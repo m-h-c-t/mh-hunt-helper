@@ -3,11 +3,11 @@
 
     "name": "MH Hunt Helper",
     "description": "This extension tracks mousehunt hunts",
-    "version": "1.0",
+    "version": "1.1",
     "icons": { "128": "icon.png" },
 
     "content_scripts": [{
-        "matches": ["https://www.mousehuntgame.com/*"],
+        "matches": ["https://www.mousehuntgame.com/*", "https://apps.facebook.com/mousehunt/*"],
         "js": ["inject.js"]
     }],
     "web_accessible_resources": ["main.js"],
