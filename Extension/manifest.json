@@ -13,7 +13,7 @@
     "web_accessible_resources": ["main.js"],
 
     "permissions": [
-        "webRequest",
-        "https://mhhh.000webhostapp.com/"
+        "https://mhhh.000webhostapp.com/",
+        "https://www.mousehuntgame.com/managers/ajax/turns/activeturn.php"
     ]
 }

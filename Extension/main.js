@@ -110,17 +110,18 @@
 
         // Caught / Attracted / Mouse
         var outcome = journal.publish_data.attachment.name;
-        if (outcome.includes(' caught ')) {
+        var action = journal.render_data.css_class;
+        if (action.match(/catchsuccess/)) {
             message.caught = 1;
             message.attracted = 1;
             message.mouse = outcome.replace(/i\ caught\ an?\ /i, '');
             message.mouse = message.mouse.replace(/(\ mouse)?\!/i, '');
-        } else if (journal.render_data.css_class.match(/catchfailure/)) {
+        } else if (action.match(/catchfailure/)) {
             message.caught = 0;
             message.attracted = 1;
             message.mouse = outcome.replace(/i\ failed\ to\ catch\ an?\ /i, '');
             message.mouse = message.mouse.replace(/(\ mouse)?\./i, '');
-        } else if (journal.render_data.css_class.match(/attractionfailure/)) {
+        } else if (action.match(/attractionfailure/)) {
             message.caught = 0;
             message.attracted = 0;
         }
