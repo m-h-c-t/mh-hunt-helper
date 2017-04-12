@@ -1,6 +1,6 @@
 <?php
 
-if (empty($_POST)) {
+if (empty($_POST['location']['name'])) {
     echo "MHHH: Missing Info (trap check or friend hunt)";
     return;
 }
@@ -17,8 +17,8 @@ $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 // Location
 if (!empty($_POST['location']['name']) && !empty($_POST['location']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM locations WHERE name LIKE ?');
-    if (!$query->execute(array($_POST['location']['name']))) {
+    $query = $pdo->prepare('SELECT count(*) FROM locations WHERE id = ?');
+    if (!$query->execute(array($_POST['location']['id']))) {
         echo "Select location failed";
         return;
     }
@@ -34,8 +34,8 @@ if (!empty($_POST['location']['name']) && !empty($_POST['location']['id'])) {
 
 // Trap
 if (!empty($_POST['trap']['name']) && !empty($_POST['trap']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM traps WHERE name LIKE ?');
-    if (!$query->execute(array($_POST['trap']['name']))) {
+    $query = $pdo->prepare('SELECT count(*) FROM traps WHERE id = ?');
+    if (!$query->execute(array($_POST['trap']['id']))) {
         echo "Select trap failed";
         return;
     }
@@ -51,8 +51,8 @@ if (!empty($_POST['trap']['name']) && !empty($_POST['trap']['id'])) {
 
 // Base
 if (!empty($_POST['base']['name']) && !empty($_POST['base']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM bases WHERE name LIKE ?');
-    if (!$query->execute(array($_POST['base']['name']))) {
+    $query = $pdo->prepare('SELECT count(*) FROM bases WHERE id = ?');
+    if (!$query->execute(array($_POST['base']['id']))) {
         echo "Select base failed";
         return;
     }
@@ -68,8 +68,8 @@ if (!empty($_POST['base']['name']) && !empty($_POST['base']['id'])) {
 
 // Charm
 if (!empty($_POST['charm']['name']) && !empty($_POST['charm']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM charms WHERE name LIKE ?');
-    if (!$query->execute(array($_POST['charm']['name']))) {
+    $query = $pdo->prepare('SELECT count(*) FROM charms WHERE id = ?');
+    if (!$query->execute(array($_POST['charm']['id']))) {
         echo "Select charm failed";
         return;
     }
@@ -85,8 +85,8 @@ if (!empty($_POST['charm']['name']) && !empty($_POST['charm']['id'])) {
 
 // Cheese
 if (!empty($_POST['cheese']['name']) && !empty($_POST['cheese']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM cheese WHERE name LIKE ?');
-    if (!$query->execute(array($_POST['cheese']['name']))) {
+    $query = $pdo->prepare('SELECT count(*) FROM cheese WHERE id = ?');
+    if (!$query->execute(array($_POST['cheese']['id']))) {
         echo "Select cheese failed";
         return;
     }
@@ -110,7 +110,7 @@ if (!empty($_POST['mouse'])) {
     }
 
     $mouse_id = $query->fetchColumn();
-    
+
     if (!$mouse_id) {
         $query = $pdo->prepare('INSERT INTO mice (name) VALUES (?)');
         if (!$query->execute(array($_POST['mouse']))) {
@@ -128,8 +128,8 @@ if (!empty($_POST['entry_id']) &&
     !empty($_POST['trap']['id']) &&
     !empty($_POST['base']['id']) &&
     !empty($_POST['cheese']['id']) &&
-    array_key_exists('caught', $_POST) &&
-    array_key_exists('attracted', $_POST)
+    array_key_exists('attracted', $_POST) &&
+    array_key_exists('caught', $_POST)
     ) {
 
     $query = $pdo->prepare('SELECT count(*) FROM hunts WHERE user_id = :user_id AND entry_id = :entry_id AND timestamp = :entry_timestamp');
