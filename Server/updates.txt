@@ -1,0 +1,22 @@
+Next things I'm planning for work on (as time permits):
+-Adding remaining stages to each location that needs them
+-Adding ajax to attraction page, so to only load table, not whole page
+-Making mouse select box editable with autocomplete (700+ mice is not going to be a good dropdown)
+-Adding more search boxes to be able to filter data by location, setup, etc.
+
+Finished Updates (newest first):
+-Added Labyrinth hallway stages
+-Refactored intake to remove repetetive code
+-Added loader animation
+-Fixed some regex on mice names, so they don't show anything but mice names
+-Made the extension only capture latest hunt by player, as trap setup is not known for other hunts
+-Put the extension in the Chrome Store for easy availability and auto updates
+-Made everything open source by putting it on GitHub
+-Setup git repository to keep track of changes
+-Added meaningful server response messages
+-Added validation on server and client side to minimize server load
+-Successfully installed and tested Chrome extension in Opera and Firefox
+-Made the site responsive for mobile phones
+-Created quick and dirty attraction webpage to see a bit of data
+-Created simple database and intake api
+-Created quick and dirty Chrome extension (for non-facebook site only)

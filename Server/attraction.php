@@ -7,6 +7,35 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .loader {
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid gray;
+          border-bottom: 16px solid gray;
+          width: 100px;
+          height: 100px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+          display: none;
+          z-index: 9999;
+          position: fixed;
+          top: 200px;
+          left: 50%;
+          margin-left: -50px;
+          
+        }
+
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body style="background-color: #fff;" class="text-center">
     <div class="container">
@@ -26,7 +55,7 @@ if (!$query->execute()) {
 }
 
 print '<form method="post"><div class="row">';
-print '<select name="mouse_id" onchange="this.form.submit()" class="center-block input-lg"><option value="">Pick a mouse</option>';
+print '<select name="mouse_id" onchange="this.form.submit();document.getElementById(\'loader\').style.display=\'block\';" class="center-block input-lg"><option value="">Pick a mouse</option>';
 while($row = $query->fetch(PDO::FETCH_ASSOC)) {
     print '<option value="' . $row['id'] . '"';
     if (!empty($_POST['mouse_id']) && ($row['id'] == $_POST['mouse_id']))
@@ -38,23 +67,24 @@ print '</select></div></form><br/>';
 
 // Mouse rates by location
 if (!empty($_POST['mouse_id'])) {
-    $statement = 'SELECT l.name, COUNT(*) as total_hunts, COUNT(m.id) as attracted_hunts
+    $statement = 'SELECT l.name as location, s.name as stage, COUNT(*) as total_hunts, COUNT(m.id) as attracted_hunts
                   FROM hunts h
                   INNER JOIN locations l ON h.location_id = l.id
                   LEFT JOIN mice m ON h.mouse_id = ? AND h.mouse_id = m.id
-                  GROUP BY l.name';
+                  LEFT JOIN stages s ON h.stage_id = s.id
+                  GROUP BY h.location_id, h.stage_id
+                  HAVING attracted_hunts > 0';
     $query = $pdo->prepare($statement);
     if (!$query->execute(array($_POST['mouse_id']))) {
         echo "Select attraction by mouse failed";
         return;
     }
 
-    print '<table class="table"><tr><th>Location</th><th>Attracted</th><th>Total hunts</th><th>Rate</th></tr>';
+    print '<table class="table"><tr><th>Location</th><th>Stage</th><th>Attracted</th><th>Total hunts</th><th>Rate</th></tr>';
     while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-        if (empty($row['attracted_hunts']))
-            continue;
 
-        print '<tr><td>' . $row['name'] .
+        print '<tr><td>' . $row['location'] .
+              '</td><td>' . $row['stage'] .
               '</td><td>' . $row['attracted_hunts'] .
               '</td><td>' . $row['total_hunts'] .
               '</td><td>' . round($row['attracted_hunts']/$row['total_hunts'], 4)*100 . '%</td></tr>';
@@ -69,8 +99,10 @@ if (!$query->execute()) {
 }
 $row = $query->fetch(PDO::FETCH_ASSOC);
 
-print '<br/><br/><p class="text-center">' . $row['hunts'] .' total hunts contributed by ' . $row['users'] . ' hunters.<br/>If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.</p>';
+print '<br/><br/><p class="text-center">This is in very early stages of development. Much more to come. <a href="updates.txt">Check out latest updates here</a>.<br/>
+    ' . $row['hunts'] .' total hunts contributed by ' . $row['users'] . ' hunters since April 11th 2017.<br/>If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.<br/>Install it on Opera using <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">this</a> and on Firefox using <a href="https://addons.mozilla.org/en-US/firefox/addon/chrome-store-foxified/">this</a>.</p>';
 ?>
 </div>
+<div id="loader" class="loader"></div>
 </body>
 </html>

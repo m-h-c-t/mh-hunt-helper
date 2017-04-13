@@ -1,6 +1,7 @@
+/*jslint browser:true */
+
 (function () {
     'use strict';
-    /*jslint browser:true */
 
     if (location.hostname.match('facebook.com')) {
         // TODO
@@ -24,7 +25,7 @@
         if (ajaxOptions.url === "https://www.mousehuntgame.com/managers/ajax/turns/activeturn.php") {
             var response = JSON.parse(xhr.responseText);
             var message = {};
-            var journal;
+            var journal = {};
 
             //window.console.log(response);
 
@@ -44,16 +45,16 @@
                 }
 
                 message = getMainHuntInfo(message, response, journal);
+                message = getStage(message, response, journal);
 
-                // Title
-                // message.title = {};
-                // message.title.name = response.title_name;
-                // message.title.id = response.title_id;
+                if (!message) {
+                    window.console.log("MHHH: Missing Info (will try better next hunt).");
+                    return;
+                }
 
                 // Send to database
                 $.post("https://mhhh.000webhostapp.com/", message)
                     .done(function (data) {
-                        // window.console.log("wohooo:");
                         if (data) {
                             window.console.log(data);
                         }
@@ -126,6 +127,30 @@
             message.attracted = 0;
         }
 
+        return message;
+    }
+
+    function getStage(message, response, journal) {
+        switch (response.user.location) {
+            case "Labyrinth":
+                message = getLabyrinthStage(message, response, journal);
+                break;
+        }
+
+        return message;
+    }
+
+    function getLabyrinthStage(message, response, journal) {
+
+        if (response.user.quests.QuestLabyrinth.status === "hallway") {
+            message.stage = response.user.quests.QuestLabyrinth.hallway_name;
+            // Remove first word (like Short)
+            message.stage = message.stage.substr(message.stage.indexOf(" ") + 1);
+        } else {
+            // Not recording last hunt of a hallway and intersections at this time
+            return;
+        }
+        
         return message;
     }
 

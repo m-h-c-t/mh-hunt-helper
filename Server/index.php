@@ -1,7 +1,7 @@
 <?php
 
 if (empty($_POST['location']['name'])) {
-    echo "MHHH: Missing Info (trap check or friend hunt)";
+    echo "MHHH: Missing Info (will try better next hunt!)";
     return;
 }
 
@@ -15,109 +15,57 @@ require "config.php";
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-// Location
-if (!empty($_POST['location']['name']) && !empty($_POST['location']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM locations WHERE id = ?');
-    if (!$query->execute(array($_POST['location']['id']))) {
-        echo "Select location failed";
-        return;
-    }
-
-    if (!$query->fetchColumn()) {
-        $query = $pdo->prepare('INSERT INTO locations (id, name) VALUES (?, ?)');
-        if (!$query->execute(array($_POST['location']['id'], $_POST['location']['name']))) {
-            echo "Insert location failed";
+// id and value intake
+$id_value_intake = array(
+    ["name" => "location", "table_name" => "locations", "optional" => false],
+    ["name" => "trap",     "table_name" => "traps",     "optional" => false],
+    ["name" => "base",     "table_name" => "bases",     "optional" => false],
+    ["name" => "charm",    "table_name" => "charms",    "optional" => true],
+    ["name" => "cheese",   "table_name" => "cheese",    "optional" => false]
+);
+foreach($id_value_intake as $item) {
+    if (!empty($_POST[$item['name']]['name']) && !empty($_POST[$item['name']]['id'])) {
+        $query = $pdo->prepare('SELECT count(*) FROM ' . $item['table_name'] . ' WHERE id = ?');
+        if (!$query->execute(array($_POST[$item['name']]['id']))) {
+            echo "Select " . $item['name'] . " failed";
             return;
+        }
+
+        if (!$query->fetchColumn()) {
+            $query = $pdo->prepare('INSERT INTO ' . $item['table_name'] . ' (id, name) VALUES (?, ?)');
+            if (!$query->execute(array($_POST[$item['name']]['id'], $_POST[$item['name']]['name']))) {
+                echo "Insert " . $item['name'] . " failed";
+                return;
+            }
         }
     }
 }
 
-// Trap
-if (!empty($_POST['trap']['name']) && !empty($_POST['trap']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM traps WHERE id = ?');
-    if (!$query->execute(array($_POST['trap']['id']))) {
-        echo "Select trap failed";
-        return;
-    }
+// only value intake
+$value_intake = array(
+    ["name" => "mouse", "table_name" => "mice",   "optional" => true],
+    ["name" => "stage", "table_name" => "stages", "optional" => true]
+);
 
-    if (!$query->fetchColumn()) {
-        $query = $pdo->prepare('INSERT INTO traps (id, name) VALUES (?, ?)');
-        if (!$query->execute(array($_POST['trap']['id'], $_POST['trap']['name']))) {
-            echo "Insert trap failed";
+foreach($value_intake as $item) {
+    ${$item['name'] . "_id"} = 0;
+    if (!empty($_POST['mouse'])) {
+        $query = $pdo->prepare('SELECT id FROM ' . $item['table_name'] . ' WHERE name LIKE ?');
+        if (!$query->execute(array($_POST[$item['name']]))) {
+            echo "Select mouse failed";
             return;
         }
-    }
-}
 
-// Base
-if (!empty($_POST['base']['name']) && !empty($_POST['base']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM bases WHERE id = ?');
-    if (!$query->execute(array($_POST['base']['id']))) {
-        echo "Select base failed";
-        return;
-    }
+        ${$item['name'] . "_id"} = $query->fetchColumn();
 
-    if (!$query->fetchColumn()) {
-        $query = $pdo->prepare('INSERT INTO bases (id, name) VALUES (?, ?)');
-        if (!$query->execute(array($_POST['base']['id'], $_POST['base']['name']))) {
-            echo "Insert base failed";
-            return;
+        if (!$mouse_id) {
+            $query = $pdo->prepare('INSERT INTO ' . $item['table_name'] . ' (name) VALUES (?)');
+            if (!$query->execute(array($_POST[$item['name']]))) {
+                echo "Insert mouse failed";
+                return;
+            }
+            ${$item['name'] . "_id"} = $pdo->lastInsertId();
         }
-    }
-}
-
-// Charm
-if (!empty($_POST['charm']['name']) && !empty($_POST['charm']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM charms WHERE id = ?');
-    if (!$query->execute(array($_POST['charm']['id']))) {
-        echo "Select charm failed";
-        return;
-    }
-
-    if (!$query->fetchColumn()) {
-        $query = $pdo->prepare('INSERT INTO charms (id, name) VALUES (?, ?)');
-        if (!$query->execute(array($_POST['charm']['id'], $_POST['charm']['name']))) {
-            echo "Insert charm failed";
-            return;
-        }
-    }
-}
-
-// Cheese
-if (!empty($_POST['cheese']['name']) && !empty($_POST['cheese']['id'])) {
-    $query = $pdo->prepare('SELECT count(*) FROM cheese WHERE id = ?');
-    if (!$query->execute(array($_POST['cheese']['id']))) {
-        echo "Select cheese failed";
-        return;
-    }
-
-    if (!$query->fetchColumn()) {
-        $query = $pdo->prepare('INSERT INTO cheese (id, name) VALUES (?, ?)');
-        if (!$query->execute(array($_POST['cheese']['id'], $_POST['cheese']['name']))) {
-            echo "Insert cheese failed";
-            return;
-        }
-    }
-}
-
-// Mouse
-$mouse_id = 0;
-if (!empty($_POST['mouse'])) {
-    $query = $pdo->prepare('SELECT id FROM mice WHERE name LIKE ?');
-    if (!$query->execute(array($_POST['mouse']))) {
-        echo "Select mouse failed";
-        return;
-    }
-
-    $mouse_id = $query->fetchColumn();
-
-    if (!$mouse_id) {
-        $query = $pdo->prepare('INSERT INTO mice (name) VALUES (?)');
-        if (!$query->execute(array($_POST['mouse']))) {
-            echo "Insert mouse failed";
-            return;
-        }
-        $mouse_id = $pdo->lastInsertId();
     }
 }
 
@@ -155,18 +103,27 @@ if (!empty($_POST['entry_id']) &&
 
 
         // Optionals
-        // Mouse
-        if (!empty($mouse_id)) {
-            $fields .= ', mouse_id';
-            $values .= ', :mouse_id';
-            $bindings['mouse_id'] = $mouse_id;
+
+        foreach ($id_value_intake as $item) {
+            if (!$item['optional'])
+                continue;
+
+            if (!empty($item['name']['id'])) {
+                $fields .= ', ' . $item['name'] . "_id";
+                $values .= ', :' . $item['name'] . "_id";
+                $bindings[$item['name'] . "_id"] = $item['name']['id'];
+            }
         }
 
-        // Charm
-        if (!empty($_POST['charm']['id'])) {
-            $fields .= ', charm_id';
-            $values .= ', :charm_id';
-            $bindings['charm_id'] = $_POST['charm']['id'];
+        foreach ($value_intake as $item) {
+            if (!$item['optional'])
+                continue;
+
+            if (!empty(${$item['name'] . "_id"})) {
+                $fields .= ', ' . $item['name'] . "_id";
+                $values .= ', :' . $item['name'] . "_id";
+                $bindings[$item['name'] . "_id"] = ${$item['name'] . "_id"};
+            }
         }
 
         // Shield
