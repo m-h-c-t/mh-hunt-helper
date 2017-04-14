@@ -135,6 +135,9 @@
             case "Labyrinth":
                 message = getLabyrinthStage(message, response, journal);
                 break;
+            case "Fiery Warpath":
+                message = getFieryWarpathStage(message, response, journal);
+                break;
         }
 
         return message;
@@ -150,7 +153,14 @@
             // Not recording last hunt of a hallway and intersections at this time
             return;
         }
-        
+
+        return message;
+    }
+
+    function getFieryWarpathStage(message, response, journal) {
+        if (response.user.viewing_atts.desert_warpath.wave) {
+            message.stage = "Wave " + response.user.viewing_atts.desert_warpath.wave;
+        }
         return message;
     }
 

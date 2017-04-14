@@ -49,19 +49,19 @@ $value_intake = array(
 
 foreach($value_intake as $item) {
     ${$item['name'] . "_id"} = 0;
-    if (!empty($_POST['mouse'])) {
+    if (!empty($_POST[$item['name']])) {
         $query = $pdo->prepare('SELECT id FROM ' . $item['table_name'] . ' WHERE name LIKE ?');
         if (!$query->execute(array($_POST[$item['name']]))) {
-            echo "Select mouse failed";
+            echo "Select " . $item['name'] . " failed";
             return;
         }
 
         ${$item['name'] . "_id"} = $query->fetchColumn();
 
-        if (!$mouse_id) {
+        if (!${$item['name'] . "_id"}) {
             $query = $pdo->prepare('INSERT INTO ' . $item['table_name'] . ' (name) VALUES (?)');
             if (!$query->execute(array($_POST[$item['name']]))) {
-                echo "Insert mouse failed";
+                echo "Insert " . $item['name'] . " failed";
                 return;
             }
             ${$item['name'] . "_id"} = $pdo->lastInsertId();

@@ -100,7 +100,7 @@ if (!$query->execute()) {
 $row = $query->fetch(PDO::FETCH_ASSOC);
 
 print '<br/><br/><p class="text-center">This is in very early stages of development. Much more to come. <a href="updates.txt">Check out latest updates here</a>.<br/>
-    ' . $row['hunts'] .' total hunts contributed by ' . $row['users'] . ' hunters since April 11th 2017.<br/>If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.<br/>Install it on Opera using <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">this</a> and on Firefox using <a href="https://addons.mozilla.org/en-US/firefox/addon/chrome-store-foxified/">this</a>.</p>';
+    ' . $row['hunts'] .' total hunts contributed by ' . $row['users'] . ' hunters.<br/>If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.<br/>Install it on Opera using <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">this</a> and on Firefox using <a href="https://addons.mozilla.org/en-US/firefox/addon/chrome-store-foxified/">this</a>.</p>';
 ?>
 </div>
 <div id="loader" class="loader"></div>
