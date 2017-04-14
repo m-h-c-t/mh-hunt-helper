@@ -138,13 +138,30 @@
             case "Fiery Warpath":
                 message = getFieryWarpathStage(message, response, journal);
                 break;
+            case "Balack's Cove":
+                message = getBalacksCoveStage(message, response, journal);
+                break;
+            // case "Seasonal Garden":
+                // message = getSeasonalGardenStage(message, response, journal);
+                // break;
+            case "Living Garden":
+                message = getLivingGardenStage(message, response, journal);
+                break;
+            case "Sand Dunes":
+                message = getSandDunesStage(message, response, journal);
+                break;
+            case "Lost City":
+                message = getLostCityStage(message, response, journal);
+                break;
+            case "Iceberg":
+                message = getIcebergStage(message, response, journal);
+                break;
         }
 
         return message;
     }
 
     function getLabyrinthStage(message, response, journal) {
-
         if (response.user.quests.QuestLabyrinth.status === "hallway") {
             message.stage = response.user.quests.QuestLabyrinth.hallway_name;
             // Remove first word (like Short)
@@ -153,7 +170,6 @@
             // Not recording last hunt of a hallway and intersections at this time
             return;
         }
-
         return message;
     }
 
@@ -164,6 +180,89 @@
         return message;
     }
 
-    window.console.log("MH Hunt Helper loaded! Good luck!");
+    function getBalacksCoveStage(message, response, journal) {
+        if (response.user.viewing_atts.tide) {
+            var tide = response.user.viewing_atts.tide;
+            message.stage = tide.substr(0, 1).toUpperCase() + tide.substr(1) + " Tide";
+        }
+        return message;
+    }
+
+    function getSeasonalGardenStage(message, response, journal) {
+        switch (response.user.viewing_atts.season) {
+            case "sr":
+                message.stage = "Summer";
+                break;
+            case "":
+                message.stage = "Fall";
+                break;
+            case "":
+                message.stage = "Winter";
+                break;
+            case "":
+                message.stage = "Spring";
+                break;
+        }
+        return message;
+    }
+    
+    function getLivingGardenStage(message, response, journal) {
+        if (user.quests.QuestLivingGarden.minigame.bucket_state) {
+            var bucket = user.quests.QuestLivingGarden.minigame.bucket_state;
+            if (bucket === "filling") {
+                message.stage = "Not pouring";
+            } else {
+                message.stage = "Pouring";
+            }
+        }
+        return message;
+    }
+    
+    function getSandDunesStage(message, response, journal) {
+        if (user.quests.QuestSandDunes.minigame.has_stampede) {
+            message.stage = "Stampede";
+        } else {
+            message.stage = "No Stampede";
+        }
+        return message;
+    }
+    
+    function getLostCityStage(message, response, journal) {
+        if (user.quests.QuestLostCity.minigame.is_cursed) {
+            message.stage = "Cursed";
+        } else {
+            message.stage = "Not Cursed";
+        }
+        return message;
+    }
+    
+    function getIcebergStage(message, response, journal) {
+        if (user.quests.QuestIceberg.current_phase) {
+            message.stage = user.quests.QuestIceberg.current_phase;
+        }
+        // switch (user.quests.QuestIceberg.current_phase) {
+            // case "Treacherous Tunnels";
+                // message.stage = "0-300ft";
+                // break;
+            // case "Brutal Bulwark";
+                // message.stage = "301-600ft";
+                // break;
+            // case "Bombing Run";
+                // message.stage = "601-1600ft";
+                // break;
+            // case "The Mad Depths";
+                // message.stage = "1601-1800ft";
+                // break;
+            // case "Icewing's Lair";
+                // message.stage = "1801-2000ft";
+                // break;
+            // default:
+                // message.stage = "2000ft";
+                // break;
+        // }
+        return message;
+    }
+
+    window.console.log("MH Hunt Helper v1.4 loaded! Good luck!");
 
 }());

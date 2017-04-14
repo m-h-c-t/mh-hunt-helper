@@ -1,11 +1,13 @@
-Next things I'm planning for work on (as time permits):
+Next things I'm planning to work on (as time permits):
 -Adding remaining stages to each location that needs them
 -Adding ajax to attraction page, so to only load table, not whole page
 -Making mouse select box editable with autocomplete (700+ mice is not going to be a good dropdown)
 -Adding more search boxes to be able to filter data by location, setup, etc.
 
 Finished Updates (newest first):
--Added Labyrinth hallway stages
+-Added LG, Sand Dunes, Lost City, Balack's Cove, Iceberg stages (v1.4)
+-Added Fiery Warpath stages (v1.3)
+-Added Labyrinth hallway stages (v1.2)
 -Refactored intake to remove repetetive code
 -Added loader animation
 -Fixed some regex on mice names, so they don't show anything but mice names
@@ -19,4 +21,4 @@ Finished Updates (newest first):
 -Made the site responsive for mobile phones
 -Created quick and dirty attraction webpage to see a bit of data
 -Created simple database and intake api
--Created quick and dirty Chrome extension (for non-facebook site only)
+-Created quick and dirty Chrome extension (for non-facebook site only) (v1.0)

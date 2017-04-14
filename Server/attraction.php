@@ -92,15 +92,15 @@ if (!empty($_POST['mouse_id'])) {
     print '</table>';
 }
 
-$query = $pdo->prepare('SELECT count(*) as hunts, count(DISTINCT user_id) as users FROM hunts');
+$query = $pdo->prepare('SELECT COUNT(*) as hunts, COUNT(DISTINCT user_id) as users, COUNT(DISTINCT mouse_id) as mice, COUNT(DISTINCT location_id) as locations FROM hunts');
 if (!$query->execute()) {
     echo 'Select all hunts and users failed';
     return;
 }
 $row = $query->fetch(PDO::FETCH_ASSOC);
 
-print '<br/><br/><p class="text-center">This is in very early stages of development. Much more to come. <a href="updates.txt">Check out latest updates here</a>.<br/>
-    ' . $row['hunts'] .' total hunts contributed by ' . $row['users'] . ' hunters.<br/>If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.<br/>Install it on Opera using <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">this</a> and on Firefox using <a href="https://addons.mozilla.org/en-US/firefox/addon/chrome-store-foxified/">this</a>.</p>';
+print '<br/><br/><p class="text-center">This is in very early stages of development. Much more to come. <a href="updates.txt">Check out latest updates here</a>.<br/> If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.<br/>Install it on Opera using <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">this</a> and on Firefox using <a href="https://addons.mozilla.org/en-US/firefox/addon/chrome-store-foxified/">this</a>.<br/>
+    <br/>Stats so far<br/>Contributors:' . $row['users'] . '<br/>Hunts:' . $row['hunts'] .'<br/>Mice:' . $row['mice'] .'<br/>Locations:' . $row['locations'] .'<br/>Current version: 1.4</p>';
 ?>
 </div>
 <div id="loader" class="loader"></div>
