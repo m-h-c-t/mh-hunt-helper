@@ -1,10 +1,14 @@
 Next things I'm planning to work on (as time permits):
 -Adding remaining stages to each location that needs them
 -Adding ajax to attraction page, so to only load table, not whole page
--Making mouse select box editable with autocomplete (700+ mice is not going to be a good dropdown)
+-Converting mouse select box into a search box with autocomplete (800+ mice is not going to be a good dropdown)
 -Adding more search boxes to be able to filter data by location, setup, etc.
+-Move the site to a more reliable host
 
 Finished Updates (newest first):
+-Added autoupdate check (v1.5)
+-Removed unnecessary permissions (v1.5)
+-Added Sunken City, Fungal Cavern, Zokor stages (v1.5)
 -Added LG, Sand Dunes, Lost City, Balack's Cove, Iceberg stages (v1.4)
 -Added Fiery Warpath stages (v1.3)
 -Added Labyrinth hallway stages (v1.2)

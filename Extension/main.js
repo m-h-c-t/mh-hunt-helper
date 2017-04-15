@@ -3,10 +3,8 @@
 (function () {
     'use strict';
 
-    if (location.hostname.match('facebook.com')) {
-        // TODO
-        return;
-    }
+    var mhhh_version = "1.5";
+    var db_url = "https://mhhh.000webhostapp.com/";
 
     if (!window.jQuery) {
         console.log("MHHH: Can't find jQuery, exiting.");
@@ -19,15 +17,10 @@
      //   /* Response body */ xhr.responseText
      //   /* Request body  */ ajaxOptions.data
 
-        //window.console.log(JSON.parse(xhr.responseText));
-
-        //if (ajaxOptions.url !== "https://mhhh.000webhostapp.com/") {
         if (ajaxOptions.url === "https://www.mousehuntgame.com/managers/ajax/turns/activeturn.php") {
             var response = JSON.parse(xhr.responseText);
             var message = {};
             var journal = {};
-
-            //window.console.log(response);
 
             if (response.active_turn && response.success && response.journal_markup != null && response.journal_markup.length > 0) {
 
@@ -53,7 +46,7 @@
                 }
 
                 // Send to database
-                $.post("https://mhhh.000webhostapp.com/", message)
+                $.post(db_url, message)
                     .done(function (data) {
                         if (data) {
                             window.console.log(data);
@@ -77,7 +70,7 @@
         // User ID
         message.user_id = response.user.user_id;
 
-        // Location (alt: response.user.location)
+        // Location
         message.location = {};
         message.location.name = response.user.location;
         message.location.id = response.user.environment_id;
@@ -141,9 +134,6 @@
             case "Balack's Cove":
                 message = getBalacksCoveStage(message, response, journal);
                 break;
-            // case "Seasonal Garden":
-                // message = getSeasonalGardenStage(message, response, journal);
-                // break;
             case "Living Garden":
                 message = getLivingGardenStage(message, response, journal);
                 break;
@@ -156,6 +146,45 @@
             case "Iceberg":
                 message = getIcebergStage(message, response, journal);
                 break;
+            case "Sunken City":
+                message = getSunkenCityStage(message, response, journal);
+                break;
+            case "Fungal Cavern":
+                message = getFungalCavernStage(message, response, journal);
+                break;
+            case "Zokor":
+                message = getZokorStage(message, response, journal);
+                break;
+            // case "Seasonal Garden":
+                // message = getSeasonalGardenStage(message, response, journal);
+                // break;
+            // case "Furoma Rift":
+                // message = get---Stage(message, response, journal);
+                // break;
+            // case "Toxic Spill":
+                // message = get---Stage(message, response, journal);
+                // break;
+            // case "Burroughs Rift":
+                // message = get---Stage(message, response, journal);
+                // break;
+            // case "Twisted Garden":
+                // message = get---Stage(message, response, journal);
+                // break;
+            // case "Sand Crypts":
+                // message = get---Stage(message, response, journal);
+                // break;
+            // case "Cursed City":
+                // message = get---Stage(message, response, journal);
+                // break;
+            // case "Fort Rox":
+                // message = get---Stage(message, response, journal);
+                // break;
+            // case "Gnawnian Express Station":
+                // message = get---Stage(message, response, journal);
+                // break;
+            // case "Whisker Woods Rift":
+                // message = get---Stage(message, response, journal);
+                // break;
         }
 
         return message;
@@ -205,10 +234,10 @@
         }
         return message;
     }
-    
+
     function getLivingGardenStage(message, response, journal) {
-        if (user.quests.QuestLivingGarden.minigame.bucket_state) {
-            var bucket = user.quests.QuestLivingGarden.minigame.bucket_state;
+        if (response.user.quests.QuestLivingGarden.minigame.bucket_state) {
+            var bucket = response.user.quests.QuestLivingGarden.minigame.bucket_state;
             if (bucket === "filling") {
                 message.stage = "Not pouring";
             } else {
@@ -217,29 +246,31 @@
         }
         return message;
     }
-    
+
     function getSandDunesStage(message, response, journal) {
-        if (user.quests.QuestSandDunes.minigame.has_stampede) {
+        if (response.user.quests.QuestSandDunes.minigame.has_stampede) {
             message.stage = "Stampede";
         } else {
             message.stage = "No Stampede";
         }
         return message;
     }
-    
+
     function getLostCityStage(message, response, journal) {
-        if (user.quests.QuestLostCity.minigame.is_cursed) {
+        if (response.user.quests.QuestLostCity.minigame.is_cursed) {
             message.stage = "Cursed";
         } else {
             message.stage = "Not Cursed";
         }
         return message;
     }
-    
+
     function getIcebergStage(message, response, journal) {
-        if (user.quests.QuestIceberg.current_phase) {
-            message.stage = user.quests.QuestIceberg.current_phase;
+        if (response.user.quests.QuestIceberg.current_phase) {
+            message.stage = response.user.quests.QuestIceberg.current_phase;
         }
+
+        //switch on current depth after checking what phase has for generals
         // switch (user.quests.QuestIceberg.current_phase) {
             // case "Treacherous Tunnels";
                 // message.stage = "0-300ft";
@@ -263,6 +294,98 @@
         return message;
     }
 
-    window.console.log("MH Hunt Helper v1.4 loaded! Good luck!");
+    function getSunkenCityStage(message, response, journal) {
+        if (!response.user.quests.QuestSunkenCity.is_diving) {
+            message.stage = "Docked";
+            return message;
+        }
+
+        // "if else" faster than "switch" calculations
+        depth = response.user.quests.QuestSunkenCity.distance;
+        if (depth < 2000) {
+            message.stage = "0-2km";
+        } else if (depth < 10000) {
+            message.stage = "2-10km";
+        } else if (depth < 15000) {
+            message.stage = "10-15km";
+        } else if (depth < 25000) {
+            message.stage = "15-25km";
+        } else if (depth >= 25000) {
+            message.stage = "25+km";
+        }
+
+        return message;
+    }
+
+    function getFungalCavernStage(message, response, journal) {
+        if (!response.user.bait_name) {
+            return message;
+        }
+
+        if ($.inArray(response.user.bait_name, ["Glowing Gruyere Cheese", "Mineral Cheese", "Gemstone Cheese", "Diamond Cheese"]) === -1) {
+            message.stage = "Misc Cheese";
+        } else {
+            message.stage = response.user.bait_name.replace(/\ cheese/i, '');
+        }
+        return message;
+    }
+
+    function getZokorStage(message, response, journal) {
+        if (!response.user.quests.QuestAncientCity.district_name) {
+            return message;
+        }
+
+        message.stage = response.user.quests.QuestAncientCity.district_name;
+
+
+        // Redo it in plain wording like Tech 50+
+        // switch (response.user.quests.QuestAncientCity.district_name) {
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+            // case "":
+                // message.stage = "";
+                // break;
+        // }
+        return message;
+    }
+
+    window.console.log("MH Hunt Helper v" + mhhh_version + " loaded! Good luck!");
 
 }());

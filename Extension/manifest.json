@@ -3,17 +3,22 @@
 
     "name": "MH Hunt Helper",
     "description": "This extension tracks mousehunt hunts.",
-    "version": "1.4",
+    "version": "1.5",
     "icons": { "128": "icon.png" },
 
     "content_scripts": [{
-        "matches": ["https://www.mousehuntgame.com/*", "https://apps.facebook.com/mousehunt/*"],
+        "matches": ["https://www.mousehuntgame.com/*"],
         "js": ["inject.js"]
     }],
+    
     "web_accessible_resources": ["main.js"],
-
-    "permissions": [
-        "https://mhhh.000webhostapp.com/",
-        "https://www.mousehuntgame.com/managers/ajax/turns/activeturn.php"
-    ]
+    
+    "background": {
+        "scripts": ["update_check.js"],
+        "persistent": false
+    },
+    
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhafuUehIKii5Oz6oXW/IErgKQjqLWMc5S/fd+9IVEW8OxOLQFA40no+bDh+bKbniP2/OEZ/oOIh8OIKJ7Y5aua/lRTgctBNspOrmmhP4XyHs01QSWEzqyBvt4UWatBgtRX8ZiXUXlvFy4zm9J0Y4oviEkZmw22L8tFad2dvls+vMqoFT/yKNq6R+X615ZImpqRhEz/vDQUPwhUCu5asYRZqBPm1FHPIn4SFLdw9Es9B+ySh4LGjtq3+geldocVu1lC4cqMcLEuPgCHYQ/GQg3kAp6skvNZiihc2m0akRchkBxjBLvIhRQ0knN5jf04v3qXTYgJ+frJVc6lWgQ+XF6wIDAQAB",
+    
+    "update_url": "https://clients2.google.com/service/update2/crx"
 }
