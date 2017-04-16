@@ -1,3 +1,7 @@
+body {
+    background-color: #fff;
+}
+
 .ui-autocomplete-loading {
     background:url('spin.gif') no-repeat right center;
 }
@@ -17,7 +21,6 @@
     top: 200px;
     left: 50%;
     margin-left: -50px;
-
 }
 
 @-webkit-keyframes spin {
@@ -29,5 +32,3 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-

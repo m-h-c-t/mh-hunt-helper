@@ -1,9 +1,16 @@
 Next things I'm planning to work on (as time permits):
--Adding remaining stages to each location that needs them
+-Adding remaining stages to each location that needs them (Frift, SG, Spill, Brift, Frox, Train, Twisted Garden, Sand Crypts, Cursed City)
 -Adding more search boxes to be able to filter data by location, setup, etc.
--Move the site to a more reliable host
+-Move the site to a more reliable host and a better url
+
+Known issues:
+1. Last mouse before auto-travel get wrong location
+2. The free host I am using is not very reliable, and has older mysql/php
 
 Finished Updates (newest first):
+-Optimized website for speed loading (except caching)
+-Made autocomplete local and faster
+-Added Datatables: sort, hidden column, styling
 -Converted mouse select box into a search box with autocomplete (800+ mice is not a good dropdown)
 -Added ajax to attraction page, so to only load table, not whole page
 -Added autoupdate check (v1.5)

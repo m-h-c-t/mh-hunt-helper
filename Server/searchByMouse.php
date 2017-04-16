@@ -8,12 +8,13 @@ $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 
 // Mouse rates by location
-// Autocomplete
-
-if (!empty($_GET['term'])) {
-    $term = trim(strip_tags($_GET['term']));
-    $query = $pdo->prepare('SELECT id, name FROM mice WHERE name LIKE ?');
-    if (!$query->execute(array("%$term%"))) {
+// Autocomplete and search
+if (empty($_POST['mouse_id'])) {
+    return;
+} else if ($_POST['mouse_id'] === 'all') {
+    // $term = trim(strip_tags($_GET['term']));
+    $query = $pdo->prepare('SELECT id, name FROM mice');
+    if (!$query->execute()) {
         print 'Select all mice failed';
         return;
     }
