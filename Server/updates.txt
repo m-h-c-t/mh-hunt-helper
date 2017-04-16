@@ -1,11 +1,11 @@
 Next things I'm planning to work on (as time permits):
 -Adding remaining stages to each location that needs them
--Adding ajax to attraction page, so to only load table, not whole page
--Converting mouse select box into a search box with autocomplete (800+ mice is not going to be a good dropdown)
 -Adding more search boxes to be able to filter data by location, setup, etc.
 -Move the site to a more reliable host
 
 Finished Updates (newest first):
+-Converted mouse select box into a search box with autocomplete (800+ mice is not a good dropdown)
+-Added ajax to attraction page, so to only load table, not whole page
 -Added autoupdate check (v1.5)
 -Removed unnecessary permissions (v1.5)
 -Added Sunken City, Fungal Cavern, Zokor stages (v1.5)
