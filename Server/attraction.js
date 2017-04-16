@@ -7,7 +7,7 @@ $( function() {
         source: "searchByMouse.php",
         minLength: 2,
         select: function( event, ui ) {
-            $("#loader").show;
+            $("#loader").css( "display", "block" );
             getAttractionByMouse(ui.item.id);
         }
     });
@@ -37,6 +37,6 @@ $( function() {
         });
         final_html += '</table>';
         $("#results").html(final_html);
-        //$("#loader").hide;
+        $("#loader").css( "display", "none" );
     }
 });

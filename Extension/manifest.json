@@ -14,8 +14,7 @@
     "web_accessible_resources": ["main.js"],
     
     "background": {
-        "scripts": ["update_check.js"],
-        "persistent": false
+        "scripts": ["update_check.js"]
     },
     
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhafuUehIKii5Oz6oXW/IErgKQjqLWMc5S/fd+9IVEW8OxOLQFA40no+bDh+bKbniP2/OEZ/oOIh8OIKJ7Y5aua/lRTgctBNspOrmmhP4XyHs01QSWEzqyBvt4UWatBgtRX8ZiXUXlvFy4zm9J0Y4oviEkZmw22L8tFad2dvls+vMqoFT/yKNq6R+X615ZImpqRhEz/vDQUPwhUCu5asYRZqBPm1FHPIn4SFLdw9Es9B+ySh4LGjtq3+geldocVu1lC4cqMcLEuPgCHYQ/GQg3kAp6skvNZiihc2m0akRchkBxjBLvIhRQ0knN5jf04v3qXTYgJ+frJVc6lWgQ+XF6wIDAQAB",
