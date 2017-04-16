@@ -3,13 +3,13 @@
 (function () {
     'use strict';
 
-    var mhhh_version = "1.5";
-    var db_url = "https://mhhh.000webhostapp.com/";
+    var db_url = "https://mhhh.000webhostapp.com/intake.php";
 
     if (!window.jQuery) {
         console.log("MHHH: Can't find jQuery, exiting.");
         return;
     }
+    var mhhh_version = $("#mhhh_version").val();
 
     $(document).ajaxSuccess(function (event, xhr, ajaxOptions) {
      //   /* Method        */ ajaxOptions.type
@@ -44,6 +44,8 @@
                     window.console.log("MHHH: Missing Info (will try better next hunt).");
                     return;
                 }
+                
+                message.extension_version = mhhh_version;
 
                 // Send to database
                 $.post(db_url, message)
