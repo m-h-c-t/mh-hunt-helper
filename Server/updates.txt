@@ -8,6 +8,10 @@ Known issues:
 2. The free host I am using is not very reliable, and has older mysql/php
 
 Finished Updates (newest first):
+-Added stages for: Toxic Spill, Twisted Garden, Cursed City, Furoma Rift and Burroughs Rift (1.7)
+-Fixed auto-update check (1.6)
+-Moved intake server url (1.6)
+-Added extension version records to see if everyone is getting auto-updated (1.6)
 -Optimized website for speed loading (except caching)
 -Made autocomplete local and faster
 -Added Datatables: sort, hidden column, styling

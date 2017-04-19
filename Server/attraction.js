@@ -29,7 +29,7 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-condensed table-striped table-bordered"><thead><tr><th>Location</th><th>Stage</th><th>Attracted</th><th>Total hunts</th><th>Rate</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-bordered"><thead><tr><th>Location</th><th>Stage</th><th>Attracted</th><th>Total hunts</th><th>Rate</th></tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {

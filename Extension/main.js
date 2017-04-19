@@ -143,6 +143,7 @@
                 message = getSandDunesStage(message, response, journal);
                 break;
             case "Lost City":
+            case "Cursed City":
                 message = getLostCityStage(message, response, journal);
                 break;
             case "Iceberg":
@@ -160,26 +161,23 @@
             // case "Seasonal Garden":
                 // message = getSeasonalGardenStage(message, response, journal);
                 // break;
-            // case "Furoma Rift":
-                // message = get---Stage(message, response, journal);
-                // break;
-            // case "Toxic Spill":
-                // message = get---Stage(message, response, journal);
-                // break;
-            // case "Burroughs Rift":
-                // message = get---Stage(message, response, journal);
-                // break;
-            // case "Twisted Garden":
-                // message = get---Stage(message, response, journal);
-                // break;
+            case "Furoma Rift":
+                message = getFuromaRiftStage(message, response, journal);
+                break;
+            case "Toxic Spill":
+                message = getToxicSpillStage(message, response, journal);
+                break;
+            case "Burroughs Rift":
+                message = getBurroughsRiftStage(message, response, journal);
+                break;
+            case "Twisted Garden":
+                message = getTwistedGardenStage(message, response, journal);
+                break;
             // case "Sand Crypts":
                 // message = get---Stage(message, response, journal);
                 // break;
-            // case "Cursed City":
-                // message = get---Stage(message, response, journal);
-                // break;
             // case "Fort Rox":
-                // message = get---Stage(message, response, journal);
+                // message = getFortRoxStage(message, response, journal);
                 // break;
             // case "Gnawnian Express Station":
                 // message = get---Stage(message, response, journal);
@@ -224,7 +222,7 @@
             case "sr":
                 message.stage = "Summer";
                 break;
-            case "":
+            case "fl":
                 message.stage = "Fall";
                 break;
             case "":
@@ -263,6 +261,15 @@
             message.stage = "Cursed";
         } else {
             message.stage = "Not Cursed";
+        }
+        return message;
+    }
+    
+    function getTwistedGardenStage(message, response, journal) {
+        if (response.user.quests.QuestLivingGarden.minigame.vials_state === "dumped") {
+            message.stage = "Pouring";
+        } else {
+            message.stage = "Not pouring";
         }
         return message;
     }
@@ -385,6 +392,74 @@
                 // message.stage = "";
                 // break;
         // }
+        return message;
+    }
+    
+    function getFuromaRiftStage(message, response, journal) {
+        switch (response.user.quests.QuestRiftFuroma.droid.charge_level) {
+            case "":
+                message.stage = "Outside";
+                break;
+            case "charge_level_one":
+                message.stage = "Battery 1";
+                break;
+            case "charge_level_two":
+                message.stage = "Battery 2";
+                break;
+            case "charge_level_three":
+                message.stage = "Battery 3";
+                break;
+            case "charge_level_four":
+                message.stage = "Battery 4";
+                break;
+            case "charge_level_five":
+                message.stage = "Battery 5";
+                break;
+            case "charge_level_six":
+                message.stage = "Battery 6";
+                break;
+            case "charge_level_seven":
+                message.stage = "Battery 7";
+                break;
+            case "charge_level_eight":
+                message.stage = "Battery 8";
+                break;
+            case "charge_level_nine":
+                message.stage = "Battery 9";
+                break;
+            case "charge_level_ten":
+                message.stage = "Battery 10";
+                break;
+        }
+        return message;
+    }
+    
+    function getToxicSpillStage(message, response, journal) {
+        var titles = response.user.quests.MiniEventPollutionOutbreak.titles;
+        for (var i=0; i < titles.length; i++) {
+            if (titles.active) {
+                message.stage = titles.name;
+                break;
+            }
+        }
+        return message;
+    }
+    
+    function getBurroughsRiftStage(message, response, journal) {
+        switch (response.user.quests.QuestRiftBurroughs.mist_tier) {
+            case "tier_0":
+                message.stage = "Mist 0";
+                break;
+            case "tier_1":
+                message.stage = "Mist 1-5";
+                break;
+            case "tier_2":
+                message.stage = "Mist 6-18";
+                break;
+            case "tier_3":
+                message.stage = "Mist 19-20";
+                break;
+        }
         return message;
     }
 

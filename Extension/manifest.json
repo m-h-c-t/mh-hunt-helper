@@ -3,7 +3,7 @@
 
     "name": "MH Hunt Helper",
     "description": "This extension tracks mousehunt hunts.",
-    "version": "1.6",
+    "version": "1.7",
     "icons": { "128": "icon.png" },
 
     "content_scripts": [{
