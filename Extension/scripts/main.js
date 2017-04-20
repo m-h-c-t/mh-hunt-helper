@@ -38,13 +38,14 @@
                 }
 
                 message = getMainHuntInfo(message, response, journal);
+                message = fixTransitionMice(message, response, journal);
                 message = getStage(message, response, journal);
 
                 if (!message) {
                     window.console.log("MHHH: Missing Info (will try better next hunt).");
                     return;
                 }
-                
+
                 message.extension_version = mhhh_version;
 
                 // Send to database
@@ -125,6 +126,17 @@
         return message;
     }
 
+    function fixTransitionMice(message, response, journal) {
+        if (message.mouse === "Realm Ripper" && message.location.name === "Acolyte Realm") {
+            message.location.name = "Forbidden Grove";
+            message.location.id = 11;
+        } else if (message.mouse === "Riptide" && message.location.name === "Jungle of Dread") {
+            message.location.name = "Balack's Cove";
+            message.location.id = 2;
+        }
+        return message;
+    }
+
     function getStage(message, response, journal) {
         switch (response.user.location) {
             case "Labyrinth":
@@ -158,9 +170,9 @@
             case "Zokor":
                 message = getZokorStage(message, response, journal);
                 break;
-            // case "Seasonal Garden":
-                // message = getSeasonalGardenStage(message, response, journal);
-                // break;
+            case "Seasonal Garden":
+                message = getSeasonalGardenStage(message, response, journal);
+                break;
             case "Furoma Rift":
                 message = getFuromaRiftStage(message, response, journal);
                 break;
@@ -176,12 +188,12 @@
             // case "Sand Crypts":
                 // message = get---Stage(message, response, journal);
                 // break;
-            // case "Fort Rox":
-                // message = getFortRoxStage(message, response, journal);
-                // break;
-            // case "Gnawnian Express Station":
-                // message = get---Stage(message, response, journal);
-                // break;
+            case "Fort Rox":
+                message = getFortRoxStage(message, response, journal);
+                break;
+            case "Gnawnian Express Station":
+                message = getTrainStage(message, response, journal);
+                break;
             // case "Whisker Woods Rift":
                 // message = get---Stage(message, response, journal);
                 // break;
@@ -203,16 +215,23 @@
     }
 
     function getFieryWarpathStage(message, response, journal) {
-        if (response.user.viewing_atts.desert_warpath.wave) {
+        if (message.mouse === "Warmonger") {
+            message.stage = "Wave 5";
+        } else {
             message.stage = "Wave " + response.user.viewing_atts.desert_warpath.wave;
         }
+
         return message;
     }
 
     function getBalacksCoveStage(message, response, journal) {
         if (response.user.viewing_atts.tide) {
             var tide = response.user.viewing_atts.tide;
-            message.stage = tide.substr(0, 1).toUpperCase() + tide.substr(1) + " Tide";
+            message.stage = tide.substr(0, 1).toUpperCase() + tide.substr(1);
+            if (message.stage === "Med") {
+                message.stage = "Medium";
+            }
+            message += " Tide";
         }
         return message;
     }
@@ -225,10 +244,10 @@
             case "fl":
                 message.stage = "Fall";
                 break;
-            case "":
+            case "wr":
                 message.stage = "Winter";
                 break;
-            case "":
+            default:
                 message.stage = "Spring";
                 break;
         }
@@ -264,7 +283,7 @@
         }
         return message;
     }
-    
+
     function getTwistedGardenStage(message, response, journal) {
         if (response.user.quests.QuestLivingGarden.minigame.vials_state === "dumped") {
             message.stage = "Pouring";
@@ -394,7 +413,7 @@
         // }
         return message;
     }
-    
+
     function getFuromaRiftStage(message, response, journal) {
         switch (response.user.quests.QuestRiftFuroma.droid.charge_level) {
             case "":
@@ -433,7 +452,7 @@
         }
         return message;
     }
-    
+
     function getToxicSpillStage(message, response, journal) {
         var titles = response.user.quests.MiniEventPollutionOutbreak.titles;
         for (var i=0; i < titles.length; i++) {
@@ -444,7 +463,7 @@
         }
         return message;
     }
-    
+
     function getBurroughsRiftStage(message, response, journal) {
         switch (response.user.quests.QuestRiftBurroughs.mist_tier) {
             case "tier_0":
@@ -464,5 +483,44 @@
     }
 
     window.console.log("MH Hunt Helper v" + mhhh_version + " loaded! Good luck!");
+
+    function getTrainStage(message, response, journal) {
+        if (response.user.quests.QuestTrainStation.on_train) {
+            message.stage = response.user.quests.QuestTrainStation.phase_name;
+        } else {
+            message.stage = "Station";
+        }
+
+        return message;
+    }
+
+    function getFortRoxStage(message, response, journal) {
+        if (message.mouse === "Heart of the Meteor" || response.user.quests.QuestFortRox.is_lair) {
+            message.stage = "Heart of the Meteor";
+        } else if (response.user.quests.QuestFortRox.is_dawn) {
+            message.stage = "Dawn";
+        } else if (response.user.quests.QuestFortRox.is_day) {
+            message.stage = "Day";
+        } else if (response.user.quests.QuestFortRox.is_night) {
+            switch (user.quests.QuestFortRox.current_stage) {
+                case "stage_one":
+                    message.stage = "Twilight";
+                    break;
+                case "stage_two":
+                    message.stage = "Midnight";
+                    break;
+                case "stage_three":
+                    message.stage = "Pitch";
+                    break;
+                case "stage_four":
+                    message.stage = "Utter Darkness";
+                    break;
+                case "stage_five":
+                    message.stage = "First Light";
+                    break;
+            }
+        }
+        return message;
+    }
 
 }());

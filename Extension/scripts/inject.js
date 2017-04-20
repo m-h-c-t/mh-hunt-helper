@@ -5,7 +5,7 @@ extension_version.setAttribute("value", chrome.runtime.getManifest().version);
 (document.head || document.documentElement).appendChild(extension_version);
 
 var s = document.createElement('script');
-s.src = chrome.extension.getURL('main.js');
+s.src = chrome.extension.getURL('scripts/main.js');
 s.onload = function() {
     this.remove();
 };

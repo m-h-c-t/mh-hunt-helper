@@ -1,3 +1,4 @@
+// Update check
 chrome.runtime.onUpdateAvailable.addListener(function(details) {
   console.log("MHHH: updating to version " + details.version);
   chrome.runtime.reload();

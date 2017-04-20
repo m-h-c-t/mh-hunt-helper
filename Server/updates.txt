@@ -1,13 +1,16 @@
 Next things I'm planning to work on (as time permits):
--Adding remaining stages to each location that needs them (Frift, SG, Spill, Brift, Frox, Train, Twisted Garden, Sand Crypts, Cursed City)
 -Adding more search boxes to be able to filter data by location, setup, etc.
 -Move the site to a more reliable host and a better url
+-Add Map Helper autopopulate
 
 Known issues:
-1. Last mouse before auto-travel get wrong location
+1. Last mouse before auto-travel gets wrong location
 2. The free host I am using is not very reliable, and has older mysql/php
 
 Finished Updates (newest first):
+-Fixed some transition mice like warmonger, hotm, and realm ripper. (1.8)
+-Added icon with popup and links (1.8)
+-Added stages to SG, Frox, and Train (1.8)
 -Added stages for: Toxic Spill, Twisted Garden, Cursed City, Furoma Rift and Burroughs Rift (1.7)
 -Fixed auto-update check (1.6)
 -Moved intake server url (1.6)
