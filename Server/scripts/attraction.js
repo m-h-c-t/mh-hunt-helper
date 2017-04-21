@@ -3,9 +3,15 @@ $( function() {
         $("#mouse").val('').focus();
     });
 
-    searchMice('all', addAutocomplete);
+    searchMice('all', firstLoad);
 
     function searchMice(mouse_id, callback) {
+        if (mouse_id !== 'all') {
+            $("#loader").css( "display", "block" );
+            // Every time we search for a mouse (on reload or ajax) set a history of it.
+            window.history.replaceState({}, "MH Hunt Helper", "attraction.php?mouse=" + mouse_id);
+        }
+
         $.ajax({
             url: "searchByMouse.php",
             method: "POST",
@@ -18,11 +24,29 @@ $( function() {
         });
     }
 
+    function firstLoad(mice) {
+        // Check and search for previous mouse (done on reload of whole page)
+        var previous_mouse_id = $("#prev_mouse").val();
+        if (previous_mouse_id) {
+            var previous_mouse_name = '';
+            for (var i = 0; i < mice.length; i++) {
+                if (mice[i].id == previous_mouse_id) {
+                    previous_mouse_name = mice[i].value;
+                    $("#mouse").val(previous_mouse_name);
+                    break;
+                }
+            }
+            searchMice($("#prev_mouse").val(), renderResultsTable);
+        }
+
+        // set autocomplete
+        addAutocomplete(mice);
+    }
+
     function addAutocomplete(mice) {
         $('#mouse').autocomplete({
             source: mice,
             select: function( event, ui ) {
-                $("#loader").css( "display", "block" );
                 searchMice(ui.item.id, renderResultsTable);
             }
         });

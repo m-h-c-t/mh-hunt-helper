@@ -37,6 +37,9 @@ if (!$query->execute()) {
 }
 $row = $query->fetch(PDO::FETCH_ASSOC);
 
+if (!empty($_GET['mouse'])) {
+    print '<input id="prev_mouse" type="hidden" value="' . $_GET['mouse'] . '">';
+}
 
 print '
 
