@@ -23,12 +23,13 @@ if (empty($_POST['mouse_id'])) {
     }
     print json_encode($mice_array);
 } else if (!empty($_POST['mouse_id'])) {
-    $statement = 'SELECT l.name as location, s.name as stage, COUNT(*) as total_hunts, COUNT(m.id) as attracted_hunts
+    $statement = 'SELECT l.name as location, s.name as stage, COUNT(*) as total_hunts, COUNT(m.id) as attracted_hunts, c.name as cheese
                   FROM hunts h
                   INNER JOIN locations l ON h.location_id = l.id
                   LEFT JOIN mice m ON h.mouse_id = ? AND h.mouse_id = m.id
                   LEFT JOIN stages s ON h.stage_id = s.id
-                  GROUP BY h.location_id, h.stage_id
+                  LEFT JOIN cheese c ON h.cheese_id = c.id
+                  GROUP BY h.location_id, h.stage_id, h.cheese_id
                   HAVING attracted_hunts > 0';
     $query = $pdo->prepare($statement);
     if (!$query->execute(array($_POST['mouse_id']))) {

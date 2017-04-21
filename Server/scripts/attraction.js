@@ -29,7 +29,7 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-bordered"><thead><tr><th>Location</th><th>Stage</th><th>Attracted</th><th>Total hunts</th><th>Rate</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-bordered"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Attracted</th><th>Total hunts</th><th>Rate</th></tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {
@@ -37,6 +37,7 @@ $( function() {
             all_stages += stage;
             final_html += '<tr><td>' + row.location +
               '</td><td>' + stage +
+              '</td><td>' + row.cheese +
               '</td><td>' + row.attracted_hunts +
               '</td><td>' + row.total_hunts +
               '</td><td>' + ((row.attracted_hunts/row.total_hunts)*100).toFixed(2) + '%</td></tr>';
@@ -47,7 +48,7 @@ $( function() {
             "paging":   false,
             "searching": false,
             "info": false,
-            "order": [[4, 'desc']],
+            "order": [[5, 'desc']],
             "columnDefs": [
                 {
                     "targets": [ 1 ],

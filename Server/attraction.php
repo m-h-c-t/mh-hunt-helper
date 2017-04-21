@@ -40,15 +40,15 @@ $row = $query->fetch(PDO::FETCH_ASSOC);
 
 print '
 
-    <div class="input-group col-sm-4 col-sm-offset-4">
+    <div class="input-group col-sm-6 col-sm-offset-3">
         <div class="input-group-addon"><strong>Mouse:</strong></div>
-        <input name="mouse" id="mouse" class="form-control input-lg" type="text" placeholder="Type mouse name and select." autofocus>
+        <input name="mouse" id="mouse" class="form-control input-lg" type="text" placeholder="Start typing mouse name and select." autofocus>
         <div id="erase_mouse" class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></div>
     </div>
 <br/>';
 
 //Ajax here
-print '<div id="results"></div>';
+print '<div id="results" class="table-responsive"></div>';
 
 print '<br/><p class="text-center">This is in very early stages of development. Much more to come. <a href="updates.txt">Check out latest updates here</a>.<br/> If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.<br/>Install it on Opera using <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">this</a> and on Firefox using <a href="https://addons.mozilla.org/en-US/firefox/addon/chrome-store-foxified/">this</a>.<br/><a href="https://www.agiletravels.com">Checkout more of my mh tools here.</a>
     <br/><h4>Stats so far</h4>Contributors: ' . $row['users'] . '<br/>Hunts: ' . $row['hunts'] . '<br/>Traps: ' . $row['traps'] . '<br/>Bases: ' . $row['bases'] . '<br/>Charms: ' . $row['charms'] . '<br/>Cheese: ' . $row['cheese'] . '<br/>Mice: ' . $row['mice'] .'<br/>Locations: ' . $row['locations'] .'<br/>Stages: ' . $row['stages'] . '</p>';
