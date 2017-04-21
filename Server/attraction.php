@@ -11,11 +11,17 @@
     <script defer src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script defer src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
     <script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script defer src="attraction.js"></script>
+    <script defer src="/scripts/attraction.js"></script>
 </head>
 <body style="text-align: center;" class="text-center">
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <h1>MouseHunt Attraction Rate</h1>
+        <!-- <p>Tool to help you catch map mice asap.</p> -->
+        </div>
+    </div>
     <div class="container">
-        <h1 class="text-center">Attraction Rate</h1><br/><br/>
 <?php
 
 require "config.php";
@@ -53,7 +59,7 @@ print '<br/><p class="text-center">This is in very early stages of development. 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="attraction.css">
+    <link rel="stylesheet" type="text/css" href="styles/attraction.css">
 </noscript>
 <script>
   var loadDeferredStyles = function() {

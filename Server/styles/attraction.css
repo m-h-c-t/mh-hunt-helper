@@ -3,7 +3,7 @@ body {
 }
 
 .ui-autocomplete-loading {
-    background:url('spin.gif') no-repeat right center;
+    background:url('/images/spin.gif') no-repeat right center;
 }
 
 .loader {
@@ -31,4 +31,10 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.jumbotron {
+    background: url("/images/croppedcat.jpg") center no-repeat;
+    text-shadow: 0 0 1em black;
+    color: white;
 }
