@@ -1,13 +1,19 @@
 Next things I'm planning to work on (as time permits):
 -Adding more search boxes to be able to filter data by location, setup, etc.
 -Move the site to a more reliable host and a better url
--Add Map Helper autopopulate
+-Add Map Helper autopopulate (and maybe Tsitu's map tool autopopulate)
+-Migrate to Map Helper server/db and 
 
 Known issues:
-1. Last mouse before auto-travel gets wrong location
-2. The free host I am using is not very reliable, and has older mysql/php
+1. Last mouse before auto-travel gets wrong location (example riptide)
+2. The free host I am using is not very reliable
+3. Auto disarming charms and cheese, don't get recorded for the hunt.
 
 Finished Updates (newest first):
+-Created per user hunts display page with CSV and XLSX export
+-Fixed data missing stages
+-Fixed charms recording
+-Added cheese to attraction rate page
 -Fixed some transition mice like warmonger, hotm, and realm ripper. (1.8)
 -Added icon with popup and links (1.8)
 -Added stages to SG, Frox, and Train (1.8)

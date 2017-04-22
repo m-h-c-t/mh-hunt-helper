@@ -1,6 +1,8 @@
 $( function() {
     $("#erase_mouse").click(function () {
+        $("#results").html('');
         $("#mouse").val('').focus();
+        window.history.replaceState({}, "MH Hunt Helper", "attraction.php");
     });
 
     searchMice('all', firstLoad);

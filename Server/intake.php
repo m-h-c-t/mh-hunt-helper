@@ -108,10 +108,10 @@ if (!empty($_POST['entry_id']) &&
             if (!$item['optional'])
                 continue;
 
-            if (!empty($item['name']['id'])) {
+            if (!empty($_POST[$item['name']]['id'])) {
                 $fields .= ', ' . $item['name'] . "_id";
                 $values .= ', :' . $item['name'] . "_id";
-                $bindings[$item['name'] . "_id"] = $item['name']['id'];
+                $bindings[$item['name'] . "_id"] = $_POST[$item['name']]['id'];
             }
         }
 
@@ -132,7 +132,7 @@ if (!empty($_POST['entry_id']) &&
             $values .= ', :shield';
             $bindings['shield'] = 1;
         }
-        
+
         // Extension Version
         if (!empty($_POST['extension_version'])) {
             $fields .= ', extension_version';
