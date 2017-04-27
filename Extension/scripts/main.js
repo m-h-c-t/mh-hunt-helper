@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    var db_url = "https://mhhh.000webhostapp.com/intake.php";
+    var db_url = "https://mhhunthelper.agiletravels.com/intake.php";
 
     if (!window.jQuery) {
         console.log("MHHH: Can't find jQuery, exiting.");
@@ -41,7 +41,7 @@
                 message = fixTransitionMice(message, response, journal);
                 message = getStage(message, response, journal);
 
-                if (!message) {
+                if (!message || !message.location || !message.location.name) {
                     window.console.log("MHHH: Missing Info (will try better next hunt).");
                     return;
                 }
@@ -131,8 +131,8 @@
             message.location.name = "Forbidden Grove";
             message.location.id = 11;
         } else if (message.mouse === "Riptide" && message.location.name === "Jungle of Dread") {
-            message.location.name = "Balack's Cove";
-            message.location.id = 2;
+            // Can't determine Balack's Cove stage
+            message = "";
         }
         return message;
     }
@@ -163,9 +163,6 @@
                 break;
             case "Sunken City":
                 message = getSunkenCityStage(message, response, journal);
-                break;
-            case "Fungal Cavern":
-                message = getFungalCavernStage(message, response, journal);
                 break;
             case "Zokor":
                 message = getZokorStage(message, response, journal);
@@ -216,7 +213,7 @@
 
     function getFieryWarpathStage(message, response, journal) {
         if (message.mouse === "Warmonger") {
-            message.stage = "Wave 5";
+            message.stage = "Wave 4";
         } else {
             message.stage = "Wave " + response.user.viewing_atts.desert_warpath.wave;
         }
@@ -342,19 +339,6 @@
             message.stage = "25+km";
         }
 
-        return message;
-    }
-
-    function getFungalCavernStage(message, response, journal) {
-        if (!response.user.bait_name) {
-            return message;
-        }
-
-        if ($.inArray(response.user.bait_name, ["Glowing Gruyere Cheese", "Mineral Cheese", "Gemstone Cheese", "Diamond Cheese"]) === -1) {
-            message.stage = "Misc Cheese";
-        } else {
-            message.stage = response.user.bait_name.replace(/\ cheese/i, '');
-        }
         return message;
     }
 

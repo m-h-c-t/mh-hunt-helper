@@ -1,8 +1,6 @@
 Next things I'm planning to work on (as time permits):
 -Adding more search boxes to be able to filter data by location, setup, etc.
--Move the site to a more reliable host and a better url
 -Add Map Helper autopopulate (and maybe Tsitu's map tool autopopulate)
--Migrate to Map Helper server/db and 
 
 Known issues:
 1. Last mouse before auto-travel gets wrong location (example riptide)
@@ -10,6 +8,11 @@ Known issues:
 3. Auto disarming charms and cheese, don't get recorded for the hunt.
 
 Finished Updates (newest first):
+-Removed FC stages (it's cheese based) (1.9)
+-Fixed Warmonger stage to be wave 4 (there is not wave 5, silly me) (1.9)
+-Moved to main host server (should be a bit more stable now) (1.9)
+-Removed riptide hunts for now (no way to tell stage) (1.9)
+-Started integration with MH Map Helper (1.9)
 -Created per user hunts display page with CSV and XLSX export
 -Fixed data missing stages
 -Fixed charms recording
