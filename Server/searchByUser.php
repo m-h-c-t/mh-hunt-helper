@@ -53,7 +53,7 @@ $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 $query_parameters = array();
 $query_string = '
-    SELECT timestamp, l.name as location, s.name as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.attracted, h.caught, m.name as mouse
+    SELECT timestamp, l.name as location, s.name as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.attracted, h.caught, m.name as mouse, c.name as cheese
     FROM hunts h
     LEFT JOIN locations l on h.location_id = l.id
     LEFT JOIN stages s on h.stage_id = s.id
@@ -89,6 +89,7 @@ print '<div class="table-responsive"><table id="results_table" class="table tabl
 <th>Trap</th>
 <th>Base</th>
 <th>Charm</th>
+<th>Cheese</th>
 <th>Shield</th>
 <th>Attracted</th>
 <th>Caught</th>
@@ -106,6 +107,7 @@ foreach ($results as $row) {
     print "<td>$row[trap]</td>";
     print "<td>$row[base]</td>";
     print "<td>$row[charm]</td>";
+    print "<td>$row[cheese]</td>";
     print "<td>" . ($row['shield'] ? "YES" : "NO" ) . "</td>";
     print "<td>" . ($row['attracted'] ? "YES" : "NO" ) . "</td>";
     print "<td>" . ($row['caught'] ? "YES" : "NO" ) . "</td>";
