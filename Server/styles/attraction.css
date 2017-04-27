@@ -37,4 +37,14 @@ body {
     background: url("/images/croppedcat.jpg") center no-repeat;
     text-shadow: 0 0 1em black;
     color: white;
+    position: relative;
+}
+
+.jumbotron a, .jumbotron a:hover {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 1em;
+    color: white;
+    text-decoration: none;
 }

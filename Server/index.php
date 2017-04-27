@@ -1,13 +1,29 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <script defer src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script defer src="/scripts/attraction.js"></script>
+</head>
+<body style="text-align: center;" class="text-center">
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="position:relative;">
+        <div class="container-fluid">
+            <h1>Jack's MH Attraction Rate</h1>
+        <!-- <p>Tool to help you catch map mice asap.</p> -->
+            <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
+        </div>
+    </div>
+    <div class="container">
 <?php
-
-if (empty($_POST['location']['name'])) {
-    echo "MHHH: Missing Info (will try better next hunt!)";
-    return;
-}
-
-header('Access-Control-Allow-Origin: https://www.mousehuntgame.com');
-
-//echo 'Current PHP version: ' . phpversion(); return;
 
 require "config.php";
 
@@ -15,132 +31,52 @@ require "config.php";
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-// id and value intake
-$id_value_intake = array(
-    ["name" => "location", "table_name" => "locations", "optional" => false],
-    ["name" => "trap",     "table_name" => "traps",     "optional" => false],
-    ["name" => "base",     "table_name" => "bases",     "optional" => false],
-    ["name" => "charm",    "table_name" => "charms",    "optional" => true],
-    ["name" => "cheese",   "table_name" => "cheese",    "optional" => false]
-);
-foreach($id_value_intake as $item) {
-    if (!empty($_POST[$item['name']]['name']) && !empty($_POST[$item['name']]['id'])) {
-        $query = $pdo->prepare('SELECT count(*) FROM ' . $item['table_name'] . ' WHERE id = ?');
-        if (!$query->execute(array($_POST[$item['name']]['id']))) {
-            echo "Select " . $item['name'] . " failed";
-            return;
-        }
+$query = $pdo->prepare('SELECT COUNT(*) as hunts, COUNT(DISTINCT user_id) as users, COUNT(DISTINCT mouse_id) as mice, COUNT(DISTINCT location_id) as locations, COUNT(DISTINCT stage_id) as stages, COUNT(DISTINCT trap_id) as traps, COUNT(DISTINCT cheese_id) as cheese, COUNT(DISTINCT base_id) as bases, COUNT(DISTINCT charm_id) as charms FROM hunts');
+if (!$query->execute()) {
+    echo 'Select all hunts and users failed';
+    return;
+}
+$row = $query->fetch(PDO::FETCH_ASSOC);
 
-        if (!$query->fetchColumn()) {
-            $query = $pdo->prepare('INSERT INTO ' . $item['table_name'] . ' (id, name) VALUES (?, ?)');
-            if (!$query->execute(array($_POST[$item['name']]['id'], $_POST[$item['name']]['name']))) {
-                echo "Insert " . $item['name'] . " failed";
-                return;
-            }
-        }
-    }
+if (!empty($_GET['mouse'])) {
+    print '<input id="prev_mouse" type="hidden" value="' . $_GET['mouse'] . '">';
 }
 
-// only value intake
-$value_intake = array(
-    ["name" => "mouse", "table_name" => "mice",   "optional" => true],
-    ["name" => "stage", "table_name" => "stages", "optional" => true]
-);
+print '
 
-foreach($value_intake as $item) {
-    ${$item['name'] . "_id"} = 0;
-    if (!empty($_POST[$item['name']])) {
-        $query = $pdo->prepare('SELECT id FROM ' . $item['table_name'] . ' WHERE name LIKE ?');
-        if (!$query->execute(array($_POST[$item['name']]))) {
-            echo "Select " . $item['name'] . " failed";
-            return;
-        }
+    <div class="input-group col-sm-6 col-sm-offset-3">
+        <div class="input-group-addon"><strong>Mouse:</strong></div>
+        <input name="mouse" id="mouse" class="form-control input-lg" type="text" placeholder="Start typing mouse name and select." autofocus>
+        <div id="erase_mouse" class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></div>
+    </div>
+<br/>';
 
-        ${$item['name'] . "_id"} = $query->fetchColumn();
+//Ajax here
+print '<div id="results" class="table-responsive"></div>';
 
-        if (!${$item['name'] . "_id"}) {
-            $query = $pdo->prepare('INSERT INTO ' . $item['table_name'] . ' (name) VALUES (?)');
-            if (!$query->execute(array($_POST[$item['name']]))) {
-                echo "Insert " . $item['name'] . " failed";
-                return;
-            }
-            ${$item['name'] . "_id"} = $pdo->lastInsertId();
-        }
-    }
-}
-
-if (!empty($_POST['entry_id']) &&
-    !empty($_POST['entry_timestamp']) &&
-    !empty($_POST['user_id']) &&
-    !empty($_POST['location']['id']) &&
-    !empty($_POST['trap']['id']) &&
-    !empty($_POST['base']['id']) &&
-    !empty($_POST['cheese']['id']) &&
-    array_key_exists('attracted', $_POST) &&
-    array_key_exists('caught', $_POST)
-    ) {
-
-    $query = $pdo->prepare('SELECT count(*) FROM hunts WHERE user_id = :user_id AND entry_id = :entry_id AND timestamp = :entry_timestamp');
-    if (!$query->execute(array('user_id' => $_POST['user_id'], 'entry_id' => $_POST['entry_id'], 'entry_timestamp' => $_POST['entry_timestamp']))) {
-        echo "Select hunt failed";
-        return;
-    }
-
-    if (!$query->fetchColumn()) {
-        $fields = 'user_id, entry_id, timestamp, location_id, trap_id, base_id, cheese_id, caught, attracted';
-        $values = ':user_id, :entry_id, :entry_timestamp, :location_id, :trap_id, :base_id, :cheese_id, :caught, :attracted';
-        $bindings = array(
-            'user_id' => $_POST['user_id'],
-            'entry_id' => $_POST['entry_id'],
-            'entry_timestamp' => $_POST['entry_timestamp'],
-            'location_id' => $_POST['location']['id'],
-            'trap_id' => $_POST['trap']['id'],
-            'base_id' => $_POST['base']['id'],
-            'cheese_id' => $_POST['cheese']['id'],
-            'caught' => $_POST['caught'],
-            'attracted' => $_POST['attracted']
-            );
-
-
-        // Optionals
-
-        foreach ($id_value_intake as $item) {
-            if (!$item['optional'])
-                continue;
-
-            if (!empty($item['name']['id'])) {
-                $fields .= ', ' . $item['name'] . "_id";
-                $values .= ', :' . $item['name'] . "_id";
-                $bindings[$item['name'] . "_id"] = $item['name']['id'];
-            }
-        }
-
-        foreach ($value_intake as $item) {
-            if (!$item['optional'])
-                continue;
-
-            if (!empty(${$item['name'] . "_id"})) {
-                $fields .= ', ' . $item['name'] . "_id";
-                $values .= ', :' . $item['name'] . "_id";
-                $bindings[$item['name'] . "_id"] = ${$item['name'] . "_id"};
-            }
-        }
-
-        // Shield
-        if (!empty($_POST['shield'])) {
-            $fields .= ', shield';
-            $values .= ', :shield';
-            $bindings['shield'] = 1;
-        }
-
-        $query = $pdo->prepare("INSERT INTO hunts ($fields) VALUES ($values)");
-        if (!$query->execute($bindings)) {
-            echo "Insert hunt failed";
-            return;
-        }
-    }
-}
-
-echo "MHHH: Thanks for the hunt info!";
-return;
+print '<br/><p class="text-center">This is in very early stages of development. Much more to come. <a href="updates.txt">Check out latest updates here</a>.<br/> If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.<br/>Install it on Opera using <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">this</a> and on Firefox using <a href="https://addons.mozilla.org/en-US/firefox/addon/chrome-store-foxified/">this</a>.
+    <br/><h4>Stats so far</h4>Contributors: ' . $row['users'] . '<br/>Hunts: ' . $row['hunts'] . '<br/>Traps: ' . $row['traps'] . '<br/>Bases: ' . $row['bases'] . '<br/>Charms: ' . $row['charms'] . '<br/>Cheese: ' . $row['cheese'] . '<br/>Mice: ' . $row['mice'] .'<br/>Locations: ' . $row['locations'] .'<br/>Stages: ' . $row['stages'] . '</p>';
 ?>
+</div>
+<div id="loader" class="loader"></div>
+<noscript id="deferred-styles">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/attraction.css">
+</noscript>
+<script>
+  var loadDeferredStyles = function() {
+    var addStylesNode = document.getElementById("deferred-styles");
+    var replacement = document.createElement("div");
+    replacement.innerHTML = addStylesNode.textContent;
+    document.body.appendChild(replacement)
+    addStylesNode.parentElement.removeChild(addStylesNode);
+  };
+  var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+      webkitRequestAnimationFrame || msRequestAnimationFrame;
+  if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+  else window.addEventListener('load', loadDeferredStyles);
+</script>
+</body>
+</html>

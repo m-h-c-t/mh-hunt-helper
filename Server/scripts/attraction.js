@@ -2,7 +2,7 @@ $( function() {
     $("#erase_mouse").click(function () {
         $("#results").html('');
         $("#mouse").val('').focus();
-        window.history.replaceState({}, "MH Hunt Helper", "attraction.php");
+        window.history.replaceState({}, "MH Hunt Helper", "");
     });
 
     searchMice('all', firstLoad);
@@ -11,7 +11,7 @@ $( function() {
         if (mouse_id !== 'all') {
             $("#loader").css( "display", "block" );
             // Every time we search for a mouse (on reload or ajax) set a history of it.
-            window.history.replaceState({}, "MH Hunt Helper", "attraction.php?mouse=" + mouse_id);
+            window.history.replaceState({}, "MH Hunt Helper", "?mouse=" + mouse_id);
         }
 
         $.ajax({
