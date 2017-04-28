@@ -16,14 +16,13 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/attraction.css">
 </head>
 <body style="text-align: center;" class="text-center">
  <!-- Jumbotron -->
-    <div class="jumbotron" style='background: url("/images/croppedcat.jpg") center no-repeat; text-shadow: 0 0 1em black; color: white;'>
-        <div class="container-fluid">
-            <h1>MouseHunt User History</h1>
-        <!-- <p>Tool to help you catch map mice asap.</p> -->
-        </div>
+    <div class="jumbotron">
+        <h1>MouseHunt User History</h1>
+        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
     </div>
     <div class="container-fluid">
     I might disable this if it takes up too many resources.
