@@ -8,6 +8,9 @@ Known issues:
 3. Auto disarming charms and cheese, don't get recorded for the hunt.
 
 Finished Updates (newest first):
+-Updated databases to integrate better with map helper
+-Changed names of stages for: Iceberg, Labby, Zokor, Train, and LG (1.9.1)
+-Added exception for Icewing (1.9.1)
 -Removed FC stages (it's cheese based) (1.9)
 -Fixed Warmonger stage to be wave 4 (there is not wave 5, silly me) (1.9)
 -Moved to main host server (should be a bit more stable now) (1.9)

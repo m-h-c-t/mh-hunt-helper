@@ -133,6 +133,10 @@
         } else if (message.mouse === "Riptide" && message.location.name === "Jungle of Dread") {
             // Can't determine Balack's Cove stage
             message = "";
+        } else if (message.mouse === "Icewing" && message.location.name === "Slushy Shoreline") {
+            message.location.name = "Iceberg";
+            message.location.id = 40;
+            message.stage = "Iceberg";
         }
         return message;
     }
@@ -204,6 +208,7 @@
             message.stage = response.user.quests.QuestLabyrinth.hallway_name;
             // Remove first word (like Short)
             message.stage = message.stage.substr(message.stage.indexOf(" ") + 1);
+            message.stage = message.stage.replace(/\ hallway/i, '');
         } else {
             // Not recording last hunt of a hallway and intersections at this time
             return;
@@ -255,7 +260,7 @@
         if (response.user.quests.QuestLivingGarden.minigame.bucket_state) {
             var bucket = response.user.quests.QuestLivingGarden.minigame.bucket_state;
             if (bucket === "filling") {
-                message.stage = "Not pouring";
+                message.stage = "Not Pouring";
             } else {
                 message.stage = "Pouring";
             }
@@ -285,37 +290,43 @@
         if (response.user.quests.QuestLivingGarden.minigame.vials_state === "dumped") {
             message.stage = "Pouring";
         } else {
-            message.stage = "Not pouring";
+            message.stage = "Not Pouring";
         }
         return message;
     }
 
     function getIcebergStage(message, response, journal) {
-        if (response.user.quests.QuestIceberg.current_phase) {
-            message.stage = response.user.quests.QuestIceberg.current_phase;
+        if (!response.user.quests.QuestIceberg.current_phase) {
+            return '';
         }
 
         //switch on current depth after checking what phase has for generals
-        // switch (user.quests.QuestIceberg.current_phase) {
-            // case "Treacherous Tunnels";
-                // message.stage = "0-300ft";
-                // break;
-            // case "Brutal Bulwark";
-                // message.stage = "301-600ft";
-                // break;
-            // case "Bombing Run";
-                // message.stage = "601-1600ft";
-                // break;
-            // case "The Mad Depths";
-                // message.stage = "1601-1800ft";
-                // break;
-            // case "Icewing's Lair";
-                // message.stage = "1801-2000ft";
-                // break;
-            // default:
-                // message.stage = "2000ft";
-                // break;
-        // }
+        switch (response.user.quests.QuestIceberg.current_phase) {
+            case "Treacherous Tunnels":
+                message.stage = "0-300ft";
+                break;
+            case "Brutal Bulwark":
+                message.stage = "301-600ft";
+                break;
+            case "Bombing Run":
+                message.stage = "601-1600ft";
+                break;
+            case "The Mad Depths":
+                message.stage = "1601-1800ft";
+                break;
+            case "Icewing's Lair":
+                message.stage = "1800ft";
+                break;
+            case "Hidden Depths":
+                message.stage = "1801-2000ft";
+                break;
+            case "The Deep Lair":
+                message.stage = "2000ft";
+                break;
+            case "General":
+                message.stage = "Generals";
+                break;
+        }
         return message;
     }
 
@@ -347,54 +358,32 @@
             return message;
         }
 
-        message.stage = response.user.quests.QuestAncientCity.district_name;
+        var zokor_stages = {
+            "Garden":     "Farming 0+",
+            "Study":      "Scholar 15+",
+            "Shrine":     "Fealty 15+",
+            "Outskirts":  "Tech 15+",
+            "Room":       "Treasure 15+",
+            "Minotaur":   "Lair - Each 30+",
+            "Temple":     "Fealty 50+",
+            "Auditorium": "Scholar 50+",
+            "Farmhouse":  "Farming 50+",
+            "Centre":     "Tech 50+",
+            "Vault":      "Treasure 50+",
+            "Library":    "Scholar 80+",
+            "Manaforge":  "Tech 80+",
+            "Sanctum":    "Fealty 80+"
+        };
 
+        var zokor_district = response.user.quests.QuestAncientCity.district_name;
 
-        // Redo it in plain wording like Tech 50+
-        // switch (response.user.quests.QuestAncientCity.district_name) {
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-            // case "":
-                // message.stage = "";
-                // break;
-        // }
+        $.each(zokor_stages, function(key, value) {
+            if (zokor_district.match('/' + key + '/i')) {
+                message.stage = value;
+                return false;
+            }
+        });
+
         return message;
     }
 
@@ -470,7 +459,17 @@
 
     function getTrainStage(message, response, journal) {
         if (response.user.quests.QuestTrainStation.on_train) {
-            message.stage = response.user.quests.QuestTrainStation.phase_name;
+            switch (response.user.quests.QuestTrainStation.phase_name) {
+                case "Supply Depot":
+                    message.stage = "1st Phase";
+                    break;
+                case "Raider River":
+                    message.stage = "2nd Phase";
+                    break;
+                case "Daredevil Canyon":
+                    message.stage = "3rd Phase";
+                    break;
+            }
         } else {
             message.stage = "Station";
         }
