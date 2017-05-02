@@ -52,6 +52,11 @@ $( function() {
                 searchMice(ui.item.id, renderResultsTable);
             }
         });
+
+        // Fix for double click on IOS
+        if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+            $('#mouse').autocomplete('widget').off('mouseenter');
+        }
     }
 
     function renderResultsTable(data) {
