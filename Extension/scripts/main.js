@@ -130,6 +130,7 @@
         if (message.mouse === "Realm Ripper" && message.location.name === "Acolyte Realm") {
             message.location.name = "Forbidden Grove";
             message.location.id = 11;
+            message.stage = "Closed";
         } else if (message.mouse === "Riptide" && message.location.name === "Jungle of Dread") {
             // Can't determine Balack's Cove stage
             message = "";
@@ -198,6 +199,9 @@
             // case "Whisker Woods Rift":
                 // message = get---Stage(message, response, journal);
                 // break;
+            case "Forbidden Grove":
+                message = getFobiddenGroveStage(message, response, journal);
+                break;
         }
 
         return message;
@@ -377,8 +381,10 @@
 
         var zokor_district = response.user.quests.QuestAncientCity.district_name;
 
+        var search_string;
         $.each(zokor_stages, function(key, value) {
-            if (zokor_district.match('/' + key + '/i')) {
+            search_string = new RegExp(key, "i");
+            if (zokor_district.match(search_string)) {
                 message.stage = value;
                 return false;
             }
@@ -503,6 +509,16 @@
                     break;
             }
         }
+        return message;
+    }
+
+    function getFobiddenGroveStage(message, response, journal) {
+        if (message.mouse === "Realm Ripper") {
+            message.stage = "Closed";
+        } else {
+            message.stage = "Open";
+        }
+
         return message;
     }
 
