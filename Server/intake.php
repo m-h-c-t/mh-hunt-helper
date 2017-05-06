@@ -1,11 +1,15 @@
 <?php
 
+$http_origin = $_SERVER['HTTP_ORIGIN'];
+
+if ($http_origin == "https://www.mousehuntgame.com" || $http_origin == "http://www.mousehuntgame.com") {
+    header("Access-Control-Allow-Origin: $http_origin");
+}
+
 if (empty($_POST['location']['name'])) {
     echo "MHHH: Missing Info (will try better next hunt!)";
     return;
 }
-
-header('Access-Control-Allow-Origin: https://www.mousehuntgame.com');
 
 //echo 'Current PHP version: ' . phpversion(); return;
 
