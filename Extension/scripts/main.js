@@ -17,13 +17,12 @@
      //   /* Response body */ xhr.responseText
      //   /* Request body  */ ajaxOptions.data
 
-        if (ajaxOptions.url === "https://www.mousehuntgame.com/managers/ajax/turns/activeturn.php") {
+        if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/turns/activeturn.php") != -1) {
             var response = JSON.parse(xhr.responseText);
             var message = {};
             var journal = {};
 
             if (response.active_turn && response.success && response.journal_markup != null && response.journal_markup.length > 0) {
-
                 for (var i=0; i < response.journal_markup.length; i++) {
                     if (response.journal_markup[i].render_data.css_class.match(/(catchfailure|catchsuccess|attractionfailure)/) &&
                         response.journal_markup[i].render_data.css_class.match(/active/)) {

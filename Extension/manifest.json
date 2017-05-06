@@ -3,7 +3,7 @@
     "author": "Jack Smith",
     "name": "MH Hunt Helper",
     "description": "This extension tracks mousehunt hunts.",
-    "version": "1.9.2",
+    "version": "1.9.3",
     "icons": {
         "16": "images/icon16.png",
         "48": "images/icon48.png",
@@ -15,7 +15,7 @@
     },
 
     "content_scripts": [{
-        "matches": ["https://www.mousehuntgame.com/*"],
+        "matches": ["*://www.mousehuntgame.com/*"],
         "js": ["scripts/inject.js"]
     }],
 
