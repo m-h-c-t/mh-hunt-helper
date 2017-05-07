@@ -1,8 +1,9 @@
 Next things I'm planning to work on (as time permits):
 -Adding more search boxes to be able to filter data by location, setup, etc.
--Add Map Helper autopopulate to extension (and maybe Tsitu's map tool autopopulate)
+-Add Map Helper autopopulate (and maybe Tsitu's map tool autopopulate)
 
 Finished Updates (newest first):
+-Added FB support (1.10.0)
 -Added http support (1.9.3)
 -Added FG stages (1.9.2)
 -Fixed Zokor stages (1.9.2)
