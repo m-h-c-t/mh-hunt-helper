@@ -55,13 +55,16 @@ WHERE h.mouse_id IS NOT NULL AND s.id IS NULL AND l.id NOT IN (44, 57); #not in 
 #SELECT count(*)
 DELETE s1
 FROM mhmaphelper.setups s1
-INNER JOIN mhmaphelper.setups s2 ON s1.mouse_id = s2.mouse_id AND s1.location_id = s2.location_id AND s2.cheese_id IN (76,26)
+INNER JOIN mhmaphelper.setups s2 ON s1.mouse_id = s2.mouse_id AND s1.location_id = s2.location_id AND s2.cheese_id IN (76,26) AND s1.stage_id <=> s2.stage_id
 WHERE s1.cheese_id = 1;
+
+# delete all previous ar
+UPDATE mhmaphelper.setups s SET s.ar = NULL;
 
 # update ar with stages
 UPDATE mhmaphelper.setups s2
 INNER JOIN (
-SELECT ROUND(COUNT(DISTINCT h2.timestamp) / COUNT(DISTINCT(h.timestamp)) * 10000) AS ar, s.id
+SELECT ROUND(COUNT(DISTINCT h2.timestamp) / COUNT(DISTINCT h.timestamp) * 10000) AS ar, s.id
 FROM mhmaphelper.setups s
 INNER JOIN mhmaphelper.locations l ON s.location_id = l.id
 INNER JOIN mhmaphelper.cheeses c ON s.cheese_id = c.id
@@ -76,7 +79,7 @@ HAVING COUNT(DISTINCT h2.timestamp) > 0 AND COUNT(DISTINCT h.timestamp) > 10
 # update ar without stages
 UPDATE mhmaphelper.setups s2
 INNER JOIN (
-SELECT ROUND(COUNT(DISTINCT h2.timestamp) / COUNT(DISTINCT(h.timestamp)) * 10000) AS ar, s.id, s.stage_id
+SELECT ROUND(COUNT(DISTINCT h2.timestamp) / COUNT(DISTINCT h.timestamp) * 10000) AS ar, s.id, s.stage_id
 FROM mhmaphelper.setups s
 INNER JOIN mhmaphelper.locations l ON s.location_id = l.id
 INNER JOIN mhmaphelper.cheeses c ON s.cheese_id = c.id
