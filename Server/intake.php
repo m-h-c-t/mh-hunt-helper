@@ -1,42 +1,6 @@
 <?php
 
-$http_origin = $_SERVER['HTTP_ORIGIN'];
-
-if ($http_origin !== "https://www.mousehuntgame.com" && $http_origin !== "http://www.mousehuntgame.com") {
-    error_log("Origin didn't match, requests origin was: " . $http_origin);
-    thanks();
-}
-header("Access-Control-Allow-Origin: $http_origin");
-
-if (abs($_SERVER['REQUEST_TIME'] - $_POST['entry_timestamp']) > 5) {
-    error_log("Time didn't match");
-    thanks();
-}
-
-if (
-    empty($_POST['location']['name']) ||
-    empty($_POST['trap']['name'])     ||
-    empty($_POST['base']['name'])     ||
-    empty($_POST['cheese']['name'])   ||
-    empty($_POST['entry_id'])         || !is_numeric($_POST['entry_id']) ||
-    empty($_POST['entry_timestamp'])  || !is_numeric($_POST['entry_id']) ||
-    empty($_POST['user_id'])          || !is_numeric($_POST['user_id']) ||
-    empty($_POST['location']['id'])   || !is_numeric($_POST['location']['id']) ||
-    empty($_POST['trap']['id'])       || !is_numeric($_POST['trap']['id']) ||
-    empty($_POST['base']['id'])       || !is_numeric($_POST['base']['id']) ||
-    empty($_POST['cheese']['id'])     || !is_numeric($_POST['cheese']['id']) ||
-    !array_key_exists('attracted', $_POST) ||
-    !array_key_exists('caught', $_POST)
-    ) {
-    error_log("One of the fields was missing");
-    thanks();
-}
-
-require "config.php";
-
-// PDO
-$pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-$pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+require "configs.php";
 
 // id and value intake
 $id_value_intake = array(
@@ -92,7 +56,10 @@ foreach($value_intake as $item) {
     }
 }
 
-
+if (empty($_POST['cheese']['name']) || empty($_POST['cheese']['id']) || !is_numeric($_POST['cheese']['id'])) {
+    error_log('Cheese missing');
+    thanks();
+}
 
 $query = $pdo->prepare('SELECT count(*) FROM hunts WHERE user_id = :user_id AND entry_id = :entry_id AND timestamp = :entry_timestamp');
 if (!$query->execute(array('user_id' => $_POST['user_id'], 'entry_id' => $_POST['entry_id'], 'entry_timestamp' => $_POST['entry_timestamp']))) {
