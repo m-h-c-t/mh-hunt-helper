@@ -29,3 +29,12 @@ chrome.webRequest.onCompleted.addListener(
     { urls: ["*://www.mousehuntgame.com/*"] },
     ["responseHeaders"]
 );
+
+// Check whether new version is installed
+chrome.runtime.onInstalled.addListener( function(details) {
+    chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
+        if ( tabs.length > 0 ) {
+            alert("Woot! New version of Jack's MH extension has been installed! Please refresh your Mousehunt page.");
+        }
+    });
+});

@@ -1,11 +1,12 @@
 function openPopupLink(website) {
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-        var needle = new RegExp('mousehuntgame\.com|apps\.facebook\.com\/mousehunt', 'i');
-        if (tabs[0].url.search(needle) == -1) {
-            alert("Please navigate to MouseHunt page first.");
-            return;
+    chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
+        if ( tabs.length > 0 ) {
+            chrome.tabs.update(tabs[0].id, {'active': true});
+            chrome.tabs.sendMessage(tabs[0].id, {link: website}, function (response) {});
         }
-        chrome.tabs.sendMessage(tabs[0].id, {link: website}, function (response) {});
+        else {
+            alert("Please navigate to MouseHunt page first.");
+        }
     });
 }
 

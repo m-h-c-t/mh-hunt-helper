@@ -24,7 +24,6 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     if (request.link === "mhmh" || request.link === "tsitu") {
         openedMapAlready = false;
         userClickedLink = request.link;
-        console.log('inject ran');
         if (null !== document.querySelector("div.treasureMapPopupContainer.hasMap")) {
             mice = getMapMice();
             openMapToolWindow(request.link, mice);
