@@ -389,6 +389,10 @@
             }
         });
 
+        if (null === message.stage) {
+            message.stage = zokor_district;
+        }
+
         return message;
     }
 
