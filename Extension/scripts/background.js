@@ -17,24 +17,13 @@ window.setInterval(function() {
     });
 }, time_interval);
 
-// Send out a message when map overlay has been opened
-chrome.webRequest.onCompleted.addListener(
-    function(details){
-        if (details.url.search('relichunter.php') !== -1) {
-            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, {mapOpened: true}, function (response) {});
-            });
-        }
-    },
-    { urls: ["*://www.mousehuntgame.com/*"] },
-    ["responseHeaders"]
-);
-
-// Check whether new version is installed
+// Refreshes mh pages when new version is installed
 chrome.runtime.onInstalled.addListener( function(details) {
     chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
         if ( tabs.length > 0 ) {
-            alert("Woot! New version of Jack's MH extension has been installed! Please refresh your Mousehunt page.");
+            for(i = 0; i<tabs.length; i++) {
+                chrome.tabs.reload(tabs[i].id);
+            }
         }
     });
 });

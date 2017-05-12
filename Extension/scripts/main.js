@@ -11,6 +11,62 @@
     }
     var mhhh_version = $("#mhhh_version").val();
 
+    // Listening for calls
+    window.addEventListener('message', function(ev){
+        if (null === ev.data.jacksmessage) {
+            return;
+        }
+        if (typeof user.user_id === 'undefined') {
+            alert('Please make sure you are logged in into MH.');
+            return;
+        }
+        if (ev.data.jacksmessage === 'userhistory') {
+            window.open('https://mhhunthelper.agiletravels.com/searchByUser.php?user=' + user.user_id);
+        }
+        else if (ev.data.jacksmessage === 'mhmh' || ev.data.jacksmessage === 'tsitu') {
+            openMapMiceSolver(ev.data.jacksmessage);
+        }
+    }, false);
+
+    // Get map mice
+    function openMapMiceSolver(solver) {
+        var url = '';
+        var glue = '';
+        if (solver === 'mhmh') {
+            url = 'https://mhmaphelper.agiletravels.com/mice/';
+            glue = '+';
+        } else if (solver === 'tsitu') {
+            url = 'https://tsitu.github.io/MH-Tools/map.html?mice=';
+            glue = '/';
+        } else {
+            return;
+        }
+
+        var new_window = window.open('');
+        var payload = {view_state: "hasMap", action: "info", uh: user.unique_hash, last_read_journal_entry_id: lastReadJournalEntryId};
+        $.post('https://www.mousehuntgame.com/managers/ajax/users/relichunter.php', payload, null, 'json')
+            .done(function (data) {
+                if (data) {
+                    if (typeof data.treasure_map === 'undefined') {
+                        alert('Please make sure you are logged in into MH and are currently member of a treasure map.');
+                        return;
+                    }
+                    var mice = [];
+                    $.each(data.treasure_map.groups, function(key, group) {
+                        if (null !== group.is_uncaught) {
+                            $.each(group.mice, function(key, mouse) {
+                                mice.push(mouse.name);
+                            });
+                        }
+                    });
+                    url += encodeURI(mice.join(glue));
+                    new_window.location = url;
+                }
+            });
+    }
+
+
+    // Listening for successful hunt
     $(document).ajaxSuccess(function (event, xhr, ajaxOptions) {
      //   /* Method        */ ajaxOptions.type
      //   /* URL           */ ajaxOptions.url

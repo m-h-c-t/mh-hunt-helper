@@ -3,6 +3,8 @@ Next things I'm planning to work on (as time permits):
 -Add Map Helper autopopulate (and maybe Tsitu's map tool autopopulate)
 
 Finished Updates (newest first):
+-Updated auto-population to be more reliable and simpler (1.11.1)
+-Added a link to user hunt history (1.11.1)
 -Added reminder to refresh mh page with new version of extension is installed (1.11.0)
 -Added auto-navigate to mh tab on auto-pop link click (1.11.0)
 -Added auto-population for two map solvers (1.11.0)

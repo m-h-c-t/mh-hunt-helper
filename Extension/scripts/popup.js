@@ -11,11 +11,10 @@ function openPopupLink(website) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('mhmh').addEventListener('click', function() {
-        openPopupLink('mhmh');
-    });
-
-    document.getElementById('tsitu').addEventListener('click', function() {
-        openPopupLink('tsitu');
+    var buttons = ['mhmh', 'tsitu', 'userhistory'];
+    buttons.forEach(function(id) {
+        document.getElementById(id).addEventListener('click', function() {
+            openPopupLink(id);
+        });
     });
 });
