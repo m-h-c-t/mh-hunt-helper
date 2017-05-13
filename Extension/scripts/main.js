@@ -93,6 +93,7 @@
                 }
 
                 message = getMainHuntInfo(message, response, journal);
+                message = fixLGLocations(message, response, journal);
                 message = fixTransitionMice(message, response, journal);
                 message = getStage(message, response, journal);
 
@@ -178,6 +179,35 @@
             message.attracted = 0;
         }
 
+        return message;
+    }
+
+    function fixLGLocations(message, response, journal) {
+        if (message.location.id === 35) {
+            if (response.user.quests.QuestLivingGarden.is_normal) {
+                message.location.name = 'Living Garden';
+                message.location.id = 35;
+            } else {
+                message.location.name = 'Twisted Garden';
+                message.location.id = 5002;
+            }
+        } else if (message.location.id === 41) {
+            if (response.user.quests.QuestLostCity.is_normal) {
+                message.location.name = 'Lost City';
+                message.location.id = 5000;
+            } else {
+                message.location.name = 'Cursed City';
+                message.location.id = 41;
+            }
+        } else if (message.location.id === 42) {
+            if (response.user.quests.QuestSandDunes.is_normal) {
+                message.location.name = 'Sand Dunes';
+                message.location.id = 5001;
+            } else {
+                message.location.name = 'Sand Crypts';
+                message.location.id = 42;
+            }
+        }
         return message;
     }
 
