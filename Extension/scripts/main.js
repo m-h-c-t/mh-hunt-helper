@@ -73,49 +73,55 @@
      //   /* Response body */ xhr.responseText
      //   /* Request body  */ ajaxOptions.data
 
-        if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/turns/activeturn.php") != -1) {
-            var response = JSON.parse(xhr.responseText);
-            var message = {};
-            var journal = {};
+        if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/turns/activeturn.php") === -1) {
+            return;
+        }
 
-            if (response.active_turn && response.success && response.journal_markup != null && response.journal_markup.length > 0) {
-                for (var i=0; i < response.journal_markup.length; i++) {
-                    if (response.journal_markup[i].render_data.css_class.match(/(catchfailure|catchsuccess|attractionfailure)/) &&
-                        response.journal_markup[i].render_data.css_class.match(/active/)) {
-                        journal = response.journal_markup[i];
-                        break;
-                    }
-                }
+        var response = JSON.parse(xhr.responseText);
+        var message = {};
+        var journal = {};
 
-                if (!journal) {
-                    window.console.log("MHHH: Missing Info (trap check or friend hunt).");
-                    return;
-                }
+        if (!response.active_turn || !response.success || response.journal_markup === null || response.journal_markup.length < 1) {
+            window.console.log("MHHH: Missing Info (trap check or friend hunt).");
+            return;
+        }
 
-                message = getMainHuntInfo(message, response, journal);
-                message = fixLGLocations(message, response, journal);
-                message = fixTransitionMice(message, response, journal);
-                message = getStage(message, response, journal);
-
-                if (!message || !message.location || !message.location.name) {
-                    window.console.log("MHHH: Missing Info (will try better next hunt).");
-                    return;
-                }
-
-                message.extension_version = mhhh_version;
-
-                // Send to database
-                $.post(db_url, message)
-                    .done(function (data) {
-                        if (data) {
-                            window.console.log(data);
-                        }
-                    });
-            }
-            else {
-                window.console.log("MHHH: Missing Info (trap check or friend hunt).");
+        for (var i=0; i < response.journal_markup.length; i++) {
+            if (response.journal_markup[i].render_data.css_class.match(/(catchfailure|catchsuccess|attractionfailure)/) &&
+                response.journal_markup[i].render_data.css_class.match(/active/)) {
+                journal = response.journal_markup[i];
+                break;
             }
         }
+
+        if (!journal) {
+            window.console.log("MHHH: Missing Info (trap check or friend hunt).");
+            return;
+        }
+
+        message = getMainHuntInfo(message, response, journal);
+        message = fixLGLocations(message, response, journal);
+        message = fixTransitionMice(message, response, journal);
+        if (message && !message.stage) {
+            message = getStage(message, response, journal);
+        }
+
+        if (!message || !message.location || !message.location.name) {
+            window.console.log("MHHH: Missing Info (will try better next hunt).");
+            return;
+        }
+
+        message.extension_version = mhhh_version;
+
+        // Send to database
+        $.post(db_url, message)
+            .done(function (data) {
+                if (data) {
+                    window.console.log(data);
+                }
+            });
+
+
     });
 
     function getMainHuntInfo(message, response, journal) {
@@ -222,7 +228,7 @@
         } else if (message.mouse === "Icewing" && message.location.name === "Slushy Shoreline") {
             message.location.name = "Iceberg";
             message.location.id = 40;
-            message.stage = "Iceberg";
+            message.stage = "1800ft";
         }
         return message;
     }
@@ -457,7 +463,7 @@
             "Temple":     "Fealty 50+",
             "Auditorium": "Scholar 50+",
             "Farmhouse":  "Farming 50+",
-            "Centre":     "Tech 50+",
+            "Center":     "Tech 50+",
             "Vault":      "Treasure 50+",
             "Library":    "Scholar 80+",
             "Manaforge":  "Tech 80+",
@@ -475,7 +481,7 @@
             }
         });
 
-        if (null === message.stage) {
+        if (!message.stage) {
             message.stage = zokor_district;
         }
 
