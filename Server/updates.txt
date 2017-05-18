@@ -1,8 +1,9 @@
-Next things I'm planning to work on (as time permits):
--Adding more search boxes to be able to filter data by location, setup, etc.
--Add Map Helper autopopulate (and maybe Tsitu's map tool autopopulate)
+Next things I'm planning to work on (as time permits): https://github.com/DevJackSmith/mh-hunt-helper/issues
 
 Finished Updates (newest first):
+-Submitted to Opera and Firefox addon stores
+-Added checks for cheese, trap, and base (1.11.4)
+-Added more precise mist checks for Burroughs Rift (1.11.4)
 -Squished a few Zokor and transitional mice bugs (1.11.3)
 -Fixed LG/Sand/City locations (1.11.2)
 -Updated auto-population to be more reliable and simpler (1.11.1)

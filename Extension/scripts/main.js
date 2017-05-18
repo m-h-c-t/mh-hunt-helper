@@ -100,6 +100,11 @@
         }
 
         message = getMainHuntInfo(message, response, journal);
+        if (!message || !message.location || !message.location.name || !message.cheese.name || !message.trap.name || !message.base.name) {
+            window.console.log("MHHH: Missing Info (will try better next hunt).");
+            return;
+        }
+
         message = fixLGLocations(message, response, journal);
         message = fixTransitionMice(message, response, journal);
         if (message && !message.stage) {
@@ -432,7 +437,7 @@
         }
 
         // "if else" faster than "switch" calculations
-        depth = response.user.quests.QuestSunkenCity.distance;
+        var depth = response.user.quests.QuestSunkenCity.distance;
         if (depth < 2000) {
             message.stage = "0-2km";
         } else if (depth < 10000) {
@@ -552,6 +557,27 @@
             case "tier_3":
                 message.stage = "Mist 19-20";
                 break;
+        }
+
+        if (!response.user.quests.QuestRiftBurroughs.can_mist) {
+            return message;
+        }
+
+        // Correcting edge cases, still doesn't cover mist level 1->0
+        if (response.user.quests.QuestRiftBurroughs.is_misting) {
+            if (response.user.quests.QuestRiftBurroughs.mist_released == 1) {
+                message.stage = "Mist 0";
+            } else if (response.user.quests.QuestRiftBurroughs.mist_released == 6) {
+                message.stage = "Mist 1-5";
+            } else if (response.user.quests.QuestRiftBurroughs.mist_released == 19) {
+                message.stage = "Mist 6-18";
+            }
+        } else {
+            if (response.user.quests.QuestRiftBurroughs.mist_released == 18) {
+                message.stage = "Mist 19-20";
+            } else if (response.user.quests.QuestRiftBurroughs.mist_released == 5) {
+                message.stage = "Mist 6-18";
+            }
         }
         return message;
     }
