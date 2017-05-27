@@ -52,7 +52,7 @@ print '
 //Ajax here
 print '<div id="results" class="table-responsive"></div>';
 
-print '<br/><p class="text-center">If you have any feedback, or want a copy of the data, please pm/post it on <a href="https://www.mousehuntgame.com/forum/showthread.php?130827-Jack-s-MH-Tools" target="_blank">this forum thread</a>.<br/><a href="updates.txt">Check out latest updates here</a>.<br/> If you want to help, please install <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">this Chrome extension</a>.<br/>Install it on Opera using <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">this</a> and on Firefox using <a href="https://addons.mozilla.org/en-US/firefox/addon/chrome-store-foxified/">this</a>.
+print '<br/><p class="text-center">For more info, copy of the data, or if you want to help with attraction rates, please look <a href="https://www.agiletravels.com">here</a>.
     <br/><h4>Stats so far</h4>Contributors: ' . $row['users'] . ' - Thank you! :)<br/>Hunts: ' . $row['hunts'] . '<br/>Traps: ' . $row['traps'] . '<br/>Bases: ' . $row['bases'] . '<br/>Charms: ' . $row['charms'] . '<br/>Cheese: ' . $row['cheese'] . '<br/>Mice: ' . $row['mice'] .'<br/>Locations: ' . $row['locations'] .'<br/>Stages: ' . $row['stages'] . '</p>';
 ?>
 </div>
