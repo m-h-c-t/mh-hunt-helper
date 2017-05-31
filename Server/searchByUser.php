@@ -107,7 +107,10 @@ foreach ($results as $row) {
     print "<td>$row[base]</td>";
     print "<td>$row[charm]</td>";
     print "<td>$row[cheese]</td>";
-    print "<td>" . ($row['shield'] ? "YES" : "NO" ) . "</td>";
+    print "<td>";
+        if ($row['shield'] === '1') print "YES";
+        if ($row['shield'] === '0') print "NO";
+    print "</td>";
     print "<td>" . ($row['attracted'] ? "YES" : "NO" ) . "</td>";
     print "<td>" . ($row['caught'] ? "YES" : "NO" ) . "</td>";
     print "<td>$row[mouse]</td>";

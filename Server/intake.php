@@ -112,7 +112,7 @@ foreach ($value_intake as $item) {
 }
 
 // Shield
-if (!empty($_POST['shield'])) {
+if (!empty($_POST['shield']) && $_POST['shield'] !== 'false') {
     $fields .= ', shield';
     $values .= ', :shield';
     $bindings['shield'] = 1;

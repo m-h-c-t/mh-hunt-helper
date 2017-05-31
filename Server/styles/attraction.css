@@ -48,3 +48,7 @@ body {
     color: white;
     text-decoration: none;
 }
+
+.fakebutton {
+    cursor: pointer;
+}

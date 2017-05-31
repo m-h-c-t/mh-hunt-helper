@@ -45,7 +45,7 @@ print '
     <div class="input-group col-sm-6 col-sm-offset-3">
         <div class="input-group-addon"><strong>Mouse:</strong></div>
         <input name="mouse" id="mouse" class="form-control input-lg" type="text" placeholder="Start typing mouse name and select." autofocus>
-        <div id="erase_mouse" class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></div>
+        <div id="erase_mouse" class="input-group-addon fakebutton"><span class="glyphicon glyphicon-remove"></span></div>
     </div>
 <br/>';
 
