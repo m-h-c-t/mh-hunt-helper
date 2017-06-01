@@ -298,6 +298,9 @@
             case "Forbidden Grove":
                 message = getFobiddenGroveStage(message, response, journal);
                 break;
+            case "Bristle Woods Rift":
+                message = getBristleWoodsRiftStage(message, response, journal);
+                break;
         }
 
         return message;
@@ -565,17 +568,17 @@
 
         // Correcting edge cases, still doesn't cover mist level 1->0
         if (response.user.quests.QuestRiftBurroughs.is_misting) {
-            if (response.user.quests.QuestRiftBurroughs.mist_released == 1) {
+            if (response.user.quests.QuestRiftBurroughs.mist_released === 1) {
                 message.stage = "Mist 0";
-            } else if (response.user.quests.QuestRiftBurroughs.mist_released == 6) {
+            } else if (response.user.quests.QuestRiftBurroughs.mist_released === 6) {
                 message.stage = "Mist 1-5";
-            } else if (response.user.quests.QuestRiftBurroughs.mist_released == 19) {
+            } else if (response.user.quests.QuestRiftBurroughs.mist_released === 19) {
                 message.stage = "Mist 6-18";
             }
         } else {
-            if (response.user.quests.QuestRiftBurroughs.mist_released == 18) {
+            if (response.user.quests.QuestRiftBurroughs.mist_released === 18) {
                 message.stage = "Mist 19-20";
-            } else if (response.user.quests.QuestRiftBurroughs.mist_released == 5) {
+            } else if (response.user.quests.QuestRiftBurroughs.mist_released === 5) {
                 message.stage = "Mist 6-18";
             }
         }
@@ -612,7 +615,7 @@
         } else if (response.user.quests.QuestFortRox.is_day) {
             message.stage = "Day";
         } else if (response.user.quests.QuestFortRox.is_night) {
-            switch (user.quests.QuestFortRox.current_stage) {
+            switch (response.user.quests.QuestFortRox.current_stage) {
                 case "stage_one":
                     message.stage = "Twilight";
                     break;
@@ -638,6 +641,16 @@
             message.stage = "Closed";
         } else {
             message.stage = "Open";
+        }
+
+        return message;
+    }
+
+    function getBristleWoodsRiftStage(message, response, journal) {
+        if (response.user.quests.QuestRiftBristleWoods.chamber_name === "Rift Acolyte Tower") {
+            message.stage = "Outside";
+        } else {
+            message.stage = response.user.quests.QuestRiftBristleWoods.chamber_name;
         }
 
         return message;
