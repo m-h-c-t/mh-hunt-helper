@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
@@ -19,30 +18,21 @@
     <link rel="stylesheet" type="text/css" href="styles/attraction.css">
 </head>
 <body style="text-align: center;" class="text-center">
- <!-- Jumbotron -->
+    <div id="loader" class="loader"></div>
+    <script>$("#loader").css( "display", "block" );</script>
     <div class="jumbotron">
         <h1>MouseHunt User History</h1>
         <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
     </div>
     <div class="container-fluid">
-    I might disable this if it takes up too many resources.
+    I might disable this page if it takes up too many resources. Timezone is set to <span id="timezone_name">...</span><br/>
 <?php
 
-if (empty($_GET['user'])) {
-    print "please specify user id";
+if (empty($_GET['user']) || !is_numeric($_GET['user'])) {
+    print "<b>PLEASE SPECIFY A VALID USER ID</b>";
+    ?><script>$("#loader").css( "display", "none" );</script><?php
     return;
 }
-?>
-<script type="text/javascript">
-$( function() {
-    var tz = jstz.determine(); // Determines the time zone of the browser client
-    document.cookie = "tz=" +  tz.name();
-});
-</script>
-<?php  
-
-$timezone = empty($_COOKIE['tz']) ? 'UTC' : $_COOKIE['tz'];
-print "Timezone is set to " . $timezone . ".<br/>";
 
 require "config.php";
 
@@ -50,7 +40,6 @@ require "config.php";
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-$query_parameters = array();
 $query_string = '
     SELECT timestamp, l.name as location, s.name as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.attracted, h.caught, m.name as mouse, c.name as cheese
     FROM hunts h
@@ -60,19 +49,12 @@ $query_string = '
     LEFT JOIN cheese c on h.cheese_id = c.id
     LEFT JOIN traps t on h.trap_id = t.id
     LEFT JOIN bases b on h.base_id = b.id
-    LEFT JOIN charms ch on h.charm_id = ch.id';
-    
-if (is_numeric($_GET['user'])) {
-    $query_string .= ' WHERE user_id = ?';
-    $query_parameters[] = $_GET['user'];
-} else if ($_GET['user'] !== 'all') {
-    return;
-}
-    
-$query_string .= ' ORDER BY timestamp DESC';
+    LEFT JOIN charms ch on h.charm_id = ch.id
+    WHERE user_id = ?
+    ORDER BY timestamp DESC';
 $query = $pdo->prepare($query_string);
 
-if (!$query->execute($query_parameters)) {
+if (!$query->execute(array($_GET['user']))) {
     print 'Select all hunts failed';
     return;
 }
@@ -81,6 +63,7 @@ if (empty($results)) {
     print "No hunts found";
     return;
 }
+
 print '<div class="table-responsive"><table id="results_table" class="table table-striped table-bordered table-hover display"><thead>
 <th>Time</th>
 <th>Location</th>
@@ -95,24 +78,18 @@ print '<div class="table-responsive"><table id="results_table" class="table tabl
 <th>Mouse</th>
 </thead><tbody>';
 
-$time = new DateTime();
-$time->setTimeZone(new DateTimeZone($timezone));
 foreach ($results as $row) {
-    $time->setTimestamp($row["timestamp"]);
     print "<tr>";
-    print "<td>" . $time->format('m-d-y H:i') . "</td>";
+    print "<td>$row[timestamp]</td>";
     print "<td>$row[location]</td>";
     print "<td>$row[stage]</td>";
     print "<td>$row[trap]</td>";
     print "<td>$row[base]</td>";
     print "<td>$row[charm]</td>";
     print "<td>$row[cheese]</td>";
-    print "<td>";
-        if ($row['shield'] === '1') print "YES";
-        if ($row['shield'] === '0') print "NO";
-    print "</td>";
-    print "<td>" . ($row['attracted'] ? "YES" : "NO" ) . "</td>";
-    print "<td>" . ($row['caught'] ? "YES" : "NO" ) . "</td>";
+    print "<td>$row[shield]</td>";
+    print "<td>$row[attracted]</td>";
+    print "<td>$row[caught]</td>";
     print "<td>$row[mouse]</td>";
     print "</tr>";
 }
@@ -121,6 +98,8 @@ print "</tbody></table></div>";
 ?>
     </div>
     <script type="text/javascript">
+        $('#timezone_name').html(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        var temp_date = new Date;
         $('#results_table').DataTable( {
             dom: 'lBftpri',
             order: [[0, 'desc']],
@@ -133,8 +112,31 @@ print "</tbody></table></div>";
                 extend: 'csvHtml5',
                 title: 'MH Data export'
             }
+            ],
+            "columnDefs": [
+                {
+                    "targets": [ 0 ],
+                    render: function ( data, type, row ) {
+                        temp_date.setTime(data * 1000);
+                        var formatted_date = temp_date.getFullYear() + "-"
+                            + ((temp_date.getMonth() + 1) < 10 ? "0" : "" ) + (temp_date.getMonth() + 1) + "-"
+                            + (temp_date.getDate() < 10 ? "0" : "" ) + temp_date.getDate();
+                        var formatted_time = (temp_date.getHours() < 10 ? "0" : "" ) + temp_date.getHours() + ":"
+                            + (temp_date.getMinutes() < 10 ? "0" : "" ) + temp_date.getMinutes();
+                        return '<span style="white-space: nowrap;">' + formatted_date + '</span> <span style="white-space: nowrap;">' + formatted_time + '</span>';
+                    }
+                },
+                {
+                    "targets": [ 7, 8, 9 ],
+                    render: function ( data, type, row ) {
+                        if (data === '1') return 'YES';
+                        if (data === '0') return 'NO';
+                        return '';
+                    }
+                }
             ]
         });
+        $("#loader").css( "display", "none" );
     </script>
 </body>
 </html>
