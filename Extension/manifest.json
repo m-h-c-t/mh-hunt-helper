@@ -3,7 +3,7 @@
     "author": "Jack Smith",
     "name": "Jack's MouseHunt Helper",
     "description": "This extension provides useful links and tracks MouseHunt horn calls for tools like rate calculators.",
-    "version": "1.11.5",
+    "version": "1.11.7",
     "icons": {
         "16": "images/icon16.png",
         "48": "images/icon48.png",
@@ -29,8 +29,6 @@
     "background": {
         "scripts": ["scripts/background.js"]
     },
-
-    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhafuUehIKii5Oz6oXW/IErgKQjqLWMc5S/fd+9IVEW8OxOLQFA40no+bDh+bKbniP2/OEZ/oOIh8OIKJ7Y5aua/lRTgctBNspOrmmhP4XyHs01QSWEzqyBvt4UWatBgtRX8ZiXUXlvFy4zm9J0Y4oviEkZmw22L8tFad2dvls+vMqoFT/yKNq6R+X615ZImpqRhEz/vDQUPwhUCu5asYRZqBPm1FHPIn4SFLdw9Es9B+ySh4LGjtq3+geldocVu1lC4cqMcLEuPgCHYQ/GQg3kAp6skvNZiihc2m0akRchkBxjBLvIhRQ0knN5jf04v3qXTYgJ+frJVc6lWgQ+XF6wIDAQAB",
 
     "update_url": "https://clients2.google.com/service/update2/crx"
 }

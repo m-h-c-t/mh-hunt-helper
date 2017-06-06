@@ -41,7 +41,7 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, 
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 $query_string = '
-    SELECT timestamp, l.name as location, s.name as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.attracted, h.caught, m.name as mouse, c.name as cheese
+    SELECT timestamp, l.name as location, s.name as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.caught, m.name as mouse, c.name as cheese, GROUP_CONCAT(CONCAT_WS(" ", hl.amount, lt.name)) as loot
     FROM hunts h
     LEFT JOIN locations l on h.location_id = l.id
     LEFT JOIN stages s on h.stage_id = s.id
@@ -50,7 +50,10 @@ $query_string = '
     LEFT JOIN traps t on h.trap_id = t.id
     LEFT JOIN bases b on h.base_id = b.id
     LEFT JOIN charms ch on h.charm_id = ch.id
+    LEFT JOIN hunt_loot hl on h.id = hl.hunt_id
+    LEFT JOIN loot lt on hl.loot_id = lt.id
     WHERE user_id = ?
+    GROUP BY h.id
     ORDER BY timestamp DESC';
 $query = $pdo->prepare($query_string);
 
@@ -73,9 +76,9 @@ print '<div class="table-responsive"><table id="results_table" class="table tabl
 <th>Charm</th>
 <th>Cheese</th>
 <th>Shield</th>
-<th>Attracted</th>
 <th>Caught</th>
 <th>Mouse</th>
+<th>Loot</th>
 </thead><tbody>';
 
 foreach ($results as $row) {
@@ -88,9 +91,9 @@ foreach ($results as $row) {
     print "<td>$row[charm]</td>";
     print "<td>$row[cheese]</td>";
     print "<td>$row[shield]</td>";
-    print "<td>$row[attracted]</td>";
     print "<td>$row[caught]</td>";
     print "<td>$row[mouse]</td>";
+    print "<td>$row[loot]</td>";
     print "</tr>";
 }
 print "</tbody></table></div>";
@@ -127,7 +130,7 @@ print "</tbody></table></div>";
                     }
                 },
                 {
-                    "targets": [ 7, 8, 9 ],
+                    "targets": [ 7, 8 ],
                     render: function ( data, type, row ) {
                         if (data === '1') return 'YES';
                         if (data === '0') return 'NO';

@@ -116,6 +116,10 @@
             return;
         }
 
+        if (journal.render_data.css_class.search("catchsuccessloot") !== -1) {
+            message = getLoot(message, response, journal);
+        }
+
         message.extension_version = mhhh_version;
 
         // Send to database
@@ -653,6 +657,27 @@
             message.stage = response.user.quests.QuestRiftBristleWoods.chamber_name;
         }
 
+        return message;
+    }
+
+    function getLoot(message, response, journal) {
+        var loot_text = journal.publish_data.attachment.description.substring(journal.publish_data.attachment.description.indexOf("following loot:") + 15);
+        var loot_array = loot_text.split(/,\s|\sand\s/g);
+
+        message.loot = [];
+        for (var i = 0, len = loot_array.length; i < len; i++) {
+            var loot_item = loot_array[i].split(/\s(.+)/);
+
+            message.loot[i] = {};
+            message.loot[i].amount = loot_item[0];
+            message.loot[i].name = loot_item[1];
+
+            if (message.loot[i].amount > 1) {
+                message.loot[i].name = message.loot[i].name.replace(/s$/i, '');
+            }
+        }
+
+        console.log(message.loot);
         return message;
     }
 

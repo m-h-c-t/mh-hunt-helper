@@ -131,6 +131,34 @@ if (!$query->execute($bindings)) {
     thanks();
 }
 
+$hunt_id = $pdo->lastInsertId();
+
+if (!empty($_POST['loot']) && $hunt_id > 0) {
+    foreach ($_POST['loot'] as $loot_item) {
+        $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
+        if (!$query->execute(array($loot_item['name']))) {
+            error_log("Select loot failed");
+            thanks();
+        }
+
+        $loot_id = $query->fetchColumn();
+
+        if (!$loot_id) {
+            $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');
+            if (!$query->execute(array($loot_item['name']))) {
+                error_log("Insert loot failed");
+                thanks();
+            }
+            $loot_id = $pdo->lastInsertId();
+        }
+
+        $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount) VALUES (?, ?, ?)');
+        if (!$query->execute(array($hunt_id, $loot_id, $loot_item['amount']))) {
+            error_log("Insert hunt loot failed");
+            thanks();
+        }
+    }
+}
 
 thanks();
 
