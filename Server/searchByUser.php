@@ -41,7 +41,7 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, 
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 $query_string = '
-    SELECT timestamp, l.name as location, s.name as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.caught, m.name as mouse, c.name as cheese, GROUP_CONCAT(CONCAT_WS(" ", hl.amount, lt.name)) as loot
+    SELECT timestamp, l.name as location, s.name as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.caught, m.name as mouse, c.name as cheese, GROUP_CONCAT(CONCAT_WS(" ", hl.amount, lt.name) separator ", ") as loot
     FROM hunts h
     LEFT JOIN locations l on h.location_id = l.id
     LEFT JOIN stages s on h.stage_id = s.id

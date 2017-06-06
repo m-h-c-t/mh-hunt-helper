@@ -1,6 +1,8 @@
 Next things I'm planning to work on (as time permits): https://github.com/DevJackSmith/mh-hunt-helper/issues
 
 Finished Updates (newest first):
+-Added loot tracking (1.11.7)
+-Opera extension approved and published (1.11.6)
 -Added Bristle Woods Rift stages (1.11.5)
 -Added asterisks to map-helper for mice that require or avoid charms
 -Firefox native add-on approved and posted
