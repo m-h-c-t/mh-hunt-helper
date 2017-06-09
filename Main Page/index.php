@@ -48,6 +48,8 @@
             <a href="https://addons.opera.com/en/extensions/details/jacks-mousehunt-helper/" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/opera.png"></a>
         </div>
     </div>
+    <br/>
+    <?php require "stats.php" ?>
 </body>
 </html>
 

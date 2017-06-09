@@ -23,19 +23,6 @@
     <div class="container">
 <?php
 
-require "config.php";
-
-// PDO
-$pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-$pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-$query = $pdo->prepare('SELECT COUNT(*) as hunts, COUNT(DISTINCT user_id) as users, COUNT(DISTINCT mouse_id) as mice, COUNT(DISTINCT location_id) as locations, COUNT(DISTINCT stage_id) as stages, COUNT(DISTINCT trap_id) as traps, COUNT(DISTINCT cheese_id) as cheese, COUNT(DISTINCT base_id) as bases, COUNT(DISTINCT charm_id) as charms FROM hunts');
-if (!$query->execute()) {
-    echo 'Select all hunts and users failed';
-    return;
-}
-$row = $query->fetch(PDO::FETCH_ASSOC);
-
 if (!empty($_GET['mouse'])) {
     print '<input id="prev_mouse" type="hidden" value="' . $_GET['mouse'] . '">';
 }
@@ -52,8 +39,7 @@ print '
 //Ajax here
 print '<div id="results" class="table-responsive"></div>';
 
-print '<br/><p class="text-center">For more info, copy of the data, or if you want to help with attraction rates, please look <a href="https://www.agiletravels.com">here</a>.
-    <br/><h4>Stats so far</h4>Contributors: ' . $row['users'] . ' - Thank you! :)<br/>Hunts: ' . $row['hunts'] . '<br/>Traps: ' . $row['traps'] . '<br/>Bases: ' . $row['bases'] . '<br/>Charms: ' . $row['charms'] . '<br/>Cheese: ' . $row['cheese'] . '<br/>Mice: ' . $row['mice'] .'<br/>Locations: ' . $row['locations'] .'<br/>Stages: ' . $row['stages'] . '</p>';
+print '<br/><p class="text-center">For more info, copy of the data, or if you want to help with attraction rates, please look <a href="https://www.agiletravels.com">here</a>.</p>';
 ?>
 </div>
 <div id="loader" class="loader"></div>
