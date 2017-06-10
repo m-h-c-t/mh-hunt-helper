@@ -28,6 +28,9 @@
             <a href="https://mhhunthelper.agiletravels.com" style="display:block;text-decoration:none;color:#333;">Attraction Rate</a>
         </td></tr>
         <tr><td>
+            <a href="https://mhhunthelper.agiletravels.com/loot.php" style="display:block;text-decoration:none;color:#333;">Loot Search</a>
+        </td></tr>
+        <tr><td>
             <a href="https://www.mousehuntgame.com/forum/showthread.php?130827-Jack-s-MH-Tools" style="display:block;text-decoration:none;color:#333;">Feedback / Support Forum</a>
         </td></tr>
         <tr><td>
