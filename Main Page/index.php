@@ -50,6 +50,7 @@
     </div>
     <br/>
     <?php require "stats.php" ?>
+    <br/>
 </body>
 </html>
 

@@ -33,7 +33,7 @@ print '
             <tr><td>Mice</td><td>'          . $row['mice']      .'</td></tr>
             <tr><td>Locations</td><td>'     . $row['locations'] .'</td></tr>
             <tr><td>Stages</td><td>'        . $row['stages']    . '</td></tr>
-            <tr><td>Drops</td><td>'         . $row2['loot']     . '</td></tr>
+            <tr><td>Loot</td><td>'         . $row2['loot']     . '</td></tr>
         </tbody>
     </table>';
 ?>
