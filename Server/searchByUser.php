@@ -56,11 +56,7 @@ $query_string = '
     GROUP BY h.id
     ORDER BY timestamp DESC';
 $query = $pdo->prepare($query_string);
-
-if (!$query->execute(array($_GET['user']))) {
-    print 'Select all hunts failed';
-    return;
-}
+$query->execute(array($_GET['user']));
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
 if (empty($results)) {
     print "No hunts found";

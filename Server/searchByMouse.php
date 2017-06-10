@@ -14,10 +14,7 @@ if (empty($_POST['mouse_id'])) {
 } else if ($_POST['mouse_id'] === 'all') {
     // $term = trim(strip_tags($_GET['term']));
     $query = $pdo->prepare('SELECT id, name FROM mice');
-    if (!$query->execute()) {
-        print 'Select all mice failed';
-        return;
-    }
+    $query->execute();
     while($row = $query->fetch(PDO::FETCH_ASSOC)) {
         $mice_array[] = ["id" => (int)$row['id'], "value" => utf8_encode(stripslashes($row['name']))];
     }
@@ -32,11 +29,7 @@ if (empty($_POST['mouse_id'])) {
                   GROUP BY h.location_id, h.stage_id, h.cheese_id
                   HAVING attracted_hunts > 0';
     $query = $pdo->prepare($statement);
-    if (!$query->execute(array($_POST['mouse_id']))) {
-        print "Select attraction by mouse failed";
-        return;
-    }
-
+    $query->execute(array($_POST['mouse_id']));
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
     print json_encode($results);
 }

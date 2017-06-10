@@ -13,17 +13,11 @@ $id_value_intake = array(
 foreach($id_value_intake as $item) {
     if (!empty($_POST[$item['name']]['name']) && !empty($_POST[$item['name']]['id'])) {
         $query = $pdo->prepare('SELECT count(*) FROM ' . $item['table_name'] . ' WHERE id = ?');
-        if (!$query->execute(array($_POST[$item['name']]['id']))) {
-            error_log("Select " . $item['name'] . " failed");
-            thanks();
-        }
+        $query->execute(array($_POST[$item['name']]['id']));
 
         if (!$query->fetchColumn()) {
             $query = $pdo->prepare('INSERT INTO ' . $item['table_name'] . ' (id, name) VALUES (?, ?)');
-            if (!$query->execute(array($_POST[$item['name']]['id'], $_POST[$item['name']]['name']))) {
-                error_log("Insert " . $item['name'] . " failed");
-                thanks();
-            }
+            $query->execute(array($_POST[$item['name']]['id'], $_POST[$item['name']]['name']));
         }
     }
 }
@@ -38,19 +32,13 @@ foreach($value_intake as $item) {
     ${$item['name'] . "_id"} = 0;
     if (!empty($_POST[$item['name']])) {
         $query = $pdo->prepare('SELECT id FROM ' . $item['table_name'] . ' WHERE name LIKE ?');
-        if (!$query->execute(array($_POST[$item['name']]))) {
-            error_log("Select " . $item['name'] . " failed");
-            thanks();
-        }
+        $query->execute(array($_POST[$item['name']]));
 
         ${$item['name'] . "_id"} = $query->fetchColumn();
 
         if (!${$item['name'] . "_id"}) {
             $query = $pdo->prepare('INSERT INTO ' . $item['table_name'] . ' (name) VALUES (?)');
-            if (!$query->execute(array($_POST[$item['name']]))) {
-                error_log("Insert " . $item['name'] . " failed");
-                thanks();
-            }
+            $query->execute(array($_POST[$item['name']]));
             ${$item['name'] . "_id"} = $pdo->lastInsertId();
         }
     }
@@ -62,10 +50,7 @@ if (empty($_POST['cheese']['name']) || empty($_POST['cheese']['id']) || !is_nume
 }
 
 $query = $pdo->prepare('SELECT count(*) FROM hunts WHERE user_id = :user_id AND entry_id = :entry_id AND timestamp = :entry_timestamp');
-if (!$query->execute(array('user_id' => $_POST['user_id'], 'entry_id' => $_POST['entry_id'], 'entry_timestamp' => $_POST['entry_timestamp']))) {
-    error_log("Select hunt failed");
-    thanks();
-}
+$query->execute(array('user_id' => $_POST['user_id'], 'entry_id' => $_POST['entry_id'], 'entry_timestamp' => $_POST['entry_timestamp']));
 
 if ($query->fetchColumn()) {
     error_log("Hunt already existed");
@@ -126,37 +111,29 @@ if (!empty($_POST['extension_version'])) {
 }
 
 $query = $pdo->prepare("INSERT INTO hunts ($fields) VALUES ($values)");
-if (!$query->execute($bindings)) {
-    error_log("Insert hunt failed");
-    thanks();
-}
+$query->execute($bindings);
 
 $hunt_id = $pdo->lastInsertId();
 
 if (!empty($_POST['loot']) && $hunt_id > 0) {
     foreach ($_POST['loot'] as $loot_item) {
-        $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
-        if (!$query->execute(array($loot_item['name']))) {
-            error_log("Select loot failed");
-            thanks();
+        $loot_item['amount'] = str_replace(",", "", $loot_item['amount']);
+        if (!is_numeric($loot_item['amount']) || $loot_item['amount'] < 1) {
+            continue;
         }
 
+        $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
+        $query->execute(array($loot_item['name']));
         $loot_id = $query->fetchColumn();
 
         if (!$loot_id) {
             $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');
-            if (!$query->execute(array($loot_item['name']))) {
-                error_log("Insert loot failed");
-                thanks();
-            }
+            $query->execute(array($loot_item['name']));
             $loot_id = $pdo->lastInsertId();
         }
 
         $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount) VALUES (?, ?, ?)');
-        if (!$query->execute(array($hunt_id, $loot_id, $loot_item['amount']))) {
-            error_log("Insert hunt loot failed");
-            thanks();
-        }
+        $query->execute(array($hunt_id, $loot_id, $loot_item['amount']));
     }
 }
 

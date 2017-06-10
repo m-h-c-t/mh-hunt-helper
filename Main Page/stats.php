@@ -6,17 +6,11 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, 
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 $query = $pdo->prepare('SELECT COUNT(*) as hunts, COUNT(DISTINCT user_id) as users, COUNT(DISTINCT mouse_id) as mice, COUNT(DISTINCT location_id) as locations, COUNT(DISTINCT stage_id) as stages, COUNT(DISTINCT trap_id) as traps, COUNT(DISTINCT cheese_id) as cheese, COUNT(DISTINCT base_id) as bases, COUNT(DISTINCT charm_id) as charms FROM hunts');
-if (!$query->execute()) {
-    echo 'Select hunt stats failed';
-    return;
-}
+$query->execute();
 $row = $query->fetch(PDO::FETCH_ASSOC);
 
 $query = $pdo->prepare('SELECT COUNT(*) as loot FROM loot');
-if (!$query->execute()) {
-    echo 'Select loot count failed';
-    return;
-}
+$query->execute();
 $row2 = $query->fetch(PDO::FETCH_ASSOC);
 
 print '
@@ -33,7 +27,7 @@ print '
             <tr><td>Mice</td><td>'          . $row['mice']      .'</td></tr>
             <tr><td>Locations</td><td>'     . $row['locations'] .'</td></tr>
             <tr><td>Stages</td><td>'        . $row['stages']    . '</td></tr>
-            <tr><td>Loot</td><td>'         . $row2['loot']     . '</td></tr>
+            <tr><td>Loot</td><td>'          . $row2['loot']     . '</td></tr>
         </tbody>
     </table>';
 ?>

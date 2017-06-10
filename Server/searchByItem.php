@@ -25,7 +25,6 @@ function main() {
             break;
         default:
             return;
-            break;
     }
 
     getItem($query_all, $query_one);
@@ -36,20 +35,14 @@ function getItem($query_all, $query_one) {
     global $pdo;
     if ($_POST['item_id'] === 'all') {
         $query = $pdo->prepare($query_all);
-        if (!$query->execute()) {
-            print "Select all $_POST[item_type] failed";
-            return;
-        }
+        $query->execute();
         while($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $item_array[] = ["id" => (int)$row['id'], "value" => utf8_encode(stripslashes($row['name']))];
         }
         print json_encode($item_array);
     } else if (!empty($_POST['item_id'])) {
         $query = $pdo->prepare($query_one);
-        if (!$query->execute(array($_POST['item_id']))) {
-            print "Select attraction by $_POST[item_type] failed";
-            return;
-        }
+        $query->execute(array($_POST['item_id']));
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         print json_encode($results);
