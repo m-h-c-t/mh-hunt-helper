@@ -4,7 +4,7 @@ chrome.runtime.onUpdateAvailable.addListener(function(details) {
     chrome.runtime.reload();
 });
 
-var time_interval = 7200 * 1000; // In seconds
+var time_interval = 7200 * 1000; // seconds * 1000
 window.setInterval(function() {
     chrome.runtime.requestUpdateCheck(function(status) {
         if (status == "update_available") {

@@ -120,7 +120,7 @@
             message = getLoot(message, response, journal);
         }
 
-        message.extension_version = mhhh_version;
+        message.extension_version = formatVersion(mhhh_version);
 
         // Send to database
         $.post(db_url, message)
@@ -669,16 +669,39 @@
             var loot_item = loot_array[i].split(/\s(.+)/);
 
             message.loot[i] = {};
-            message.loot[i].amount = loot_item[0];
+            message.loot[i].amount = loot_item[0].replace(/,/i, '');
             message.loot[i].name = loot_item[1];
 
             if (message.loot[i].amount > 1) {
                 message.loot[i].name = message.loot[i].name.replace(/s$/i, '');
             }
+
+            // Exceptions
+            switch (message.loot[i].name) {
+                case 'Rift-torn Roots':
+                case 'Rift Cherries':
+                    message.loot[i].name = message.loot[i].name.replace(/s$/i, '');
+                    break;
+                case 'Plates of Fealty':
+                    message.loot[i].name = 'Plate of Fealty';
+                    break;
+            }
         }
 
-        console.log(message.loot);
         return message;
+    }
+
+    function pad(num, size) {
+        var s = String(num);
+        while (s.length < (size || 2)) {s = "0" + s;}
+        return s;
+    }
+
+    function formatVersion(version) {
+        version = version.split('.');
+        version = version[0] + pad(version[1], 2) + pad(version[2], 2);
+        version = Number(version);
+        return version;
     }
 
 }());

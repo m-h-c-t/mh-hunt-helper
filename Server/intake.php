@@ -107,7 +107,7 @@ if (!empty($_POST['shield']) && $_POST['shield'] !== 'false') {
 if (!empty($_POST['extension_version'])) {
     $fields .= ', extension_version';
     $values .= ', :extension_version';
-    $bindings['extension_version'] = $_POST['extension_version'];
+    $bindings['extension_version'] = formatVersion($_POST['extension_version']);
 }
 
 $query = $pdo->prepare("INSERT INTO hunts ($fields) VALUES ($values)");
@@ -142,4 +142,17 @@ thanks();
 function thanks() {
     die("MHHH: Thanks for the hunt info!");
 }
+
+function formatVersion($version) {
+	if (strpos($version, '.') !== false) {
+		$version_array = explode('.', $version);
+		$new_version = '';
+		foreach($version_array as $piece) {
+			$new_version .= str_pad($piece,  2, "0", STR_PAD_LEFT);
+		}
+		$version = intval($new_version);
+	}
+	return $version;
+}
+
 ?>
