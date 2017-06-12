@@ -137,5 +137,6 @@ print "</tbody></table></div>";
         });
         $("#loader").css( "display", "none" );
     </script>
+    <?php include_once("ga.php") ?>
 </body>
 </html>
