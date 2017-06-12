@@ -62,5 +62,6 @@ print '<br/><p class="text-center">For more info, copy of the data, or if you wa
   if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
   else window.addEventListener('load', loadDeferredStyles);
 </script>
+<?php include_once("ga.php") ?>
 </body>
 </html>

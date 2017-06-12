@@ -34,7 +34,7 @@
             <a href="https://www.mousehuntgame.com/forum/showthread.php?130827-Jack-s-MH-Tools" style="display:block;text-decoration:none;color:#333;">Feedback / Support Forum</a>
         </td></tr>
         <tr><td>
-            <a href="https://www.agiletravels.com/updates.txt" style="display:block;text-decoration:none;color:#333;">Latest Updates</a>
+            <a href="https://www.agiletravels.com/updates.php" style="display:block;text-decoration:none;color:#333;">Latest Updates</a>
         </td></tr>
     </tbody>
     </table>
@@ -53,6 +53,7 @@
     </div>
     <br/>
     <?php require "stats.php" ?>
+    <?php include_once("ga.php") ?>
     <br/>
 </body>
 </html>
