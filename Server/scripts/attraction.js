@@ -60,18 +60,18 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th class="hidden-xs">Attracted</th><th class="hidden-xs">Total hunts</th><th>Rate</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate</th><th>Total hunts</th></tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {
             var stage = (row.stage ? row.stage : '');
             all_stages += stage;
-            final_html += '<tr><td>' + row.location +
-              '</td><td>' + stage +
-              '</td><td>' + row.cheese +
-              '</td><td class="hidden-xs">' + row.attracted_hunts +
-              '</td><td class="hidden-xs">' + row.total_hunts +
-              '</td><td>' + ((row.attracted_hunts/row.total_hunts)*100).toFixed(2) + '%</td></tr>';
+            final_html += '<tr><td>'
+                + row.location + '</td><td>'
+                + stage + '</td><td>'
+                + row.cheese + '</td><td>'
+                + ((row.attracted_hunts/row.total_hunts)*100).toFixed(2) + '%</td><td>'
+                + row.total_hunts + '</td></tr>';
         });
         final_html += '</tbody></table>';
         $("#results").html(final_html);
@@ -79,13 +79,17 @@ $( function() {
             "paging":   false,
             "searching": false,
             "info": false,
-            "order": [[5, 'desc']],
+            "order": [[3, 'desc']],
             "columnDefs": [
                 {
                     "targets": [ 1 ],
                     "visible": (all_stages.length === 0 ? false : true)
                 }
             ]
+        });
+        var table = $('#results_table').DataTable();
+        table.columns().iterator( 'column', function (ctx, idx) {
+            $( table.column(idx).header() ).append('<span class="sort-icon"/>');
         });
 
         $("#loader").css( "display", "none" );
