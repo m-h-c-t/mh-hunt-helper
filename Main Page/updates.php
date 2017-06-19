@@ -2,7 +2,7 @@
 <a href="https://github.com/DevJackSmith/mh-hunt-helper/issues">Next things I'm planning to work on (as time permits)</a>.<br/><br/>
 
 <b>Updates</b> (newest first):<br/>
--Optimized db queries for attractions even more<br/>
+-Optimized db queries for attractions and drops even more<br/>
 -Changed sort by total hunts, displayed them on mobile, and removed attracted column to simplify<br/>
 -Added new version db format for better storage and queries (1.11.8)<br/>
 -Fixed few loot spelling exceptions (1.11.8)<br/>
