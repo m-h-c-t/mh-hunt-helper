@@ -52,14 +52,13 @@ function getItem($query_all, $query_one) {
 function getMouseQuery(&$query_all, &$query_one) {
     $query_all = 'SELECT id, name FROM mice';
     $query_one = '
-        SELECT l.name as location, s.name as stage, COUNT(*) as total_hunts, COUNT(m.id) as attracted_hunts, c.name as cheese
-        FROM hunts h
+        SELECT l.name as location, s.name as stage, h.total_hunts, h.rate, c.name as cheese
+        FROM attractions h
         INNER JOIN locations l ON h.location_id = l.id
-        LEFT JOIN mice m ON h.mouse_id = ? AND h.mouse_id = m.id
+        INNER JOIN mice m ON h.mouse_id = m.id
+        INNER JOIN cheese c ON h.cheese_id = c.id
         LEFT JOIN stages s ON h.stage_id = s.id
-        LEFT JOIN cheese c ON h.cheese_id = c.id
-        GROUP BY h.location_id, h.stage_id, h.cheese_id
-        HAVING attracted_hunts > 0';
+        WHERE h.mouse_id = ? AND total_hunts > 0';
 }
 
 function getLootQuery(&$query_all, &$query_one) {

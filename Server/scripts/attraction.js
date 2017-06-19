@@ -15,10 +15,11 @@ $( function() {
         }
 
         $.ajax({
-            url: "searchByMouse.php",
+            url: "searchByItem.php",
             method: "POST",
             data: {
-                mouse_id: mouse_id
+                item_id: mouse_id,
+                item_type: "mouse"
             }
         })
         .done(function( data ) {
@@ -70,7 +71,7 @@ $( function() {
                 + row.location + '</td><td>'
                 + stage + '</td><td>'
                 + row.cheese + '</td><td>'
-                + ((row.attracted_hunts/row.total_hunts)*100).toFixed(2) + '%</td><td>'
+                + ((row.rate)/100).toFixed(2) + '%</td><td>'
                 + row.total_hunts + '</td></tr>';
         });
         final_html += '</tbody></table>';
@@ -79,7 +80,7 @@ $( function() {
             "paging":   false,
             "searching": false,
             "info": false,
-            "order": [[3, 'desc']],
+            "order": [[4, 'desc']],
             "columnDefs": [
                 {
                     "targets": [ 1 ],
