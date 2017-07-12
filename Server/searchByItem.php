@@ -20,6 +20,9 @@ function main() {
         case 'mouse':
             getMouseQuery($query_all, $query_one);
             break;
+        case 'mhmh_mouse':
+            getMHMHMouseQuery($query_all, $query_one);
+            break;
         case 'loot':
             getLootQuery($query_all, $query_one);
             break;
@@ -70,4 +73,9 @@ function getLootQuery(&$query_all, &$query_one) {
         INNER JOIN locations l ON h.location_id = l.id
         LEFT JOIN stages s ON h.stage_id = s.id
         WHERE h.loot_id = ?';
+}
+
+function getMHMHMouseQuery(&$query_all, &$query_one) {
+    global $mhmh_dbname;
+    $query_all = 'SELECT id, name FROM ' . $mhmh_dbname . '.mice';
 }

@@ -5,6 +5,14 @@
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="Jack's MouseHunt Tools" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.agiletravels.com" />
+    <meta property="og:description" content="Tools to help with the MouseHunt game." />
+    <meta property="og:image" content="https://www.agiletravels.com/images/fb_image.jpg" />
+    <meta property="fb:app_id" content="314857368939024" />
+
     <title>Jack's MouseHunt Tools</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
