@@ -13,21 +13,22 @@
 </head>
 
 <body class="text-center" style="background-color: #fff;">
+<div id="loader" class="loader"></div>
 <script src="scripts/spotter.js"></script>
 
 <!-- Jumbotron -->
 <div class="jumbotron">
     <div class="container-fluid">
         <h1>Jack's MH Map Spotter</h1>
-        <p>Tool for map sniping.</p>
+        <p>Tool for map sniping, leeching and helping.</p>
         <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
     </div>
 </div>
 
 <div class="container">
-    <a href="spotterManager.php" class="pull-right"><button class="btn btn-success">Create/Manage Snipe Requests</button></a><br/><br/>
+    <a href="spotterManager.php" class="pull-right"><button class="btn btn-success">Create/Manage Posts</button></a><br/><br/>
 
-    <p>All requests automatically removed 72 hours after posting.</p>
+    <p>All requests automatically removed 48 hours after posting.</p>
     <div id="currentRequests"></div>
 </div><br/><br/>
 

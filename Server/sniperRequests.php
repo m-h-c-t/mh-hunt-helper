@@ -29,7 +29,24 @@ function main() {
         case 'expireRequest':
             expireRequest();
             break;
+        case 'getAllMaps':
+            getAllMaps();
+            break;
     }
+}
+
+function getAllMaps() {
+    global $pdo;
+    $query = '
+        SELECT m.id, m.name
+        FROM mhmapspotter.maps m
+        ORDER BY m.name ASC';
+    $query = $pdo->prepare($query);
+    $query->execute();
+    while($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $item_array[] = ["id" => (int)$row['id'], "value" => utf8_encode(stripslashes($row['name']))];
+        }
+    print json_encode($item_array);
 }
 
 function getAllRequests() {
@@ -57,15 +74,16 @@ function getUserRequests() {
 
 function getRequestsQueryBuilder($user_specific = false) {
     $query = '
-        SELECT r.id, TIMESTAMPDIFF(SECOND, CURRENT_TIMESTAMP(), DATE_ADD(r.timestamp, INTERVAL 72 HOUR)) as timediff, r.timestamp, m.name as mouse, f.first_name, f.fb_link, r.reward_count, r.man_expired
+        SELECT r.id, UNIX_TIMESTAMP(r.timestamp) as timestamp, mhmhm.name as mouse, f.first_name, f.fb_id, r.reward_count, r.man_expired, m.name as map, r.dusted, rt.name as request_type
         FROM requests r
-        INNER JOIN mhmaphelper.mice m ON r.mouse_id = m.id
-        LEFT JOIN requests_fb_users rf ON r.id = rf.request_id
-        LEFT JOIN fb_users f ON rf.fb_user_id = f.id
+        INNER JOIN fb_users f ON r.fb_user_id = f.id
+        INNER JOIN request_types rt on r.type_id = rt.id
+        LEFT JOIN mhmaphelper.mice mhmhm ON r.mouse_id = mhmhm.id
+        LEFT JOIN maps m ON r.map_id = m.id
         WHERE ';
 
     if (!$user_specific) {
-        $query .= 'r.timestamp > TIMESTAMP(DATE_SUB(NOW(), INTERVAL 72 HOUR)) AND r.man_expired = 0';
+        $query .= 'r.timestamp > TIMESTAMP(DATE_SUB(NOW(), INTERVAL 48 HOUR)) AND r.man_expired = 0';
     } else {
         $query .= 'f.fb_id = ?';
     }
@@ -79,15 +97,50 @@ function createNewRequest() {
     global $pdo;
     $error_message = 'Missing some of the info, please make sure to log in and fill out the form completely.';
 
+    if (empty($_REQUEST['postType'])) {
+        error_log('Unknown sniper request mh_action.');
+        die($error_message);
+    }
+
     $required_fields = [
-        'mouseId'       => 'number',
         'fbUserId'      => 'number',
-        'fbLink'        => 'text',
         'fbAccessToken' => 'text',
-        //'mouseName'     => 'text',
         'fName'         => 'text',
-        'rewardCount'  => 'number'
         ];
+
+    switch ($_REQUEST['postType']) {
+        case 'snipe_request':
+        case 'snipe_offer':
+            $required_fields['mouseId'] = 'number';
+            $required_fields['rewardCount'] = 'number';
+            $db_fields = 'mouse_id, reward_count';
+            $db_values = array($_POST['mouseId'], $_POST['rewardCount']);
+            break;
+        case 'leech_request':
+        case 'leech_offer':
+            $required_fields['mapId'] = 'number';
+            $required_fields['rewardCount'] = 'number';
+            $db_fields = 'map_id, reward_count';
+            $db_values = array($_POST['mapId'], $_POST['rewardCount']);
+            if (!empty($_POST['mapDust'])) {
+                $db_fields .= ', dusted';
+                $db_values[] = $_POST['mapDust'];
+            }
+            break;
+        case 'helper_request':
+        case 'helper_offer':
+            $required_fields['mapId'] = 'number';
+            $db_fields = 'map_id';
+            $db_values = array($_POST['mapId']);
+            if (!empty($_POST['mapDust'])) {
+                $db_fields .= ', dusted';
+                $db_values[] = $_POST['mapDust'];
+            }
+            break;
+        default:
+            die($error_message);
+            break;
+    }
 
     foreach ($required_fields as $name => $type) {
         if (empty($_POST[$name])) {
@@ -95,7 +148,7 @@ function createNewRequest() {
         }
 
         if ($type === 'text' && strlen($_POST[$name]) <= 0) {
-            return $error_message;
+            die($error_message);
         } else if ($type === 'number' && (!is_numeric($_POST[$name]) || $_POST[$name] <=0 )) {
             die($error_message);
         }
@@ -112,44 +165,24 @@ function createNewRequest() {
 
     // Check if FB user is valid
     if (!verifyFBUser()) {
-        die('You are not recognized as a valid fb user. Please contact Jack if this is an error.');
+        die('You are not recognized as a valid fb user. Please logout of facebook, refresh, and try again.');
     }
 
     $pdo->beginTransaction();
 
     if (!empty($fb_user['id'])) {
-        // check if user made 3 requests within last 15 minutes
+        // check if user has 3 active posts
         $query = $pdo->prepare("
             SELECT count(*)
             FROM requests r
-            INNER JOIN requests_fb_users rf ON r.id = rf.request_id
-            WHERE rf.fb_user_id = ? AND r.timestamp > TIMESTAMP(DATE_SUB(NOW(), INTERVAL 15 MINUTE))");
+            WHERE r.fb_user_id = ? AND r.timestamp > TIMESTAMP(DATE_SUB(NOW(), INTERVAL 48 HOUR)) AND r.man_expired = 0");
         $query->execute(array($fb_user['id']));
         $result = $query->fetchColumn();
 
         if ($result >= 3) {
-            die('You have made 3 requests within the last 15 minutes. Please wait a while before requesting again.');
+            die('Users are limited to 3 active posts.');
         }
-
-        // check for duplicate active request
-        $query = $pdo->prepare("
-            SELECT count(*)
-            FROM requests r
-            INNER JOIN requests_fb_users rf ON r.id = rf.request_id
-            INNER JOIN fb_users f ON rf.fb_user_id = f.id
-            WHERE f.fb_id = ?
-                AND r.timestamp > TIMESTAMP(DATE_SUB(NOW(), INTERVAL 72 HOUR))
-                AND r.mouse_id = ?
-                AND r.man_expired = 0");
-        $query->execute(array($fb_user['id'], $_REQUEST['mouseId']));
-        $result = $query->fetchColumn();
     }
-
-    // create the new request
-    $query = 'INSERT INTO requests (mouse_id, reward_count) VALUES (?, ?)';
-    $query = $pdo->prepare($query);
-    $query->execute(array($_REQUEST['mouseId'], $_REQUEST['rewardCount']));
-    $request_id = $pdo->lastInsertId();
 
     // create user if needed
     if (empty($fb_user['id'])) {
@@ -159,11 +192,25 @@ function createNewRequest() {
         $fb_user['id'] = $pdo->lastInsertId();
     }
 
-    // create a request-user link
-    $query = 'INSERT INTO requests_fb_users (fb_user_id, request_id) VALUES (?, ?)';
-    $query = $pdo->prepare($query);
-    $query->execute(array($fb_user['id'], $request_id));
+    $placeholders = [];
+    foreach ($db_values as $value) {
+        $placeholders[] = '?';
+    }
+    $placeholders = implode(', ', $placeholders);
 
+    $db_fields .= ', fb_user_id, type_id';
+    $placeholders .= ', ?, rt.id';
+    $db_values = array_merge($db_values, array($fb_user['id'], $_REQUEST['postType']));
+
+    // create the new request
+    $query = 'INSERT INTO requests (' . $db_fields . ')
+              SELECT ' . $placeholders . '
+              FROM mhmapspotter.request_types rt
+              WHERE rt.name LIKE ?';
+    //error_log(print_r($db_values, true));
+    $query = $pdo->prepare($query);
+    $query->execute($db_values);
+    $request_id = $pdo->lastInsertId();
 
     $pdo->commit();
 
@@ -182,8 +229,7 @@ function expireRequest() {
 
     $query = '
         UPDATE requests r
-        INNER JOIN requests_fb_users rf ON r.id = rf.request_id
-        INNER JOIN fb_users f ON rf.fb_user_id = f.id
+        INNER JOIN fb_users f ON r.fb_user_id = f.id
         SET r.man_expired = 1
         WHERE r.id = ? AND f.fb_id = ? AND r.man_expired = 0';
     $query = $pdo->prepare($query);

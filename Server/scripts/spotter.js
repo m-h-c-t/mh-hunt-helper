@@ -1,5 +1,7 @@
 (function() {
 
+    $("#loader").css( "display", "block" );
+
     if (!$('#fb-root').length) {
         listRequests();
         return;
@@ -43,17 +45,21 @@
             $('.hideOnLogin').hide();
             $('#fbAccessToken').val(response.authResponse.accessToken);
             $('#fbUserId').val(response.authResponse.userID);
-            FB.api('/' + response.authResponse.userID + '?fields=link,first_name', function(response2) {
-                $('#fName').val(response2.first_name);
-                $('#fbLink').val(response2.link);
-            });
+            getFBUserInfo();
             listRequests(response.authResponse.userID);
 
         } else {
             // The person is not logged into your app or we are unable to tell.
             $('.showOnLogin').hide();
             $('.hideOnLogin').show();
+            $("#loader").css( "display", "none" );
         }
+    }
+
+    function getFBUserInfo() {
+        FB.api('/' + $('#fbUserId').val() + '?fields=link,first_name,permissions', function(response) {
+            $('#fName').val(response.first_name);
+        });
     }
 
     // logout function
@@ -66,40 +72,65 @@
         });
     });
 
-    // Autocomplete
-    searchItems('all', addAutocomplete);
+    // Mice and Maps Autocomplete
+    searchItems('mice', addAutocomplete);
+    searchItems('maps', addAutocomplete);
 
-    function searchItems(item_id, callback) {
+    function searchItems(item_type, callback) {
+        if (item_type === 'mice') {
+            var url = "searchByItem.php";
+            var data = {
+                item_id: 'all',
+                item_type: "mhmh_mouse"
+            };
+        } else if (item_type === 'maps') {
+            url = "sniperRequests.php";
+            var data = {
+                mh_action: "getAllMaps"
+            }
+        }
 
         $.ajax({
-            url: "searchByItem.php",
+            url: url,
             method: "POST",
-            data: {
-                item_id: item_id,
-                item_type: "mhmh_mouse"
-            }
+            data: data
         })
         .done(function( data ) {
-            callback( JSON.parse(data));
+            callback(item_type, JSON.parse(data));
         });
     }
 
-    function addAutocomplete(items) {
-        $('#mouseName').autocomplete({
+    function addAutocomplete(item_type, items) {
+        if (item_type === 'mice') {
+            var name_field = 'mouseName';
+            var id_field = 'mouseId';
+        } else if (item_type === 'maps') {
+            var name_field = 'mapName';
+            var id_field = 'mapId';
+        }
+
+        $('#' + name_field).autocomplete({
             source: items,
             select: function( event, ui ) {
-                $('#mouseId').val(ui.item.id);
+                $('#' + id_field).val(ui.item.id);
             }
         });
 
         // Fix for double click on IOS
         if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
-            $('#mouseName').autocomplete('widget').off('mouseenter');
+            $('#' + name_field).autocomplete('widget').off('mouseenter');
         }
     }
 
-
     function listRequests(fbUserId) {
+        var request_types = {
+            snipe_request: "Snipe Request",
+            snipe_offer: "Snipe Offer",
+            leech_request: "Leech Request",
+            leech_offer: "Leech Offer",
+            helper_request: "Helper Request",
+            helper_offer: "Helper Offer"
+        };
         var data = {mh_action: 'getAllRequests'};
         if (fbUserId !== undefined && fbUserId.length > 0) {
             data = {
@@ -115,6 +146,7 @@
             results = JSON.parse(results);
             if (results.length === 0) {
                 $('#currentRequests').html("<p>No requests found yet. Why don't you make one?</p>");
+                $("#loader").css( "display", "none" );
                 return;
             }
 
@@ -124,17 +156,21 @@
 
                 // Admin section
                 if (fbUserId !== undefined) {
-                    if (row.timediff < 0 || row.man_expired == 1) {
+                    var enddate = parseInt(row.timestamp) + 48*60*60;
+                    var now = Math.floor(new Date().getTime()/1000);
+                    var timediff = enddate - now;
+                    if (timediff < 0 || row.man_expired == 1) {
                         // If expired
                         final_html +=
-                            '<tr class="bg-danger"><td>Expired</td><td></td><td></td></tr>';
+                            '<tr class="bg-danger"><td>Expired</td><td></td><td></td><td></td></tr>';
                     } else {
                         // If active
-                        var hours   = Math.floor(row.timediff / 3600);
-                        var minutes = Math.floor((row.timediff - (hours * 3600)) / 60);
+                        var hours   = Math.floor(timediff / 3600);
+                        var minutes = Math.floor((timediff - (hours * 3600)) / 60);
                         final_html +=
                             '<tr><td class="bg-success">Active</td>'
-                            + '<td>Timer: ' + hours + 'h ' + minutes + 'm </td>'
+                            + '<td id="timer_' + row.id + '">' + hours + 'h ' + minutes + 'm </td>'
+                            + '<td></td>'
                             + '<td><button class="btn btn-danger expire_button" value="' + row.id + '">Expire</button></td></tr>';
                     }
                 }
@@ -142,27 +178,94 @@
                 // Actual request
                 final_html +=
                     '<tr>'
-                        + '<td><a target="_blank" href="https://mhmaphelper.agiletravels.com/mice/' + row.mouse + '"><button class="btn btn-warning">' + row.mouse + '</button></a></td>'
-                            + '<td style="width:15%">' + row.reward_count + ' SB+</td>'
-                        + '<td style="width:15%"><a target="_blank" href="' + row.fb_link + '"><button class="btn btn-primary">' + row.first_name + '</button></a></td>'
+                        + '<td style="width:20%">' + request_types[row.request_type] + '</td>';
+                if (row.mouse) {
+                    final_html += '<td><a target="_blank" href="https://mhmaphelper.agiletravels.com/mice/' + row.mouse + '"><button class="btn btn-warning">' + row.mouse + '</button></a></td>';
+                } else {
+                    final_html += '<td>' + (row.dusted ? 'Dusted ' : '' ) + row.map + '</td>';
+                }
+
+                final_html += '<td style="width:15%">' + (row.reward_count ? row.reward_count + ' SB+' : '') + '</td>'
+                        + '<td style="width:15%"><a target="_blank" href="https://www.facebook.com/app_scoped_user_id/' + row.fb_id + '/"><button class="btn btn-primary">' + row.first_name + '</button></a></td>'
                     + '</tr></table></div>';
             });
             $('#currentRequests').html(final_html);
             $('.expire_button').click(expireRequest);
+            $("#loader").css( "display", "none" );
         });
     }
+
+    // Post type management
+    viewPostFields();
+    $('#postType').change(viewPostFields);
+
+    function viewPostFields() {
+        switch($('#postType').val()) {
+            case 'snipe_request':
+            case 'snipe_offer':
+                $('#mouseInputGroup').show();
+                $('#mapInputGroup').hide();
+                $('#rewardInputGroup').show();
+                break;
+            case 'leech_request':
+            case 'leech_offer':
+                $('#mouseInputGroup').hide();
+                $('#mapInputGroup').show();
+                $('#rewardInputGroup').show();
+                break;
+            case 'helper_request':
+            case 'helper_offer':
+                $('#mouseInputGroup').hide();
+                $('#mapInputGroup').show();
+                $('#rewardInputGroup').hide();
+                break;
+        }
+        // updateFBMessage();
+    }
+
+    // $('#rewardCount').on("input", updateFBMessage);
+    // $('#mapName').on("input change", updateFBMessage);
+    // $('#mouseName').on("input change", updateFBMessage);
+
+    // function updateFBMessage() {
+        // switch($('#postType').val()) {
+            // case 'snipe_request':
+                // $('#fbGroupMessage').val('Looking for a snipe of ' + $('#mouseName').val() + '.\nReward: ' + $('#rewardCount').val() + ' SB+.');
+                // break;
+            // case 'snipe_offer':
+                // $('#fbGroupMessage').val('Offering to snipe ' + $('#mouseName').val() + '.\nPrice: ' + $('#rewardCount').val() + ' SB+.');
+                // break;
+            // case 'leech_request':
+                // $('#fbGroupMessage').val('Looking to leech on ' + $('#mapName').val() + '.\nReward: ' + $('#rewardCount').val() + ' SB+.');
+                // break;
+            // case 'leech_offer':
+                // $('#fbGroupMessage').val('Offering a leech spot on ' + $('#mapName').val() + '.\nPrice: ' + $('#rewardCount').val() + ' SB+.');
+                // break;
+            // case 'helper_request':
+                // $('#fbGroupMessage').val('Looking for helpers to join ' + $('#mapName').val() + '.');
+                // break;
+            // case 'helper_offer':
+                // $('#fbGroupMessage').val('Offering to help with ' + $('#mapName').val() + '.');
+                // break;
+        // }
+    // }
+
+    // hideFBMessage();
+    // $('#mapmeisters').change(hideFBMessage);
+
+    // function hideFBMessage() {
+        // if ($('#mapmeisters').is(':checked')) {
+            // $('#fbGroupMessage').show();
+        // } else {
+           // $('#fbGroupMessage').hide();
+        // }
+    // }
 
     // Create new request form
     $("#newPostForm").validate({
         debug: true,
         errorPlacement: function(error, element) {
-            if (element.attr("name") == "mouseName" ) {
-                error.insertAfter("#mouseInputGroup");
-            } else if (element.attr("name") == "rewardCount" ) {
-                error.insertAfter("#rewardInputGroup");
-            } else {
-                error.insertAfter(element);
-            }
+            error.insertAfter(element.parent('div'));
         },
         invalidHandler: function(event, validator) {
             // 'this' refers to the form
@@ -176,26 +279,29 @@
             }
         },
         submitHandler: function() {
+            $("#loader").css( "display", "block" );
             $("#success_message").hide();
             $("#error_message").hide();
             var data = $('#newPostForm').serializeArray();
             data.push({name:'mh_action', value:'createNewRequest'});
-
             $.ajax({
                 method: "POST",
                 url: "sniperRequests.php",
                 data: data
             }).done(function(response) {
-                $('#mouseName').val('');
-                $('#rewardCount').val('');
-                $('#mouseId').val('');
                 if (response === 'Request added!') {
+                    $('#mouseName').val('');
+                    $('#rewardCount').val('');
+                    $('#mouseId').val('');
+                    $('#mapName').val('');
+                    $('#mapId').val('');
                     $("#success_message").html(response);
                     listRequests($('#fbUserId').val());
                     $("#success_message").show();
                 } else {
                     $("#error_message").html(response);
                     $("#error_message").show();
+                    $("#loader").css( "display", "none" );
                 }
             });
         }
