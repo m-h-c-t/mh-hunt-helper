@@ -227,18 +227,94 @@
     }
 
     function fixTransitionMice(message, response, journal) {
-        if (message.mouse === "Realm Ripper" && message.location.name === "Acolyte Realm") {
-            message.location.name = "Forbidden Grove";
-            message.location.id = 11;
-            message.stage = "Closed";
-        } else if (message.mouse === "Riptide" && message.location.name === "Jungle of Dread") {
-            // Can't determine Balack's Cove stage
-            message = "";
-        } else if (message.mouse === "Icewing" && message.location.name === "Slushy Shoreline") {
-            message.location.name = "Iceberg";
-            message.location.id = 40;
-            message.stage = "1800ft";
+        switch (message.location.name) {
+            case "Acolyte Realm":
+                if (message.mouse === "Realm Ripper") {
+                    message.location.name = "Forbidden Grove";
+                    message.location.id = 11;
+                    message.stage = "Closed";
+                }
+                break;
+            case "Jungle of Dread":
+                if (message.mouse === "Riptide") {
+                    // Can't determine Balack's Cove stage
+                    message = "";
+                }
+                break;
+            case "Slushy Shoreline":
+                if (message.mouse === "Icewing") {
+                    message.location.name = "Iceberg";
+                    message.location.id = 40;
+                    message.stage = "1800ft";
+                }
+                break;
+            case "Bristle Woods Rift":
+                if (message.mouse === "Absolute Acolyte") {
+                    message.stage = "Acolyte";
+                }
+                break;
+            case "Fiery Warpath":
+                if (message.mouse === "Vanguard"
+                    || message.mouse === "Desert Soldier") {
+                    message.stage = "Wave 1";
+                } else if (message.stage === "Wave 4") {
+                    if (message.mouse !== "Theurgy Warden"
+                        && message.mouse !== "Warmonger") {
+                        message.stage = "Wave 3";
+                    }
+                }
+                break;
+            case "Fort Rox":
+                if (message.stage === "Day") {
+                    if (message.mouse === "Monster of the Meteor"
+                        || message.mouse === "Dawn Guardian") {
+                        message.stage = "Dawn";
+                    } else if (message.mouse === "Arcane Summoner") {
+                        message = "";
+                    }
+                }
+                break;
+            case "Seasonal Garden":
+                if (message.mouse === "Chess Master"
+                    || message.mouse === "Technic King"
+                    || message.mouse === "Mystic King") {
+                    message.location.name = "Zugzwang's Tower";
+                    message.location.id = 32;
+                    delete message.stage;
+                }
+                break;
+            case "Burroughs Rift":
+                if (message.stage !== "Mist 19-20") {
+                    if (message.mouse === "Menace of the Rift") {
+                        message.stage = "Mist 19-20";
+                    }
+                }
+                break;    
+            case "Twisted Garden":
+                if (message.mouse === "Carmine the Apothecary") {
+                    message.location.name = "Living Garden";
+                    message.location.id = 35;
+                }
+                break;
+            case "Iceberg":
+                if (message.stage === "Generals") {
+                    if (message.mouse !== "Lady Coldsnap"
+                        && message.mouse !== "Lord Splodington"
+                        && message.mouse !== "Princess Fist"
+                        && message.mouse !== "General Drheller") {
+                        message = "";
+                    }
+                } else {
+                    if (message.mouse === "Lady Coldsnap"
+                        || message.mouse === "Lord Splodington"
+                        || message.mouse === "Princess Fist"
+                        || message.mouse === "General Drheller") {
+                        message.stage = "Generals";
+                    }
+                }
+                break;
         }
+
         return message;
     }
 
@@ -652,7 +728,7 @@
 
     function getBristleWoodsRiftStage(message, response, journal) {
         if (response.user.quests.QuestRiftBristleWoods.chamber_name === "Rift Acolyte Tower") {
-            message.stage = "Outside";
+            message.stage = "Entrance";
         } else {
             message.stage = response.user.quests.QuestRiftBristleWoods.chamber_name;
         }
@@ -685,6 +761,15 @@
                 case 'Plates of Fealty':
                     message.loot[i].name = 'Plate of Fealty';
                     break;
+                case 'Cavern Fungi':
+                    message.loot[i].name = 'Cavern Fungus';
+                    break;
+            }
+            if (message.loot[i].name.search('Gold (' !== -1)){
+                var loot_name = message.loot[i].name;
+                var loot_amount = loot_name.substring(loot.name.indexOf('(')+1, loot.name.indexOf(')'));
+                message.loot[i].amount = message.loot[i].amount * parseInt(loot_amount.replace(/,/, ''));
+                message.loot[i].name = 'Gold';
             }
         }
 
