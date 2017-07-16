@@ -51,9 +51,14 @@ function getAllMaps() {
 
 function getAllRequests() {
     global $pdo;
+    $db_values = array();
+    if (!empty($_REQUEST['typeFilter'])) {
+        $db_values[] = $_REQUEST['typeFilter'];
+    }
+
     $query = getRequestsQueryBuilder();
     $query = $pdo->prepare($query);
-    $query->execute();
+    $query->execute($db_values);
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
     print json_encode($results);
 }
@@ -84,11 +89,13 @@ function getRequestsQueryBuilder($user_specific = false) {
 
     if (!$user_specific) {
         $query .= 'r.timestamp > TIMESTAMP(DATE_SUB(NOW(), INTERVAL 48 HOUR)) AND r.man_expired = 0';
+        if (!empty($_REQUEST['typeFilter'])) {
+            $query .= ' AND rt.name LIKE ?';
+        }
+        $query .= ' ORDER BY r.timestamp ASC';
     } else {
-        $query .= 'f.fb_id = ?';
+        $query .= 'f.fb_id = ? ORDER BY r.man_expired ASC, r.timestamp DESC';
     }
-
-    $query .= ' ORDER BY r.man_expired ASC, r.timestamp DESC';
 
     return $query;
 }
@@ -186,9 +193,9 @@ function createNewRequest() {
 
     // create user if needed
     if (empty($fb_user['id'])) {
-        $query = 'INSERT INTO fb_users (fb_id, fb_link, first_name) VALUES (?, ?, ?)';
+        $query = 'INSERT INTO fb_users (fb_id, first_name) VALUES (?, ?)';
         $query = $pdo->prepare($query);
-        $query->execute(array($_REQUEST['fbUserId'], $_REQUEST['fbLink'], $_REQUEST['fName']));
+        $query->execute(array($_REQUEST['fbUserId'], $_REQUEST['fName']));
         $fb_user['id'] = $pdo->lastInsertId();
     }
 

@@ -3,6 +3,12 @@
     $("#loader").css( "display", "block" );
 
     if (!$('#fb-root').length) {
+        $('#typeFilters > button').on('click', function() {
+            listRequests(undefined, $(this).val());
+            $('#typeFilters > button').toggleClass("active", false);
+            $(this).toggleClass("active", true);
+        });
+
         listRequests();
         return;
     }
@@ -122,7 +128,8 @@
         }
     }
 
-    function listRequests(fbUserId) {
+    function listRequests(fbUserId, typeFilter) {
+        $("#loader").css( "display", "block" );
         var request_types = {
             snipe_request: "Snipe Request",
             snipe_offer: "Snipe Offer",
@@ -138,6 +145,9 @@
                 mh_action: 'getUserRequests',
                 fbAccessToken: $('#fbAccessToken').val()
             };
+        }
+        if (typeFilter !== undefined && typeFilter.length > 0) {
+            data.typeFilter = typeFilter;
         }
         $.ajax({
             url: "sniperRequests.php",
@@ -162,31 +172,35 @@
                     if (timediff < 0 || row.man_expired == 1) {
                         // If expired
                         final_html +=
-                            '<tr class="bg-danger"><td>Expired</td><td></td><td></td><td></td></tr>';
+                            '<tr class="bg-danger"><td><strong>Expired</strong></td><td></td><td></td><td></td></tr>';
                     } else {
                         // If active
                         var hours   = Math.floor(timediff / 3600);
                         var minutes = Math.floor((timediff - (hours * 3600)) / 60);
                         final_html +=
-                            '<tr><td class="bg-success">Active</td>'
+                            '<tr><td class="bg-success"><strong>Active</strong></td>'
                             + '<td id="timer_' + row.id + '">' + hours + 'h ' + minutes + 'm </td>'
                             + '<td></td>'
-                            + '<td><button class="btn btn-danger expire_button" value="' + row.id + '">Expire</button></td></tr>';
+                            + '<td class="bg-danger"><button class="btn btn-danger btn-block expire_button" value="' + row.id + '">Expire</button></td></tr>';
                     }
                 }
 
                 // Actual request
                 final_html +=
                     '<tr>'
-                        + '<td style="width:20%">' + request_types[row.request_type] + '</td>';
+                        + '<td style="width:20%;background-color:#eee;"><button class="btn btn-default btn-block"><strong>' + request_types[row.request_type] + '</strong></button></td>';
                 if (row.mouse) {
-                    final_html += '<td><a target="_blank" href="https://mhmaphelper.agiletravels.com/mice/' + row.mouse + '"><button class="btn btn-warning">' + row.mouse + '</button></a></td>';
+                    final_html += '<td class="bg-warning"><a target="_blank" href="https://mhmaphelper.agiletravels.com/mice/' + row.mouse + '"><button class="btn btn-warning">' + row.mouse + '</button></a></td>';
                 } else {
-                    final_html += '<td>' + (row.dusted ? 'Dusted ' : '' ) + row.map + '</td>';
+                    final_html += '<td class="bg-warning"><button class="btn btn-warning">' + (row.dusted ? 'Dusted ' : '' ) + row.map + '</button></td>';
                 }
 
-                final_html += '<td style="width:15%">' + (row.reward_count ? row.reward_count + ' SB+' : '') + '</td>'
-                        + '<td style="width:15%"><a target="_blank" href="https://www.facebook.com/app_scoped_user_id/' + row.fb_id + '/"><button class="btn btn-primary">' + row.first_name + '</button></a></td>'
+                final_html += '<td style="width:15%" class="bg-success">';
+                if (row.reward_count) {
+                    final_html += '<button class="btn btn-success btn-block">' + row.reward_count + ' SB+</button>';
+                }
+                final_html += '</td>'
+                        + '<td style="width:15%" class="bg-info"><a target="_blank" href="https://www.facebook.com/app_scoped_user_id/' + row.fb_id + '/"><button class="btn btn-primary btn-block">' + row.first_name + '</button></a></td>'
                     + '</tr></table></div>';
             });
             $('#currentRequests').html(final_html);

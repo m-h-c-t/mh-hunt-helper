@@ -44,15 +44,11 @@
     <div id="fbLoginButton" class="fb-login-button hideOnLogin" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-use-continue-as="false" onlogin="checkLoginState();" scope="public_profile"></div><br class="hideOnLogin" /><!--,publish_actions-->
     <p id="pleaseLogin" class="hideOnLogin">
         Please login to create a post. <br/>
-        <!--You must be a member of Mapmeisters to post. If you are not, you can <a target="_blank" href="https://www.facebook.com/groups/mapmeister/">join here</a>.<br/>-->
         Facebook login is used to:</br>
+        -Get your first name<br/>
+        -Get link to your public fb profile<br/>
     </p>
-    <ul class="text-left hideOnLogin">
-        <!--<li>Verify your Mapmeisters membership</li>-->
-        <li>Get your first name</li>
-        <li>Get link to your public fb profile</li>
-        <!--<li>Post to their group if you choose to</li>-->
-    </ul>
+
     <form id="newPostForm" class="form-horizontal showOnLogin" method="POST">
         <h2>Create New Post</h2><br/>
 
@@ -130,7 +126,7 @@
 
 <!--<span>
     Please note: Your posts in Facebook Groups can be accessed by members of the group and are not restricted by the app privacy level.
-</span><br/><br/>--><hr/>
+</span><br/><br/>--><hr class="showOnLogin"/>
 
 <div class="container showOnLogin">
     <h2>Your Posts</h2>
