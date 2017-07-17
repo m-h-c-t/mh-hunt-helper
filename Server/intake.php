@@ -116,24 +116,34 @@ $query->execute($bindings);
 $hunt_id = $pdo->lastInsertId();
 
 if (!empty($_POST['loot']) && $hunt_id > 0) {
+    $loot_array = [];
     foreach ($_POST['loot'] as $loot_item) {
         $loot_item['amount'] = str_replace(",", "", $loot_item['amount']);
         if (!is_numeric($loot_item['amount']) || $loot_item['amount'] < 1) {
             continue;
         }
 
+        if (!empty($loot_array[$loot_item['name']])) {
+            $loot_array[$loot_item['name']] += $loot_item['amount'];
+        } else {
+            $loot_array[$loot_item['name']] = $loot_item['amount'];
+        }
+    }
+
+    foreach ($loot_array as $loot_name => $loot_amount) {
+
         $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
-        $query->execute(array($loot_item['name']));
+        $query->execute(array($loot_name));
         $loot_id = $query->fetchColumn();
 
         if (!$loot_id) {
             $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');
-            $query->execute(array($loot_item['name']));
+            $query->execute(array($loot_name));
             $loot_id = $pdo->lastInsertId();
         }
 
         $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount) VALUES (?, ?, ?)');
-        $query->execute(array($hunt_id, $loot_id, $loot_item['amount']));
+        $query->execute(array($hunt_id, $loot_id, $loot_amount));
     }
 }
 
