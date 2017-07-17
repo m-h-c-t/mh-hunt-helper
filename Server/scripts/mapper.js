@@ -69,7 +69,7 @@ $( function() {
                 + row.mouse + '</td><td>'
                 + row.seen_maps + '</td><td>'
                 + row.total_maps + '</td><td>'
-                + ((row.rate)/100).toFixed(2) + '</td></tr>';
+                + ((row.rate)/100).toFixed(2) + '%</td></tr>';
         });
         final_html += '</tbody></table>';
         $("#results").html(final_html);

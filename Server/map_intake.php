@@ -36,6 +36,15 @@ if ($query->fetchColumn()) {
     thanks();
 }
 
+$query = $pdo->prepare('SELECT 1 FROM map_mice WHERE map_id = :id LIMIT 1');
+$query->execute(array('id' => $_POST['id']));
+
+if ($query->fetchColumn()) {
+    //error_log("Spotter tried to insert existing map mice again for map id $_POST[id]");
+    // Not sure why this even gets hit so much
+    thanks();
+}
+
 $_POST['name'] = str_ireplace("common ", "", $_POST['name']);
 
 $query = $pdo->prepare('SELECT m.id FROM maps m WHERE m.name LIKE ? LIMIT 1');
@@ -53,14 +62,6 @@ $query->execute(array($_POST['id'], $map_type_id));
 
 $mice = implode('|', $_POST['mice']);
 $mice = '^(' . $mice . ')$';
-
-$query = $pdo->prepare('SELECT 1 FROM map_mice WHERE map_id = :id LIMIT 1');
-$query->execute(array('id' => $_POST['id']));
-
-if ($query->fetchColumn()) {
-    error_log("Spotter tried to insert existing map mice again for map id $_POST[id]");
-    thanks();
-}
 
 $query = $pdo->prepare("
     INSERT INTO map_mice (map_id, mouse_id)
