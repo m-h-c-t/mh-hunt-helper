@@ -816,9 +816,9 @@
                     message.loot[i].name = 'Cavern Fungus';
                     break;
             }
-            if (message.loot[i].name.search('Gold (' !== -1)){
+            if (message.loot[i].name.search(' of Gold ') !== -1) {
                 var loot_name = message.loot[i].name;
-                var loot_amount = loot_name.substring(loot.name.indexOf('(')+1, loot.name.indexOf(')'));
+                var loot_amount = loot_name.substring(loot_name.indexOf('(')+1, loot_name.indexOf(')'));
                 message.loot[i].amount = message.loot[i].amount * parseInt(loot_amount.replace(/,/, ''));
                 message.loot[i].name = 'Gold';
             }
