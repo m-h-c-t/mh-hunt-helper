@@ -84,21 +84,19 @@
 
     function searchItems(item_type, callback) {
         if (item_type === 'mice') {
-            var url = "searchByItem.php";
             var data = {
-                item_id: 'all',
                 item_type: "mhmh_mouse"
             };
         } else if (item_type === 'maps') {
-            url = "sniperRequests.php";
             var data = {
-                mh_action: "getAllMaps"
+                item_type: "map"
             }
         }
+        data.item_id = 'all';
 
         $.ajax({
-            url: url,
-            method: "POST",
+            url: "searchByItem.php",
+            method: "GET",
             data: data
         })
         .done(function( data ) {

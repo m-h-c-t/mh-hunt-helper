@@ -29,24 +29,7 @@ function main() {
         case 'expireRequest':
             expireRequest();
             break;
-        case 'getAllMaps':
-            getAllMaps();
-            break;
     }
-}
-
-function getAllMaps() {
-    global $pdo;
-    $query = '
-        SELECT m.id, m.name
-        FROM mhmapspotter.maps m
-        ORDER BY m.name ASC';
-    $query = $pdo->prepare($query);
-    $query->execute();
-    while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-            $item_array[] = ["id" => (int)$row['id'], "value" => utf8_encode(stripslashes($row['name']))];
-        }
-    print json_encode($item_array);
 }
 
 function getAllRequests() {

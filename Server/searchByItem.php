@@ -5,26 +5,29 @@ require_once "config.php";
 main();
 
 function main() {
-    global $pdo, $servername, $dbname, $username, $password;
-    if (empty($_POST['item_id']) || empty($_POST['item_type'])) {
+    global $pdo;
+    if (empty($_REQUEST['item_id']) || empty($_REQUEST['item_type'])) {
         return;
     }
 
-    // PDO
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
     $query_all = '';
     $query_one = '';
-    switch ($_POST['item_type']) {
+    switch ($_REQUEST['item_type']) {
         case 'mouse':
+            connectMHHH();
             getMouseQuery($query_all, $query_one);
             break;
         case 'mhmh_mouse':
+            connectMHHH();
             getMHMHMouseQuery($query_all, $query_one);
             break;
         case 'loot':
+            connectMHHH();
             getLootQuery($query_all, $query_one);
+            break;
+        case 'map':
+            connectMMS();
+            getMapQuery($query_all, $query_one);
             break;
         default:
             return;
@@ -33,19 +36,31 @@ function main() {
     getItem($query_all, $query_one);
 }
 
+function connectMHHH() {
+    global $pdo, $servername, $dbname, $username, $password;
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+}
+
+function connectMMS() {
+    global $pdo, $mms_servername, $mms_dbname, $mms_username, $mms_password;
+    $pdo = new PDO("mysql:host=$mms_servername;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
+    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+}
+
 // Loot rates by location
 function getItem($query_all, $query_one) {
     global $pdo;
-    if ($_POST['item_id'] === 'all') {
+    if ($_REQUEST['item_id'] === 'all') {
         $query = $pdo->prepare($query_all);
         $query->execute();
         while($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $item_array[] = ["id" => (int)$row['id'], "value" => utf8_encode(stripslashes($row['name']))];
         }
         print json_encode($item_array);
-    } else if (!empty($_POST['item_id'])) {
+    } else if (!empty($_REQUEST['item_id'])) {
         $query = $pdo->prepare($query_one);
-        $query->execute(array($_POST['item_id']));
+        $query->execute(array($_REQUEST['item_id']));
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         print json_encode($results);
@@ -78,4 +93,11 @@ function getLootQuery(&$query_all, &$query_one) {
 function getMHMHMouseQuery(&$query_all, &$query_one) {
     global $mhmh_dbname;
     $query_all = 'SELECT id, name FROM ' . $mhmh_dbname . '.mice';
+}
+
+function getMapQuery(&$query_all, &$query_one) {
+    $query_all = 'SELECT m.id, m.name
+        FROM mhmapspotter.maps m
+        ORDER BY m.name ASC';
+    $query_one = '';
 }
