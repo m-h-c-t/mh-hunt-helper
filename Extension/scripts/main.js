@@ -4,6 +4,7 @@
     'use strict';
 
     var db_url = "https://mhhunthelper.agiletravels.com/intake.php";
+    var map_intake_url = "https://mhhunthelper.agiletravels.com/map_intake.php";
 
     if (!window.jQuery) {
         console.log("MHHH: Can't find jQuery, exiting.");
@@ -47,42 +48,78 @@
         $.post('https://www.mousehuntgame.com/managers/ajax/users/relichunter.php', payload, null, 'json')
             .done(function (data) {
                 if (data) {
-                    if (typeof data.treasure_map === 'undefined') {
+                    if (!data.treasure_map) {
                         alert('Please make sure you are logged in into MH and are currently member of a treasure map.');
                         return;
                     }
-                    var mice = [];
-                    $.each(data.treasure_map.groups, function(key, group) {
-                        if (null !== group.is_uncaught) {
-                            $.each(group.mice, function(key, mouse) {
-                                mice.push(mouse.name);
-                            });
-                        }
-                    });
+                    var mice = getMapMice(data, true);
                     url += encodeURI(mice.join(glue));
                     new_window.location = url;
                 }
             });
     }
 
+    // Extract map mice from a map
+    function getMapMice(data, uncaught_only) {
+        var mice = [];
+        $.each(data.treasure_map.groups, function(key, group) {
+            if (!uncaught_only) {
+                $.each(group.mice, function(key, mouse) {
+                    mice.push(mouse.name);
+                });
+            } else if (group.is_uncaught) {
+                $.each(group.mice, function(key, mouse) {
+                    mice.push(mouse.name);
+                });
+            }
+        });
+        return mice;
+    }
 
-    // Listening for successful hunt
+    // Listening router
     $(document).ajaxSuccess(function (event, xhr, ajaxOptions) {
-     //   /* Method        */ ajaxOptions.type
-     //   /* URL           */ ajaxOptions.url
-     //   /* Response body */ xhr.responseText
-     //   /* Request body  */ ajaxOptions.data
+    //   /* Method        */ ajaxOptions.type
+    //   /* URL           */ ajaxOptions.url
+    //   /* Response body */ xhr.responseText
+    //   /* Request body  */ ajaxOptions.data
 
-        if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/turns/activeturn.php") === -1) {
+        if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/turns/activeturn.php") !== -1) {
+            recordHunt(xhr);
+        } else if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/users/relichunter.php") !== -1) {
+            recordMap(xhr);
+        }
+    });
+    
+    // Record map mice
+    function recordMap(xhr) {
+        if (!xhr.responseJSON.treasure_map || !xhr.responseJSON.treasure_map.board_id || !xhr.responseJSON.treasure_map.name) {
             return;
         }
+        var map = {};
+        map.mice = getMapMice(xhr.responseJSON);
+        map.id = xhr.responseJSON.treasure_map.board_id;
+        map.name = xhr.responseJSON.treasure_map.name.replace(/\ treasure/i, '');
+        map.name = map.name.replace(/rare\ /i, '');
+        
+        map.extension_version = formatVersion(mhhh_version);
 
+        // Send to database
+        $.post(map_intake_url, map)
+            .done(function (data) {
+                if (data) {
+                    window.console.log(data);
+                }
+            });
+    }
+
+    // Record successful hunt
+    function recordHunt(xhr) {
         var response = JSON.parse(xhr.responseText);
         var message = {};
         var journal = {};
 
-        if (!response.active_turn || !response.success || response.journal_markup === null || response.journal_markup.length < 1) {
-            window.console.log("MHHH: Missing Info (trap check or friend hunt).");
+        if (!response.active_turn || !response.success || !response.journal_markup) {
+            window.console.log("MHHH: Missing Info (trap check or friend hunt)(1)");
             return;
         }
 
@@ -95,13 +132,13 @@
         }
 
         if (!journal) {
-            window.console.log("MHHH: Missing Info (trap check or friend hunt).");
+            window.console.log("MHHH: Missing Info (trap check or friend hunt)(2)");
             return;
         }
 
         message = getMainHuntInfo(message, response, journal);
         if (!message || !message.location || !message.location.name || !message.cheese.name || !message.trap.name || !message.base.name) {
-            window.console.log("MHHH: Missing Info (will try better next hunt).");
+            window.console.log("MHHH: Missing Info (will try better next hunt)(1)");
             return;
         }
 
@@ -112,7 +149,7 @@
         }
 
         if (!message || !message.location || !message.location.name) {
-            window.console.log("MHHH: Missing Info (will try better next hunt).");
+            window.console.log("MHHH: Missing Info (will try better next hunt)(2)");
             return;
         }
 
@@ -131,7 +168,7 @@
             });
 
 
-    });
+    }
 
     function getMainHuntInfo(message, response, journal) {
 
@@ -145,16 +182,28 @@
         message.user_id = response.user.user_id;
 
         // Location
+        if (!response.user.location) {
+            console.log('MH Helper: Missing Location');
+            return "";
+        }
         message.location = {};
         message.location.name = response.user.location;
         message.location.id = response.user.environment_id;
 
         // Trap
+        if (!response.user.weapon_name) {
+            console.log('MH Helper: Missing Trap');
+            return "";
+        }
         message.trap = {};
         message.trap.name = response.user.weapon_name.replace(/\ trap/i, '');
         message.trap.id = response.user.weapon_item_id;
 
         // Base
+        if (!response.user.base_name) {
+            console.log('MH Helper: Missing Base');
+            return "";
+        }
         message.base = {};
         message.base.name = response.user.base_name.replace(/\ base/i, '');
         message.base.id = response.user.base_item_id;
@@ -167,11 +216,13 @@
         }
 
         // Cheese
-        message.cheese = {};
-        if (response.user.bait_name) {
-            message.cheese.name = response.user.bait_name.replace(/\ cheese/i, '');
-            message.cheese.id = response.user.bait_item_id;
+        if (!response.user.bait_name) {
+            console.log('MH Helper: Missing Cheese');
+            return "";
         }
+        message.cheese = {};
+        message.cheese.name = response.user.bait_name.replace(/\ cheese/i, '');
+        message.cheese.id = response.user.bait_item_id;
 
         // Shield (true / false)
         message.shield = response.user.has_shield;
@@ -238,7 +289,7 @@
             case "Jungle of Dread":
                 if (message.mouse === "Riptide") {
                     // Can't determine Balack's Cove stage
-                    message = "";
+                    return "";
                 }
                 break;
             case "Slushy Shoreline":
@@ -270,7 +321,7 @@
                         || message.mouse === "Dawn Guardian") {
                         message.stage = "Dawn";
                     } else if (message.mouse === "Arcane Summoner") {
-                        message = "";
+                        return "";
                     }
                 }
                 break;
@@ -289,7 +340,7 @@
                         message.stage = "Mist 19-20";
                     }
                 }
-                break;    
+                break;
             case "Twisted Garden":
                 if (message.mouse === "Carmine the Apothecary") {
                     message.location.name = "Living Garden";
@@ -302,7 +353,7 @@
                         && message.mouse !== "Lord Splodington"
                         && message.mouse !== "Princess Fist"
                         && message.mouse !== "General Drheller") {
-                        message = "";
+                        return "";
                     }
                 } else {
                     if (message.mouse === "Lady Coldsnap"
@@ -618,8 +669,8 @@
     function getToxicSpillStage(message, response, journal) {
         var titles = response.user.quests.MiniEventPollutionOutbreak.titles;
         for (var i=0; i < titles.length; i++) {
-            if (titles.active) {
-                message.stage = titles.name;
+            if (titles[i].active) {
+                message.stage = titles[i].name;
                 break;
             }
         }
