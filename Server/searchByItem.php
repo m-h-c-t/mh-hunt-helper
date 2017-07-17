@@ -96,8 +96,10 @@ function getMHMHMouseQuery(&$query_all, &$query_one) {
 }
 
 function getMapQuery(&$query_all, &$query_one) {
-    $query_all = 'SELECT m.id, m.name
-        FROM mhmapspotter.maps m
-        ORDER BY m.name ASC';
-    $query_one = '';
+    $query_all = 'SELECT m.id, m.name FROM mhmapspotter.maps m ORDER BY m.name ASC';
+    $query_one = 'SELECT mhmhm.name as mouse, mma.rate, mma.seen_maps, mma.total_maps
+        FROM mhmapspotter.map_mice_aggr mma
+        INNER JOIN mhmaphelper.mice mhmhm ON mma.mouse_id = mhmhm.id
+        WHERE mma.map_type_id = ?
+        ORDER BY mma.rate DESC';
 }
