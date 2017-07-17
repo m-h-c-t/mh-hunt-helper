@@ -204,7 +204,79 @@ function createNewRequest() {
 
     $pdo->commit();
 
+    $message = createPostMessage();
+    sendDiscordMessage($message);
+
     die('Request added!');
+}
+
+function createPostMessage() {
+    $message = $_REQUEST['fName'];
+    $fblink = "https://www.facebook.com/app_scoped_user_id/$_REQUEST[fbUserId]/";
+    $dusted = (!empty($_POST['mapDust']) ? " Dusted" : "");
+    switch ($_REQUEST['postType']) {
+        case 'snipe_request':
+            $mouse = getMouseName();
+            $message .= " requested $mouse to be sniped for $_REQUEST[rewardCount] SB+";
+            break;
+        case 'snipe_offer':
+            $mouse = getMouseName();
+            $message .=  " offered to snipe your $mouse for $_REQUEST[rewardCount] SB+";
+            break;
+        case 'leech_request':
+            $map = getMapName();
+            $message .= " requested to leech on your$dusted $map for $_REQUEST[rewardCount] SB+";
+            break;
+        case 'leech_offer':
+            $map = getMapName();
+            $message .= " offered a leech spot on his$dusted $map for $_REQUEST[rewardCount] SB+";
+            break;
+        case 'helper_request':
+            $map = getMapName();
+            $message .= " requested a helper on his$dusted $map";
+            break;
+        case 'helper_offer':
+            $map = getMapName();
+            $message .= " offered to help with your$dusted $map";
+            break;
+    }
+    $message .= "\n (@ https://www.agiletravels.com/spotter.php)";
+    return $message;
+}
+
+function sendDiscordMessage($message) {
+    global $discord_webhook_url;
+
+    $data = array('content' => $message);
+
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($discord_webhook_url, false, $context);
+    if ($result === FALSE) {
+        error_log("Discord webhook send failed.");
+    }
+}
+
+function getMouseName() {
+    global $pdo;
+    $query = 'SELECT name FROM mhmaphelper.mice WHERE id = ?';
+    $query = $pdo->prepare($query);
+    $query->execute(array($_REQUEST['mouseId']));
+    return $query->fetchColumn();
+}
+
+function getMapName() {
+    global $pdo;
+    $query = 'SELECT name FROM mhmapspotter.maps WHERE id = ?';
+    $query = $pdo->prepare($query);
+    $query->execute(array($_REQUEST['mapId']));
+    return $query->fetchColumn();
 }
 
 function expireRequest() {

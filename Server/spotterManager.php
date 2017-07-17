@@ -112,7 +112,8 @@
             <textarea id="fbGroupMessage" name="fbGroupMessage" class="form-control" row="3" disabled></textarea><br/>
         </div>-->
 
-        <span>Posts expire automatically after 48 hours.</span><br/><br/>
+        <span>Posts expire automatically after 48 hours.</span><br/>
+        <span>This tool posts to this site and MH Discord.</span><br/><br/>
         <div class="row" style="clear:both;">
             <div class="alert alert-danger" id="error_message"></div>
             <div class="alert alert-success" id="success_message"></div>
