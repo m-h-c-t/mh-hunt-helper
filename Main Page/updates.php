@@ -2,6 +2,10 @@
 <a href="https://github.com/DevJackSmith/mh-hunt-helper/issues">Next things I'm planning to work on (as time permits)</a>.<br/><br/>
 
 <b>Updates</b> (newest first):<br/>
+-Added spotter tool
+-Added map mice tracker (1.11.9)
+-Added more transition mice rules (1.11.9)
+-Updated icon (1.11.9)
 -Optimized db queries for attractions and drops even more<br/>
 -Changed sort by total hunts, displayed them on mobile, and removed attracted column to simplify<br/>
 -Added new version db format for better storage and queries (1.11.8)<br/>
