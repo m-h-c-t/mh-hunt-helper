@@ -18,7 +18,7 @@ if (
     thanks();
 }
 
-if (!in_array($_POST['extension_version'], [11109, 11110])) {
+if (!in_array($_POST['extension_version'], [11110])) {
     error_log("Bad version: " . $_POST['extension_version']);
     die("MH Helper: Please update to the latest version!");
 }
@@ -36,22 +36,44 @@ if ($query->fetchColumn()) {
     thanks();
 }
 
-$query = $pdo->prepare('
-    INSERT INTO map_records (map_id, map_type_id)
-    SELECT ?, m.id
-    FROM maps m
-    WHERE m.name LIKE ?');
-$query->execute(array($_POST['id'], $_POST['name']));
+$_POST['name'] = str_ireplace("common ", "", $_POST['name']);
+
+$query = $pdo->prepare('SELECT m.id FROM maps m WHERE m.name LIKE ? LIMIT 1');
+$query->execute(array($_POST['name']));
+$map_type_id = $query->fetchColumn();
+
+if (!$map_type_id) {
+    $query = $pdo->prepare('INSERT INTO maps (name) VALUES (?)');
+    $query->execute(array($_POST['name']));
+    $map_type_id = $pdo->lastInsertId();
+}
+
+$query = $pdo->prepare('INSERT INTO map_records (map_id, map_type_id) VALUES (?, ?)');
+$query->execute(array($_POST['id'], $map_type_id));
 
 $mice = implode('|', $_POST['mice']);
 $mice = '^(' . $mice . ')$';
 
+$query = $pdo->prepare('SELECT 1 FROM map_mice WHERE map_id = :id LIMIT 1');
+$query->execute(array('id' => $_POST['id']));
+
+if ($query->fetchColumn()) {
+    error_log("Spotter tried to insert existing map mice again for map id $_POST[id]");
+    thanks();
+}
+
 $query = $pdo->prepare("
     INSERT INTO map_mice (map_id, mouse_id)
-    SELECT ?, m.id
+    SELECT DISTINCT ?, m.id
     FROM $mhmh_dbname.mice m
     WHERE m.name REGEXP ?");
 $query->execute(array($_POST['id'], $mice));
+
+$mice_inserted_count = $query->rowCount();
+$mice_supplied_count = count($_POST['mice']);
+if ($mice_supplied_count != $mice_inserted_count) {
+    error_log("Spotter should have inserted $mice_supplied_count mice, but instead inserted $mice_inserted_count, for map id $_POST[id]");
+}
 
 thanks();
 
