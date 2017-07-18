@@ -667,13 +667,24 @@
     }
 
     function getToxicSpillStage(message, response, journal) {
-        var titles = response.user.quests.MiniEventPollutionOutbreak.titles;
-        for (var i=0; i < titles.length; i++) {
-            if (titles[i].active) {
-                message.stage = titles[i].name;
-                break;
+        var titles = response.user.quests.QuestPollutionOutbreak.titles;
+        var formatted_titles = {
+            hero:                 'Hero',
+            knight:               'Knight',
+            lord_lady:            'Lord/Lady',
+            baron_baroness:       'Baron/Baroness',
+            count_countess:       'Count/Countess',
+            duke_dutchess:        'Duke/Duchess',
+            grand_duke:           'Grand Duke/Duchess',
+            archduke_archduchess: 'Archduke/Archduchess'
+        };
+        $.each(titles, function(title, level) {
+            if (!level.active) {
+                return true; // Continue
             }
-        }
+            message.stage = formatted_titles[title];
+            return false; // Break
+        });
         return message;
     }
 
@@ -807,6 +818,12 @@
             switch (message.loot[i].name) {
                 case 'Rift-torn Roots':
                 case 'Rift Cherries':
+                case 'Savoury Vegetables':
+                case 'Sap-filled Thorns':
+                case 'Doobers':
+                case 'Crumbly Rift Salts':
+                case 'Brain Bits':
+                case 'Plumepearl Herbs':
                     message.loot[i].name = message.loot[i].name.replace(/s$/i, '');
                     break;
                 case 'Plates of Fealty':
@@ -814,6 +831,15 @@
                     break;
                 case 'Cavern Fungi':
                     message.loot[i].name = 'Cavern Fungus';
+                    break;
+                case 'Ancient Hourglas':
+                    message.loot[i].name = 'Ancient Hourglass';
+                    break;
+                case 'Shard of Glas':
+                    message.loot[i].name = 'Shard of Glass';
+                    break;
+                case 'Bolts of Cloth':
+                    message.loot[i].name = 'Bolt of Cloth';
                     break;
             }
             if (message.loot[i].name.search(' of Gold ') !== -1) {
