@@ -149,7 +149,7 @@ function createNewRequest() {
     $query->execute(array($_REQUEST['fbUserId']));
     $fb_user = $query->fetch();
 
-    if (!empty($fb_user['id']) && $fb_user['banned'] != 0) {
+    if (!empty($fb_user['banned'])) {
         die('You have been banned. Please contact Jack if you think this is an error.');
     }
 
@@ -161,25 +161,11 @@ function createNewRequest() {
     $pdo->beginTransaction();
 
     if (!empty($fb_user['id'])) {
-        // check if user has 3 active posts
-        $query = $pdo->prepare("
-            SELECT count(*)
-            FROM requests r
-            WHERE r.fb_user_id = ? AND r.timestamp > TIMESTAMP(DATE_SUB(NOW(), INTERVAL 48 HOUR)) AND r.man_expired = 0");
-        $query->execute(array($fb_user['id']));
-        $result = $query->fetchColumn();
-
-        if ($result >= 3) {
-            die('Users are limited to 3 active posts.');
-        }
-    }
-
-    // create user if needed
-    if (empty($fb_user['id'])) {
-        $query = 'INSERT INTO fb_users (fb_id, first_name) VALUES (?, ?)';
-        $query = $pdo->prepare($query);
-        $query->execute(array($_REQUEST['fbUserId'], $_REQUEST['fName']));
-        $fb_user['id'] = $pdo->lastInsertId();
+        // check if user has 10 active posts
+        checkActivePostLimit($fb_user['id']);
+    } else {
+        // create user if needed
+        $fb_user['id'] = createNewUser();
     }
 
     $placeholders = [];
@@ -205,42 +191,78 @@ function createNewRequest() {
     $pdo->commit();
 
     $message = createPostMessage();
+
+    // Admin test posts should not post to other places
+    // if ($fb_user['id'] == 2) {
+        // die('Request added!');
+    // }
+
     sendDiscordMessage($message);
 
     die('Request added!');
 }
 
+function checkActivePostLimit($fb_user_id) {
+    global $pdo;
+    $query = $pdo->prepare("
+        SELECT count(*)
+        FROM requests r
+        WHERE r.fb_user_id = ? AND r.timestamp > TIMESTAMP(DATE_SUB(NOW(), INTERVAL 48 HOUR)) AND r.man_expired = 0");
+    $query->execute(array($fb_user_id));
+    $result = $query->fetchColumn();
+
+    if ($result >= 10) {
+        die('Users are limited to 10 active posts.');
+    }
+}
+
+function createNewUser() {
+    global $pdo;
+    $query = 'INSERT INTO fb_users (fb_id, first_name) VALUES (?, ?)';
+    $query = $pdo->prepare($query);
+    $query->execute(array($_REQUEST['fbUserId'], $_REQUEST['fName']));
+    return $pdo->lastInsertId();
+}
+
 function createPostMessage() {
     $message = $_REQUEST['fName'];
     $fblink = "https://www.facebook.com/app_scoped_user_id/$_REQUEST[fbUserId]/";
-    $dusted = (!empty($_POST['mapDust']) ? " Dusted" : "");
+    $dusted = "";
+    $split_dust = "";
+    if (!empty($_POST['mapDust'])) {
+        if ($_POST['mapDust'] == 1) {
+            $dusted = "Dusted ";
+        } else if ($_POST['mapDust'] == 2) {
+            $split_dust = " (split dust)";
+        }
+    }
     switch ($_REQUEST['postType']) {
         case 'snipe_request':
             $mouse = getMouseName();
-            $message .= " requested $mouse to be sniped for $_REQUEST[rewardCount] SB+";
+            $message .= ' requested ' . $mouse . ' to be sniped for ' . $_REQUEST['rewardCount'] . ' SB+';
             break;
         case 'snipe_offer':
             $mouse = getMouseName();
-            $message .=  " offered to snipe your $mouse for $_REQUEST[rewardCount] SB+";
+            $message .=  ' offered to snipe your ' . $mouse . ' for ' . $_REQUEST['rewardCount'] . ' SB+';
             break;
         case 'leech_request':
             $map = getMapName();
-            $message .= " requested to leech on your$dusted $map for $_REQUEST[rewardCount] SB+";
+            $message .= ' requested to leech on your ' . $dusted . $map . $split_dust . ' for ' . $_REQUEST['rewardCount'] . ' SB+';
             break;
         case 'leech_offer':
             $map = getMapName();
-            $message .= " offered a leech spot on his$dusted $map for $_REQUEST[rewardCount] SB+";
+            $message .= ' offered a leech spot on their ' . $dusted . $map . $split_dust . ' for ' . $_REQUEST['rewardCount'] . ' SB+';
             break;
         case 'helper_request':
             $map = getMapName();
-            $message .= " requested a helper on his$dusted $map";
+            $message .= ' requested a helper on their ' . $dusted . $map . $split_dust;
             break;
         case 'helper_offer':
             $map = getMapName();
-            $message .= " offered to help with your$dusted $map";
+            $message .= ' offered to help with your ' . $dusted . $map . $split_dust;
             break;
     }
-    $message .= "\n (@ https://www.agiletravels.com/spotter.php)";
+    $message .= "\n(@ <https://mhhunthelper.agiletravels.com/spotter.php>)";
     return $message;
 }
 

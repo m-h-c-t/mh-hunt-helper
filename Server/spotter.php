@@ -28,7 +28,8 @@
 <div class="container">
     <a href="spotterManager.php" class="pull-right"><button class="btn btn-success">Create/Manage Posts</button></a><br/><br/>
 
-    <p>All requests automatically removed 48 hours after posting. Sorted by oldest first.</p>
+    <span>All requests automatically removed 48 hours after posting. Sorted by oldest first.</span><br/>
+    <span>Stay vigilant! Check if the other party is in a FB Maps Group Like Mapmeisters, LMM, MMS, etc.</span><br/>
 
     <div class="btn-group" role="group" id="typeFilters">
         <button type="button" class="btn btn-default active" value="">All posts</button>

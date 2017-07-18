@@ -190,7 +190,7 @@
                 if (row.mouse) {
                     final_html += '<td class="bg-warning"><a target="_blank" href="https://mhmaphelper.agiletravels.com/mice/' + row.mouse + '"><button class="btn btn-warning">' + row.mouse + '</button></a></td>';
                 } else {
-                    final_html += '<td class="bg-warning"><button class="btn btn-warning">' + (row.dusted ? 'Dusted ' : '' ) + row.map + '</button></td>';
+                    final_html += '<td class="bg-warning"><button class="btn btn-warning">' + (row.dusted == 1 ? 'Dusted ' : '' ) + row.map + (row.dusted == 2 ? ' (Split Dust)' : '' ) + '</button></td>';
                 }
 
                 final_html += '<td style="width:15%" class="bg-success">';

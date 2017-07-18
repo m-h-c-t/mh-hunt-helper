@@ -47,6 +47,7 @@
         Facebook login is used to:</br>
         -Get your first name<br/>
         -Get link to your public fb profile<br/>
+        -Allow you to keep track of your posts<br/>
     </p>
 
     <form id="newPostForm" class="form-horizontal showOnLogin" method="POST">
@@ -85,19 +86,21 @@
                 <span class="input-group-addon"><strong>Map Type</strong></span>
                 <input id="mapName" name="mapName" type="text" class="form-control" required placeholder="Easy Treasure Map!" maxlength="250" />
                 <input type="hidden" id="mapId" name="mapId" required/>
-            </div>
-            <div class="checkbox text-left">
-            <label>
-                <input id="mapDust" name="mapDust" type="checkbox" value="1" />
-                <strong>Dusted</strong>
-            </label>
+            </div><br/>
+            <div class="input-group">
+                <span class="input-group-addon"><strong>Dust</strong></span>
+                <select id="mapDust" name="mapDust" class="form-control">
+                    <option value="">Anything</option>
+                    <option value="1">Dusted</option>
+                    <option value="2">Split dust cost</option>
+                </select>
             </div><br/>
         </div>
 
         <div id="rewardInputGroup">
             <div class="input-group">
                 <span class="input-group-addon"><strong>Reward / Price</strong></span>
-                <input id="rewardCount" name="rewardCount" type="number" class="form-control" min="1" max="1000" required />
+                <input id="rewardCount" name="rewardCount" type="number" class="form-control" min="1" max="2000" required />
                 <span class="input-group-addon"><strong>SB+</strong></span>
             </div><br/>
         </div>
@@ -112,8 +115,9 @@
             <textarea id="fbGroupMessage" name="fbGroupMessage" class="form-control" row="3" disabled></textarea><br/>
         </div>-->
 
+        <span>This tool posts to this site and to MH Discord.</span><br/>
         <span>Posts expire automatically after 48 hours.</span><br/>
-        <span>This tool posts to this site and MH Discord.</span><br/><br/>
+        <span>Limited to 10 active posts at a time.</span><br/><br/>
         <div class="row" style="clear:both;">
             <div class="alert alert-danger" id="error_message"></div>
             <div class="alert alert-success" id="success_message"></div>
