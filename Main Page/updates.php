@@ -2,7 +2,11 @@
 <a href="https://github.com/DevJackSmith/mh-hunt-helper/issues">Next things I'm planning to work on (as time permits)</a>.<br/><br/>
 
 <b>Updates</b> (newest first):<br/>
--Added spotter tool<br/>
+-Added Mapper Tool<br/>
+-Added Spotter integration with Discord<br/>
+-Added new Toxic Spill with stages (1.11.11)<br/>
+-Fixed few loot spellings (1.11.11)<br/>
+-Added Spotter tool<br/>
 -Added map mice tracker (1.11.9)<br/>
 -Added more transition mice rules (1.11.9)<br/>
 -Updated icon (1.11.9)<br/>
