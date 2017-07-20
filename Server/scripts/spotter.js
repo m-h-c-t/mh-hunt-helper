@@ -159,8 +159,20 @@
             }
 
             var final_html = '';
+            var highlight = '';
+            var rounded_top = '';
+            var rounded_left_top = '';
+            var rounded_right_top = '';
             results.forEach(function(row) {
-                final_html += '<div class="table-responsive"><table class="table table-bordered" id="request_' + row.id + '">';
+                rounded_top = 'border-top-rounded';
+                rounded_left_top = 'border-top-left-rounded';
+                rounded_right_top = 'border-top-right-rounded';
+                if (window.location.hash && window.location.hash === ('#' + row.id)) {
+                    highlight = 'highlight';
+                } else {
+                    highlight = '';
+                }
+                final_html += '<div class="table-responsive"><table class="table table-bordered border-top-rounded border-bottom-rounded ' + highlight + '" style="border-collapse:separate;" id="' + row.id + '">';
 
                 // Admin section
                 if (fbUserId !== undefined) {
@@ -170,23 +182,25 @@
                     if (timediff < 0 || row.man_expired == 1) {
                         // If expired
                         final_html +=
-                            '<tr class="bg-danger"><td><strong>Expired</strong></td><td></td><td></td><td></td></tr>';
+                            '<tr class="bg-danger ' + rounded_top + '"><td class="' + rounded_top + '" colspan="4"><strong>Expired</strong></td></tr>';
                     } else {
                         // If active
                         var hours   = Math.floor(timediff / 3600);
                         var minutes = Math.floor((timediff - (hours * 3600)) / 60);
                         final_html +=
-                            '<tr><td class="bg-success"><strong>Active</strong></td>'
-                            + '<td id="timer_' + row.id + '">' + hours + 'h ' + minutes + 'm </td>'
-                            + '<td></td>'
-                            + '<td class="bg-danger"><button class="btn btn-danger btn-block expire_button" value="' + row.id + '">Expire</button></td></tr>';
+                            '<tr class="' + rounded_top + '"><td class="bg-success ' + rounded_left_top + '"><strong>Active</strong></td>'
+                            + '<td id="timer_' + row.id + '" colspan="2">' + hours + 'h ' + minutes + 'm </td>'
+                            + '<td class="bg-danger ' + rounded_right_top + '"><button class="btn btn-danger btn-block expire_button" value="' + row.id + '">Expire</button></td></tr>';
                     }
+                    rounded_top = '';
+                    rounded_left_top = '';
+                    rounded_right_top = '';
                 }
 
                 // Actual request
                 final_html +=
-                    '<tr>'
-                        + '<td style="width:20%;background-color:#eee;"><button class="btn btn-default btn-block"><strong>' + request_types[row.request_type] + '</strong></button></td>';
+                    '<tr class="border-bottom-rounded ' + rounded_top + '">'
+                        + '<td class="border-bottom-left-rounded ' + rounded_left_top + '" style="width:20%;background-color:#eee;"><button class="btn btn-default btn-block"><strong>' + request_types[row.request_type] + '</strong></button></td>';
                 if (row.mouse) {
                     final_html += '<td class="bg-warning"><a target="_blank" href="https://mhmaphelper.agiletravels.com/mice/' + row.mouse + '"><button class="btn btn-warning">' + row.mouse + '</button></a></td>';
                 } else {
@@ -198,11 +212,14 @@
                     final_html += '<button class="btn btn-success btn-block">' + row.reward_count + ' SB+</button>';
                 }
                 final_html += '</td>'
-                        + '<td style="width:15%" class="bg-info"><a target="_blank" href="https://www.facebook.com/app_scoped_user_id/' + row.fb_id + '/"><button class="btn btn-primary btn-block">' + row.first_name + '</button></a></td>'
+                        + '<td style="width:15%;" class="bg-info border-bottom-right-rounded ' + rounded_right_top + '"><a target="_blank" href="https://www.facebook.com/app_scoped_user_id/' + row.fb_id + '/"><button class="btn btn-primary btn-block">' + row.first_name + '</button></a></td>'
                     + '</tr></table></div>';
             });
             $('#currentRequests').html(final_html);
             $('.expire_button').click(expireRequest);
+            if (window.location.hash) {
+                $('html,body').animate({scrollTop: $(window.location.hash).offset().top});
+            }
             $("#loader").css( "display", "none" );
         });
     }

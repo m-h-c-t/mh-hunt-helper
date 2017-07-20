@@ -83,3 +83,33 @@ table.dataTable thead .sorting_asc span:before {
 table.dataTable thead .sorting_desc span:before {
     content: "\e156";
 }
+
+.border-top-rounded {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.border-top-left-rounded {
+    border-top-left-radius: 20px;
+}
+
+.border-top-right-rounded {
+    border-top-right-radius: 20px;
+}
+
+.border-bottom-rounded {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.border-bottom-left-rounded {
+    border-bottom-left-radius: 20px;
+}
+
+.border-bottom-right-rounded {
+    border-bottom-right-radius: 20px;
+}
+
+.highlight {
+    border: 3px solid #5cb85c;
+}

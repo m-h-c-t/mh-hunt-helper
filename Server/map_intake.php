@@ -18,7 +18,7 @@ if (
     thanks();
 }
 
-if (!in_array($_POST['extension_version'], [11110])) {
+if (!in_array($_POST['extension_version'], [11110, 11111])) {
     error_log("Bad version: " . $_POST['extension_version']);
     die("MH Helper: Please update to the latest version!");
 }

@@ -190,12 +190,12 @@ function createNewRequest() {
 
     $pdo->commit();
 
-    $message = createPostMessage();
+    $message = createPostMessage($request_id);
 
     // Admin test posts should not post to other places
-    // if ($fb_user['id'] == 2) {
-        // die('Request added!');
-    // }
+    if ($fb_user['id'] == 2) {
+        die('Request added!');
+    }
 
     sendDiscordMessage($message);
 
@@ -224,7 +224,7 @@ function createNewUser() {
     return $pdo->lastInsertId();
 }
 
-function createPostMessage() {
+function createPostMessage($request_id) {
     $message = $_REQUEST['fName'];
     $fblink = "https://www.facebook.com/app_scoped_user_id/$_REQUEST[fbUserId]/";
     $dusted = "";
@@ -262,7 +262,7 @@ function createPostMessage() {
             $message .= ' offered to help with your ' . $dusted . $map . $split_dust;
             break;
     }
-    $message .= "\n(@ <https://mhhunthelper.agiletravels.com/spotter.php>)";
+    $message .= "\n(@ <https://mhhunthelper.agiletravels.com/spotter.php#$request_id>)";
     return $message;
 }
 
