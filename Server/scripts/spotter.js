@@ -114,7 +114,11 @@
         }
 
         $('#' + name_field).autocomplete({
-            source: items,
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(items, request.term);
+                response(results.slice(0, 10));
+            },
+            delay: 0,
             select: function( event, ui ) {
                 $('#' + id_field).val(ui.item.id);
             }
@@ -204,7 +208,7 @@
                 if (row.mouse) {
                     final_html += '<td class="bg-warning"><a target="_blank" href="https://mhmaphelper.agiletravels.com/mice/' + row.mouse + '"><button class="btn btn-warning">' + row.mouse + '</button></a></td>';
                 } else {
-                    final_html += '<td class="bg-warning"><button class="btn btn-warning">' + (row.dusted == 1 ? 'Dusted ' : '' ) + row.map + (row.dusted == 2 ? ' (Split Dust)' : '' ) + '</button></td>';
+                    final_html += '<td class="bg-warning"><a target="_blank" href="https://mhhunthelper.agiletravels.com/mapper.php?item=' + row.map_id + '"><button class="btn btn-warning">' + (row.dusted == 1 ? 'Dusted ' : '' ) + row.map + (row.dusted == 2 ? ' (Split Dust)' : '' ) + '</button></a></td>';
                 }
 
                 final_html += '<td style="width:15%" class="bg-success">';
@@ -249,46 +253,7 @@
                 $('#rewardInputGroup').hide();
                 break;
         }
-        // updateFBMessage();
     }
-
-    // $('#rewardCount').on("input", updateFBMessage);
-    // $('#mapName').on("input change", updateFBMessage);
-    // $('#mouseName').on("input change", updateFBMessage);
-
-    // function updateFBMessage() {
-        // switch($('#postType').val()) {
-            // case 'snipe_request':
-                // $('#fbGroupMessage').val('Looking for a snipe of ' + $('#mouseName').val() + '.\nReward: ' + $('#rewardCount').val() + ' SB+.');
-                // break;
-            // case 'snipe_offer':
-                // $('#fbGroupMessage').val('Offering to snipe ' + $('#mouseName').val() + '.\nPrice: ' + $('#rewardCount').val() + ' SB+.');
-                // break;
-            // case 'leech_request':
-                // $('#fbGroupMessage').val('Looking to leech on ' + $('#mapName').val() + '.\nReward: ' + $('#rewardCount').val() + ' SB+.');
-                // break;
-            // case 'leech_offer':
-                // $('#fbGroupMessage').val('Offering a leech spot on ' + $('#mapName').val() + '.\nPrice: ' + $('#rewardCount').val() + ' SB+.');
-                // break;
-            // case 'helper_request':
-                // $('#fbGroupMessage').val('Looking for helpers to join ' + $('#mapName').val() + '.');
-                // break;
-            // case 'helper_offer':
-                // $('#fbGroupMessage').val('Offering to help with ' + $('#mapName').val() + '.');
-                // break;
-        // }
-    // }
-
-    // hideFBMessage();
-    // $('#mapmeisters').change(hideFBMessage);
-
-    // function hideFBMessage() {
-        // if ($('#mapmeisters').is(':checked')) {
-            // $('#fbGroupMessage').show();
-        // } else {
-           // $('#fbGroupMessage').hide();
-        // }
-    // }
 
     // Create new request form
     $("#newPostForm").validate({

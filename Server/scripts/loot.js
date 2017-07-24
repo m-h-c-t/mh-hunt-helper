@@ -48,7 +48,11 @@ $( function() {
 
     function addAutocomplete(items) {
         $('#item').autocomplete({
-            source: items,
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(items, request.term);
+                response(results.slice(0, 10));
+            },
+            delay: 0,
             select: function( event, ui ) {
                 searchItems(ui.item.id, renderResultsTable);
             }

@@ -62,7 +62,7 @@ function getUserRequests() {
 
 function getRequestsQueryBuilder($user_specific = false) {
     $query = '
-        SELECT r.id, UNIX_TIMESTAMP(r.timestamp) as timestamp, mhmhm.name as mouse, f.first_name, f.fb_id, r.reward_count, r.man_expired, m.name as map, r.dusted, rt.name as request_type
+        SELECT r.id, UNIX_TIMESTAMP(r.timestamp) as timestamp, mhmhm.name as mouse, f.first_name, f.fb_id, r.reward_count, r.man_expired, m.name as map, r.dusted, rt.name as request_type, m.id as map_id
         FROM requests r
         INNER JOIN fb_users f ON r.fb_user_id = f.id
         INNER JOIN request_types rt on r.type_id = rt.id
@@ -86,6 +86,10 @@ function getRequestsQueryBuilder($user_specific = false) {
 function createNewRequest() {
     global $pdo;
     $error_message = 'Missing some of the info, please make sure to log in and fill out the form completely.';
+
+    if (!empty($_REQUEST['test'])) {
+        die('Request added!');
+    }
 
     if (empty($_REQUEST['postType'])) {
         error_log('Unknown sniper request mh_action.');

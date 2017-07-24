@@ -48,7 +48,11 @@ $( function() {
 
     function addAutocomplete(mice) {
         $('#mouse').autocomplete({
-            source: mice,
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(mice, request.term);
+                response(results.slice(0, 10));
+            },
+            delay: 0,
             select: function( event, ui ) {
                 searchMice(ui.item.id, renderResultsTable);
             }
