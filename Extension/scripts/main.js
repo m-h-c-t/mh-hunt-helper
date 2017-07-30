@@ -117,6 +117,7 @@
         var response = JSON.parse(xhr.responseText);
         var message = {};
         var journal = {};
+        message.extension_version = formatVersion(mhhh_version);
 
         if (!response.active_turn || !response.success || !response.journal_markup) {
             window.console.log("MHHH: Missing Info (trap check or friend hunt)(1)");
@@ -124,14 +125,19 @@
         }
 
         for (var i=0; i < response.journal_markup.length; i++) {
-            if (response.journal_markup[i].render_data.css_class.match(/(catchfailure|catchsuccess|attractionfailure)/) &&
-                response.journal_markup[i].render_data.css_class.match(/active/)) {
+            var journal_entry = response.journal_markup[i].render_data;
+            if (journal_entry.css_class.search("relicHunter_catch") !== -1) {
+                message.rh_environment = journal_entry.environment;
+                sendMessage(message);
+            }
+            else if (Object.keys(journal).length === 0 &&
+                journal_entry.css_class.match(/(catchfailure|catchsuccess|attractionfailure)/) &&
+                journal_entry.css_class.match(/active/)) {
                 journal = response.journal_markup[i];
-                break;
             }
         }
 
-        if (!journal) {
+        if (Object.keys(journal).length === 0) {
             window.console.log("MHHH: Missing Info (trap check or friend hunt)(2)");
             return;
         }
@@ -143,10 +149,8 @@
         }
 
         message = fixLGLocations(message, response, journal);
-        message = fixTransitionMice(message, response, journal);
-        if (message && !message.stage) {
-            message = getStage(message, response, journal);
-        }
+        message = getStage(message, response, journal);
+        message = fixTransitionMice(message, response, journal); // Must be after get stage to fix bad stages
 
         if (!message || !message.location || !message.location.name) {
             window.console.log("MHHH: Missing Info (will try better next hunt)(2)");
@@ -157,8 +161,10 @@
             message = getLoot(message, response, journal);
         }
 
-        message.extension_version = formatVersion(mhhh_version);
-
+        sendMessage(message);
+    }
+    
+    function sendMessage(message) {
         // Send to database
         $.post(db_url, message)
             .done(function (data) {
@@ -166,8 +172,6 @@
                     window.console.log(data);
                 }
             });
-
-
     }
 
     function getMainHuntInfo(message, response, journal) {
@@ -278,6 +282,9 @@
     }
 
     function fixTransitionMice(message, response, journal) {
+        if (!message) {
+            return "";
+        }
         switch (message.location.name) {
             case "Acolyte Realm":
                 if (message.mouse === "Realm Ripper") {
@@ -286,22 +293,16 @@
                     message.stage = "Closed";
                 }
                 break;
-            case "Jungle of Dread":
-                if (message.mouse === "Riptide") {
-                    // Can't determine Balack's Cove stage
-                    return "";
-                }
-                break;
-            case "Slushy Shoreline":
-                if (message.mouse === "Icewing") {
-                    message.location.name = "Iceberg";
-                    message.location.id = 40;
-                    message.stage = "1800ft";
-                }
-                break;
             case "Bristle Woods Rift":
                 if (message.mouse === "Absolute Acolyte") {
                     message.stage = "Acolyte";
+                }
+                break;
+            case "Burroughs Rift":
+                if (message.stage !== "Mist 19-20") {
+                    if (message.mouse === "Menace of the Rift") {
+                        message.stage = "Mist 19-20";
+                    }
                 }
                 break;
             case "Fiery Warpath":
@@ -320,31 +321,13 @@
                     if (message.mouse === "Monster of the Meteor"
                         || message.mouse === "Dawn Guardian") {
                         message.stage = "Dawn";
-                    } else if (message.mouse === "Arcane Summoner") {
+                    } else if (message.mouse === "Arcane Summoner"
+                        || message.mouse === "Battering Ram") {
                         return "";
                     }
                 }
-                break;
-            case "Seasonal Garden":
-                if (message.mouse === "Chess Master"
-                    || message.mouse === "Technic King"
-                    || message.mouse === "Mystic King") {
-                    message.location.name = "Zugzwang's Tower";
-                    message.location.id = 32;
-                    delete message.stage;
-                }
-                break;
-            case "Burroughs Rift":
-                if (message.stage !== "Mist 19-20") {
-                    if (message.mouse === "Menace of the Rift") {
-                        message.stage = "Mist 19-20";
-                    }
-                }
-                break;
-            case "Twisted Garden":
-                if (message.mouse === "Carmine the Apothecary") {
-                    message.location.name = "Living Garden";
-                    message.location.id = 35;
+                if (message.mouse === "Heart of the Meteor") {
+                    message.stage = "Heart of the Meteor";
                 }
                 break;
             case "Iceberg":
@@ -364,12 +347,48 @@
                     }
                 }
                 break;
+            case "Jungle of Dread":
+                if (message.mouse === "Riptide") {
+                    // Can't determine Balack's Cove stage
+                    return "";
+                }
+                break;
+            case "Sand Dunes":
+                if (message.mouse === "Grubling") {
+                    message.stage = "Stampede";
+                }
+                break;
+            case "Seasonal Garden":
+                if (message.mouse === "Chess Master"
+                    || message.mouse === "Technic King"
+                    || message.mouse === "Mystic King") {
+                    message.location.name = "Zugzwang's Tower";
+                    message.location.id = 32;
+                    delete message.stage;
+                }
+                break;
+            case "Slushy Shoreline":
+                if (message.mouse === "Icewing") {
+                    message.location.name = "Iceberg";
+                    message.location.id = 40;
+                    message.stage = "1800ft";
+                }
+                break;
+            case "Twisted Garden":
+                if (message.mouse === "Carmine the Apothecary") {
+                    message.location.name = "Living Garden";
+                    message.location.id = 35;
+                }
+                break;
         }
 
         return message;
     }
 
     function getStage(message, response, journal) {
+        if (!message) {
+            return "";
+        }
         switch (response.user.location) {
             case "Labyrinth":
                 message = getLabyrinthStage(message, response, journal);
@@ -451,11 +470,7 @@
     }
 
     function getFieryWarpathStage(message, response, journal) {
-        if (message.mouse === "Warmonger") {
-            message.stage = "Wave 4";
-        } else {
-            message.stage = "Wave " + response.user.viewing_atts.desert_warpath.wave;
-        }
+        message.stage = "Wave " + response.user.viewing_atts.desert_warpath.wave;
 
         return message;
     }
@@ -581,7 +596,7 @@
         } else if (depth < 25000) {
             message.stage = "15-25km";
         } else if (depth >= 25000) {
-            message.stage = "25+km";
+            message.stage = "25km+";
         }
 
         return message;
@@ -750,7 +765,7 @@
     }
 
     function getFortRoxStage(message, response, journal) {
-        if (message.mouse === "Heart of the Meteor" || response.user.quests.QuestFortRox.is_lair) {
+        if (response.user.quests.QuestFortRox.is_lair) {
             message.stage = "Heart of the Meteor";
         } else if (response.user.quests.QuestFortRox.is_dawn) {
             message.stage = "Dawn";
