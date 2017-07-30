@@ -150,7 +150,7 @@ if (!empty($_POST['loot']) && $hunt_id > 0) {
 thanks();
 
 function thanks() {
-    die("MHHH: Thanks for the hunt info!");
+    die("MHHH: Thanks for the MH hunt info!");
 }
 
 function formatVersion($version) {
@@ -163,6 +163,17 @@ function formatVersion($version) {
 		$version = intval($new_version);
 	}
 	return $version;
+}
+
+function recordRelicHunter() {
+    $query = $pdo->prepare('select rh_environment from mhhunthelper.states');
+    $query->execute();
+    if ($_POST['rh_environment'] == $query->fetchColumn()) {
+        return;
+    }
+
+    $query = $pdo->prepare('UPDATE mhhunthelper.states SET rh_environment = ?, rh_timestamp = NOW()');
+    $query->execute(array($_POST['rh_environment']));
 }
 
 ?>

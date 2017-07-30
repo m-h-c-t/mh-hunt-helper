@@ -89,7 +89,7 @@
             recordMap(xhr);
         }
     });
-    
+
     // Record map mice
     function recordMap(xhr) {
         if (!xhr.responseJSON.treasure_map || !xhr.responseJSON.treasure_map.board_id || !xhr.responseJSON.treasure_map.name) {
@@ -100,7 +100,7 @@
         map.id = xhr.responseJSON.treasure_map.board_id;
         map.name = xhr.responseJSON.treasure_map.name.replace(/\ treasure/i, '');
         map.name = map.name.replace(/rare\ /i, '');
-        
+
         map.extension_version = formatVersion(mhhh_version);
 
         // Send to database
@@ -163,7 +163,7 @@
 
         sendMessage(message);
     }
-    
+
     function sendMessage(message) {
         // Send to database
         $.post(db_url, message)
@@ -380,6 +380,19 @@
                     message.location.id = 35;
                 }
                 break;
+            case "Whisker Woods Rift":
+                if (message.mouse === "Cyclops Barbarian") {
+                    message.stage.clearing = "CC 50";
+                } else if (message.mouse === "Centaur Ranger") {
+                    message.stage.tree = "GGT 50";
+                } else if (message.mouse === "Tri-dra") {
+                    message.stage.lagoon = "DL 50";
+                } else if (message.mouse === "Monstrous Black Widow") {
+                    message.stage.clearing = "CC 50";
+                    message.stage.tree = "GGT 50";
+                    message.stage.lagoon = "DL 50";
+                }
+                break;
         }
 
         return message;
@@ -442,15 +455,49 @@
             case "Gnawnian Express Station":
                 message = getTrainStage(message, response, journal);
                 break;
-            // case "Whisker Woods Rift":
-                // message = get---Stage(message, response, journal);
-                // break;
+            case "Whisker Woods Rift":
+                message = getWhiskerWoodsRiftStage(message, response, journal);
+                break;
             case "Forbidden Grove":
                 message = getFobiddenGroveStage(message, response, journal);
                 break;
             case "Bristle Woods Rift":
                 message = getBristleWoodsRiftStage(message, response, journal);
                 break;
+        }
+
+        return message;
+    }
+
+    function getWhiskerWoodsRiftStage(message, response, journal) {
+        var clearing = response.user.quests.QuestRiftWhiskerWoods.zones.clearing.level;
+        var tree = response.user.quests.QuestRiftWhiskerWoods.zones.tree.level;
+        var lagoon = response.user.quests.QuestRiftWhiskerWoods.zones.lagoon.level;
+
+        message.stages = [];
+
+        if (0 <= clearing && clearing <= 24) {
+            message.stages.clearing = 'CC 0-24';
+        } else if (25 <= clearing && clearing <= 49) {
+            message.stages.clearing = 'CC 25-49';
+        } else {
+            message.stages.clearing = 'CC 50';
+        }
+
+        if (0 <= tree && tree <= 24) {
+            message.stages.tree = 'GGT 0-24';
+        } else if (25 <= tree && tree <= 49) {
+            message.stages.tree = 'GGT 25-49';
+        } else {
+            message.stages.tree = 'GGT 50';
+        }
+
+        if (0 <= lagoon && lagoon <= 24) {
+            message.stages.lagoon = 'DL 0-24';
+        } else if (25 <= lagoon && lagoon <= 49) {
+            message.stages.lagoon = 'DL 25-49';
+        } else {
+            message.stages.lagoon = 'DL 50';
         }
 
         return message;

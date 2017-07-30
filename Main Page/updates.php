@@ -2,6 +2,9 @@
 <a href="https://github.com/DevJackSmith/mh-hunt-helper/issues">Next things I'm planning to work on (as time permits)</a>.<br/><br/>
 
 <b>Updates</b> (newest first):<br/>
+-Added client side RH tracking (1.12.00)<br/>
+-Added client side WWR stages logic (1.12.00)<br/>
+-Fixed transition mice rules (1.12.00)<br/>
 -Added Mapper Tool<br/>
 -Added Spotter integration with Discord<br/>
 -Added new Toxic Spill with stages (1.11.11)<br/>
