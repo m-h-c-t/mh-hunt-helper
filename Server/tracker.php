@@ -24,30 +24,30 @@
     </div>
     <div class="container">
         <?php
+        $file_name = 'tracker.json';
+        $location = 'Unknown';
+        $time_since = 'a while';
+        $data = file_get_contents($file_name);
 
-        require_once "config.php";
+        if (!empty($data)) {
+            $data = json_decode($data);
 
-        // PDO
-        $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-        $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            if (!empty($data->rh->location)) {
+                $location = $data->rh->location;
+            }
 
-        $query = $pdo->prepare("SELECT rh_environment, rh_timestamp FROM states");
-        $query->execute();
-        $states = $query->fetch(PDO::FETCH_ASSOC);
+            if ($data->rh->last_seen != 0) {
+                $last_seen = $data->rh->last_seen;
+                $date = new DateTime("@$last_seen");
+                $now = new DateTime();
 
-        if (!$states['rh_environment']) {
-            $states['rh_environment'] = 'unknown';
-            $states['rh_timestamp'] = 'a while';
-        } else {
-            $date = new DateTime($states['rh_timestamp']);
-            $now = new DateTime();
-
-            $states['rh_timestamp'] = $date->diff($now)->format("%h hour(s) and %i minute(s)");
+                $time_since = $date->diff($now)->format("%h hour(s) and %i minute(s)");
+            }
         }
 
         ?>
-        <h3>Current Relic Hunter Location: <?php print $states['rh_environment']; ?>.<br/>
-            <small>Last seen: <?php print $states['rh_timestamp']; ?> ago.</small>
+        <h3>Current Relic Hunter Location: <?php print $location; ?>.<br/>
+            <small>Last seen: <?php print $time_since; ?> ago.</small>
         </h3><br/><br/>
 
         <?php require_once "stats.php"; ?>

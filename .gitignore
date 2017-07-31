@@ -2,5 +2,6 @@
 /mhhh.pem
 /old versions/
 /Server/config.php
+/Server/tracker.json
 /.idea/
 ga.php

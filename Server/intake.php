@@ -166,16 +166,27 @@ function formatVersion($version) {
 }
 
 function recordRelicHunter() {
-    $query = $pdo->prepare('SELECT rh_environment FROM mhhunthelper.states');
-    $query->execute();
-    if ($_POST['rh_environment'] == $query->fetchColumn()) {
-        $query = $pdo->prepare('UPDATE mhhunthelper.states SET rh_timestamp = NOW()');
-        $query->execute();
-        return;
+    $file_name = 'tracker.json';
+    $location = filter_var($_POST['rh_environment'], FILTER_SANITIZE_STRING);
+
+    $data = file_get_contents($file_name);
+
+    if (!empty($data)) {
+        $data = json_decode($data);
+        if (!empty($data->rh)) {
+            $data->rh->location = $location;
+            $data->rh->last_seen = time();
+        }
+    } else {
+        $data = [
+            "rh" => [
+                "location" => $location,
+                "last_seen" => time()
+            ]
+        ];
     }
 
-    $query = $pdo->prepare('UPDATE mhhunthelper.states SET rh_environment = ?, rh_timestamp = NOW()');
-    $query->execute(array($_POST['rh_environment']));
+    file_put_contents($file_name, json_encode($data));
 }
 
 ?>
