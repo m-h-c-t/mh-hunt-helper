@@ -23,7 +23,18 @@ if (!in_array($_POST['extension_version'], [11111, 11200])) {
     die("MH Helper: Please update to the latest version!");
 }
 
-require "config.php";
+$_POST['name'] = str_ireplace("common ", "", $_POST['name']);
+
+if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['mice'])
+    || in_array('Paladin Weapon Master', $_POST['mice'])
+    || in_array('Manaforge Smith', $_POST['mice'])
+    || in_array('Hired Eidolon', $_POST['mice'])
+    || in_array('Desert Nomad', $_POST['mice']))) {
+    error_log('Old map submitted');
+    thanks();
+}
+
+require_once "config.php";
 
 // PDO
 $pdo = new PDO("mysql:host=$mms_servername;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
@@ -44,8 +55,6 @@ if ($query->fetchColumn()) {
     // Not sure why this even gets hit so much
     thanks();
 }
-
-$_POST['name'] = str_ireplace("common ", "", $_POST['name']);
 
 $query = $pdo->prepare('SELECT m.id FROM maps m WHERE m.name LIKE ? LIMIT 1');
 $query->execute(array($_POST['name']));
