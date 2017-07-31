@@ -52,7 +52,7 @@
 
         <?php require_once "stats.php"; ?>
 
-        <br/><p class="text-center">For more info, copy of the data, or if you want to help with data, please look <a href="https://www.agiletravels.com">here</a>.</p>
+        <br/><p class="text-center">For more info, copy of the data, or if you want to help with data gathering, please look <a href="https://www.agiletravels.com">here</a>.</p>
     </div>
     <?php include_once("ga.php") ?>
 </body>
