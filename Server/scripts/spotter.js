@@ -221,7 +221,7 @@
             });
             $('#currentRequests').html(final_html);
             $('.expire_button').click(expireRequest);
-            if (window.location.hash) {
+            if (window.location.hash && $(window.location.hash).length) {
                 $('html,body').animate({scrollTop: $(window.location.hash).offset().top});
             }
             $("#loader").css( "display", "none" );
