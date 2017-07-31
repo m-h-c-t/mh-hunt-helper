@@ -166,9 +166,11 @@ function formatVersion($version) {
 }
 
 function recordRelicHunter() {
-    $query = $pdo->prepare('select rh_environment from mhhunthelper.states');
+    $query = $pdo->prepare('SELECT rh_environment FROM mhhunthelper.states');
     $query->execute();
     if ($_POST['rh_environment'] == $query->fetchColumn()) {
+        $query = $pdo->prepare('UPDATE mhhunthelper.states SET rh_timestamp = NOW()');
+        $query->execute();
         return;
     }
 

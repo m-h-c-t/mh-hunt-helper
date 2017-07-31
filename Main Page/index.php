@@ -45,6 +45,9 @@
             <a href="https://mhhunthelper.agiletravels.com/mapper.php" style="display:block;text-decoration:none;color:#333;">Mapper</a>
         </td></tr>
         <tr><td>
+            <a href="https://mhhunthelper.agiletravels.com/tracker.php" style="display:block;text-decoration:none;color:#333;">Tracker</a>
+        </td></tr>
+        <tr><td>
             <a href="https://www.mousehuntgame.com/forum/showthread.php?130827-Jack-s-MH-Tools" style="display:block;text-decoration:none;color:#333;">Feedback / Support Forum</a>
         </td></tr>
         <tr><td>
@@ -66,7 +69,6 @@
         </div>
     </div>
     <br/>
-    <?php require "stats.php" ?>
     <?php include_once("ga.php") ?>
     <br/>
 </body>

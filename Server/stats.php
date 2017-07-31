@@ -27,7 +27,7 @@ $submitted_maps = $query->fetchColumn();
 print '
     <table class="table table-hover table-bordered" style="width:auto;margin:auto;">
         <thead>
-            <tr><th colspan="2" class="text-center">Stats so far</th><tr></thead>
+            <tr><th colspan="2" class="text-center">Jack\'s Tools so far</th><tr></thead>
         <tbody>
             <tr><td>Contributors:</td><td>'    . $row['users']     . ' - Thank you! :)</td></tr>
             <tr><td>Hunt submissions</td><td>' . $row['hunts']     . '</td></tr>
