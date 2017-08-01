@@ -31,6 +31,7 @@
 <div id="loader" class="loader"></div>
 <div id="fb-root"></div>
 
+<?php if (empty($_GET['nokitty'])) { ?>
 <!-- Jumbotron -->
 <div class="jumbotron">
     <div class="container-fluid">
@@ -39,9 +40,12 @@
         <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
     </div>
 </div>
+<?php } else { ?>
+<br/>
+<?php } ?>
 
 <div class="container">
-    <a href="spotter.php" class="pull-left"><button class="btn btn-default">Back to all Requests / Offers</button></a><br/><br/>
+    <a href="spotter.php<?php print (empty($_GET['nokitty']) ? '' : '?nokitty=1'); ?>" class="pull-left"><button class="btn btn-default">Back to all Requests / Offers</button></a><br/><br/>
 </div>
 
 <div id="newPostArea" class="container">

@@ -24,6 +24,7 @@
 <body class="text-center" style="background-color: #fff;">
 <div id="loader" class="loader"></div>
 
+<?php if (empty($_GET['nokitty'])) { ?>
 <!-- Jumbotron -->
 <div class="jumbotron">
     <div class="container-fluid">
@@ -32,9 +33,11 @@
         <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
     </div>
 </div>
-
+<?php } else { ?>
+<br/>
+<?php } ?>
 <div class="container">
-    <a href="spotterManager.php" class="pull-right"><button class="btn btn-success">Create/Manage Posts</button></a><br/><br/>
+    <a href="spotterManager.php<?php print (empty($_GET['nokitty']) ? '' : '?nokitty=1'); ?>" class="pull-right"><button class="btn btn-success">Create/Manage Posts</button></a><br/><br/>
 
     <span>All requests automatically removed 48 hours after posting. Sorted by oldest first.</span><br/>
     <span>Stay vigilant! Check if the other party is in a FB Maps Group Like Mapmeisters, LMM, MMS, etc.</span><br/>
