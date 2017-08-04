@@ -18,19 +18,20 @@ if (
     thanks();
 }
 
-if (!in_array($_POST['extension_version'], [11111, 11200])) {
+if (!in_array($_POST['extension_version'], [11200])) {
     error_log("Bad version: " . $_POST['extension_version']);
     die("MH Helper: Please update to the latest version!");
 }
 
-$_POST['name'] = str_ireplace("common ", "", $_POST['name']);
+$_POST['name'] = str_ireplace("common ", "", $_POST['name']); // SHOULD BE MOVED TO CLIENT SIDE
+$_POST['name'] = str_ireplace("Ardouous", "Arduous", $_POST['name']); // SHOULD BE MOVED TO CLIENT SIDE
 
 if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['mice'])
     || in_array('Paladin Weapon Master', $_POST['mice'])
     || in_array('Manaforge Smith', $_POST['mice'])
     || in_array('Hired Eidolon', $_POST['mice'])
     || in_array('Desert Nomad', $_POST['mice']))) {
-    error_log('Old map submitted');
+    // error_log('Old map submitted');
     thanks();
 }
 
