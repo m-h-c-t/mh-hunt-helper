@@ -58,8 +58,8 @@
     </div>
     </div>
     <div class="container">
-        <p class="muted">If you want to help, please install browser extension/add-on:<br/>
-            <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek">Chrome</a>, <a href="https://addons.mozilla.org/en-US/firefox/addon/jacks-mousehunt-helper/">Firefox</a> or <a href="https://addons.opera.com/en/extensions/details/jacks-mousehunt-helper/">Opera</a>.<br/>These projects are brought to you by <a href="https://devjacksmith.github.io" target="_blank">Jack</a> from <a href="https://www.mousehuntgame.com/profile.php?snuid=100004585984363" target="_blank">Cluless Cats</a> team.<br/>The code and data are Open Source on <a href="https://github.com/DevJackSmith/" target="_blank">GitHub</a>.<br/>Also check out <a href="https://sites.google.com/site/mhtimerslinks/">MH Timers & Links</a>, <a href="https://tsitu.github.io/MH-Tools/">Tsitu's MH Tools</a>, <a href="https://www.reddit.com/r/mousehunt/">MH Subreddit</a> and join us on <a href="https://discord.gg/E4utmBD">Discord</a>.</p>
+        <p class="muted">If you want to help, please install the browser extension below.<br/>
+            These projects are brought to you by <a href="https://devjacksmith.github.io" target="_blank">Jack</a> from <a href="https://www.mousehuntgame.com/profile.php?snuid=100004585984363" target="_blank">Cluless Cats</a> team.<br/>The code and data are Open Source on <a href="https://github.com/DevJackSmith/" target="_blank">GitHub</a>.<br/>Also check out <a href="https://www.reddit.com/r/mousehunt/">MH Subreddit</a> and join us on <a href="https://discord.gg/E4utmBD">Discord</a>.</p>
     </div>
     <div class="container">
         <div class="text-center">
