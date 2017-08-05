@@ -24,8 +24,7 @@ foreach($id_value_intake as $item) {
 
 // only value intake
 $value_intake = array(
-    ["name" => "mouse", "table_name" => "mice",   "optional" => true],
-    ["name" => "stage", "table_name" => "stages", "optional" => true]
+    ["name" => "mouse", "table_name" => "mice",   "optional" => true]
 );
 
 foreach($value_intake as $item) {
@@ -115,6 +114,35 @@ $query->execute($bindings);
 
 $hunt_id = $pdo->lastInsertId();
 
+// Stage(s)
+if (!empty($_POST['stage']) && !empty($hunt_id)) {
+    if (is_string($_POST['stage'])) {
+        $_POST['stage'] = array($_POST['stage']);
+    }
+
+    foreach ($_POST['stage'] as $stage_name) {
+        $stage_id = 0;
+        $query = $pdo->prepare('SELECT id FROM mhhunthelper.stages WHERE name LIKE ?');
+        $query->execute(array($stage_name));
+
+        $stage_id = $query->fetchColumn();
+
+        if (!$stage_id) {
+            $query = $pdo->prepare('INSERT INTO mhhunthelper.stages (name) VALUES (?)');
+            $query->execute(array($stage_name));
+            $stage_id = $pdo->lastInsertId();
+        }
+
+
+        if (!empty($stage_id)) {
+            $query = $pdo->prepare("INSERT INTO hunt_stage (hunt_id, stage_id) VALUES (?, ?)");
+            $query->execute(array($hunt_id, $stage_id));
+        }
+    }
+}
+
+
+// Loot
 if (!empty($_POST['loot']) && $hunt_id > 0) {
     $loot_array = [];
     foreach ($_POST['loot'] as $loot_item) {

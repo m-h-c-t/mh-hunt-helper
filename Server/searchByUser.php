@@ -41,14 +41,15 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, 
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 $query_string = '
-    SELECT timestamp, l.name as location, s.name as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.caught, m.name as mouse, c.name as cheese, GROUP_CONCAT(CONCAT_WS(" ", hl.amount, lt.name) separator ", ") as loot
+    SELECT timestamp, l.name as location, GROUP_CONCAT(DISTINCT s.name) as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.caught, m.name as mouse, c.name as cheese, GROUP_CONCAT(CONCAT_WS(" ", hl.amount, lt.name) separator ", ") as loot
     FROM hunts h
-    LEFT JOIN locations l on h.location_id = l.id
-    LEFT JOIN stages s on h.stage_id = s.id
+    INNER JOIN locations l on h.location_id = l.id
+    LEFT JOIN hunt_stage hs on h.id = hs.hunt_id
+    LEFT JOIN stages s on hs.stage_id = s.id
     LEFT JOIN mice m on h.mouse_id = m.id
-    LEFT JOIN cheese c on h.cheese_id = c.id
-    LEFT JOIN traps t on h.trap_id = t.id
-    LEFT JOIN bases b on h.base_id = b.id
+    INNER JOIN cheese c on h.cheese_id = c.id
+    INNER JOIN traps t on h.trap_id = t.id
+    INNER JOIN bases b on h.base_id = b.id
     LEFT JOIN charms ch on h.charm_id = ch.id
     LEFT JOIN hunt_loot hl on h.id = hl.hunt_id
     LEFT JOIN loot lt on hl.loot_id = lt.id
