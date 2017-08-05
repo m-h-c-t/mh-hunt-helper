@@ -2,6 +2,8 @@
 <a href="https://github.com/DevJackSmith/mh-hunt-helper/issues">Next things I'm planning to work on (as time permits)</a>.<br/><br/>
 
 <b>Updates</b> (newest first):<br/>
+-Fixed WWR stages logic (1.12.01)<br/>
+-Separated stages from hunts in a multi to one relationship<br/>
 -Added client side RH tracking (1.12.00)<br/>
 -Added client side WWR stages logic (1.12.00)<br/>
 -Fixed transition mice rules (1.12.00)<br/>

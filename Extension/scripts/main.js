@@ -403,14 +403,39 @@
             return "";
         }
         switch (response.user.location) {
-            case "Labyrinth":
-                message = getLabyrinthStage(message, response, journal);
+            case "Balack's Cove":
+                message = getBalacksCoveStage(message, response, journal);
+                break;
+            case "Bristle Woods Rift":
+                message = getBristleWoodsRiftStage(message, response, journal);
+                break;
+            case "Burroughs Rift":
+                message = getBurroughsRiftStage(message, response, journal);
+                break;
+            case "Cursed City":
+            case "Lost City":
+                message = getLostCityStage(message, response, journal);
                 break;
             case "Fiery Warpath":
                 message = getFieryWarpathStage(message, response, journal);
                 break;
-            case "Balack's Cove":
-                message = getBalacksCoveStage(message, response, journal);
+            case "Forbidden Grove":
+                message = getFobiddenGroveStage(message, response, journal);
+                break;
+            case "Fort Rox":
+                message = getFortRoxStage(message, response, journal);
+                break;
+            case "Furoma Rift":
+                message = getFuromaRiftStage(message, response, journal);
+                break;
+            case "Gnawnian Express Station":
+                message = getTrainStage(message, response, journal);
+                break;
+            case "Iceberg":
+                message = getIcebergStage(message, response, journal);
+                break;
+            case "Labyrinth":
+                message = getLabyrinthStage(message, response, journal);
                 break;
             case "Living Garden":
                 message = getLivingGardenStage(message, response, journal);
@@ -418,51 +443,23 @@
             case "Sand Dunes":
                 message = getSandDunesStage(message, response, journal);
                 break;
-            case "Lost City":
-            case "Cursed City":
-                message = getLostCityStage(message, response, journal);
-                break;
-            case "Iceberg":
-                message = getIcebergStage(message, response, journal);
+            case "Seasonal Garden":
+                message = getSeasonalGardenStage(message, response, journal);
                 break;
             case "Sunken City":
                 message = getSunkenCityStage(message, response, journal);
                 break;
-            case "Zokor":
-                message = getZokorStage(message, response, journal);
-                break;
-            case "Seasonal Garden":
-                message = getSeasonalGardenStage(message, response, journal);
-                break;
-            case "Furoma Rift":
-                message = getFuromaRiftStage(message, response, journal);
-                break;
             case "Toxic Spill":
                 message = getToxicSpillStage(message, response, journal);
-                break;
-            case "Burroughs Rift":
-                message = getBurroughsRiftStage(message, response, journal);
                 break;
             case "Twisted Garden":
                 message = getTwistedGardenStage(message, response, journal);
                 break;
-            // case "Sand Crypts":
-                // message = get---Stage(message, response, journal);
-                // break;
-            case "Fort Rox":
-                message = getFortRoxStage(message, response, journal);
-                break;
-            case "Gnawnian Express Station":
-                message = getTrainStage(message, response, journal);
-                break;
             case "Whisker Woods Rift":
                 message = getWhiskerWoodsRiftStage(message, response, journal);
                 break;
-            case "Forbidden Grove":
-                message = getFobiddenGroveStage(message, response, journal);
-                break;
-            case "Bristle Woods Rift":
-                message = getBristleWoodsRiftStage(message, response, journal);
+            case "Zokor":
+                message = getZokorStage(message, response, journal);
                 break;
         }
 
@@ -474,30 +471,30 @@
         var tree = response.user.quests.QuestRiftWhiskerWoods.zones.tree.level;
         var lagoon = response.user.quests.QuestRiftWhiskerWoods.zones.lagoon.level;
 
-        message.stages = [];
+        message.stage = {};
 
         if (0 <= clearing && clearing <= 24) {
-            message.stages.clearing = 'CC 0-24';
+            message.stage.clearing = 'CC 0-24';
         } else if (25 <= clearing && clearing <= 49) {
-            message.stages.clearing = 'CC 25-49';
+            message.stage.clearing = 'CC 25-49';
         } else {
-            message.stages.clearing = 'CC 50';
+            message.stage.clearing = 'CC 50';
         }
 
         if (0 <= tree && tree <= 24) {
-            message.stages.tree = 'GGT 0-24';
+            message.stage.tree = 'GGT 0-24';
         } else if (25 <= tree && tree <= 49) {
-            message.stages.tree = 'GGT 25-49';
+            message.stage.tree = 'GGT 25-49';
         } else {
-            message.stages.tree = 'GGT 50';
+            message.stage.tree = 'GGT 50';
         }
 
         if (0 <= lagoon && lagoon <= 24) {
-            message.stages.lagoon = 'DL 0-24';
+            message.stage.lagoon = 'DL 0-24';
         } else if (25 <= lagoon && lagoon <= 49) {
-            message.stages.lagoon = 'DL 25-49';
+            message.stage.lagoon = 'DL 25-49';
         } else {
-            message.stages.lagoon = 'DL 50';
+            message.stage.lagoon = 'DL 50';
         }
 
         return message;
