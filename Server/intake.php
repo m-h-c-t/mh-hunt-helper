@@ -45,7 +45,7 @@ foreach($value_intake as $item) {
 
 if (empty($_POST['cheese']['name']) || empty($_POST['cheese']['id']) || !is_numeric($_POST['cheese']['id'])) {
     error_log('Cheese missing');
-    thanks();
+    die();
 }
 
 $query = $pdo->prepare('SELECT count(*) FROM hunts WHERE user_id = :user_id AND entry_id = :entry_id AND timestamp = :entry_timestamp');
@@ -53,7 +53,7 @@ $query->execute(array('user_id' => $_POST['user_id'], 'entry_id' => $_POST['entr
 
 if ($query->fetchColumn()) {
     error_log("Hunt already existed");
-    thanks();
+    die();
 }
 
 $fields = 'user_id, entry_id, timestamp, location_id, trap_id, base_id, cheese_id, caught, attracted';
@@ -175,11 +175,7 @@ if (!empty($_POST['loot']) && $hunt_id > 0) {
     }
 }
 
-thanks();
-
-function thanks() {
-    sendResponse('success', "MHHH: Thanks for the MH hunt info!");
-}
+sendResponse('success', "MHHH: Thanks for the hunt info!");
 
 function sendResponse($status, $message) {
 	$response = json_encode([

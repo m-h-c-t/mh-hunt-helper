@@ -2,6 +2,7 @@
 <a href="https://github.com/DevJackSmith/mh-hunt-helper/issues">Next things I'm planning to work on (as time permits)</a>.<br/><br/>
 
 <b>Updates</b> (newest first):<br/>
+-Fixed more FW transition mice (1.12.11)<br/>
 -Added flash message (1.12.11)<br/>
 -Redesigned extension popup (1.12.11)<br/>
 -Added extension popup error message (1.12.11)<br/>

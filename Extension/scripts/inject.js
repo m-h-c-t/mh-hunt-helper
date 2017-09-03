@@ -13,7 +13,7 @@ mhhh_flash_message_div.setAttribute(
     "display:none;" +
     "z-index:100;" +
     "position:absolute;" +
-    "top:30%;" +
+    "top:20%;" +
     "background-color: white;" +
     "padding: 10px;" +
     "border-radius: 5px;" +

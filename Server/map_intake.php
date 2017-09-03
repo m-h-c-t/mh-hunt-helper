@@ -3,7 +3,7 @@ $http_origin = $_SERVER['HTTP_ORIGIN'];
 
 if ($http_origin !== "https://www.mousehuntgame.com" && $http_origin !== "http://www.mousehuntgame.com") {
     error_log("Origin didn't match, requests origin was: " . $http_origin);
-    thanks();
+    die();
 }
 
 header("Access-Control-Allow-Origin: $http_origin");
@@ -15,7 +15,7 @@ if (
     empty($_POST['extension_version']) || !is_numeric($_POST['extension_version'])
     ) {
     error_log("One of the fields was missing");
-    thanks();
+    die();
 }
 
 if (!in_array($_POST['extension_version'], [11201, 11211])) {
@@ -32,7 +32,7 @@ if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['
     || in_array('Hired Eidolon', $_POST['mice'])
     || in_array('Desert Nomad', $_POST['mice']))) {
     // error_log('Old map submitted');
-    thanks();
+    die();
 }
 
 require_once "config.php";
@@ -45,7 +45,7 @@ $query = $pdo->prepare('SELECT 1 FROM map_records WHERE map_id = :id LIMIT 1');
 $query->execute(array('id' => $_POST['id']));
 
 if ($query->fetchColumn()) {
-    thanks();
+    die();
 }
 
 $query = $pdo->prepare('SELECT 1 FROM map_mice WHERE map_id = :id LIMIT 1');
@@ -54,7 +54,7 @@ $query->execute(array('id' => $_POST['id']));
 if ($query->fetchColumn()) {
     //error_log("Spotter tried to insert existing map mice again for map id $_POST[id]");
     // Not sure why this even gets hit so much
-    thanks();
+    die();
 }
 
 $query = $pdo->prepare('SELECT m.id FROM maps m WHERE m.name LIKE ? LIMIT 1');
@@ -86,11 +86,7 @@ if ($mice_supplied_count != $mice_inserted_count) {
     error_log("Spotter should have inserted $mice_supplied_count mice, but instead inserted $mice_inserted_count, for map id $_POST[id]");
 }
 
-thanks();
-
-function thanks() {
-    sendResponse('success', "Thanks for the map info!");
-}
+sendResponse('success', "Thanks for the map info!");
 
 function sendResponse($status, $message) {
 	$response = json_encode([
