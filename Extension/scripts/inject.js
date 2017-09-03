@@ -16,7 +16,10 @@ s.onload = function() {
 
 // Forwards messages from popup to main script
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
-    if (request.link === "userhistory" || request.link === "mhmh" || request.link === "tsitu") {
+    if (request.link === "userhistory" ||
+        request.link === "mhmh" ||
+        request.link === "tsitu" ||
+        request.link === "ryonn") {
         window.postMessage({ jacksmessage: request.link }, "*");
     }
 });

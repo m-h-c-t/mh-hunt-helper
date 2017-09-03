@@ -24,7 +24,9 @@
         if (ev.data.jacksmessage === 'userhistory') {
             window.open('https://mhhunthelper.agiletravels.com/searchByUser.php?user=' + user.user_id);
         }
-        else if (ev.data.jacksmessage === 'mhmh' || ev.data.jacksmessage === 'tsitu') {
+        else if (ev.data.jacksmessage === 'mhmh'
+            || ev.data.jacksmessage === 'tsitu'
+            || ev.data.jacksmessage === 'ryonn') {
             openMapMiceSolver(ev.data.jacksmessage);
         }
     }, false);
@@ -39,6 +41,9 @@
         } else if (solver === 'tsitu') {
             url = 'https://tsitu.github.io/MH-Tools/map.html?mice=';
             glue = '/';
+        } else if (solver === 'ryonn') {
+            url = 'http://dbgames.info/mousehunt/tavern?q=';
+            glue = '%2C';
         } else {
             return;
         }

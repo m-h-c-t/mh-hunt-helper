@@ -11,9 +11,13 @@ function openPopupLink(website) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    var buttons = ['mhmh', 'tsitu', 'userhistory'];
+    var buttons = ['mhmh', 'tsitu', 'userhistory', 'ryonn'];
     buttons.forEach(function(id) {
-        document.getElementById(id).addEventListener('click', function() {
+        var button_element = document.getElementById(id);
+        if (!button_element) {
+            return;
+        }
+        button_element.addEventListener('click', function() {
             openPopupLink(id);
         });
     });

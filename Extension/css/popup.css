@@ -1,0 +1,14 @@
+.popup-link {
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.popup-link-out,
+.popup-link-out:hover,
+.popup-link-out:active,
+.popup-link-out:visited {
+    display: block;
+    text-decoration: none;
+    color: black;
+    white-space: nowrap;
+}
