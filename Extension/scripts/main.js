@@ -325,15 +325,39 @@
                 break;
             case "Burroughs Rift":
                 if (message.stage !== "Mist 19-20") {
-                    if (message.mouse === "Menace of the Rift") {
+                    if (message.mouse === "Menace of the Rift"
+                        || message.mouse === 'Big Bad Behemoth Burroughs') {
                         message.stage = "Mist 19-20";
+                    }
+                } else {
+                    if (message.mouse !== 'Big Bad Behemoth Burroughs'
+                        && message.cheese.name === 'Terra Ricotta') {
+                        message.stage = 'Mist 6-18';
                     }
                 }
                 break;
             case "Fiery Warpath":
-                if (message.mouse === "Vanguard"
-                    || message.mouse === "Desert Soldier") {
-                    message.stage = "Wave 1";
+                if (message.mouse === 'Artillery Commander') {
+                    message.stage = "Portal";
+                } else if (message.stage === 'Wave 1') {
+                    if (message.mouse === 'Theurgy Warden'
+                        || message.mouse === 'Warmonger') {
+                        message.stage = 'Wave 4';
+                    }
+                } else if (message.stage === 'Wave 2') {
+                    if (message.mouse === 'Vanguard'
+                        || message.mouse === 'Desert Archer'
+                        || message.mouse === "Desert Soldier") {
+                        message.stage = 'Wave 1';
+                    }
+                } else if (message.stage === "Wave 3") {
+                    if (message.mouse === "Flame Archer"
+                        || message.mouse === "Flame Warrior"
+                        || message.mouse === "Inferno Mage"
+                        || message.mouse === "Sentinel"
+                        || message.mouse === "Sand Cavalry") {
+                        message.stage = "Wave 2";
+                    }
                 } else if (message.stage === "Wave 4") {
                     if (message.mouse !== "Theurgy Warden"
                         && message.mouse !== "Warmonger") {
@@ -539,7 +563,11 @@
     }
 
     function getFieryWarpathStage(message, response, journal) {
-        message.stage = "Wave " + response.user.viewing_atts.desert_warpath.wave;
+        if (response.user.viewing_atts.desert_warpath.wave === 'portal') {
+            message.stage = 'Portal';
+        } else {
+            message.stage = "Wave " + response.user.viewing_atts.desert_warpath.wave;
+        }
 
         return message;
     }
