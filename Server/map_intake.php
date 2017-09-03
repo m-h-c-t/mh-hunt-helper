@@ -18,9 +18,9 @@ if (
     thanks();
 }
 
-if (!in_array($_POST['extension_version'], [11200])) {
+if (!in_array($_POST['extension_version'], [11201, 11211])) {
     error_log("Bad version: " . $_POST['extension_version']);
-    die("MH Helper: Please update to the latest version!");
+    sendResponse('error', "Please update extension to the latest version.");
 }
 
 $_POST['name'] = str_ireplace("common ", "", $_POST['name']); // SHOULD BE MOVED TO CLIENT SIDE
@@ -89,5 +89,13 @@ if ($mice_supplied_count != $mice_inserted_count) {
 thanks();
 
 function thanks() {
-    die("MH Helper: Thanks for the map info!");
+    sendResponse('success', "Thanks for the map info!");
+}
+
+function sendResponse($status, $message) {
+	$response = json_encode([
+		'status' => $status,
+		'message' => $message
+	]);
+	die($response);
 }

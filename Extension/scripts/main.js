@@ -81,6 +81,30 @@
         return mice;
     }
 
+    function showFlashMessage(type, message) {
+        var mhhh_flash_message_div = $('#mhhh_flash_message_div');
+        mhhh_flash_message_div.text("Jack's MH Helper: " + message);
+
+        mhhh_flash_message_div.css('left', 'calc(50% - ' + (mhhh_flash_message_div.width() / 2) + 'px)');
+
+        if (type === 'success') {
+            mhhh_flash_message_div.css('background', 'lightgreen');
+            mhhh_flash_message_div.css('border', '1px solid green');
+        } else if (type === 'error') {
+            mhhh_flash_message_div.css('background', 'pink');
+            mhhh_flash_message_div.css('border', '1px solid red');
+        } else { // warning
+            mhhh_flash_message_div.css('background', 'gold');
+            mhhh_flash_message_div.css('border', '1px solid darkgoldenrod');
+        }
+
+        mhhh_flash_message_div.fadeIn(function() {
+            setTimeout(function() {
+                $('#mhhh_flash_message_div').fadeOut();
+            }, 3000);
+        });
+    }
+
     // Listening router
     $(document).ajaxSuccess(function (event, xhr, ajaxOptions) {
     //   /* Method        */ ajaxOptions.type
@@ -109,12 +133,7 @@
         map.extension_version = formatVersion(mhhh_version);
 
         // Send to database
-        $.post(map_intake_url, map)
-            .done(function (data) {
-                if (data) {
-                    window.console.log(data);
-                }
-            });
+       sendMessageToServer(map_intake_url, map);
     }
 
     // Record successful hunt
@@ -166,15 +185,16 @@
             message = getLoot(message, response, journal);
         }
 
-        sendMessage(message);
+        sendMessageToServer(db_url, message);
     }
 
-    function sendMessage(message) {
+    function sendMessageToServer(url, message) {
         // Send to database
-        $.post(db_url, message)
+        $.post(url, message)
             .done(function (data) {
                 if (data) {
-                    window.console.log(data);
+                    var response = JSON.parse(data);
+                    showFlashMessage(response.status, response.message);
                 }
             });
     }

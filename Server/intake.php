@@ -178,7 +178,15 @@ if (!empty($_POST['loot']) && $hunt_id > 0) {
 thanks();
 
 function thanks() {
-    die("MHHH: Thanks for the MH hunt info!");
+    sendResponse('success', "MHHH: Thanks for the MH hunt info!");
+}
+
+function sendResponse($status, $message) {
+	$response = json_encode([
+		'status' => $status,
+		'message' => $message
+	]);
+	die($response);
 }
 
 function formatVersion($version) {

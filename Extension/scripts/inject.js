@@ -3,7 +3,22 @@ var extension_version = document.createElement("input");
 extension_version.setAttribute("id", "mhhh_version");
 extension_version.setAttribute("type", "hidden");
 extension_version.setAttribute("value", chrome.runtime.getManifest().version);
-(document.head || document.documentElement).appendChild(extension_version);
+document.body.appendChild(extension_version);
+
+// Add flash message div
+var mhhh_flash_message_div = document.createElement("div");
+mhhh_flash_message_div.setAttribute("id", "mhhh_flash_message_div");
+mhhh_flash_message_div.setAttribute(
+    "style",
+    "display:none;" +
+    "z-index:100;" +
+    "position:absolute;" +
+    "top:30%;" +
+    "background-color: white;" +
+    "padding: 10px;" +
+    "border-radius: 5px;" +
+    "box-shadow: 0 0 30px gray;");
+document.body.appendChild(mhhh_flash_message_div);
 
 // Inject main script
 var s = document.createElement('script');
