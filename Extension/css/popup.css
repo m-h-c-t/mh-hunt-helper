@@ -12,3 +12,12 @@
     color: black;
     white-space: nowrap;
 }
+
+.error_popup {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index:+1;
+    width:100%;
+}

@@ -1,11 +1,11 @@
 function openPopupLink(website) {
-    chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
+    chrome.tabs.query({'url': ['*://www.2mousehuntgame.com/*', '*://apps.2facebook.com/mousehunt/*']}, function(tabs) {
         if ( tabs.length > 0 ) {
             chrome.tabs.update(tabs[0].id, {'active': true});
             chrome.tabs.sendMessage(tabs[0].id, {link: website}, function (response) {});
         }
         else {
-            alert("Please navigate to MouseHunt page first.");
+            displayErrorPopup("Please navigate to MouseHunt page first.");
         }
     });
 }
@@ -22,3 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function displayErrorPopup(message) {
+    var error_popup = document.getElementById('error_popup');
+    error_popup.innerHTML = message;
+    error_popup.style.display = 'block';
+    setTimeout( function(){
+        error_popup.style.display = 'none';
+    }, 2000);
+}
