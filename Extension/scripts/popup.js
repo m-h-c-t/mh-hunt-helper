@@ -1,5 +1,5 @@
 function openPopupLink(website) {
-    chrome.tabs.query({'url': ['*://www.2mousehuntgame.com/*', '*://apps.2facebook.com/mousehunt/*']}, function(tabs) {
+    chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
         if ( tabs.length > 0 ) {
             chrome.tabs.update(tabs[0].id, {'active': true});
             chrome.tabs.sendMessage(tabs[0].id, {link: website}, function (response) {});
