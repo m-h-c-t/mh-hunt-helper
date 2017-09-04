@@ -17,7 +17,7 @@ mhhh_flash_message_div.setAttribute(
     "background-color: white;" +
     "padding: 10px;" +
     "border-radius: 5px;" +
-    "box-shadow: 0 0 30px gray;");
+    "box-shadow: 0 0 10px 1px black;");
 document.body.appendChild(mhhh_flash_message_div);
 
 // Inject main script

@@ -43,7 +43,7 @@
             glue = '/';
         } else if (solver === 'ryonn') {
             url = 'http://dbgames.info/mousehunt/tavern?q=';
-            glue = '%2C';
+            glue = ',';
         } else {
             return;
         }
@@ -58,8 +58,7 @@
                         return;
                     }
                     var mice = getMapMice(data, true);
-                    url += encodeURI(mice.join(glue));
-                    new_window.location = url;
+                    new_window.location = encodeURI(url + mice.join(glue));
                 }
             });
     }

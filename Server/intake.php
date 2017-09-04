@@ -175,7 +175,7 @@ if (!empty($_POST['loot']) && $hunt_id > 0) {
     }
 }
 
-sendResponse('success', "MHHH: Thanks for the hunt info!");
+sendResponse('success', "Thanks for the hunt info!");
 
 function sendResponse($status, $message) {
 	$response = json_encode([
