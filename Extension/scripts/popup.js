@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function displayErrorPopup(message) {
     var error_popup = document.getElementById('error_popup');
-    error_popup.innerHTML = message;
+    error_popup.innerText = message;
     error_popup.style.display = 'block';
     setTimeout( function(){
         error_popup.style.display = 'none';
