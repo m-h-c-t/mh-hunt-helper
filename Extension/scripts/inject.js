@@ -1,3 +1,10 @@
+// Pass extension id from manifest to injected script
+var extension_id = document.createElement("input");
+extension_id.setAttribute("id", "mhhh_id");
+extension_id.setAttribute("type", "hidden");
+extension_id.setAttribute("value", chrome.runtime.id);
+document.body.appendChild(extension_id);
+
 // Pass version # from manifest to injected script
 var extension_version = document.createElement("input");
 extension_version.setAttribute("id", "mhhh_version");

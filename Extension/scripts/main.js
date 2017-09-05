@@ -81,6 +81,20 @@
     }
 
     function showFlashMessage(type, message) {
+        var mhhh_id = $("#mhhh_id").val();
+        chrome.runtime.sendMessage(mhhh_id, {get_options: "messages"}, function(response) {
+            checkMessageSettings(type, message, response);
+        });
+    }
+
+    function checkMessageSettings(type, message, settings) {
+        if ((type === 'success' && settings.success_messages)
+            || (type !== 'success' && settings.error_messages)){
+            displayFlashMessage(type, message);
+        }
+    }
+
+    function displayFlashMessage(type, message) {
         var mhhh_flash_message_div = $('#mhhh_flash_message_div');
         mhhh_flash_message_div.text("Jack's MH Helper: " + message);
 
@@ -100,7 +114,7 @@
         mhhh_flash_message_div.fadeIn(function() {
             setTimeout(function() {
                 $('#mhhh_flash_message_div').fadeOut();
-            }, 3000);
+            }, 2000);
         });
     }
 
