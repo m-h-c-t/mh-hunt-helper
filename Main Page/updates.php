@@ -1,89 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Jack's MH Tools Updates</title>
+    <meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+<div class="col-sm-8 col-sm-offset-2">
+    <h1>Updates<small> (newest first)</small></h1>
+	<ul>
+		<li>Added user settings for displaying messages (1.12.12)</li>
+		<li>Added some more links to extension (1.12.12)</li>
+		<li>Fixed more FW transition mice (1.12.11)</li>
+		<li>Added flash message (1.12.11)</li>
+		<li>Redesigned extension popup (1.12.11)</li>
+		<li>Added extension popup error message (1.12.11)</li>
+		<li>Fixed WWR stages logic (1.12.01)</li>
+		<li>Separated stages from hunts in a multi to one relationship</li>
+		<li>Added client side RH tracking (1.12.00)</li>
+		<li>Added client side WWR stages logic (1.12.00)</li>
+		<li>Fixed transition mice rules (1.12.00)</li>
+		<li>Added Mapper Tool</li>
+		<li>Added Spotter integration with Discord</li>
+		<li>Added new Toxic Spill with stages (1.11.11)</li>
+		<li>Fixed few loot spellings (1.11.11)</li>
+		<li>Added Spotter tool</li>
+		<li>Added map mice tracker (1.11.9)</li>
+		<li>Added more transition mice rules (1.11.9)</li>
+		<li>Updated icon (1.11.9)</li>
+		<li>Optimized db queries for attractions and drops even more</li>
+		<li>Changed sort by total hunts, displayed them on mobile, and removed attracted column to simplify</li>
+		<li>Added new version db format for better storage and queries (1.11.8)</li>
+		<li>Fixed few loot spelling exceptions (1.11.8)</li>
+		<li>Added loot search page</li>
+		<li>Added loot tracking (1.11.7)</li>
+		<li>Opera extension approved and published (1.11.6)</li>
+		<li>Added Bristle Woods Rift stages (1.11.5)</li>
+		<li>Added asterisks to map-helper for mice that require or avoid charms</li>
+		<li>Firefox native add-on approved and posted</li>
+		<li>Submitted to Opera and Firefox add-on stores</li>
+		<li>Added checks for cheese, trap, and base (1.11.4)</li>
+		<li>Added more precise mist checks for Burroughs Rift (1.11.4)</li>
+		<li>Squished a few Zokor and transitional mice bugs (1.11.3)</li>
+		<li>Fixed LG/Sand/City locations (1.11.2)</li>
+		<li>Updated auto-population to be more reliable and simpler (1.11.1)</li>
+		<li>Added a link to user hunt history (1.11.1)</li>
+		<li>Added reminder to refresh mh page with new version of extension is installed (1.11.0)</li>
+		<li>Added auto-navigate to mh tab on auto-pop link click (1.11.0)</li>
+		<li>Added auto-population for two map solvers (1.11.0)</li>
+		<li>Added FB support (1.10.0)</li>
+		<li>Added http support (1.9.3)</li>
+		<li>Added FG stages (1.9.2)</li>
+		<li>Fixed Zokor stages (1.9.2)</li>
+		<li>Updated databases to integrate better with map helper</li>
+		<li>Changed names of stages for: Iceberg, Labby, Zokor, Train, and LG (1.9.1)</li>
+		<li>Added exception for Icewing (1.9.1)</li>
+		<li>Removed FC stages (it's cheese based) (1.9)</li>
+		<li>Fixed Warmonger stage to be wave 4 (there is not wave 5, silly me) (1.9)</li>
+		<li>Moved to main host server (should be a bit more stable now) (1.9)</li>
+		<li>Removed riptide hunts for now (no way to tell stage) (1.9)</li>
+		<li>Started integration with MH Map Helper (1.9)</li>
+		<li>Created per user hunts display page with CSV and XLSX export</li>
+		<li>Fixed data missing stages</li>
+		<li>Fixed charms recording</li>
+		<li>Added cheese to attraction rate page</li>
+		<li>Fixed some transition mice like warmonger, hotm, and realm ripper. (1.8)</li>
+		<li>Added icon with popup and links (1.8)</li>
+		<li>Added stages to SG, Frox, and Train (1.8)</li>
+		<li>Added stages for: Toxic Spill, Twisted Garden, Cursed City, Furoma Rift and Burroughs Rift (1.7)</li>
+		<li>Fixed auto-update check (1.6)</li>
+		<li>Moved intake server url (1.6)</li>
+		<li>Added extension version records to see if everyone is getting auto-updated (1.6)</li>
+		<li>Optimized website for speed loading (except caching)</li>
+		<li>Made autocomplete local and faster</li>
+		<li>Added Datatables: sort, hidden column, styling</li>
+		<li>Converted mouse select box into a search box with autocomplete (800+ mice is not a good dropdown)</li>
+		<li>Added ajax to attraction page, so to only load table, not whole page</li>
+		<li>Added autoupdate check (v1.5)</li>
+		<li>Removed unnecessary permissions (v1.5)</li>
+		<li>Added Sunken City, Fungal Cavern, Zokor stages (v1.5)</li>
+		<li>Added LG, Sand Dunes, Lost City, Balack's Cove, Iceberg stages (v1.4)</li>
+		<li>Added Fiery Warpath stages (v1.3)</li>
+		<li>Added Labyrinth hallway stages (v1.2)</li>
+		<li>Refactored intake to remove repetetive code</li>
+		<li>Added loader animation</li>
+		<li>Fixed some regex on mice names, so they don't show anything but mice names</li>
+		<li>Made the extension only capture latest hunt by player, as trap setup is not known for other hunts</li>
+		<li>Put the extension in the Chrome Store for easy availability and auto updates</li>
+		<li>Made everything open source by putting it on GitHub</li>
+		<li>Setup git repository to keep track of changes</li>
+		<li>Added meaningful server response messages</li>
+		<li>Added validation on server and client side to minimize server load</li>
+		<li>Successfully installed and tested Chrome extension in Opera and Firefox</li>
+		<li>Made the site responsive for mobile phones</li>
+		<li>Created quick and dirty attraction webpage to see a bit of data</li>
+		<li>Created simple database and intake api</li>
+		<li>Created quick and dirty Chrome extension (for non-facebook site only) (v1.0)</li>
+	</ul>
+</div>
 <?php include_once("ga.php") ?>
-<a href="https://github.com/DevJackSmith/mh-hunt-helper/issues">Next things I'm planning to work on (as time permits)</a>.<br/><br/>
-
-<b>Updates</b> (newest first):<br/>
--Fixed more FW transition mice (1.12.11)<br/>
--Added flash message (1.12.11)<br/>
--Redesigned extension popup (1.12.11)<br/>
--Added extension popup error message (1.12.11)<br/>
--Fixed WWR stages logic (1.12.01)<br/>
--Separated stages from hunts in a multi to one relationship<br/>
--Added client side RH tracking (1.12.00)<br/>
--Added client side WWR stages logic (1.12.00)<br/>
--Fixed transition mice rules (1.12.00)<br/>
--Added Mapper Tool<br/>
--Added Spotter integration with Discord<br/>
--Added new Toxic Spill with stages (1.11.11)<br/>
--Fixed few loot spellings (1.11.11)<br/>
--Added Spotter tool<br/>
--Added map mice tracker (1.11.9)<br/>
--Added more transition mice rules (1.11.9)<br/>
--Updated icon (1.11.9)<br/>
--Optimized db queries for attractions and drops even more<br/>
--Changed sort by total hunts, displayed them on mobile, and removed attracted column to simplify<br/>
--Added new version db format for better storage and queries (1.11.8)<br/>
--Fixed few loot spelling exceptions (1.11.8)<br/>
--Added loot search page<br/>
--Added loot tracking (1.11.7)<br/>
--Opera extension approved and published (1.11.6)<br/>
--Added Bristle Woods Rift stages (1.11.5)<br/>
--Added asterisks to map-helper for mice that require or avoid charms<br/>
--Firefox native add-on approved and posted<br/>
--Submitted to Opera and Firefox add-on stores<br/>
--Added checks for cheese, trap, and base (1.11.4)<br/>
--Added more precise mist checks for Burroughs Rift (1.11.4)<br/>
--Squished a few Zokor and transitional mice bugs (1.11.3)<br/>
--Fixed LG/Sand/City locations (1.11.2)<br/>
--Updated auto-population to be more reliable and simpler (1.11.1)<br/>
--Added a link to user hunt history (1.11.1)<br/>
--Added reminder to refresh mh page with new version of extension is installed (1.11.0)<br/>
--Added auto-navigate to mh tab on auto-pop link click (1.11.0)<br/>
--Added auto-population for two map solvers (1.11.0)<br/>
--Added FB support (1.10.0)<br/>
--Added http support (1.9.3)<br/>
--Added FG stages (1.9.2)<br/>
--Fixed Zokor stages (1.9.2)<br/>
--Updated databases to integrate better with map helper<br/>
--Changed names of stages for: Iceberg, Labby, Zokor, Train, and LG (1.9.1)<br/>
--Added exception for Icewing (1.9.1)<br/>
--Removed FC stages (it's cheese based) (1.9)<br/>
--Fixed Warmonger stage to be wave 4 (there is not wave 5, silly me) (1.9)<br/>
--Moved to main host server (should be a bit more stable now) (1.9)<br/>
--Removed riptide hunts for now (no way to tell stage) (1.9)<br/>
--Started integration with MH Map Helper (1.9)<br/>
--Created per user hunts display page with CSV and XLSX export<br/>
--Fixed data missing stages<br/>
--Fixed charms recording<br/>
--Added cheese to attraction rate page<br/>
--Fixed some transition mice like warmonger, hotm, and realm ripper. (1.8)<br/>
--Added icon with popup and links (1.8)<br/>
--Added stages to SG, Frox, and Train (1.8)<br/>
--Added stages for: Toxic Spill, Twisted Garden, Cursed City, Furoma Rift and Burroughs Rift (1.7)<br/>
--Fixed auto-update check (1.6)<br/>
--Moved intake server url (1.6)<br/>
--Added extension version records to see if everyone is getting auto-updated (1.6)<br/>
--Optimized website for speed loading (except caching)<br/>
--Made autocomplete local and faster<br/>
--Added Datatables: sort, hidden column, styling<br/>
--Converted mouse select box into a search box with autocomplete (800+ mice is not a good dropdown)<br/>
--Added ajax to attraction page, so to only load table, not whole page<br/>
--Added autoupdate check (v1.5)<br/>
--Removed unnecessary permissions (v1.5)<br/>
--Added Sunken City, Fungal Cavern, Zokor stages (v1.5)<br/>
--Added LG, Sand Dunes, Lost City, Balack's Cove, Iceberg stages (v1.4)<br/>
--Added Fiery Warpath stages (v1.3)<br/>
--Added Labyrinth hallway stages (v1.2)<br/>
--Refactored intake to remove repetetive code<br/>
--Added loader animation<br/>
--Fixed some regex on mice names, so they don't show anything but mice names<br/>
--Made the extension only capture latest hunt by player, as trap setup is not known for other hunts<br/>
--Put the extension in the Chrome Store for easy availability and auto updates<br/>
--Made everything open source by putting it on GitHub<br/>
--Setup git repository to keep track of changes<br/>
--Added meaningful server response messages<br/>
--Added validation on server and client side to minimize server load<br/>
--Successfully installed and tested Chrome extension in Opera and Firefox<br/>
--Made the site responsive for mobile phones<br/>
--Created quick and dirty attraction webpage to see a bit of data<br/>
--Created simple database and intake api<br/>
--Created quick and dirty Chrome extension (for non-facebook site only) (v1.0)<br/><br/>
+</div>
+</body>
+</html>
