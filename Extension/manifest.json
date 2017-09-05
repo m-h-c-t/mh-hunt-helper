@@ -32,7 +32,10 @@
         "scripts": ["scripts/background.js"]
     },
 
-    "options_page": "options.html",
+    "options_ui": {
+        "page": "options.html",
+        "chrome_style": true
+    },
 
     "externally_connectable": {
         "matches": ["*://www.mousehuntgame.com/*"]
