@@ -6,7 +6,10 @@ function save_options() {
         success_messages: success_messages,
         error_messages: error_messages
     }, function() {
-        window.close();
+        document.getElementById('save_status').style.visibility = "visible";
+        setTimeout(function() {
+            document.getElementById('save_status').style.visibility = "hidden";
+        }, 2000);
     });
 }
 

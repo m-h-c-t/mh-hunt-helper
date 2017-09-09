@@ -27,17 +27,3 @@ chrome.runtime.onInstalled.addListener( function(details) {
         }
     });
 });
-
-chrome.runtime.onMessageExternal.addListener(
-    function(request, sender, sendResponse) {
-        if (request.get_options === "messages") {
-            chrome.storage.sync.get({
-                success_messages: true, // defaults
-                error_messages: true // defaults
-            }, function (items) {
-                sendResponse(items);
-            });
-        }
-        return true;
-    }
-);

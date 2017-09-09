@@ -81,17 +81,17 @@
     }
 
     function showFlashMessage(type, message) {
-        var mhhh_id = $("#mhhh_id").val();
-        chrome.runtime.sendMessage(mhhh_id, {get_options: "messages"}, function(response) {
-            checkMessageSettings(type, message, response);
-        });
-    }
+        window.addEventListener("message", function(event) {
+            if (event.data.jacks_settings_response !== 1 || event.data.get_options !== "messages") {
+                return;
+            }
 
-    function checkMessageSettings(type, message, settings) {
-        if ((type === 'success' && settings.success_messages)
-            || (type !== 'success' && settings.error_messages)){
-            displayFlashMessage(type, message);
-        }
+            if ((type === 'success' && event.data.settings.success_messages)
+                || (type !== 'success' && event.data.settings.error_messages)){
+                displayFlashMessage(type, message);
+            }
+        }, false);
+        window.postMessage({jacks_settings_request: 1, get_options: "messages"}, "*");
     }
 
     function displayFlashMessage(type, message) {
