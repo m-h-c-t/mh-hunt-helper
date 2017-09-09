@@ -1,10 +1,3 @@
-// Pass extension id from manifest to injected script
-var extension_id = document.createElement("input");
-extension_id.setAttribute("id", "mhhh_id");
-extension_id.setAttribute("type", "hidden");
-extension_id.setAttribute("value", chrome.runtime.id);
-document.body.appendChild(extension_id);
-
 // Pass version # from manifest to injected script
 var extension_version = document.createElement("input");
 extension_version.setAttribute("id", "mhhh_version");
@@ -45,3 +38,27 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
         window.postMessage({ jacksmessage: request.link }, "*");
     }
 });
+
+window.addEventListener("message",
+    function(event) {
+        if (event.data.jacks_settings_request !== 1) {
+            return;
+        }
+
+        if (event.data.get_options === "messages") {
+            chrome.storage.sync.get({
+                success_messages: true, // defaults
+                error_messages: true // defaults
+            }, function (items) {
+                event.source.postMessage(
+                    {
+                        jacks_settings_response: 1,
+                        get_options: "messages",
+                        settings: items
+                    },
+                    event.origin);
+            });
+        }
+    },
+    false
+);
