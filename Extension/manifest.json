@@ -36,10 +36,4 @@
         "page": "options.html",
         "chrome_style": true
     }
-//  ,
-//    "applications": {
-//        "gecko": {
-//            "id": "addon@example.com"
-//        }
-//    }
 }

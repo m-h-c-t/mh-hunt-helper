@@ -13,6 +13,11 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+        <li>Added automatic weekly rotating db backup to github</li>
+        <li>Added description popovers to main page</li>
+        <li>Increased loot drop rate precision to 3 digits</li>
+        <li>Activated Ryonn's Tavern auto-populated link (1.12.13)</li>
+        <li>Switched to new messaging for FF flash messages (1.12.13)</li>
 		<li>Added user settings for displaying messages (1.12.12)</li>
 		<li>Added some more links to extension (1.12.12)</li>
 		<li>Fixed more FW transition mice (1.12.11)</li>
