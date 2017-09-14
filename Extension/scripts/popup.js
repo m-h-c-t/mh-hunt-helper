@@ -10,6 +10,9 @@ function openPopupLink(website) {
     });
 }
 
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var buttons = ['mhmh', 'tsitu', 'userhistory', 'ryonn'];
     buttons.forEach(function(id) {
@@ -21,6 +24,36 @@ document.addEventListener('DOMContentLoaded', function() {
             openPopupLink(id);
         });
     });
+	
+	// Send message to MH Tab to sound the horn.
+	var hornButton = document.getElementById("horn");
+	hornButton.addEventListener('click', function() {
+		chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
+			if ( tabs.length > 0 ) {
+				chrome.tabs.sendMessage(tabs[0].id, {action: "horn"}, function (response) {});
+			}
+			else {
+				displayErrorPopup("Please navigate to MouseHunt page first.");
+			}
+		});
+	});
+
+    var huntTimer = document.getElementById("huntTimer");
+	chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
+		if ( tabs.length > 0 ) {
+			chrome.tabs.sendMessage(tabs[0].id, {action: "huntTimer"}, function (response) {
+                console.log(response);
+                if(response === "Ready!"){
+                    huntTimer.innerHTML = '<img src="http://images.clipartpanda.com/horn-clipart-Hupe.png" width="40px">';
+                }else{
+                    huntTimer.innerHTML = response;
+                }
+            });
+		}
+		else {
+			displayErrorPopup("Please navigate to MouseHunt page first.");
+		}
+	});
 });
 
 function displayErrorPopup(message) {
@@ -41,3 +74,6 @@ document.getElementById('options').addEventListener('click', function() {
         window.open(chrome.runtime.getURL('options.html'));
     }
 });
+
+
+

@@ -37,10 +37,19 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
         request.link === "ryonn") {
         window.postMessage({ jacksmessage: request.link }, "*");
     }
+    
+    // Used to trigger sounding the horn
+    if(request.action === "horn"){
+        window.postMessage({ jacksmessage: request.action }, "*");
+    }
+    else if(request.action === "huntTimer"){
+        sendResponse(document.getElementById('huntTimer').innerHTML)
+    }  
+
 });
 
 window.addEventListener("message",
-    function(event) {
+    function(event) {        
         if (event.data.jacks_settings_request !== 1) {
             return;
         }

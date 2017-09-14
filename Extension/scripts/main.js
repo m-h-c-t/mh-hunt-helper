@@ -14,6 +14,7 @@
 
     // Listening for calls
     window.addEventListener('message', function(ev){
+		
         if (null === ev.data.jacksmessage) {
             return;
         }
@@ -29,6 +30,16 @@
             || ev.data.jacksmessage === 'ryonn') {
             openMapMiceSolver(ev.data.jacksmessage);
         }
+        else if (ev.data.jacksmessage === 'horn'){	
+        
+            if($(".hornbutton").first().children().first().length && $("#huntTimer").text() === "Ready!"){ // Old Layout
+			    $(".hornbutton").first().children().first().click();
+		    }
+            else if($(".mousehuntHud-huntersHorn").first().length && $("#huntTimer").text() === "Ready!"){ // FreshCoat™ Layout
+			    $(".mousehuntHud-huntersHorn").first().click();
+		    }
+		}
+
     }, false);
 
     // Get map mice
