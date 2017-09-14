@@ -14,7 +14,6 @@
 
     // Listening for calls
     window.addEventListener('message', function(ev){
-		
         if (null === ev.data.jacksmessage) {
             return;
         }

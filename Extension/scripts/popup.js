@@ -10,9 +10,6 @@ function openPopupLink(website) {
     });
 }
 
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     var buttons = ['mhmh', 'tsitu', 'userhistory', 'ryonn'];
     buttons.forEach(function(id) {
@@ -74,6 +71,3 @@ document.getElementById('options').addEventListener('click', function() {
         window.open(chrome.runtime.getURL('options.html'));
     }
 });
-
-
-

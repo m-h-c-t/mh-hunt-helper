@@ -49,7 +49,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
 });
 
 window.addEventListener("message",
-    function(event) {        
+    function(event) {
         if (event.data.jacks_settings_request !== 1) {
             return;
         }
