@@ -514,6 +514,9 @@
             case "Living Garden":
                 message = getLivingGardenStage(message, response, journal);
                 break;
+            case "Moussu Picchu":
+                message = getMoussuPicchuStage(message, response, journal);
+                break;
             case "Sand Dunes":
                 message = getSandDunesStage(message, response, journal);
                 break;
@@ -536,6 +539,14 @@
                 message = getZokorStage(message, response, journal);
                 break;
         }
+
+        return message;
+    }
+
+    function getMoussuPicchuStage(message, response, journal) {
+        message.stage = {};
+        message.stage.rain = 'Rain ' + response.user.quests.QuestMoussuPicchu.elements.rain.level;
+        message.stage.wind = 'Wind ' + response.user.quests.QuestMoussuPicchu.elements.wind.level;
 
         return message;
     }
@@ -864,8 +875,6 @@
         return message;
     }
 
-    window.console.log("MH Hunt Helper v" + mhhh_version + " loaded! Good luck!");
-
     function getTrainStage(message, response, journal) {
         if (response.user.quests.QuestTrainStation.on_train) {
             switch (response.user.quests.QuestTrainStation.phase_name) {
@@ -1003,4 +1012,5 @@
         return version;
     }
 
+    window.console.log("MH Hunt Helper v" + mhhh_version + " loaded! Good luck!");
 }());
