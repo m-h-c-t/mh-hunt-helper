@@ -16,10 +16,10 @@
     <title>Jack's MouseHunt Tools</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
-	
+
     <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script defer type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script defer type="text/javascript" src="scripts/main.js"></script>
+    <script defer type="text/javascript" src="scripts/main.js"></script>
 </head>
 <body class="text-center">
     <!-- Jumbotron -->
@@ -35,34 +35,34 @@
     <tbody>
         <tr><td>
             <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-			data-content="Copy/Paste (OR Automatically filled by extension below) a list of your map mice into this tool,
-			and it will show you locations with stages, cheese, attraction rates, and mice in each area, sorted by descending
-			number of mice in each location."></a>
-			<a href="https://mhmaphelper.agiletravels.com" style="display:block;text-decoration:none;color:#333;">Map Helper</a>
+            data-content="Copy/Paste (OR Automatically filled by extension below) a list of your map mice into this tool,
+            and it will show you locations with stages, cheese, attraction rates, and mice in each area, sorted by descending
+            number of mice in each location."></a>
+            <a href="https://mhmaphelper.agiletravels.com" style="display:block;text-decoration:none;color:#333;">Map Helper</a>
         </td></tr>
         <tr><td>
-			<a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-			data-content="Search by mouse name to see the location, cheese and attraction rate of a specific mouse."></a>
+            <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+            data-content="Search by mouse name to see the location, cheese and attraction rate of a specific mouse."></a>
             <a href="https://mhhunthelper.agiletravels.com" style="display:block;text-decoration:none;color:#333;">Attraction Rate</a>
         </td></tr>
         <tr><td>
-			<a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-			data-content="Search by loot name to see the location and drop rate of a specific loot."></a>
+            <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+            data-content="Search by loot name to see the location and drop rate of a specific loot."></a>
             <a href="https://mhhunthelper.agiletravels.com/loot.php" style="display:block;text-decoration:none;color:#333;">Looter</a>
         </td></tr>
         <tr><td>
-			<a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-			data-content="Post your map Snipe, Leech and plain old Help requests/offers here."></a>
+            <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+            data-content="Post your map Snipe, Leech and plain old Help requests/offers here."></a>
             <a href="https://mhhunthelper.agiletravels.com/spotter.php" style="display:block;text-decoration:none;color:#333;">Spotter</a>
         </td></tr>
         <tr><td>
-			<a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-			data-content="Search maps to see what mice are likely to appear on them."></a>
+            <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+            data-content="Search maps to see what mice are likely to appear on them."></a>
             <a href="https://mhhunthelper.agiletravels.com/mapper.php" style="display:block;text-decoration:none;color:#333;">Mapper</a>
         </td></tr>
         <tr><td>
-			<a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-			data-content="See stats about these tools as well as confirmed RH location. (RH must be caught by one of us for it to show up here)"></a>
+            <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+            data-content="See stats about these tools as well as confirmed RH location. (RH must be caught by one of us for it to show up here)"></a>
             <a href="https://mhhunthelper.agiletravels.com/tracker.php" style="display:block;text-decoration:none;color:#333;">Tracker</a>
         </td></tr>
         <tr><td>
@@ -77,7 +77,10 @@
     </div>
     <div class="container">
         <p class="muted">If you want to help, please install the browser extension below.<br/>
-            These projects are brought to you by <a href="https://devjacksmith.github.io" target="_blank">Jack</a> from <a href="https://www.mousehuntgame.com/profile.php?snuid=100004585984363" target="_blank">Cluless Cats</a> team.<br/>The code and data are Open Source on <a href="https://github.com/DevJackSmith/" target="_blank">GitHub</a>.<br/>Also check out <a href="https://www.reddit.com/r/mousehunt/">MH Subreddit</a> and join us on <a href="https://discord.gg/E4utmBD">Discord</a>.</p>
+            These projects are brought to you by Jack and other developers: Loaf.<br/>
+            The code and data are Open Source on <a href="https://github.com/DevJackSmith/" target="_blank">GitHub</a>.<br/>
+            Also check out <a href="https://www.reddit.com/r/mousehunt/">MH Subreddit</a> and join us on <a href="https://discord.gg/E4utmBD">Discord</a>.
+        </p>
     </div>
     <div class="container">
         <div class="text-center">
