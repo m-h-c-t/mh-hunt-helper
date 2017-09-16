@@ -14,21 +14,33 @@
 
     // Listening for calls
     window.addEventListener('message', function(ev){
-        if (null === ev.data.jacksmessage) {
+        if (null === ev.data.jacks_message) {
             return;
         }
         if (typeof user.user_id === 'undefined') {
             alert('Please make sure you are logged in into MH.');
             return;
         }
-        if (ev.data.jacksmessage === 'userhistory') {
+        if (ev.data.jacks_message === 'userhistory') {
             window.open('https://mhhunthelper.agiletravels.com/searchByUser.php?user=' + user.user_id);
         }
-        else if (ev.data.jacksmessage === 'mhmh'
-            || ev.data.jacksmessage === 'tsitu'
-            || ev.data.jacksmessage === 'ryonn') {
-            openMapMiceSolver(ev.data.jacksmessage);
+        else if (ev.data.jacks_message === 'mhmh'
+            || ev.data.jacks_message === 'tsitu'
+            || ev.data.jacks_message === 'ryonn') {
+            openMapMiceSolver(ev.data.jacks_message);
         }
+        else if (ev.data.jacks_message === 'horn') {
+            if ($("#huntTimer").text() !== "Ready!") {
+                return;
+            }
+
+            if ($(".mousehuntHud-huntersHorn").length) { // FreshCoat™ Layout
+                $(".mousehuntHud-huntersHorn").click();
+            } else if ($(".hornbutton a").length) { // Old Layout
+                $(".hornbutton a").click();
+            }
+		}
+
     }, false);
 
     // Get map mice
@@ -502,6 +514,9 @@
             case "Living Garden":
                 message = getLivingGardenStage(message, response, journal);
                 break;
+            case "Moussu Picchu":
+                message = getMoussuPicchuStage(message, response, journal);
+                break;
             case "Sand Dunes":
                 message = getSandDunesStage(message, response, journal);
                 break;
@@ -524,6 +539,14 @@
                 message = getZokorStage(message, response, journal);
                 break;
         }
+
+        return message;
+    }
+
+    function getMoussuPicchuStage(message, response, journal) {
+        message.stage = {};
+        message.stage.rain = 'Rain ' + response.user.quests.QuestMoussuPicchu.elements.rain.level;
+        message.stage.wind = 'Wind ' + response.user.quests.QuestMoussuPicchu.elements.wind.level;
 
         return message;
     }
@@ -852,8 +875,6 @@
         return message;
     }
 
-    window.console.log("MH Hunt Helper v" + mhhh_version + " loaded! Good luck!");
-
     function getTrainStage(message, response, journal) {
         if (response.user.quests.QuestTrainStation.on_train) {
             switch (response.user.quests.QuestTrainStation.phase_name) {
@@ -991,4 +1012,5 @@
         return version;
     }
 
+    window.console.log("MH Hunt Helper v" + mhhh_version + " loaded! Good luck!");
 }());

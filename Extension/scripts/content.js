@@ -29,13 +29,16 @@ s.onload = function() {
 (document.head || document.documentElement).appendChild(s);
 
 
-// Forwards messages from popup to main script
+// Handles messages from popup
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
-    if (request.link === "userhistory" ||
-        request.link === "mhmh" ||
-        request.link === "tsitu" ||
-        request.link === "ryonn") {
-        window.postMessage({ jacksmessage: request.link }, "*");
+    if (["userhistory", "mhmh", "tsitu", "ryonn", "horn"].indexOf(request.jacks_link) !== -1) {
+        // Forwards messages from popup to main script
+        window.postMessage({ jacks_message: request.jacks_link }, "*");
+    } else if (request.jacks_link === "huntTimer") {
+        var hunt_timer = document.getElementById('huntTimer');
+        if (hunt_timer != null) { // Must have this check for Firefox
+            sendResponse(hunt_timer.textContent);
+        }
     }
 });
 
