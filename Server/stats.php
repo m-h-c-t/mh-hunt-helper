@@ -63,7 +63,7 @@ $submitted_maps = $query->fetchColumn();
 <table class="table table-hover table-bordered" style="width:auto;margin:auto;">
     <thead>
         <tr><th colspan="2" class="text-center">Top Hunt Contributors</th></tr></thead>
-        <tr><th class="text-center">User ID</th><th>Hunts</th></tr></thead>
+        <tr><th class="text-center">Hunter ID</th><th>Hunts</th></tr></thead>
     <tbody>
 <?php
     while ( $row = $query->fetch(PDO::FETCH_ASSOC)) {
