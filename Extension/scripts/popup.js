@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function updateHuntTimerField(tab, huntTimerField) {
     chrome.tabs.sendMessage(tab, {jacks_link: "huntTimer"}, function (response) {
-
         if (response === "Ready!") {
             huntTimerField.innerHTML = '<img src="images/horn.png" class="horn">';
         } else {

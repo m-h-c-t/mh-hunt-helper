@@ -35,8 +35,10 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
         // Forwards messages from popup to main script
         window.postMessage({ jacks_message: request.jacks_link }, "*");
     } else if (request.jacks_link === "huntTimer") {
-        // Used to trigger sounding the horn
-        sendResponse(document.getElementById('huntTimer').textContent);
+        var hunt_timer = document.getElementById('huntTimer');
+        if (hunt_timer != null) { // Must have this check for Firefox
+            sendResponse(hunt_timer.textContent);
+        }
     }
 });
 
