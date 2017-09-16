@@ -29,23 +29,15 @@ s.onload = function() {
 (document.head || document.documentElement).appendChild(s);
 
 
-// Forwards messages from popup to main script
+// Handles messages from popup
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
-    if (request.link === "userhistory" ||
-        request.link === "mhmh" ||
-        request.link === "tsitu" ||
-        request.link === "ryonn") {
-        window.postMessage({ jacksmessage: request.link }, "*");
+    if (["userhistory", "mhmh", "tsitu", "ryonn", "horn"].indexOf(request.jacks_link) !== -1) {
+        // Forwards messages from popup to main script
+        window.postMessage({ jacks_message: request.jacks_link }, "*");
+    } else if (request.jacks_link === "huntTimer") {
+        // Used to trigger sounding the horn
+        sendResponse(document.getElementById('huntTimer').textContent);
     }
-    
-    // Used to trigger sounding the horn
-    if(request.action === "horn"){
-        window.postMessage({ jacksmessage: request.action }, "*");
-    }
-    else if(request.action === "huntTimer"){
-        sendResponse(document.getElementById('huntTimer').innerHTML)
-    }  
-
 });
 
 window.addEventListener("message",

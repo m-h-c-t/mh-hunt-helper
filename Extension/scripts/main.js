@@ -14,29 +14,31 @@
 
     // Listening for calls
     window.addEventListener('message', function(ev){
-        if (null === ev.data.jacksmessage) {
+        if (null === ev.data.jacks_message) {
             return;
         }
         if (typeof user.user_id === 'undefined') {
             alert('Please make sure you are logged in into MH.');
             return;
         }
-        if (ev.data.jacksmessage === 'userhistory') {
+        if (ev.data.jacks_message === 'userhistory') {
             window.open('https://mhhunthelper.agiletravels.com/searchByUser.php?user=' + user.user_id);
         }
-        else if (ev.data.jacksmessage === 'mhmh'
-            || ev.data.jacksmessage === 'tsitu'
-            || ev.data.jacksmessage === 'ryonn') {
-            openMapMiceSolver(ev.data.jacksmessage);
+        else if (ev.data.jacks_message === 'mhmh'
+            || ev.data.jacks_message === 'tsitu'
+            || ev.data.jacks_message === 'ryonn') {
+            openMapMiceSolver(ev.data.jacks_message);
         }
-        else if (ev.data.jacksmessage === 'horn'){	
-        
-            if($(".hornbutton").first().children().first().length && $("#huntTimer").text() === "Ready!"){ // Old Layout
-			    $(".hornbutton").first().children().first().click();
-		    }
-            else if($(".mousehuntHud-huntersHorn").first().length && $("#huntTimer").text() === "Ready!"){ // FreshCoat™ Layout
-			    $(".mousehuntHud-huntersHorn").first().click();
-		    }
+        else if (ev.data.jacks_message === 'horn') {
+            if ($("#huntTimer").text() !== "Ready!") {
+                return;
+            }
+
+            if ($(".mousehuntHud-huntersHorn").length) { // FreshCoat™ Layout
+                $(".mousehuntHud-huntersHorn").click();
+            } else if ($(".hornbutton a").length) { // Old Layout
+                $(".hornbutton a").click();
+            }
 		}
 
     }, false);

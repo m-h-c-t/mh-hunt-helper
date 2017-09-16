@@ -1,57 +1,54 @@
-function openPopupLink(website) {
+function findOpenMHTab(button_pressed, callback, silent) {
     chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
         if ( tabs.length > 0 ) {
-            chrome.tabs.update(tabs[0].id, {'active': true});
-            chrome.tabs.sendMessage(tabs[0].id, {link: website}, function (response) {});
+            callback(tabs[0].id, button_pressed);
         }
-        else {
+        else if (!silent) {
             displayErrorPopup("Please navigate to MouseHunt page first.");
         }
     });
 }
 
+function sendMessageToScript(tab, button_pressed) {
+    if (button_pressed === "horn") {
+        chrome.tabs.update(tab, {'active': true});
+        chrome.tabs.sendMessage(tab, {jacks_link: button_pressed}, function (response) {});
+    } else {
+        chrome.tabs.sendMessage(tab, {jacks_link: button_pressed}, function (response) {});
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    var buttons = ['mhmh', 'tsitu', 'userhistory', 'ryonn'];
+    findOpenMHTab("huntTimer", updateHuntTimer, true);
+
+    var buttons = ['mhmh', 'tsitu', 'userhistory', 'ryonn', 'horn'];
     buttons.forEach(function(id) {
         var button_element = document.getElementById(id);
         if (!button_element) {
             return;
         }
         button_element.addEventListener('click', function() {
-            openPopupLink(id);
+            findOpenMHTab(id, sendMessageToScript);
         });
     });
-	
-	// Send message to MH Tab to sound the horn.
-	var hornButton = document.getElementById("horn");
-	hornButton.addEventListener('click', function() {
-		chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
-			if ( tabs.length > 0 ) {
-				chrome.tabs.sendMessage(tabs[0].id, {action: "horn"}, function (response) {});
-			}
-			else {
-				displayErrorPopup("Please navigate to MouseHunt page first.");
-			}
-		});
-	});
-
-    var huntTimer = document.getElementById("huntTimer");
-	chrome.tabs.query({'url': ['*://www.mousehuntgame.com/*', '*://apps.facebook.com/mousehunt/*']}, function(tabs) {
-		if ( tabs.length > 0 ) {
-			chrome.tabs.sendMessage(tabs[0].id, {action: "huntTimer"}, function (response) {
-                console.log(response);
-                if(response === "Ready!"){
-                    huntTimer.innerHTML = '<img src="http://images.clipartpanda.com/horn-clipart-Hupe.png" width="40px">';
-                }else{
-                    huntTimer.innerHTML = response;
-                }
-            });
-		}
-		else {
-			displayErrorPopup("Please navigate to MouseHunt page first.");
-		}
-	});
 });
+
+function updateHuntTimerField(tab, huntTimerField) {
+    chrome.tabs.sendMessage(tab, {jacks_link: "huntTimer"}, function (response) {
+
+        if (response === "Ready!") {
+            huntTimerField.innerHTML = '<img src="images/horn.png" class="horn">';
+        } else {
+            huntTimerField.textContent = response;
+        }
+    });
+}
+
+function updateHuntTimer(tab, button_pressed) {
+    var huntTimerField = document.getElementById("huntTimer");
+    updateHuntTimerField(tab, huntTimerField); // Fire now
+    setInterval(updateHuntTimerField, 1000, tab, huntTimerField); // Continue firing each second
+}
 
 function displayErrorPopup(message) {
     var error_popup = document.getElementById('error_popup');
