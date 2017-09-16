@@ -13,6 +13,9 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+        <li>Added Moussu Picchu stages (1.12.15)</li>
+        <li>Added Top Hunt Contributors in Tracker (1.12.15)</li>
+        <li>Added Loaf's horn timer and button (1.12.15)</li>
         <li>Added automatic weekly rotating db backup to github</li>
         <li>Added description popovers to main page</li>
         <li>Increased loot drop rate precision to 3 digits</li>

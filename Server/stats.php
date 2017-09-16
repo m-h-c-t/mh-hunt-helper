@@ -37,23 +37,37 @@ $query = $pdo2->prepare('SELECT COUNT(*) FROM map_records');
 $query->execute();
 $submitted_maps = $query->fetchColumn();
 
-print '
-    <table class="table table-hover table-bordered" style="width:auto;margin:auto;">
-        <thead>
-            <tr><th colspan="2" class="text-center">Jack\'s Tools so far</th><tr></thead>
-        <tbody>
-            <tr><td>Contributors:</td><td>'     . $row['users']     . ' - Thank you! :)</td></tr>
-            <tr><td>Hunt submissions</td><td>'  . $row['hunts']     . '</td></tr>
-            <tr><td>Map submissions</td><td>'   . $submitted_maps   . '</td></tr>
-            <tr><td>Traps</td><td>'             . $row['traps']     . '</td></tr>
-            <tr><td>Bases</td><td>'             . $row['bases']     . '</td></tr>
-            <tr><td>Charms</td><td>'            . $row['charms']    . '</td></tr>
-            <tr><td>Cheese</td><td>'            . $row['cheese']    . '</td></tr>
-            <tr><td>Mice</td><td>'              . $row['mice']      .'</td></tr>
-            <tr><td>Locations</td><td>'         . $row['locations'] .'</td></tr>
-            <tr><td>Stages</td><td>'            . $stages           . '</td></tr>
-            <tr><td>Loot</td><td>'              . $loot             . '</td></tr>
-            <tr><td>Maps</td><td>'              . $map_types        . '</td></tr>
-        </tbody>
-    </table>';
 ?>
+<table class="table table-hover table-bordered" style="width:auto;margin:auto;">
+    <thead>
+        <tr><th colspan="2" class="text-center">Jack's Tools so far</th></tr></thead>
+    <tbody>
+        <tr><td>Contributors:</td><td>      <?php echo $row['users']; ?> - Thank you! :)</td></tr>
+        <tr><td>Hunt submissions</td><td>   <?php echo $row['hunts']; ?></td></tr>
+        <tr><td>Map submissions</td><td>    <?php echo $submitted_maps; ?></td></tr>
+        <tr><td>Traps</td><td>              <?php echo $row['traps']; ?></td></tr>
+        <tr><td>Bases</td><td>              <?php echo $row['bases']; ?></td></tr>
+        <tr><td>Charms</td><td>             <?php echo $row['charms']; ?></td></tr>
+        <tr><td>Cheese</td><td>             <?php echo $row['cheese']; ?></td></tr>
+        <tr><td>Mice</td><td>               <?php echo $row['mice']; ?></td></tr>
+        <tr><td>Locations</td><td>          <?php echo $row['locations']; ?></td></tr>
+        <tr><td>Stages</td><td>             <?php echo $stages; ?></td></tr>
+        <tr><td>Loot</td><td>               <?php echo $loot; ?></td></tr>
+        <tr><td>Maps</td><td>               <?php echo $map_types; ?></td></tr>
+    </tbody>
+</table><br/>
+<?php
+    $query = $pdo->prepare('SELECT user_id, count(id) as total_hunts FROM hunts GROUP BY user_id ORDER BY total_hunts DESC LIMIT 10');
+    $query->execute();
+?>
+<table class="table table-hover table-bordered" style="width:auto;margin:auto;">
+    <thead>
+        <tr><th colspan="2" class="text-center">Top Hunt Contributors</th></tr></thead>
+        <tr><th class="text-center">User ID</th><th>Hunts</th></tr></thead>
+    <tbody>
+<?php
+    while ( $row = $query->fetch(PDO::FETCH_ASSOC)) {
+        print "<tr><td>$row[user_id]</td><td>$row[total_hunts]</td></tr>";
+    }
+?>
+</tbody></table>
