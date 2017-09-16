@@ -25,7 +25,6 @@
         <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
     </div>
     <div class="container-fluid">
-    I might disable this page if it takes up too many resources. Timezone is set to <span id="timezone_name">...</span><br/>
 <?php
 
 if (empty($_GET['user']) || !is_numeric($_GET['user'])) {
@@ -39,6 +38,22 @@ require "config.php";
 // PDO
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
+$count_query_string = "SELECT count(*) FROM hunts where user_id = ?";
+$query2 = $pdo->prepare($count_query_string);
+$query2->execute(array($_GET['user']));
+$count = $query2->fetchColumn();
+
+if (empty($count)) {
+    print "<br/>No hunts found<br/>";
+    ?><script>$("#loader").css( "display", "none" );</script><?php
+    return;
+}
+print 'Timezone is set to <span id="timezone_name">...</span>.Total hunts found: ' . $count . '.';
+if ($count > 1000) {
+    print " Limiting hunts to latest 1000.";
+}
+print "<br/>";
 
 $query_string = '
     SELECT timestamp, l.name as location, GROUP_CONCAT(DISTINCT s.name SEPARATOR ", ") as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.caught, m.name as mouse, c.name as cheese, GROUP_CONCAT(DISTINCT CONCAT_WS(" ", hl.amount, lt.name) SEPARATOR ", ") as loot
@@ -55,14 +70,11 @@ $query_string = '
     LEFT JOIN loot lt on hl.loot_id = lt.id
     WHERE user_id = ?
     GROUP BY h.id
-    ORDER BY timestamp DESC';
+    ORDER BY timestamp DESC
+    LIMIT 1000';
 $query = $pdo->prepare($query_string);
 $query->execute(array($_GET['user']));
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
-if (empty($results)) {
-    print "No hunts found";
-    return;
-}
 
 print '<div class="table-responsive"><table id="results_table" class="table table-striped table-bordered table-hover display"><thead>
 <th>Time</th>
