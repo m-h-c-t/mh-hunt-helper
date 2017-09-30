@@ -67,7 +67,7 @@ $submitted_maps = $query->fetchColumn();
     <tbody>
 <?php
     while ( $row = $query->fetch(PDO::FETCH_ASSOC)) {
-        print "<tr><td>$row[user_id]</td><td>$row[total_hunts]</td></tr>";
+        print "<tr><td>**" . substr($row["user_id"], 2) . "</td><td>$row[total_hunts]</td></tr>";
     }
 ?>
 </tbody></table>
