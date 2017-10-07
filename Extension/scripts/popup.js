@@ -12,10 +12,8 @@ function findOpenMHTab(button_pressed, callback, silent) {
 function sendMessageToScript(tab, button_pressed) {
     if (button_pressed === "horn") {
         chrome.tabs.update(tab, {'active': true});
-        chrome.tabs.sendMessage(tab, {jacks_link: button_pressed}, function (response) {});
-    } else {
-        chrome.tabs.sendMessage(tab, {jacks_link: button_pressed}, function (response) {});
     }
+    chrome.tabs.sendMessage(tab, {jacks_link: button_pressed}, function (response) {});
 }
 
 document.addEventListener('DOMContentLoaded', function() {

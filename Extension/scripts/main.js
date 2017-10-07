@@ -55,7 +55,7 @@
             glue = '/';
         } else if (solver === 'ryonn') {
             url = 'http://dbgames.info/mousehunt/tavern?q=';
-            glue = ',';
+            glue = ';';
         } else {
             return;
         }
@@ -65,7 +65,8 @@
         $.post('https://www.mousehuntgame.com/managers/ajax/users/relichunter.php', payload, null, 'json')
             .done(function (data) {
                 if (data) {
-                    if (!data.treasure_map) {
+                    if (!data.treasure_map || data.treasure_map.view_state === "noMap") {
+						new_window.close();
                         alert('Please make sure you are logged in into MH and are currently member of a treasure map.');
                         return;
                     }
@@ -154,6 +155,8 @@
         map.id = xhr.responseJSON.treasure_map.board_id;
         map.name = xhr.responseJSON.treasure_map.name.replace(/\ treasure/i, '');
         map.name = map.name.replace(/rare\ /i, '');
+        map.name = map.name.replace(/common\ /i, '');
+        map.name = map.name.replace(/Ardouous/i, 'Arduous');
 
         map.extension_version = formatVersion(mhhh_version);
 
@@ -427,6 +430,16 @@
                     return "";
                 }
                 break;
+			case "Moussu Picchu":
+				if (message.mouse === "Ful'Mina, The Mountain Queen") {
+                    if (message.stage.rain === "Rain medium") {
+						message.stage.rain = "Rain high";
+					}
+					if (message.stage.wind === "Wind medium") {
+						message.stage.wind = "Wind high";
+					}
+                }
+				break;
             case "Sand Dunes":
                 if (message.mouse === "Grubling") {
                     message.stage = "Stampede";
