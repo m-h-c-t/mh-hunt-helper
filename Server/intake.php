@@ -1,6 +1,7 @@
 <?php
-
-require "configs.php";
+define('not_direct_access', TRUE);
+require_once "bcheck.php";
+require_once "configs.php";
 
 // id and value intake
 $id_value_intake = array(

@@ -1,4 +1,7 @@
 <?php
+define('not_direct_access', TRUE);
+require_once "bcheck.php";
+
 $http_origin = $_SERVER['HTTP_ORIGIN'];
 
 if ($http_origin !== "https://www.mousehuntgame.com" && $http_origin !== "http://www.mousehuntgame.com") {
@@ -18,7 +21,7 @@ if (
     die();
 }
 
-if (!in_array($_POST['extension_version'], [11213, 11215])) {
+if (!in_array($_POST['extension_version'], [11215])) {
     error_log("Bad version: " . $_POST['extension_version']);
     sendResponse('error', "Please update extension to the latest version.");
 }
