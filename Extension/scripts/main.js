@@ -284,6 +284,11 @@
         // Shield (true / false)
         message.shield = response.user.has_shield;
 
+        // Total Power, Luck, Attraction
+        message.total_power = response.user.trap_power;
+        message.total_luck = response.user.trap_luck;
+        message.attraction_bonus = Math.round(response.user.trap_attraction_bonus*100);
+
         // Caught / Attracted / Mouse
         var outcome = journal.publish_data.attachment.name;
         var action = journal.render_data.css_class;

@@ -13,6 +13,7 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+        <li>Started recording total power, luck and attraction bonus (1.12.17)</li>
         <li>Moved more map name formatting to front end (1.12.16)</li>
         <li>Closed blank window open by autopopulated links if not on a map (1.12.16)</li>
         <li>Updated Ryonn's autopopulation to handle Ful'mina in upcoming MoPi maps (1.12.16)</li>
