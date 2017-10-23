@@ -68,9 +68,16 @@ $bindings = array(
     'base_id' => $_POST['base']['id'],
     'cheese_id' => $_POST['cheese']['id'],
     'caught' => $_POST['caught'],
-    'attracted' => $_POST['attracted']
+    'attracted' => $_POST['attracted'],
     );
 
+if ($_POST['extension_version'] >= 11217) {
+	$fields .= ', attraction_bonus, total_power, total_luck';
+	$values .= ', :attraction_bonus, :total_power, :total_luck';
+	$bindings['attraction_bonus'] = $_POST['attraction_bonus'];
+	$bindings['total_power'] 	  = $_POST['total_power'];
+	$bindings['total_luck'] 	  = $_POST['total_luck'];
+}
 
 // Optionals
 
