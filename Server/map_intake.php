@@ -21,13 +21,10 @@ if (
     die();
 }
 
-if (!in_array($_POST['extension_version'], [11215, 11216])) {
+if (!in_array($_POST['extension_version'], [11216, 11217])) {
     error_log("Bad version: " . $_POST['extension_version']);
     sendResponse('error', "Please update extension to the latest version.");
 }
-
-$_POST['name'] = str_ireplace("common ", "", $_POST['name']); // MOVED TO CLIENT SIDE starting with 11216
-$_POST['name'] = str_ireplace("Ardouous", "Arduous", $_POST['name']); // MOVED TO CLIENT SIDE starting with 11216
 
 if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['mice'])
     || in_array('Paladin Weapon Master', $_POST['mice'])
