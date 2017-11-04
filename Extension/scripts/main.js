@@ -23,13 +23,17 @@
         }
         if (ev.data.jacks_message === 'userhistory') {
             window.open('https://mhhunthelper.agiletravels.com/searchByUser.php?user=' + user.user_id);
+            return;
         }
-        else if (ev.data.jacks_message === 'mhmh'
-            || ev.data.jacks_message === 'tsitu'
+
+        if (ev.data.jacks_message === 'mhmh'
+            || ev.data.jacks_message === 'tsitu_map'
             || ev.data.jacks_message === 'ryonn') {
             openMapMiceSolver(ev.data.jacks_message);
+            return;
         }
-        else if (ev.data.jacks_message === 'horn') {
+
+        if (ev.data.jacks_message === 'horn') {
             if ($("#huntTimer").text() !== "Ready!") {
                 return;
             }
@@ -39,9 +43,48 @@
             } else if ($(".hornbutton a").length) { // Old Layout
                 $(".hornbutton a").click();
             }
+            return;
 		}
 
+        if (ev.data.jacks_message === 'tsitu_cre') {
+            getBookmarklet("https://raw.githubusercontent.com/tsitu/MH-Tools/gh-pages/src/bookmarklet/crebookmarklet.min.js");
+            return;
+        }
+
+        if (ev.data.jacks_message === 'tsitu_setup') {
+            getBookmarklet("https://raw.githubusercontent.com/tsitu/MH-Tools/gh-pages/src/bookmarklet/setupbookmarklet.min.js");
+            return;
+        }
+
     }, false);
+
+    function getBookmarklet(url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                var js_script = xhr.responseText;
+                attachToMHPage(js_script);
+            }
+        };
+        xhr.send();
+    }
+
+    function attachToMHPage(js_script) {
+        var script_element = document.createElement('script');
+        var script_code = document.createTextNode("function jacks_bookmarklet_run() { " + js_script + "document.getElementById(\"jacks_attached_script\").outerHTML='';}");
+        script_element.appendChild(script_code);
+        script_element.setAttribute("id", "jacks_attached_script");
+        script_element.type = 'text/javascript';
+        script_element.onload = function() {
+            this.remove();
+        };
+        console.log("fired3");
+        document.body.appendChild(script_element);
+        console.log("fired4");
+        document.location.href="javascript:jacks_bookmarklet_run();";
+        console.log("fired5");
+    }
 
     // Get map mice
     function openMapMiceSolver(solver) {
@@ -50,7 +93,7 @@
         if (solver === 'mhmh') {
             url = 'https://mhmaphelper.agiletravels.com/mice/';
             glue = '+';
-        } else if (solver === 'tsitu') {
+        } else if (solver === 'tsitu_map') {
             url = 'https://tsitu.github.io/MH-Tools/map.html?mice=';
             glue = '/';
         } else if (solver === 'ryonn') {
@@ -180,7 +223,7 @@
             var journal_entry = response.journal_markup[i].render_data;
             if (journal_entry.css_class.search("relicHunter_catch") !== -1) {
                 message.rh_environment = journal_entry.environment;
-                sendMessage(message);
+                sendMessageToServer(db_url, message);
             }
             else if (Object.keys(journal).length === 0 &&
                 journal_entry.css_class.match(/(catchfailure|catchsuccess|attractionfailure)/) &&

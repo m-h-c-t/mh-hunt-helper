@@ -31,7 +31,7 @@ s.onload = function() {
 
 // Handles messages from popup
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
-    if (["userhistory", "mhmh", "tsitu", "ryonn", "horn"].indexOf(request.jacks_link) !== -1) {
+    if (["userhistory", "mhmh", "tsitu_map", "ryonn", "horn", "tsitu_cre", "tsitu_setup"].indexOf(request.jacks_link) !== -1) {
         // Forwards messages from popup to main script
         window.postMessage({ jacks_message: request.jacks_link }, "*");
     } else if (request.jacks_link === "huntTimer") {

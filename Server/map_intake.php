@@ -21,7 +21,7 @@ if (
     die();
 }
 
-if (!in_array($_POST['extension_version'], [11216, 11217])) {
+if (!in_array($_POST['extension_version'], [11216, 11217, 11218])) {
     error_log("Bad version: " . $_POST['extension_version']);
     sendResponse('error', "Please update extension to the latest version.");
 }
