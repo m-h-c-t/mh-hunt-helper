@@ -79,11 +79,8 @@
         script_element.onload = function() {
             this.remove();
         };
-        console.log("fired3");
         document.body.appendChild(script_element);
-        console.log("fired4");
         document.location.href="javascript:jacks_bookmarklet_run();";
-        console.log("fired5");
     }
 
     // Get map mice
@@ -1008,6 +1005,7 @@
     function getLoot(message, response, journal) {
         var loot_text = journal.publish_data.attachment.description.substring(journal.publish_data.attachment.description.indexOf("following loot:") + 15);
         var loot_array = loot_text.split(/,\s|\sand\s/g);
+        var render_array = journal.render_data.text.split(/<a\s/)
 
         message.loot = [];
         for (var i = 0, len = loot_array.length; i < len; i++) {
@@ -1055,6 +1053,10 @@
                 message.loot[i].amount = message.loot[i].amount * parseInt(loot_amount.replace(/,/, ''));
                 message.loot[i].name = 'Gold';
             }
+            var render_item = render_array.filter(function (render) {
+                return render.indexOf(loot_item[1]) !== -1
+            })[0]
+            message.loot[i].lucky = render_item && render_item.indexOf('class="lucky"') !== -1
         }
 
         return message;

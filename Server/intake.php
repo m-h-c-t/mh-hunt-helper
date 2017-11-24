@@ -69,14 +69,14 @@ $bindings = array(
     'cheese_id' => $_POST['cheese']['id'],
     'caught' => $_POST['caught'],
     'attracted' => $_POST['attracted'],
-    );
+);
 
 if ($_POST['extension_version'] >= 11217) {
-	$fields .= ', attraction_bonus, total_power, total_luck';
-	$values .= ', :attraction_bonus, :total_power, :total_luck';
-	$bindings['attraction_bonus'] = $_POST['attraction_bonus'];
-	$bindings['total_power'] 	  = $_POST['total_power'];
-	$bindings['total_luck'] 	  = $_POST['total_luck'];
+    $fields .= ', attraction_bonus, total_power, total_luck';
+    $values .= ', :attraction_bonus, :total_power, :total_luck';
+    $bindings['attraction_bonus'] = $_POST['attraction_bonus'];
+    $bindings['total_power'] 	  = $_POST['total_power'];
+    $bindings['total_luck'] 	  = $_POST['total_luck'];
 }
 
 // Optionals
@@ -159,50 +159,46 @@ if (!empty($_POST['loot']) && $hunt_id > 0) {
             continue;
         }
 
-        if (!empty($loot_array[$loot_item['name']])) {
-            $loot_array[$loot_item['name']] += $loot_item['amount'];
-        } else {
-            $loot_array[$loot_item['name']] = $loot_item['amount'];
+        $lucky = null;
+        if (!empty($loot_item['lucky'])) {
+            $lucky = $loot_item['lucky'] === 'true' ? 1 : 0;
         }
-    }
-
-    foreach ($loot_array as $loot_name => $loot_amount) {
 
         $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
-        $query->execute(array($loot_name));
+        $query->execute(array($loot_item['name']));
         $loot_id = $query->fetchColumn();
 
         if (!$loot_id) {
             $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');
-            $query->execute(array($loot_name));
+            $query->execute(array($loot_item['name']));
             $loot_id = $pdo->lastInsertId();
         }
 
-        $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount) VALUES (?, ?, ?)');
-        $query->execute(array($hunt_id, $loot_id, $loot_amount));
+        $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount, lucky) VALUES (?, ?, ?, ?)');
+        $query->execute(array($hunt_id, $loot_id, $loot_item['amount'], $lucky));
     }
 }
 
 sendResponse('success', "Thanks for the hunt info!");
 
 function sendResponse($status, $message) {
-	$response = json_encode([
-		'status' => $status,
-		'message' => $message
-	]);
-	die($response);
+    $response = json_encode([
+        'status' => $status,
+        'message' => $message
+    ]);
+    die($response);
 }
 
 function formatVersion($version) {
-	if (strpos($version, '.') !== false) {
-		$version_array = explode('.', $version);
-		$new_version = '';
-		foreach($version_array as $piece) {
-			$new_version .= str_pad($piece,  2, "0", STR_PAD_LEFT);
-		}
-		$version = intval($new_version);
-	}
-	return $version;
+    if (strpos($version, '.') !== false) {
+        $version_array = explode('.', $version);
+        $new_version = '';
+        foreach($version_array as $piece) {
+            $new_version .= str_pad($piece,  2, "0", STR_PAD_LEFT);
+        }
+        $version = intval($new_version);
+    }
+    return $version;
 }
 
 function recordRelicHunter() {
