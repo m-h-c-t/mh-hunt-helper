@@ -21,7 +21,9 @@ if (
     die();
 }
 
-if (!in_array($_POST['extension_version'], [11216, 11217, 11218])) {
+require_once "config.php";
+
+if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
     error_log("Bad version: " . $_POST['extension_version']);
     sendResponse('error', "Please update extension to the latest version.");
 }
@@ -34,8 +36,6 @@ if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['
     // error_log('Old map submitted');
     die();
 }
-
-require_once "config.php";
 
 // PDO
 $pdo = new PDO("mysql:host=$mms_servername;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);

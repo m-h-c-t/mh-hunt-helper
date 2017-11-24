@@ -1,5 +1,7 @@
 <?php
 
+$allowed_extension_versions = [];
+
 $servername = "";
 $username = "";
 $password = "";

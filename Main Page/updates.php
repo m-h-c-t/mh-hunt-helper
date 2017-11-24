@@ -13,6 +13,9 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+        <li>Added Groupsky's lucky loot flag (1.12.19)</li>
+        <li>Moved Tsitu's scripts into the extension (1.12.19)</li>
+        <li>Upgraded to a bigger server! Woo!</li>
         <li>Added Tsitu's CRE and Best Setup links ... autopopulated! (1.12.18)</li>
         <li>Fixed Relic Hunter Reporting (1.12.18)</li>
         <li>Fixed few hunt timer hidden errors (1.12.18)</li>
