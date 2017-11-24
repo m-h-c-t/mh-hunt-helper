@@ -79,11 +79,8 @@
         script_element.onload = function() {
             this.remove();
         };
-        console.log("fired3");
         document.body.appendChild(script_element);
-        console.log("fired4");
         document.location.href="javascript:jacks_bookmarklet_run();";
-        console.log("fired5");
     }
 
     // Get map mice
