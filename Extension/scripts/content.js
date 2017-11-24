@@ -32,8 +32,14 @@ s.onload = function() {
 // Handles messages from popup
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     if (["userhistory", "mhmh", "tsitu_map", "ryonn", "horn", "tsitu_cre", "tsitu_setup"].indexOf(request.jacks_link) !== -1) {
+        var file_link = '';
+        if (request.jacks_link == "tsitu_cre") {
+            file_link = chrome.extension.getURL('third_party/tsitus/crebookmarklet.min.js');
+        } else if (request.jacks_link == "tsitu_setup") {
+            file_link = chrome.extension.getURL('third_party/tsitus/setupbookmarklet.min.js');
+        }
         // Forwards messages from popup to main script
-        window.postMessage({ jacks_message: request.jacks_link }, "*");
+        window.postMessage({ "jacks_message": request.jacks_link, "file_link": file_link }, "*");
     } else if (request.jacks_link === "huntTimer") {
         var hunt_timer = document.getElementById('huntTimer');
         if (hunt_timer != null) { // Must have this check for Firefox

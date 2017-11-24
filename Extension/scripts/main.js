@@ -46,13 +46,8 @@
             return;
 		}
 
-        if (ev.data.jacks_message === 'tsitu_cre') {
-            getBookmarklet("https://raw.githubusercontent.com/tsitu/MH-Tools/gh-pages/src/bookmarklet/crebookmarklet.min.js");
-            return;
-        }
-
-        if (ev.data.jacks_message === 'tsitu_setup') {
-            getBookmarklet("https://raw.githubusercontent.com/tsitu/MH-Tools/gh-pages/src/bookmarklet/setupbookmarklet.min.js");
+        if (['tsitu_cre', 'tsitu_setup'].indexOf(ev.data.jacks_message) !== -1) {
+            getBookmarklet(ev.data.file_link);
             return;
         }
 
