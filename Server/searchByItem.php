@@ -80,7 +80,8 @@ function getMouseQuery(&$query_all, &$query_one) {
 }
 
 function getLootQuery(&$query_all, &$query_one) {
-    $query_all = 'SELECT id, name FROM loot';
+	# blocking gold
+    $query_all = 'SELECT id, name FROM loot where id NOT IN (15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265)';
     $query_one = '
         SELECT l.name AS location, s.name AS stage, h.total_hunts, h.rate, c.name AS cheese
         FROM drops h

@@ -153,6 +153,7 @@ if (!empty($_POST['stage']) && !empty($hunt_id)) {
 // Loot
 if (!empty($_POST['loot']) && $hunt_id > 0) {
     $loot_array = [];
+	$gold_array = [15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265];
     foreach ($_POST['loot'] as $loot_item) {
         $loot_item['amount'] = str_replace(",", "", $loot_item['amount']);
         if (!is_numeric($loot_item['amount']) || $loot_item['amount'] < 1) {
@@ -167,6 +168,10 @@ if (!empty($_POST['loot']) && $hunt_id > 0) {
         $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
         $query->execute(array($loot_item['name']));
         $loot_id = $query->fetchColumn();
+		
+		if (in_array($loot_id, $gold_array)) { // Blocking gold, there could be multiples of it, and not accurate
+			continue;
+		}
 
         if (!$loot_id) {
             $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');

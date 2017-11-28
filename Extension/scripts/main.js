@@ -668,7 +668,7 @@
             if (message.stage === "Med") {
                 message.stage = "Medium";
             }
-            message += " Tide";
+            message.stage += " Tide";
         }
         return message;
     }
