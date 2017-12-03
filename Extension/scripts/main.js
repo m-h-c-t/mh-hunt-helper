@@ -5,6 +5,7 @@
 
     var db_url = "https://mhhunthelper.agiletravels.com/intake.php";
     var map_intake_url = "https://mhhunthelper.agiletravels.com/map_intake.php";
+    var convertible_intake_url = "https://mhhunthelper.agiletravels.com/convertible_intake.php";
 
     if (!window.jQuery) {
         console.log("MHHH: Can't find jQuery, exiting.");
@@ -185,6 +186,8 @@
             recordHunt(xhr);
         } else if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/users/relichunter.php") !== -1) {
             recordMap(xhr);
+        } else if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/users/useconvertible.php") !== -1) {
+            recordConvertible(xhr);
         }
     });
 
@@ -257,6 +260,49 @@
         }
 
         sendMessageToServer(db_url, message);
+    }
+
+    // Record convertible items
+    function recordConvertible(xhr) {
+        if (!xhr || !xhr.responseJSON || !xhr.responseJSON.items || !xhr.responseJSON.messageData || !xhr.responseJSON.messageData.message_model) {
+            return;
+        }
+        if (!xhr.responseJSON.messageData.message_model.messages || xhr.responseJSON.messageData.message_model.messages.length !== 1) {
+            return;
+        }
+
+        var response = xhr.responseJSON;
+
+        var convertible;
+        for (var key in response.items) {
+            if (!response.items.hasOwnProperty(key)) continue;
+            if (convertible) {
+                window.console.log("MHHH: Multiple items are not supported (yet)");
+                return;
+            }
+            convertible = response.items[key];
+        }
+
+        if (!convertible) {
+            window.console.log("MHHH: Couldn't find any item");
+            return;
+        }
+
+        var message = xhr.responseJSON.messageData.message_model.messages[0];
+        if (!message.isNew || !message.messageData || !message.messageData.items || message.messageData.items.length === 0) {
+            return;
+        }
+        var items = message.messageData.items;
+
+        var record = {
+            convertible: getItem(convertible),
+            items: items.map(getItem.bind(null))
+        }
+
+        record.extension_version = formatVersion(mhhh_version);
+
+        // Send to database
+        sendMessageToServer(convertible_intake_url, record);
     }
 
     function sendMessageToServer(url, message) {
@@ -1058,6 +1104,16 @@
         }
 
         return message;
+    }
+
+    function getItem(item) {
+        return {
+            id: item.item_id,
+            name: item.name,
+            type: item.type,
+            quantity: item.quantity,
+            class: item.class || item.classification
+        }
     }
 
     function pad(num, size) {
