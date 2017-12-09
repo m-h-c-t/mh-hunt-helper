@@ -163,7 +163,7 @@
         mhhh_flash_message_div.fadeIn(function() {
             setTimeout(function() {
                 $('#mhhh_flash_message_div').fadeOut();
-            }, 2000);
+            }, 1000);
         });
     }
 
