@@ -288,10 +288,11 @@
 
         var record = {
             convertible: getItem(convertible),
-            items: items.map(getItem.bind(null))
-        }
-
-        record.extension_version = formatVersion(mhhh_version);
+            items: items.map(getItem.bind(null)),
+            extension_version: formatVersion(mhhh_version),
+            asset_package_hash: response.asset_package_hash,
+            user_id: response.user.user_id
+        };
 
         // Send to database
         sendMessageToServer(convertible_intake_url, record);
@@ -545,6 +546,10 @@
                     message.location.name = "Iceberg";
                     message.location.id = 40;
                     message.stage = "1800ft";
+                } else if (message.mouse === "Deep") {
+                    message.location.name = "Iceberg";
+                    message.location.id = 40;
+                    message.stage = "2000ft";
                 }
                 break;
             case "Twisted Garden":
@@ -1046,7 +1051,7 @@
     function getLoot(message, response, journal) {
         var loot_text = journal.publish_data.attachment.description.substring(journal.publish_data.attachment.description.indexOf("following loot:") + 15);
         var loot_array = loot_text.split(/,\s|\sand\s/g);
-        var render_array = journal.render_data.text.split(/<a\s/)
+        var render_array = journal.render_data.text.split(/<a\s/);
 
         message.loot = [];
         for (var i = 0, len = loot_array.length; i < len; i++) {
@@ -1096,7 +1101,7 @@
             }
             var render_item = render_array.filter(function (render) {
                 return render.indexOf(loot_item[1]) !== -1
-            })[0]
+            })[0];
             message.loot[i].lucky = render_item && render_item.indexOf('class="lucky"') !== -1
         }
 
@@ -1107,9 +1112,9 @@
         return {
             id: item.item_id,
             name: item.name,
-            type: item.type,
-            quantity: item.quantity,
-            class: item.class || item.classification
+            //type: item.type,
+            quantity: item.quantity
+            //class: item.class || item.classification
         }
     }
 

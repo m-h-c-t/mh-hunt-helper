@@ -13,6 +13,9 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+        <li>Added Groupsky's convertible recording (1.12.21)</li>
+        <li>Updated Tsitu's bookmarklets (1.12.21)</li>
+        <li>Fixed Deep mouse recording (1.12.21)</li>
         <li>Fixed Balack's Cove hunt recording (1.12.20)</li>
         <li>Blocking gold recording since it is innacurate and interferes with luck flag</li>
         <li>Added Groupsky's lucky loot flag (1.12.19)</li>
