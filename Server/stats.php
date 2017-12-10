@@ -8,6 +8,9 @@ $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 $pdo2 = new PDO("mysql:host=$mms_servername;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
 $pdo2->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
+$pdo3 = new PDO("mysql:host=$convertible_servername;dbname=$convertible_dbname;charset=utf8", $convertible_username, $convertible_password);
+$pdo3->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
 $query = $pdo->prepare('SELECT
     COUNT(*) as hunts,
     COUNT(DISTINCT user_id) as users,
@@ -37,23 +40,33 @@ $query = $pdo2->prepare('SELECT COUNT(*) FROM map_records');
 $query->execute();
 $submitted_maps = $query->fetchColumn();
 
+$query = $pdo3->prepare('SELECT COUNT(*) FROM convertibles');
+$query->execute();
+$convertibles = $query->fetchColumn();
+
+$query = $pdo3->prepare('SELECT COUNT(*) FROM entries');
+$query->execute();
+$submitted_convertibles = $query->fetchColumn();
+
 ?>
 <table class="table table-hover table-bordered" style="width:auto;margin:auto;">
     <thead>
         <tr><th colspan="2" class="text-center">Jack's Tools so far</th></tr></thead>
     <tbody>
-        <tr><td>Contributors:</td><td>      <?php echo $row['users']; ?> - Thank you! :)</td></tr>
-        <tr><td>Hunt submissions</td><td>   <?php echo $row['hunts']; ?></td></tr>
-        <tr><td>Map submissions</td><td>    <?php echo $submitted_maps; ?></td></tr>
-        <tr><td>Traps</td><td>              <?php echo $row['traps']; ?></td></tr>
-        <tr><td>Bases</td><td>              <?php echo $row['bases']; ?></td></tr>
-        <tr><td>Charms</td><td>             <?php echo $row['charms']; ?></td></tr>
-        <tr><td>Cheese</td><td>             <?php echo $row['cheese']; ?></td></tr>
-        <tr><td>Mice</td><td>               <?php echo $row['mice']; ?></td></tr>
-        <tr><td>Locations</td><td>          <?php echo $row['locations']; ?></td></tr>
-        <tr><td>Stages</td><td>             <?php echo $stages; ?></td></tr>
-        <tr><td>Loot</td><td>               <?php echo $loot; ?></td></tr>
-        <tr><td>Maps</td><td>               <?php echo $map_types; ?></td></tr>
+        <tr><td>Contributors:</td><td>      		<?php echo $row['users']; ?> - Thank you! :)</td></tr>
+        <tr><td>Hunt submissions</td><td>   		<?php echo $row['hunts']; ?></td></tr>
+        <tr><td>Map submissions</td><td>    		<?php echo $submitted_maps; ?></td></tr>
+        <tr><td>Converitble submissions</td><td>    <?php echo $submitted_convertibles; ?></td></tr>
+        <tr><td>Traps</td><td>              		<?php echo $row['traps']; ?></td></tr>
+        <tr><td>Bases</td><td>              		<?php echo $row['bases']; ?></td></tr>
+        <tr><td>Charms</td><td>             		<?php echo $row['charms']; ?></td></tr>
+        <tr><td>Cheese</td><td>            			<?php echo $row['cheese']; ?></td></tr>
+        <tr><td>Mice</td><td>               		<?php echo $row['mice']; ?></td></tr>
+        <tr><td>Locations</td><td>          		<?php echo $row['locations']; ?></td></tr>
+        <tr><td>Stages</td><td>             		<?php echo $stages; ?></td></tr>
+        <tr><td>Loot</td><td>               		<?php echo $loot; ?></td></tr>
+        <tr><td>Maps</td><td>               		<?php echo $map_types; ?></td></tr>
+        <tr><td>Convertibles</td><td>               <?php echo $convertibles; ?></td></tr>
     </tbody>
 </table><br/>
 <?php
