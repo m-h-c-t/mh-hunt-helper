@@ -1,5 +1,6 @@
 <html lang="en">
 <head>
+	<title>Jack's MH Looter</title>
     <?php require "common_head.php"; ?>
     <script defer src="/scripts/loot.js"></script>
 </head>
