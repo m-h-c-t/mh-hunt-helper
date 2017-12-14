@@ -174,11 +174,11 @@
     //   /* Response body */ xhr.responseText
     //   /* Request body  */ ajaxOptions.data
 
-        if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/turns/activeturn.php") !== -1) {
+        if (ajaxOptions.url.indexOf("mousehuntgame.com/managers/ajax/turns/activeturn.php") !== -1) {
             recordHunt(xhr);
-        } else if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/users/relichunter.php") !== -1) {
+        } else if (ajaxOptions.url.indexOf("mousehuntgame.com/managers/ajax/users/relichunter.php") !== -1) {
             recordMap(xhr);
-        } else if (ajaxOptions.url.search("mousehuntgame.com/managers/ajax/users/useconvertible.php") !== -1) {
+        } else if (ajaxOptions.url.indexOf("mousehuntgame.com/managers/ajax/users/useconvertible.php") !== -1) {
             recordConvertible(xhr);
         }
     });
@@ -216,14 +216,29 @@
 
         for (var i=0; i < response.journal_markup.length; i++) {
             var journal_entry = response.journal_markup[i].render_data;
-            if (journal_entry.css_class.search("relicHunter_catch") !== -1) {
+            if (journal_entry.css_class.indexOf("relicHunter_catch") !== -1) {
                 message.rh_environment = journal_entry.environment;
                 sendMessageToServer(db_url, message);
+                continue;
             }
-            else if (Object.keys(journal).length === 0 &&
-                journal_entry.css_class.match(/(catchfailure|catchsuccess|attractionfailure)/) &&
-                journal_entry.css_class.match(/active/)) {
+
+            if (Object.keys(journal).length !== 0) {
+                continue;
+            }
+
+            if (journal_entry.css_class.search(/linked|passive|misc/) !== -1) {
+                continue;
+            }
+
+            if (journal_entry.css_class.search(/(catchfailure|catchsuccess|attractionfailure)/) !== -1 &&
+                journal_entry.css_class.indexOf('active') !== -1) {
                 journal = response.journal_markup[i];
+                continue;
+            }
+
+            if (response.journal_markup[i].publish_data.attachment.href.indexOf('journal_Active') !== -1) {
+                journal = response.journal_markup[i];
+                continue;
             }
         }
 
@@ -247,9 +262,7 @@
             return;
         }
 
-        if (journal.render_data.css_class.search("catchsuccessloot") !== -1) {
-            message = getLoot(message, response, journal);
-        }
+        message = getLoot(message, response, journal);
 
         sendMessageToServer(db_url, message);
     }
@@ -373,18 +386,17 @@
 
         // Caught / Attracted / Mouse
         var outcome = journal.publish_data.attachment.name;
-        var action = journal.render_data.css_class;
-        if (action.match(/catchsuccess/)) {
+        if (outcome.indexOf('I caught') !== -1) {
             message.caught = 1;
             message.attracted = 1;
             message.mouse = outcome.replace(/i\ caught\ an?\ /i, '');
             message.mouse = message.mouse.replace(/(\ mouse)?\!/i, '');
-        } else if (action.match(/catchfailure/)) {
+        } else if (outcome.indexOf('I failed to catch') !== -1) {
             message.caught = 0;
             message.attracted = 1;
             message.mouse = outcome.replace(/i\ failed\ to\ catch\ an?\ /i, '');
             message.mouse = message.mouse.replace(/(\ mouse)?\./i, '');
-        } else if (action.match(/attractionfailure/)) {
+        } else if (outcome.indexOf('I failed to attract') !== -1) {
             message.caught = 0;
             message.attracted = 0;
         }
@@ -449,6 +461,11 @@
                         && message.cheese.name === 'Terra Ricotta') {
                         message.stage = 'Mist 6-18';
                     }
+                }
+                break;
+            case "Festive Comet":
+                if (message.mouse === "Naughty Nougat") {
+                    message.stage = "Core";
                 }
                 break;
             case "Fiery Warpath":
@@ -550,6 +567,8 @@
                     message.location.name = "Iceberg";
                     message.location.id = 40;
                     message.stage = "2000ft";
+                } else if (message.mouse === "Frostwing Commander") {
+                    return "";
                 }
                 break;
             case "Twisted Garden":
@@ -593,6 +612,9 @@
             case "Cursed City":
             case "Lost City":
                 message = getLostCityStage(message, response, journal);
+                break;
+            case "Festive Comet":
+                message = getFestiveCometStage(message, response, journal);
                 break;
             case "Fiery Warpath":
                 message = getFieryWarpathStage(message, response, journal);
@@ -642,6 +664,27 @@
             case "Zokor":
                 message = getZokorStage(message, response, journal);
                 break;
+        }
+
+        return message;
+    }
+
+    function getFestiveCometStage(message, response, journal) {
+        if (!response.user.quests.QuestWinterHunt2017) {
+            return message;
+        }
+
+        if (response.user.quests.QuestWinterHunt2017.comet.at_boss === true) {
+            message.stage = "Core";
+            return message;
+        }
+
+        message.stage = response.user.quests.QuestWinterHunt2017.comet.phase_name;
+        for (var key in response.user.quests.QuestWinterHunt2017.comet.phases) {
+            if (response.user.quests.QuestWinterHunt2017.comet.phases[key].status === "active") {
+                message.stage += ' (' + key.replace(/phase_/, '') + ')';
+                break;
+            }
         }
 
         return message;
@@ -866,7 +909,7 @@
         var search_string;
         $.each(zokor_stages, function(key, value) {
             search_string = new RegExp(key, "i");
-            if (zokor_district.match(search_string)) {
+            if (zokor_district.indexOf(search_string) !== -1) {
                 message.stage = value;
                 return false;
             }
@@ -1049,6 +1092,9 @@
     }
 
     function getLoot(message, response, journal) {
+        if (journal.publish_data.attachment.description.indexOf("following loot:") === -1) {
+            return message;
+        }
         var loot_text = journal.publish_data.attachment.description.substring(journal.publish_data.attachment.description.indexOf("following loot:") + 15);
         var loot_array = loot_text.split(/,\s|\sand\s/g);
         var render_array = journal.render_data.text.split(/<a\s/);
@@ -1093,7 +1139,7 @@
                     message.loot[i].name = 'Bolt of Cloth';
                     break;
             }
-            if (message.loot[i].name.search(' of Gold ') !== -1) {
+            if (message.loot[i].name.indexOf(' of Gold ') !== -1) {
                 var loot_name = message.loot[i].name;
                 var loot_amount = loot_name.substring(loot_name.indexOf('(')+1, loot_name.indexOf(')'));
                 message.loot[i].amount = message.loot[i].amount * parseInt(loot_amount.replace(/,/, ''));
