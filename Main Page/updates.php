@@ -13,6 +13,12 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+        <li>Added nightly db back up (1.12.22)</li>
+        <li>Optimized string searching in extension (1.12.22)</li>
+        <li>Added converter to popup (1.12.22)</li>
+        <li>Reorganized popup a little (1.12.22)</li>
+        <li>Added Great Winter Hunt 2017 stages (1.12.22)</li>
+        <li>Changed the way hunts are recorded to fix Stuck Snowball mouse (1.12.22)</li>
         <li>Added Groupsky's convertible recording (1.12.21)</li>
         <li>Updated Tsitu's bookmarklets (1.12.21)</li>
         <li>Fixed Deep mouse recording (1.12.21)</li>
