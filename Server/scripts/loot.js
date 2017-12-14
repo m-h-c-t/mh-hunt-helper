@@ -75,7 +75,7 @@ $( function() {
                 + row.location + '</td><td>'
                 + stage + '</td><td>'
                 + row.cheese + '</td><td>'
-                + ((row.rate)/1000).toFixed(3) + '</td><td>'
+                + parseFloat(((row.rate)/1000).toFixed(3)) + '</td><td>'
                 + row.total_hunts + '</td></tr>';
         });
         final_html += '</tbody></table>';

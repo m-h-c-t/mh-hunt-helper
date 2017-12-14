@@ -72,7 +72,7 @@ $( function() {
             final_html += '<tr><td>'
                 + row.item + '</td><td>'
                 + row.total + '</td><td>'
-                + ((row.rate)/1000).toFixed(3) + '</td></tr>';
+                + parseFloat(((row.rate)/1000).toFixed(3)) + '</td></tr>';
         });
         final_html += '</tbody></table>';
         $("#results").html(final_html);
