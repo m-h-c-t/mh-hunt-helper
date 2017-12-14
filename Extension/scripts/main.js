@@ -571,6 +571,11 @@
                     message.stage.lagoon = "DL 50";
                 }
                 break;
+            case "Festive Comet":
+                if (message.mouse === "Naughty Nougat") {
+                    message.stage = "Nougat";
+                }
+                break;
         }
 
         return message;
@@ -641,6 +646,9 @@
                 break;
             case "Zokor":
                 message = getZokorStage(message, response, journal);
+                break;
+            case "Festive Comet":
+                message = getWinterHunt2017Stage(message, response, journal);
                 break;
         }
 
@@ -1043,6 +1051,32 @@
             message.stage = "Entrance";
         } else {
             message.stage = response.user.quests.QuestRiftBristleWoods.chamber_name;
+        }
+
+        return message;
+    }
+
+    function getWinterHunt2017Stage(message, response, journal) {
+        if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_1.status === 'active') {
+            message.stage = "Snow";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_2.status === 'active') {
+            message.stage = "Wrapping Paper";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_3.status === 'active') {
+            message.stage = "Yule Log";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_4.status === 'active') {
+            message.stage = "Eggnog";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_5.status === 'active') {
+            message.stage = "Tree";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_6.status === 'active') {
+            message.stage = "Scarf";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_7.status === 'active') {
+            message.stage = "Gingerbread";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_8.status === 'active') {
+            message.stage = "Peppermint";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_9.status === 'active') {
+            message.stage = "Ice";
+        } else if (response.user.quests.QuestWinterHunt2017.comet.phases.phase_10.status === 'active') {
+            message.stage = "Nougat";
         }
 
         return message;
