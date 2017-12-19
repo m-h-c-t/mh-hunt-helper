@@ -36,13 +36,13 @@ $pdo = new PDO("mysql:host=$convertible_servername;dbname=$convertible_dbname;ch
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 // Check for existing entry
-$query = $pdo->prepare('SELECT 1 FROM entries WHERE user_id = :user_id AND asset_hash = :asset_hash LIMIT 1');
-$query->execute(array('user_id' => $_POST['user_id'], 'asset_hash' => $_POST['asset_package_hash']));
+// $query = $pdo->prepare('SELECT 1 FROM entries WHERE user_id = :user_id AND asset_hash = :asset_hash LIMIT 1');
+// $query->execute(array('user_id' => $_POST['user_id'], 'asset_hash' => $_POST['asset_package_hash']));
 
-if ($query->fetchColumn()) {
-    error_log("Converter tried to insert existing asset for user id $_POST[user_id]");
-    die();
-}
+// if ($query->fetchColumn()) {
+    // error_log("Converter tried to insert existing asset for user id $_POST[user_id]");
+    // die();
+// }
 
 // Record new entry
 $query = $pdo->prepare('INSERT INTO entries (user_id, asset_hash) VALUES (?, ?)');
