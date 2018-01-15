@@ -56,7 +56,7 @@ $submitted_convertibles = $query->fetchColumn();
         <tr><td>Contributors:</td><td>      		<?php echo $row['users']; ?> - Thank you! :)</td></tr>
         <tr><td>Hunt submissions</td><td>   		<?php echo $row['hunts']; ?></td></tr>
         <tr><td>Map submissions</td><td>    		<?php echo $submitted_maps; ?></td></tr>
-        <tr><td>Converitble submissions</td><td>    <?php echo $submitted_convertibles; ?></td></tr>
+        <tr><td>Convertible submissions</td><td>    <?php echo $submitted_convertibles; ?></td></tr>
         <tr><td>Traps</td><td>              		<?php echo $row['traps']; ?></td></tr>
         <tr><td>Bases</td><td>              		<?php echo $row['bases']; ?></td></tr>
         <tr><td>Charms</td><td>             		<?php echo $row['charms']; ?></td></tr>
