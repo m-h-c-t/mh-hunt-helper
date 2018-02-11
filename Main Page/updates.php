@@ -13,6 +13,10 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+        <li>Renamed data backups for clarity (1.12.23)</li>
+        <li>Added backend framework to record hunt details (1.12.23)</li>
+        <li>Added latest Tsitu's scripts (1.12.23)</li>
+        <li>Added Groupsky's BWR and hunt details (1.12.23)</li>
         <li>Added nightly db back up (1.12.22)</li>
         <li>Optimized string searching in extension (1.12.22)</li>
         <li>Added converter to popup (1.12.22)</li>
