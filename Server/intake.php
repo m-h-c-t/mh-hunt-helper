@@ -184,6 +184,39 @@ if (!empty($_POST['loot']) && $hunt_id > 0) {
     }
 }
 
+// Hunt Details
+if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
+    foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
+        $detail_type_id = 0;
+        $detail_value_id = 0;
+
+        $query = $pdo->prepare("SELECT id FROM mhhunthelper.detail_types WHERE name LIKE ?");
+        $query->execute(array($detail_type));
+        $detail_type_id = $query->fetchColumn();
+
+        if (!$detail_type_id) {
+            $query = $pdo->prepare('INSERT INTO mhhunthelper.detail_types (name) VALUES (?)');
+            $query->execute(array($detail_type));
+            $detail_type_id = $pdo->lastInsertId();
+        }
+
+        $query = $pdo->prepare("SELECT id FROM mhhunthelper.detail_values WHERE name LIKE ?");
+        $query->execute(array($detail_value));
+        $detail_value_id = $query->fetchColumn();
+
+        if (!$detail_value_id) {
+            $query = $pdo->prepare('INSERT INTO mhhunthelper.detail_values (name) VALUES (?)');
+            $query->execute(array($detail_value));
+            $detail_value_id = $pdo->lastInsertId();
+        }
+
+        if (!empty($detail_type_id) && !empty($detail_value_id)) {
+            $query = $pdo->prepare("INSERT INTO hunt_details (hunt_id, detail_type_id, detail_value_id) VALUES (?, ?, ?)");
+            $query->execute(array($hunt_id, $detail_type_id, $detail_value_id));
+        }
+    }
+}
+
 sendResponse('success', "Thanks for the hunt info!");
 
 function sendResponse($status, $message) {
