@@ -1,6 +1,6 @@
 This folder contains Database backups which can be used to determine all all kinds of neat MouseHunt related stats.
 
-**TL;DR:** You most likely want the latest hunt data in SQL, it is in the hunthelper_nightly.sql.gz. Otherwise keep reading.
+**TL;DR:** You most likely want the latest hunt data in SQL, it is in the [hunthelper_nightly.sql.gz](https://github.com/DevJackSmith/mh-hunt-helper/blob/master/DB/hunthelper_nightly.sql.gz). Otherwise keep reading.
 
 # Projects
 **Converter:**
