@@ -1,0 +1,10 @@
+# HTID:957825: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+php_value display_errors 1
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:957825:
+
+#Header Set Access-Control-Allow-Origin "https://www.mousehuntgame.com"
+
+SetEnvIf Origin "http(s)?://(www\.)?(mousehuntgame\.com)$" AccessControlAllowOrigin=$0
+Header Set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+
+AddType image/x-icon .ico

@@ -1,0 +1,31 @@
+<?php
+
+$allowed_extension_versions = [];
+
+$servername = ""; // host
+$username = "";
+$password = "";
+$dbname = "";
+
+$htapi = "";
+
+$mms_servername = ""; // host
+$mms_username = "";
+$mms_password = "";
+$mms_dbname = "";
+
+$mhmh_dbname = "";
+
+// $fb_app_id = "";
+// $fb_app_secret = "";
+
+// $discord_webhook_url = "";
+
+$convertible_servername = ""; // host
+$convertible_username = "";
+$convertible_password = "";
+$convertible_dbname = "";
+
+$random_uuid_hash_1 = '';
+$random_uuid_hash_2 = '';
+

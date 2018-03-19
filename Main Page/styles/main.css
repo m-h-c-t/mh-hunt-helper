@@ -1,0 +1,20 @@
+.jumbotron {
+    background: url("/images/croppedcat.jpg") center no-repeat;
+    text-shadow: 0 0 1em black;
+    color: white;
+}
+
+* {
+   font-size: 16px;
+   line-height: 2;
+}
+
+.popover_styles,
+.popover_styles:hover,
+.popover_styles:focus,
+.popover_styles:visited {
+	text-decoration: none;
+	color: gray;
+	position: relative;
+	top: 8px;
+}
