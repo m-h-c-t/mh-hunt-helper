@@ -1,6 +1,6 @@
 **THE BACKUPS HAVE BEEN MOVED TO [HERE](https://keybase.pub/devjacksmith/mh_backups/)**
 
-**TL;DR:** You most likely want the latest hunt data in SQL, it is in the [hunthelper_nightly.sql.gz](https://keybase.pub/devjacksmith/mh_backups/hunthelper_nightly.sql.gz). Otherwise keep reading.
+**TL;DR:** You most likely want the latest hunt data in SQL, it is in the [hunthelper_nightly.sql.gz](https://keybase.pub/devjacksmith/mh_backups/nightly/hunthelper_nightly.sql.gz). Otherwise keep reading.
 
 This folder contains Database backups which can be used to determine all kinds of neat MouseHunt related stats.
 
