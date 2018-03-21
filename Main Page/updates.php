@@ -13,6 +13,11 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+		<li>Updated Tsitus bookmarklets and their execution mechanism (1.12.29)</li>
+		<li>Added version to popup (1.12.29)</li>
+		<li>Fixed messages (1.12.29)</li>
+		<li>Updated Tsitus CRE and Best Setup (1.12.28)</li>
+		<li>Small Crown collector update (1.12.27)</li>
 	    <li>Added Crown collector with Tehhowch's help (1.12.26)</li>
 	    <li>Updated Tsitu's scripts to latest version (1.12.26)</li>
 		<li>Added RH time check to make sure it's after reset (1.12.25)</li>
