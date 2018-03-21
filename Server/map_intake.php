@@ -57,7 +57,8 @@ if ($query->fetchColumn()) {
     die();
 }
 
-$query = $pdo->prepare('SELECT m.id FROM maps m WHERE m.name LIKE ? LIMIT 1');
+// Get map id
+$query = $pdo->prepare('SELECT m.id FROM maps m WHERE m.name LIKE ?');
 $query->execute(array($_POST['name']));
 $map_type_id = $query->fetchColumn();
 
@@ -67,23 +68,42 @@ if (!$map_type_id) {
     $map_type_id = $pdo->lastInsertId();
 }
 
+
+// Get mice ids
+$mice_supplied_count = count($_POST['mice']);
+$mice_ids = [];
+foreach ($_POST['mice'] as $mouse_name) {
+    $query = $pdo->prepare("SELECT m.id FROM $mhmh_dbname.mice m WHERE m.name LIKE ?");
+    $query->execute(array($mouse_name));
+    $mouse_id = $query->fetchColumn();
+
+    if (!$mouse_id) {
+        $query = $pdo->prepare("INSERT INTO $mhmh_dbname.mice (name) VALUES (?)");
+        $query->execute(array($mouse_name));
+        $mouse_id = $pdo->lastInsertId();
+    }
+    $mice_ids[] = $mouse_id;
+}
+if ($mice_supplied_count != count($mice_ids)) {
+    error_log("Map intake should have found $mice_supplied_count mice ids, but instead found " . count($mice_ids) . " ids, for map id $_POST[id]");
+    die();
+}
+
+
+// Record map with mice
 $query = $pdo->prepare('INSERT INTO map_records (map_id, map_type_id) VALUES (?, ?)');
 $query->execute(array($_POST['id'], $map_type_id));
 
-$mice = implode('|', $_POST['mice']);
-$mice = '^(' . $mice . ')$';
+$insert_query = 'INSERT INTO map_mice (map_id, mouse_id) VALUES (:map_id,';
+$insert_query .= implode('),(:map_id,', $mice_ids);
+$insert_query .= ')';
 
-$query = $pdo->prepare("
-    INSERT INTO map_mice (map_id, mouse_id)
-    SELECT DISTINCT ?, m.id
-    FROM $mhmh_dbname.mice m
-    WHERE m.name REGEXP ?");
-$query->execute(array($_POST['id'], $mice));
+$query = $pdo->prepare($insert_query);
+$query->execute(array('map_id' => $_POST['id']));
 
 $mice_inserted_count = $query->rowCount();
-$mice_supplied_count = count($_POST['mice']);
 if ($mice_supplied_count != $mice_inserted_count) {
-    error_log("Spotter should have inserted $mice_supplied_count mice, but instead inserted $mice_inserted_count, for map id $_POST[id]");
+    error_log("Map intake should have inserted $mice_supplied_count mice, but instead inserted $mice_inserted_count, for map id $_POST[id]");
 }
 
 sendResponse('success', "Thanks for the map info!");
