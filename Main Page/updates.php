@@ -13,6 +13,10 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+		<li>Added icon countdown timer (18.3.21)</li>
+		<li>Added horn ready sound (18.3.21)</li>
+		<li>Added desktop notification (18.3.21)</li>
+		<li>Fixed new mice not being recorded through new maps</li>
 		<li>Updated Tsitus bookmarklets and their execution mechanism (1.12.29)</li>
 		<li>Added version to popup (1.12.29)</li>
 		<li>Fixed messages (1.12.29)</li>
