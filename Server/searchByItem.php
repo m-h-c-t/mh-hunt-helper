@@ -87,6 +87,9 @@ function getMouseQuery(&$query_all, &$query_one) {
             case "stpatty2018":
                 $table = "attractions_stpatty_18";
                 break;
+            case "seh2018":
+                $table = "attractions_seh_18";
+                break;
             case "last3days":
                 $table = "attractions_3_days";
                 break;
@@ -115,6 +118,9 @@ function getLootQuery(&$query_all, &$query_one) {
                 break;
             case "stpatty2018":
                 $table = "drops_stpatty_18";
+                break;
+            case "seh2018":
+                $table = "drops_seh_18";
                 break;
             case "last3days":
                 $table = "drops_3_days";
