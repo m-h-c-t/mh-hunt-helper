@@ -93,6 +93,9 @@ function getMouseQuery(&$query_all, &$query_one) {
             case "last3days":
                 $table = "attractions_3_days";
                 break;
+            case "current":
+                $table = "attractions_seh_18";
+                break;
             default:
                 break;
         }
@@ -124,6 +127,9 @@ function getLootQuery(&$query_all, &$query_one) {
                 break;
             case "last3days":
                 $table = "drops_3_days";
+                break;
+            case "current":
+                $table = "drops_seh_18";
                 break;
             default:
                 break;
