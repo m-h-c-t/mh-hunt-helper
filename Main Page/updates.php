@@ -13,6 +13,9 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+		<li>Fixed icon countdown timer on classic layout (18.3.31)</li>
+		<li>Fixed icon countdown timer king's reward detection (18.3.31)</li>
+		<li>Added per catch rate to looter tool (18.3.31)</li>
 		<li>Added icon countdown timer (18.3.21)</li>
 		<li>Added horn ready sound (18.3.21)</li>
 		<li>Added desktop notification (18.3.21)</li>
