@@ -61,7 +61,6 @@ $( function() {
             searchItems($('#prev_item').val(), renderResultsTable, $('#timefilter').val());
         });
 		$('#rate_per_catch').change(function() {
-			console.log("checkbox changed1");
             searchItems($('#prev_item').val(), renderResultsTable, $('#timefilter').val());
         });
     }
