@@ -11,21 +11,35 @@
         <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
     </div>
     <div class="container">
+		<form id="search_options">
         <input id="prev_item" type="hidden" value="<?php (!empty($_GET['item']) ? print $_GET['item'] : '' ) ?>">
         <input id="prev_timefilter" type="hidden" value="<?php (!empty($_GET['timefilter']) ? print $_GET['timefilter'] : 'all' ) ?>">
-
         <div class="input-group col-sm-6 col-sm-offset-3">
-            <div class="input-group-addon"><strong>Loot:</strong><br/><br/><strong style="display:block">Time:</strong></div>
-            <input name="item" id="item" class="form-control input-lg" type="text" placeholder="Start typing loot name and select." autofocus>
-            <select class="form-control input-lg" id="timefilter" name="timefilter">
-                <option value="all" selected>All Time</option>
-                <option value="last3days">Last 3 days</option>
-                <option value="seh2018">Spring Egg Hunt 2018</option>
-                <option value="stpatty2018">St Patty 2018</option>
-                <option value="bd2018">Birthday event 2018</option>
-            </select>
+            <div class="input-group">
+				<div class="input-group-addon"><strong>Loot:</strong></div>
+				<input name="item" id="item" class="form-control input-lg" type="text" placeholder="Start typing loot name and select." autofocus>
+			</div>
+			<div class="input-group">
+				<div class="input-group-addon"><strong>Time:</strong></div>
+				<select class="form-control input-lg" id="timefilter" name="timefilter">
+					<option value="all" selected>All Time</option>
+					<option value="last3days">Last 3 days</option>
+					<option value="seh2018">Spring Egg Hunt 2018</option>
+					<option value="stpatty2018">St Patty 2018</option>
+					<option value="bd2018">Birthday event 2018</option>
+				</select>
+			</div>
+			<div class="input-group">
+				<div class="input-group-addon"><strong>Options:</strong></div>
+				<div class="form-control">
+				  <label>
+					<input type="checkbox" id="rate_per_catch" value="1"> Show catches and rate per catch
+				  </label>
+				</div>
+			</div>
             <div id="erase_item" class="input-group-addon fakebutton"><span class="glyphicon glyphicon-remove"></span></div>
         </div>
+		</form>
         <br/>
 
         <div id="results" class="table-responsive"></div>
