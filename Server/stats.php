@@ -11,66 +11,53 @@ $pdo2->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 $pdo3 = new PDO("mysql:host=$convertible_servername;dbname=$convertible_dbname;charset=utf8", $convertible_username, $convertible_password);
 $pdo3->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-$query = $pdo->prepare('SELECT
-    COUNT(*) as hunts,
-    COUNT(DISTINCT user_id) as users,
-    COUNT(DISTINCT mouse_id) as mice,
-    COUNT(DISTINCT location_id) as locations,
-    COUNT(DISTINCT trap_id) as traps,
-    COUNT(DISTINCT cheese_id) as cheese,
-    COUNT(DISTINCT base_id) as bases,
-    COUNT(DISTINCT charm_id) as charms
-    FROM hunts');
-$query->execute();
-$row = $query->fetch(PDO::FETCH_ASSOC);
+$stat_variables = [
+	'hunts' => $pdo,
+	'users' => $pdo,
+	'mice' => $pdo,
+	'locations' => $pdo,
+	'traps' => $pdo,
+	'cheese' => $pdo,
+	'bases' => $pdo,
+	'charms' => $pdo,
+	'loot' => $pdo,
+	'stages' => $pdo,
+	'maps' => $pdo2,
+	'map_records' => $pdo2,
+	'convertibles' => $pdo3,
+	'entries' => $pdo3
+	];
 
-$query = $pdo->prepare('SELECT COUNT(*) FROM loot');
-$query->execute();
-$loot = $query->fetchColumn();
-
-$query = $pdo->prepare('SELECT COUNT(*) FROM stages');
-$query->execute();
-$stages = $query->fetchColumn();
-
-$query = $pdo2->prepare('SELECT COUNT(*) FROM maps');
-$query->execute();
-$map_types = $query->fetchColumn();
-
-$query = $pdo2->prepare('SELECT COUNT(*) FROM map_records');
-$query->execute();
-$submitted_maps = $query->fetchColumn();
-
-$query = $pdo3->prepare('SELECT COUNT(*) FROM convertibles');
-$query->execute();
-$convertibles = $query->fetchColumn();
-
-$query = $pdo3->prepare('SELECT COUNT(*) FROM entries');
-$query->execute();
-$submitted_convertibles = $query->fetchColumn();
+$stat_variable_values = [];
+foreach ($stat_variables as $name => $dbh) {
+	$query = $dbh->prepare('SELECT COUNT(*) FROM ' . $name);
+	$query->execute();
+	$stat_variable_values[$name] = $query->fetchColumn();
+}
 
 ?>
 <table class="table table-hover table-bordered" style="width:auto;margin:auto;">
     <thead>
         <tr><th colspan="2" class="text-center">Jack's Tools so far</th></tr></thead>
     <tbody>
-        <tr><td>Contributors:</td><td>      		<?php echo $row['users']; ?> - Thank you! :)</td></tr>
-        <tr><td>Hunt submissions</td><td>   		<?php echo $row['hunts']; ?></td></tr>
-        <tr><td>Map submissions</td><td>    		<?php echo $submitted_maps; ?></td></tr>
-        <tr><td>Convertible submissions</td><td>    <?php echo $submitted_convertibles; ?></td></tr>
-        <tr><td>Traps</td><td>              		<?php echo $row['traps']; ?></td></tr>
-        <tr><td>Bases</td><td>              		<?php echo $row['bases']; ?></td></tr>
-        <tr><td>Charms</td><td>             		<?php echo $row['charms']; ?></td></tr>
-        <tr><td>Cheese</td><td>            			<?php echo $row['cheese']; ?></td></tr>
-        <tr><td>Mice</td><td>               		<?php echo $row['mice']; ?></td></tr>
-        <tr><td>Locations</td><td>          		<?php echo $row['locations']; ?></td></tr>
-        <tr><td>Stages</td><td>             		<?php echo $stages; ?></td></tr>
-        <tr><td>Loot</td><td>               		<?php echo $loot; ?></td></tr>
-        <tr><td>Maps</td><td>               		<?php echo $map_types; ?></td></tr>
-        <tr><td>Convertibles</td><td>               <?php echo $convertibles; ?></td></tr>
+        <tr><td>Contributors:</td><td>      		<?php echo $stat_variable_values['users']; ?> - Thank you! :)</td></tr>
+        <tr><td>Hunt submissions</td><td>   		<?php echo $stat_variable_values['hunts']; ?></td></tr>
+        <tr><td>Map submissions</td><td>    		<?php echo $stat_variable_values['map_records']; ?></td></tr>
+        <tr><td>Convertible submissions</td><td>    <?php echo $stat_variable_values['entries']; ?></td></tr>
+        <tr><td>Traps</td><td>              		<?php echo $stat_variable_values['traps']; ?></td></tr>
+        <tr><td>Bases</td><td>              		<?php echo $stat_variable_values['bases']; ?></td></tr>
+        <tr><td>Charms</td><td>             		<?php echo $stat_variable_values['charms']; ?></td></tr>
+        <tr><td>Cheese</td><td>            			<?php echo $stat_variable_values['cheese']; ?></td></tr>
+        <tr><td>Mice</td><td>               		<?php echo $stat_variable_values['mice']; ?></td></tr>
+        <tr><td>Locations</td><td>          		<?php echo $stat_variable_values['locations']; ?></td></tr>
+        <tr><td>Stages</td><td>             		<?php echo $stat_variable_values['stages']; ?></td></tr>
+        <tr><td>Loot</td><td>               		<?php echo $stat_variable_values['loot']; ?></td></tr>
+        <tr><td>Maps</td><td>               		<?php echo $stat_variable_values['maps']; ?></td></tr>
+        <tr><td>Convertibles</td><td>               <?php echo $stat_variable_values['convertibles']; ?></td></tr>
     </tbody>
 </table><br/>
 <?php
-    $query = $pdo->prepare('SELECT user_id, count(id) as total_hunts FROM hunts GROUP BY user_id ORDER BY total_hunts DESC LIMIT 10');
+    $query = $pdo->prepare('SELECT count(id) as total_hunts FROM hunts GROUP BY user_id ORDER BY total_hunts DESC LIMIT 10');
     $query->execute();
 ?>
 <table class="table table-hover table-bordered" style="width:auto;margin:auto;">
