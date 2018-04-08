@@ -13,6 +13,7 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+		<li>Added Tsitu's Bookmarklet Loader (18.4.8)</li>
 		<li>Fixed icon countdown timer on classic layout (18.3.31)</li>
 		<li>Fixed icon countdown timer king's reward detection (18.3.31)</li>
 		<li>Added per catch rate to looter tool (18.3.31)</li>
