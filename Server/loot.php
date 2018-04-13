@@ -3,6 +3,7 @@
 	<title>Jack's MH Looter</title>
     <?php require "common_head.php"; ?>
     <script defer src="/scripts/loot.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles/loot.css">
 </head>
 <body style="text-align: center;" class="text-center">
     <!-- Jumbotron -->
@@ -37,8 +38,12 @@
 			<div class="input-group" style="width:100%">
 				<div class="input-group-addon"><strong>Options:</strong></div>
 				<div class="form-control">
-				  <label>
-					<input type="checkbox" id="rate_per_catch" value="1"> Show catches and rate per catch
+					<label>
+					<div class="switch">
+						<input type="checkbox" id="rate_per_catch" value="1">
+						<span class="slider round"></span>
+					</div>
+					<span class="switch_label">Show catches and rate per catch</span>
 				  </label>
 				</div>
 			</div>
