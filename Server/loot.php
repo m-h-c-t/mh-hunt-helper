@@ -15,11 +15,12 @@
         <input id="prev_item" type="hidden" value="<?php (!empty($_GET['item']) ? print $_GET['item'] : '' ) ?>">
         <input id="prev_timefilter" type="hidden" value="<?php (!empty($_GET['timefilter']) ? print $_GET['timefilter'] : 'all' ) ?>">
         <div class="input-group col-sm-6 col-sm-offset-3">
-            <div class="input-group">
+            <div class="input-group" style="width:100%">
 				<div class="input-group-addon"><strong>Loot:</strong></div>
 				<input name="item" id="item" class="form-control input-lg" type="text" placeholder="Start typing loot name and select." autofocus>
 			</div>
-			<div class="input-group">
+
+			<div class="input-group" style="width:100%">
 				<div class="input-group-addon"><strong>Time:</strong></div>
 				<select class="form-control input-lg" id="timefilter" name="timefilter">
 					<option value="all" selected>All Time</option>
@@ -29,7 +30,11 @@
 					<option value="bd2018">Birthday event 2018</option>
 				</select>
 			</div>
-			<div class="input-group">
+
+            <div id="erase_item" class="input-group-addon fakebutton"><span class="glyphicon glyphicon-remove"></span></div>
+        </div>
+		<div class="input-group col-sm-6 col-sm-offset-3">
+			<div class="input-group" style="width:100%">
 				<div class="input-group-addon"><strong>Options:</strong></div>
 				<div class="form-control">
 				  <label>
@@ -37,8 +42,7 @@
 				  </label>
 				</div>
 			</div>
-            <div id="erase_item" class="input-group-addon fakebutton"><span class="glyphicon glyphicon-remove"></span></div>
-        </div>
+		</div>
 		</form>
         <br/>
 
