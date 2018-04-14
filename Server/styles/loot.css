@@ -31,8 +31,8 @@
   content: "";
   height: 1em;
   width: 1em;
-  left: 4px;
-  bottom: 4px;
+  left: 0.25em;
+  bottom: 0.25em;
   background-color: white;
   -webkit-transition: .3s;
   transition: .3s;

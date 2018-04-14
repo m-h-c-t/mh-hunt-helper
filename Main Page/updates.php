@@ -13,6 +13,9 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
 	<ul>
+		<li>Added Groupsky's Sunken City zone recorder (18.4.13)</li>
+		<li>Updated options page view (18.4.13)</li>
+		<li>Fixed link to Tsitu's Loader (18.4.13)</li>
 		<li>Added custom sound and volume (18.4.9)</li>
 		<li>Added web alert (18.4.9)</li>
 		<li>Updated options styling (18.4.9)</li>
