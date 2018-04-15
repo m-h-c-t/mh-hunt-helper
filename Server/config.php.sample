@@ -29,3 +29,7 @@ $convertible_dbname = "";
 $random_uuid_hash_1 = '';
 $random_uuid_hash_2 = '';
 
+$giveaway_url = '';
+$giveaway_key = '';
+$giveaway_start_time = 0;
+$giveaway_end_time = 9999999999;
