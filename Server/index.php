@@ -14,9 +14,9 @@
 
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-    <script defer src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script defer src="/scripts/attraction.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/attraction.css">
@@ -55,7 +55,7 @@
 <noscript id="deferred-styles">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles/attraction.css">
 </noscript>
 <script>
