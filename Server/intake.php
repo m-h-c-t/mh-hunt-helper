@@ -268,6 +268,10 @@ function formatVersion($version) {
 }
 
 function recordRelicHunter() {
+	if (empty($_POST['entry_timestamp']) || !is_numeric($_POST['entry_timestamp'])) {
+		return;
+	}
+
     $file_name = 'tracker.json';
     $location = filter_var($_POST['rh_environment'], FILTER_SANITIZE_STRING);
 
@@ -275,15 +279,16 @@ function recordRelicHunter() {
 
     if (!empty($data)) {
         $data = json_decode($data);
-        if (!empty($data->rh)) {
-            $data->rh->location = $location;
-            $data->rh->last_seen = time();
-        }
+        if (empty($data->rh) || $data->rh->last_seen > $_POST['entry_timestamp'] ) {
+			return;
+		}
+		$data->rh->location = $location;
+		$data->rh->last_seen = $_POST['entry_timestamp'];
     } else {
         $data = [
             "rh" => [
                 "location" => $location,
-                "last_seen" => time()
+                "last_seen" => $_POST['entry_timestamp']
             ]
         ];
     }

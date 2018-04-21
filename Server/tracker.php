@@ -47,7 +47,7 @@
 
         ?>
         <h3>Current Relic Hunter Location: <?php print $location; ?>.<br/>
-            <small>Last seen: <?php print $time_since; ?> ago.</small>
+            <small>Last seen (after last move): <?php print $time_since; ?> ago.</small>
         </h3><br/><br/>
 
         <?php require_once "stats.php"; ?><br/><br/>
