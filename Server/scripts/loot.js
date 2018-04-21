@@ -89,7 +89,7 @@ $( function() {
 		if (show_rate_per_catch) {
 			rate_per_catch_title = '<th>Rate per catch</th><th>Catches</th>';
 		}
-        var final_html = '<table id="results_table" class="table table-striped table-hover"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate per hunt</th><th>Hunts</th>' + rate_per_catch_title + '</tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate per hunt</th><th>Hunts</th>' + rate_per_catch_title + '</tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {
