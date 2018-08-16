@@ -27,20 +27,11 @@ rm -rf /var/lib/mysql-files/*
 # Map Spotter
 echo "===== Backing up map spotter ====="
 
-if [ -f mapspotter_structure_weekly.sql.gz ]; then
-	rm mapspotter_structure_weekly.sql.gz
+if [ -f mapspotter_weekly.sql.gz ]; then
+	rm mapspotter_weekly.sql.gz
 fi
 
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --no-data --events mhmapspotter | gzip -9 > mapspotter_structure_weekly.sql.gz
-
-# Map Spotter
-echo "===== Backing up map spotter ====="
-
-if [ -f mapspotter_structure_weekly.sql.gz ]; then
-	rm mapspotter_structure_weekly.sql.gz
-fi
-
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --no-data --events mhmapspotter | gzip -9 > mapspotter_structure_weekly.sql.gz
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --ignore-table=mhmapspotter.fb_users --ignore-table=mhmapspotter.fb_groups --events mhmapspotter | gzip -9 > mapspotter_weekly.sql.gz
 
 # Converter
 echo "===== Backing up converter ====="
