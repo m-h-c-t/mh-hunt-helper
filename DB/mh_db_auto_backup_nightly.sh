@@ -9,7 +9,7 @@ date > last_updated.txt
 echo "====== Backing up hunt helper ====="
 
 if [ -f hunthelper_nightly.sql.gz ]; then
-	rm hunthelper_nightly.sql.zip
+	rm hunthelper_nightly.sql.gz
 fi
 
 if [ -f hunthelper_nightly.txt.zip ]; then
