@@ -16,7 +16,7 @@ if [ -f hunthelper_weekly.txt.zip ]; then
 	rm hunthelper_weekly.txt.zip
 fi
 
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events mhhunthelper | gzip -9 > hunthelper_weekly.sql.gz
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhhunthelper
@@ -31,7 +31,7 @@ if [ -f mapspotter_weekly.sql.gz ]; then
 	rm mapspotter_weekly.sql.gz
 fi
 
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --ignore-table=mhmapspotter.fb_users --ignore-table=mhmapspotter.fb_groups --events mhmapspotter | gzip -9 > mapspotter_weekly.sql.gz
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --ignore-table=mhmapspotter.fb_users --ignore-table=mhmapspotter.fb_groups --events --routines mhmapspotter | gzip -9 > mapspotter_weekly.sql.gz
 
 # Converter
 echo "===== Backing up converter ====="
@@ -44,7 +44,7 @@ if [ -f converter_weekly.txt.zip ]; then
 	rm converter_weekly.txt.zip
 fi
 
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events mhconverter --ignore-table=mhconverter.entries | gzip -9 > converter_weekly.sql.gz
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhconverter --ignore-table=mhconverter.entries | gzip -9 > converter_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhconverter --ignore-table=mhconverter.entries
@@ -60,6 +60,6 @@ if [ -f maphelper_weekly.sql.gz ]; then
 	rm maphelper_weekly.sql.gz
 fi
 
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events mhmaphelper --ignore-table=mhmaphelper.users | gzip -9 > maphelper_weekly.sql.gz
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhmaphelper --ignore-table=mhmaphelper.users | gzip -9 > maphelper_weekly.sql.gz
 
 echo "===== finished mh_db_auto_backup.sh ====="

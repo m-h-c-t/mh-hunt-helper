@@ -16,7 +16,7 @@ if [ -f hunthelper_nightly.txt.zip ]; then
 	rm hunthelper_nightly.txt.zip
 fi
 
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events mhhunthelper | gzip -9 > hunthelper_nightly.sql.gz
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_nightly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhhunthelper
