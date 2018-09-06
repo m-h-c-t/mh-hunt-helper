@@ -108,8 +108,8 @@ foreach ($results as $row) {
     print "<td>$row[base]</td>";
     print "<td>$row[charm]</td>";
     print "<td>$row[cheese]</td>";
-    print "<td>$row[shield]</td>";
-    print "<td>$row[caught]</td>";
+    print "<td class='text-center'>$row[shield]</td>";
+    print "<td class='text-center'>$row[caught]</td>";
     print "<td>$row[mouse]</td>";
     print "<td>$row[loot]</td>";
     print "</tr>";
