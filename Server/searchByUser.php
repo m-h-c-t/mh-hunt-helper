@@ -150,8 +150,8 @@ print "</tbody></table></div>";
                 {
                     "targets": [ 7, 8 ],
                     render: function ( data, type, row ) {
-                        if (data === '1') return '<span class="text-success glyphicon glyphicon-ok"></span>';
-                        if (data === '0') return '<span class="text-danger glyphicon glyphicon-remove"></span>';
+                        if (data === '1') return '<span class="text-success glyphicon glyphicon-ok"><span style="opacity:0">1</span></span>';
+                        if (data === '0') return '<span class="text-danger glyphicon glyphicon-remove"><span style="opacity:0">0</span></span>';
                         return '';
                     }
                 }
