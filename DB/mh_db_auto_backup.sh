@@ -19,7 +19,7 @@ fi
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhhunthelper
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhhunthelper
 rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 hunthelper_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
@@ -31,7 +31,18 @@ if [ -f mapspotter_weekly.sql.gz ]; then
 	rm mapspotter_weekly.sql.gz
 fi
 
+if [ -f mapspotter_weekly.txt.zip ]; then
+        rm mapspotter_weekly.txt.zip
+fi
+
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --ignore-table=mhmapspotter.fb_users --ignore-table=mhmapspotter.fb_groups --events --routines mhmapspotter | gzip -9 > mapspotter_weekly.sql.gz
+sleep 5s
+rm -rf /var/lib/mysql-files/*
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --ignore-table=mhmapspotter.fb_users --ignore-table=mhmapspotter.fb_groups --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhmapspotter
+rm -rf /var/lib/mysql-files/*.sql
+zip -j -9 mapspotter_weekly.txt.zip /var/lib/mysql-files/*
+rm -rf /var/lib/mysql-files/*
+
 
 # Converter
 echo "===== Backing up converter ====="
@@ -47,7 +58,7 @@ fi
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhconverter --ignore-table=mhconverter.entries | gzip -9 > converter_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhconverter --ignore-table=mhconverter.entries
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhconverter --ignore-table=mhconverter.entries
 rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 converter_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
@@ -60,6 +71,17 @@ if [ -f maphelper_weekly.sql.gz ]; then
 	rm maphelper_weekly.sql.gz
 fi
 
+if [ -f maphelper_weekly.txt.zip ]; then
+        rm maphelper_weekly.txt.zip
+fi
+
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhmaphelper --ignore-table=mhmaphelper.users | gzip -9 > maphelper_weekly.sql.gz
+sleep 5s
+rm -rf /var/lib/mysql-files/*
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhmaphelper --ignore-table=mhmaphelper.users
+rm -rf /var/lib/mysql-files/*.sql
+zip -j -9 maphelper_weekly.txt.zip /var/lib/mysql-files/*
+rm -rf /var/lib/mysql-files/*
 
 echo "===== finished mh_db_auto_backup.sh ====="
+
