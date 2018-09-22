@@ -267,13 +267,37 @@ function formatVersion($version) {
     return $version;
 }
 
+function getAliasLocationName($input) {
+    switch ($input) {
+        case 'Living Garden':
+        case 'Twisted Garden':
+            $input = 'Living/Twisted Garden';
+            break;
+
+        case 'Sand Dunes':
+        case 'Sand Crypts':
+            $input = 'Sand Dunes/Crypts';
+            break;
+
+        case 'Lost City':
+        case 'Cursed City':
+            $input = 'Lost/Cursed City';
+            break;
+
+        default:
+            // No-op
+            break;
+    }
+    return $input
+}
+
 function recordRelicHunter() {
     if (empty($_POST['entry_timestamp']) || !is_numeric($_POST['entry_timestamp'])) {
         return;
     }
 
     $file_name = 'tracker.json';
-    $location = filter_var($_POST['rh_environment'], FILTER_SANITIZE_STRING);
+    $location = getAliasLocationName(filter_var($_POST['rh_environment'], FILTER_SANITIZE_STRING));
 
     $data = file_get_contents($file_name);
 
