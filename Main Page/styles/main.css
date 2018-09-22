@@ -13,8 +13,8 @@
 .popover_styles:hover,
 .popover_styles:focus,
 .popover_styles:visited {
-	text-decoration: none;
-	color: gray;
-	position: relative;
-	top: 8px;
+    text-decoration: none;
+    color: gray;
+    position: relative;
+    top: 8px;
 }

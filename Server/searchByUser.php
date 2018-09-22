@@ -32,9 +32,9 @@ if (empty($_GET['user']) || !is_numeric($_GET['user'])) {
     ?><script>$("#loader").css( "display", "none" );</script><?php
     return;
 } else {
-	$not_direct_access_id = true;
+    $not_direct_access_id = true;
     $encrypted_user_id = $_GET['user'];
-	require "id_modifier.php";
+    require "id_modifier.php";
 }
 
 require "config.php";

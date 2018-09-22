@@ -57,7 +57,7 @@
                     <a href="https://mhhunthelper.agiletravels.com/mapper.php" style="display:block;text-decoration:none;color:#333;">Mapper</a>
                 </td></tr>
             <tr><td>
-					<a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                        data-content="Search convertibles like chests, to see what items are likely to be in them."></a>
                     <a href="https://mhhunthelper.agiletravels.com/converter.php" style="display:block;text-decoration:none;color:#333;">Converter</a>
                 </td></tr>

@@ -5,7 +5,7 @@ $( function() {
         $('#timefilter').val('all');
         $("#prev_item").val('');
         $("#prev_timefilter").val('');
-		$("#rate_per_catch").val('');
+        $("#rate_per_catch").val('');
         window.history.replaceState({}, "MH Hunt Helper", "loot.php");
     });
 
@@ -60,7 +60,7 @@ $( function() {
         $('#timefilter').change(function() {
             searchItems($('#prev_item').val(), renderResultsTable, $('#timefilter').val());
         });
-		$('#rate_per_catch').change(function() {
+        $('#rate_per_catch').change(function() {
             searchItems($('#prev_item').val(), renderResultsTable, $('#timefilter').val());
         });
     }
@@ -84,11 +84,11 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-		var show_rate_per_catch = $('#rate_per_catch').is(':checked');
-		var rate_per_catch_title = '';
-		if (show_rate_per_catch) {
-			rate_per_catch_title = '<th>Rate per catch</th><th>Catches</th>';
-		}
+        var show_rate_per_catch = $('#rate_per_catch').is(':checked');
+        var rate_per_catch_title = '';
+        if (show_rate_per_catch) {
+            rate_per_catch_title = '<th>Rate per catch</th><th>Catches</th>';
+        }
         var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate per hunt</th><th>Hunts</th>' + rate_per_catch_title + '</tr></thead><tbody>';
 
         var all_stages = '';
@@ -101,10 +101,10 @@ $( function() {
                 + row.cheese + '</td><td>'
                 + parseFloat(((row.rate)/1000).toFixed(3)) + '</td><td>'
                 + row.total_hunts + '</td>';
-			if (show_rate_per_catch) {
-				final_html += '<td>' + parseFloat(((row.rate_per_catch)/1000).toFixed(3)) + '</td><td>' + row.total_catches + '</td>';
-			}
-			final_html += '</tr>';
+            if (show_rate_per_catch) {
+                final_html += '<td>' + parseFloat(((row.rate_per_catch)/1000).toFixed(3)) + '</td><td>' + row.total_catches + '</td>';
+            }
+            final_html += '</tr>';
         });
         final_html += '</tbody></table>';
         $("#results").html(final_html);

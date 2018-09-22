@@ -9,11 +9,11 @@ date > last_updated.txt
 echo "====== Backing up hunt helper ====="
 
 if [ -f hunthelper_nightly.sql.gz ]; then
-	rm hunthelper_nightly.sql.gz
+    rm hunthelper_nightly.sql.gz
 fi
 
 if [ -f hunthelper_nightly.txt.zip ]; then
-	rm hunthelper_nightly.txt.zip
+    rm hunthelper_nightly.txt.zip
 fi
 
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_nightly.sql.gz

@@ -26,10 +26,10 @@ $query->execute();
         <tr><th colspan="2" class="text-center">Mice missing from tools (except map helper)</th></tr></thead>
     <tbody>
 <?php
-	$mouse_count = 1;
+    $mouse_count = 1;
     while ( $row = $query->fetch(PDO::FETCH_ASSOC)) {
         print "<tr><td>$mouse_count</td><td>$row[mouse]</td></tr>";
-		$mouse_count++;
+        $mouse_count++;
     }
 ?>
 </tbody></table>

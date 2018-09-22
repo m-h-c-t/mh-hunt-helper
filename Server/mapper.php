@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-	<title>Jack's MH Mapper</title>
+    <title>Jack's MH Mapper</title>
     <?php require "common_head.php"; ?>
     <script defer src="/scripts/mapper.js"></script>
 </head>
