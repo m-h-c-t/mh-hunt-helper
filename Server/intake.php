@@ -90,8 +90,8 @@ if ($_POST['extension_version'] >= 11217) {
     $fields .= ', attraction_bonus, total_power, total_luck';
     $values .= ', :attraction_bonus, :total_power, :total_luck';
     $bindings['attraction_bonus'] = $_POST['attraction_bonus'];
-    $bindings['total_power'] 	  = $_POST['total_power'];
-    $bindings['total_luck'] 	  = $_POST['total_luck'];
+    $bindings['total_power']      = $_POST['total_power'];
+    $bindings['total_luck']       = $_POST['total_luck'];
 }
 
 // Optionals
@@ -168,7 +168,7 @@ if (!empty($_POST['stage']) && !empty($hunt_id)) {
 // Loot
 if (!empty($_POST['loot']) && $hunt_id > 0) {
     $loot_array = [];
-	$gold_array = [15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265];
+    $gold_array = [15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265];
     foreach ($_POST['loot'] as $loot_item) {
         $loot_item['amount'] = str_replace(",", "", $loot_item['amount']);
         if (!is_numeric($loot_item['amount']) || $loot_item['amount'] < 1) {
@@ -183,10 +183,10 @@ if (!empty($_POST['loot']) && $hunt_id > 0) {
         $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
         $query->execute(array($loot_item['name']));
         $loot_id = $query->fetchColumn();
-		
-		if (in_array($loot_id, $gold_array)) { // Blocking gold, there could be multiples of it, and not accurate
-			continue;
-		}
+        
+        if (in_array($loot_id, $gold_array)) { // Blocking gold, there could be multiples of it, and not accurate
+            continue;
+        }
 
         if (!$loot_id) {
             $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');
@@ -234,7 +234,7 @@ if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
 
 // Giveaway
 if ($_POST['entry_timestamp'] >= $giveaway_start_time && $_POST['entry_timestamp'] <= $giveaway_end_time) {
-	recordGiveawayHunt($_POST['user_id'], $_POST['entry_timestamp']);
+    recordGiveawayHunt($_POST['user_id'], $_POST['entry_timestamp']);
 }
 
 sendResponse('success', "Thanks for the hunt info!");
@@ -248,11 +248,11 @@ function sendResponse($status, $message) {
 }
 
 function recordGiveawayHunt($user = '', $timestamp = '') {
-	global $giveaway_url, $giveaway_key;
-	$url = $giveaway_url;
-	$url .= '?user=' . $user . '&ts=' . $timestamp;
-	$url .= '&mykey=' . $giveaway_key;
-	$nothing = file_get_contents($url);
+    global $giveaway_url, $giveaway_key;
+    $url = $giveaway_url;
+    $url .= '?user=' . $user . '&ts=' . $timestamp;
+    $url .= '&mykey=' . $giveaway_key;
+    $nothing = file_get_contents($url);
 }
 
 function formatVersion($version) {
@@ -267,23 +267,47 @@ function formatVersion($version) {
     return $version;
 }
 
+function getAliasLocationName($input) {
+    switch ($input) {
+        case 'Living Garden':
+        case 'Twisted Garden':
+            $input = 'Living/Twisted Garden';
+            break;
+
+        case 'Sand Dunes':
+        case 'Sand Crypts':
+            $input = 'Sand Dunes/Crypts';
+            break;
+
+        case 'Lost City':
+        case 'Cursed City':
+            $input = 'Lost/Cursed City';
+            break;
+
+        default:
+            // No-op
+            break;
+    }
+    return $input
+}
+
 function recordRelicHunter() {
-	if (empty($_POST['entry_timestamp']) || !is_numeric($_POST['entry_timestamp'])) {
-		return;
-	}
+    if (empty($_POST['entry_timestamp']) || !is_numeric($_POST['entry_timestamp'])) {
+        return;
+    }
 
     $file_name = 'tracker.json';
-    $location = filter_var($_POST['rh_environment'], FILTER_SANITIZE_STRING);
+    $location = getAliasLocationName(filter_var($_POST['rh_environment'], FILTER_SANITIZE_STRING));
 
     $data = file_get_contents($file_name);
 
     if (!empty($data)) {
         $data = json_decode($data);
         if (empty($data->rh) || $data->rh->last_seen > $_POST['entry_timestamp'] ) {
-			return;
-		}
-		$data->rh->location = $location;
-		$data->rh->last_seen = $_POST['entry_timestamp'];
+            return;
+        }
+        $data->rh->location = $location;
+        $data->rh->last_seen = $_POST['entry_timestamp'];
     } else {
         $data = [
             "rh" => [

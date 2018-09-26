@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-	<title>Jack's MH Converter</title>
+    <title>Jack's MH Converter</title>
     <?php require "common_head.php"; ?>
     <script defer src="/scripts/converter.js"></script>
 </head>

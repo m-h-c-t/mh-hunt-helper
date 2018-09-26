@@ -9,11 +9,11 @@ date > last_updated.txt
 echo "====== Backing up hunt helper ====="
 
 if [ -f hunthelper_weekly.sql.gz ]; then
-	rm hunthelper_weekly.sql.gz
+    rm hunthelper_weekly.sql.gz
 fi
 
 if [ -f hunthelper_weekly.txt.zip ]; then
-	rm hunthelper_weekly.txt.zip
+    rm hunthelper_weekly.txt.zip
 fi
 
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_weekly.sql.gz
@@ -28,7 +28,7 @@ rm -rf /var/lib/mysql-files/*
 echo "===== Backing up map spotter ====="
 
 if [ -f mapspotter_weekly.sql.gz ]; then
-	rm mapspotter_weekly.sql.gz
+    rm mapspotter_weekly.sql.gz
 fi
 
 if [ -f mapspotter_weekly.txt.zip ]; then
@@ -48,11 +48,11 @@ rm -rf /var/lib/mysql-files/*
 echo "===== Backing up converter ====="
 
 if [ -f converter_weekly.sql.gz ]; then
-	rm converter_weekly.sql.gz
+    rm converter_weekly.sql.gz
 fi
 
 if [ -f converter_weekly.txt.zip ]; then
-	rm converter_weekly.txt.zip
+    rm converter_weekly.txt.zip
 fi
 
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhconverter --ignore-table=mhconverter.entries | gzip -9 > converter_weekly.sql.gz
@@ -68,7 +68,7 @@ rm -rf /var/lib/mysql-files/*
 echo "===== Backing up map helper ====="
 
 if [ -f maphelper_weekly.sql.gz ]; then
-	rm maphelper_weekly.sql.gz
+    rm maphelper_weekly.sql.gz
 fi
 
 if [ -f maphelper_weekly.txt.zip ]; then
