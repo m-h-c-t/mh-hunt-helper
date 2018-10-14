@@ -13,6 +13,11 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
     <ul>
+        <li>Added Tsitu's code for stages in Harbour, GES, and CSC (18.10.14)</li>
+        <li>Added new Sunken City stages with Groupsky's previous help (18.10.14)</li>
+        <li>Fixed Web Alert popup in newer browsers (18.10.14)</li>
+        <li>Updated Tsitu's loader (18.10.14)</li>
+        <li>Removed Tsitu's other tools, since they are updated more frequently in loader (18.10.14)</li>
         <li>Added Groupsky's Sunken City zone recorder (18.4.13)</li>
         <li>Updated options page view (18.4.13)</li>
         <li>Fixed link to Tsitu's Loader (18.4.13)</li>
