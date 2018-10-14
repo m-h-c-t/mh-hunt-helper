@@ -288,7 +288,7 @@ function getAliasLocationName($input) {
             // No-op
             break;
     }
-    return $input
+    return $input;
 }
 
 function recordRelicHunter() {
