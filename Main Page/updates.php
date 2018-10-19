@@ -13,6 +13,7 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
     <ul>
+        <li>Fixed mouse name filtering with Tehhowch (18.10.19)</li>
         <li>Fixed hunt recording (18.10.18)</li>
         <li>Added stages for Mousoleum by Tsitu (18.10.18)</li>
         <li>Updated Tsitu's loader (18.10.18)</li>
