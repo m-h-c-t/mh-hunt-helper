@@ -13,6 +13,9 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
     <ul>
+        <li>Fixed hunt recording (18.10.18)</li>
+        <li>Added stages for Mousoleum by Tsitu (18.10.18)</li>
+        <li>Updated Tsitu's loader (18.10.18)</li>
         <li>Added Tsitu's code for stages in Harbour, GES, and CSC (18.10.14)</li>
         <li>Added new Sunken City stages with Groupsky's previous help (18.10.14)</li>
         <li>Fixed Web Alert popup in newer browsers (18.10.14)</li>
