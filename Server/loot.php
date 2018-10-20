@@ -26,6 +26,7 @@
                 <select class="form-control input-lg" id="timefilter" name="timefilter">
                     <option value="all" selected>All Time</option>
                     <option value="last3days">Last 3 days</option>
+                    <option value="hlwn2018">Halloween 2018</option>
                     <option value="seh2018">Spring Egg Hunt 2018</option>
                     <option value="stpatty2018">St Patty 2018</option>
                     <option value="bd2018">Birthday event 2018</option>

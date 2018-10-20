@@ -81,6 +81,9 @@ function getMouseQuery(&$query_all, &$query_one) {
     $table = "attractions";
     if (!empty($_REQUEST['timefilter'])) {
         switch($_REQUEST['timefilter']) {
+            case "hlwn2018":
+                $table = "attractions_hlwn_18";
+                break;
             case "bd2018":
                 $table = "attractions_birthday_18";
                 break;
@@ -94,7 +97,7 @@ function getMouseQuery(&$query_all, &$query_one) {
                 $table = "attractions_3_days";
                 break;
             case "current":
-                $table = "attractions_seh_18";
+                $table = "attractions_hlwn_18";
                 break;
             default:
                 break;
@@ -116,6 +119,9 @@ function getLootQuery(&$query_all, &$query_one) {
     $table = "drops";
     if (!empty($_REQUEST['timefilter'])) {
         switch($_REQUEST['timefilter']) {
+            case "hlwn2018":
+                $table = "drops_hlwn_18";
+                break;
             case "bd2018":
                 $table = "drops_birthday_18";
                 break;
@@ -129,7 +135,7 @@ function getLootQuery(&$query_all, &$query_one) {
                 $table = "drops_3_days";
                 break;
             case "current":
-                $table = "drops_seh_18";
+                $table = "drops_hlwn_18";
                 break;
             default:
                 break;
