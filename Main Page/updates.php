@@ -13,6 +13,10 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
     <ul>
+        <li>Tehhowch's backend update (18.10.21)</li>
+        <li>Fixed map helper autopopulator (18.10.21)</li>
+        <li>Fixed map recording for event and regular maps (18.10.21)</li>
+        <li>Added automatic refresh of mh pages on options save (18.10.21)</li>
         <li>Fixed mouse name filtering with Tehhowch (18.10.19)</li>
         <li>Fixed hunt recording (18.10.18)</li>
         <li>Added stages for Mousoleum by Tsitu (18.10.18)</li>
