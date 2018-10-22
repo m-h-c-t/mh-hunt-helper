@@ -1,0 +1,54 @@
+{
+    "attractions": [
+        {
+            "display_name": "Halloween 2018",
+            "code_name": "hlwn2018"
+        },
+        {
+            "display_name": "Birthday 2018",
+            "code_name": "bd2018"
+        },
+        {
+            "display_name": "St Pattys 2018",
+            "code_name": "stpatty2018"
+        },
+        {
+            "display_name": "SEH 2018",
+            "code_name": "seh2018"
+        },
+        {
+            "display_name": "Last 3 days",
+            "code_name": "last3days"
+        },
+        {
+            "display_name": "Current",
+            "code_name": "current"
+        }
+    ],
+    "drops": [
+        {
+            "display_name": "Halloween 2018",
+            "code_name": "hlwn2018"
+        },
+        {
+            "display_name": "Birthday 2018",
+            "code_name": "bd2018"
+        },
+        {
+            "display_name": "St Pattys 2018",
+            "code_name": "stpatty2018"
+        },
+        {
+            "display_name": "SEH 2018",
+            "code_name": "seh2018"
+        },
+        {
+            "display_name": "Last 3 days",
+            "code_name": "last3days"
+        },
+        {
+            "display_name": "Current",
+            "code_name": "current"
+        }
+    ]
+}
