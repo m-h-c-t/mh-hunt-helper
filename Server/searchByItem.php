@@ -79,29 +79,14 @@ function getItem($query_all, $query_one) {
 
 function getMouseQuery(&$query_all, &$query_one) {
     $table = "attractions";
-    if (!empty($_REQUEST['timefilter'])) {
-        switch($_REQUEST['timefilter']) {
-            case "hlwn2018":
-                $table = "attractions_hlwn_18";
-                break;
-            case "bd2018":
-                $table = "attractions_birthday_18";
-                break;
-            case "stpatty2018":
-                $table = "attractions_stpatty_18";
-                break;
-            case "seh2018":
-                $table = "attractions_seh_18";
-                break;
-            case "last3days":
-                $table = "attractions_3_days";
-                break;
-            case "current":
-                $table = "attractions_hlwn_18";
-                break;
-            default:
-                break;
-        }
+    $code_names_only = true;
+    $silent = true;
+    require_once "filters.php";
+
+    if (!empty($_REQUEST['timefilter'])
+        && in_array($_REQUEST['timefilter'], $filters)
+        && $_REQUEST['timefilter'] != 'all_time') {
+        $table = 'attractions_' . $_REQUEST['timefilter'];
     }
 
     $query_all = 'SELECT id, name FROM mice';
