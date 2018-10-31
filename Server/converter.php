@@ -24,8 +24,7 @@
                 <div class="input-group-addon"><strong>Convertible:</strong></div>
                 <input name="item" id="item" class="form-control input-lg" type="text" placeholder="Start typing convertible name and select." autofocus>
                 <div id="erase_item" class="input-group-addon fakebutton"><span class="glyphicon glyphicon-remove"></span></div>
-            </div>
-        <br/>';
+            </div>';
 
         //Ajax here
         print '<div id="results_total"></div>';

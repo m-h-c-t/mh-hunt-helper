@@ -70,15 +70,14 @@ $( function() {
         var all_stages = '';
         let total_seen = 'Did not find this convertible';
         data.forEach(function(row) {
-            total_seen = row.total;
+            total_seen = row.total + ' convertibles';
             final_html += '<tr><td>'
                 + row.item + '</td><td>'
                 + parseFloat(((row.rate)/1000).toFixed(3)) + '</td></tr>';
         });
         final_html += '</tbody></table>';
 
-        total_seen += ' convertibles';
-        total_seen = '<h5>' + total_seen + '</h5>';
+        total_seen = '<h4>' + total_seen + '</h4>';
         $('#results_total').html(total_seen);
 
         $("#results").html(final_html);
