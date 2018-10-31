@@ -65,22 +65,28 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Item</th><th>Seen Convertibles</th><th>Average items</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Item</th><th>Average items</th></tr></thead><tbody>';
 
         var all_stages = '';
+        let total_seen = 'Did not find this convertible';
         data.forEach(function(row) {
+            total_seen = row.total;
             final_html += '<tr><td>'
                 + row.item + '</td><td>'
-                + row.total + '</td><td>'
                 + parseFloat(((row.rate)/1000).toFixed(3)) + '</td></tr>';
         });
         final_html += '</tbody></table>';
+
+        total_seen += ' convertibles';
+        total_seen = '<h5>' + total_seen + '</h5>';
+        $('#results_total').html(total_seen);
+
         $("#results").html(final_html);
         $('#results_table').DataTable( {
             "paging":   false,
             "searching": false,
             "info": false,
-            "order": [[2, 'desc']]
+            "order": [[1, 'desc']]
         });
 
         var table = $('#results_table').DataTable();
