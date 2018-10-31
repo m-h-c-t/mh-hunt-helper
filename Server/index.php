@@ -18,12 +18,13 @@
         <div class="input-group-addon"><strong style="display:block">Mouse:</strong><br/><br/><strong style="display:block">Time:</strong></div>
         <input name="mouse" id="mouse" class="form-control input-lg" type="text" placeholder="Start typing mouse name and select." autofocus>
         <select class="form-control input-lg" id="timefilter" name="timefilter">
-            <option value="all" selected>All Time</option>
-            <option value="last3days">Last 3 days</option>
-            <option value="hlwn2018">Halloween 2018</option>
-            <option value="seh2018">Spring Egg Hunt 2018</option>
-            <option value="stpatty2018">St Patty 2018</option>
-            <option value="bd2018">Birthday event 2018</option>
+        <?php
+            $silent = true;
+            require_once "filters.php";
+            foreach ($filters as $filter) {
+                print '<option value="' . $filter['code_name'] . '">' . $filter['display_name'] . '</option>';
+            }
+        ?>
         </select>
         <div id="erase_mouse" class="input-group-addon fakebutton"><span class="glyphicon glyphicon-remove"></span></div>
     </div>

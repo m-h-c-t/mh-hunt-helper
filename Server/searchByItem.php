@@ -78,31 +78,7 @@ function getItem($query_all, $query_one) {
 }
 
 function getMouseQuery(&$query_all, &$query_one) {
-    $table = "attractions";
-    if (!empty($_REQUEST['timefilter'])) {
-        switch($_REQUEST['timefilter']) {
-            case "hlwn2018":
-                $table = "attractions_hlwn_18";
-                break;
-            case "bd2018":
-                $table = "attractions_birthday_18";
-                break;
-            case "stpatty2018":
-                $table = "attractions_stpatty_18";
-                break;
-            case "seh2018":
-                $table = "attractions_seh_18";
-                break;
-            case "last3days":
-                $table = "attractions_3_days";
-                break;
-            case "current":
-                $table = "attractions_hlwn_18";
-                break;
-            default:
-                break;
-        }
-    }
+    $table = generateTable("attractions");
 
     $query_all = 'SELECT id, name FROM mice';
     $query_one = '
@@ -116,31 +92,7 @@ function getMouseQuery(&$query_all, &$query_one) {
 }
 
 function getLootQuery(&$query_all, &$query_one) {
-    $table = "drops";
-    if (!empty($_REQUEST['timefilter'])) {
-        switch($_REQUEST['timefilter']) {
-            case "hlwn2018":
-                $table = "drops_hlwn_18";
-                break;
-            case "bd2018":
-                $table = "drops_birthday_18";
-                break;
-            case "stpatty2018":
-                $table = "drops_stpatty_18";
-                break;
-            case "seh2018":
-                $table = "drops_seh_18";
-                break;
-            case "last3days":
-                $table = "drops_3_days";
-                break;
-            case "current":
-                $table = "drops_hlwn_18";
-                break;
-            default:
-                break;
-        }
-    }
+    $table = generateTable("drops");
 
     # blocking gold
     $query_all = 'SELECT id, name FROM loot where id NOT IN (15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265)';
@@ -151,6 +103,19 @@ function getLootQuery(&$query_all, &$query_one) {
         INNER JOIN locations l ON h.location_id = l.id
         LEFT JOIN stages s ON h.stage_id = s.id
         WHERE h.loot_id = ?';
+}
+
+function generateTable($table) {
+    $code_names_only = true;
+    $silent = true;
+    require_once "filters.php";
+
+    if (!empty($_REQUEST['timefilter'])
+        && in_array($_REQUEST['timefilter'], $filters)
+        && $_REQUEST['timefilter'] != 'all_time') {
+        $table .= '_' . $_REQUEST['timefilter'];
+    }
+    return $table;
 }
 
 function getMHMHMouseQuery(&$query_all, &$query_one) {
