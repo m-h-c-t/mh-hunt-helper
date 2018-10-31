@@ -22,5 +22,6 @@ else {
 
 
 if (!isset($silent) || !$silent) {
-    print json_encode($filters);
+    header('Content-Type: application/json');
+    print json_encode($filters, JSON_PRETTY_PRINT);
 }
