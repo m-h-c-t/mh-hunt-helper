@@ -65,23 +65,28 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Mouse/Item</th><th>Seen Maps</th><th>Total Maps</th><th>Rate per map</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Mouse/Item</th><th>Seen Maps</th><th>Rate per map</th></tr></thead><tbody>';
 
         var all_stages = '';
+        let total_seen = 'Did not find this map';
         data.forEach(function(row) {
+            total_seen = row.total_maps + ' maps';
             final_html += '<tr><td>'
                 + row.mouse + '</td><td>'
                 + row.seen_maps + '</td><td>'
-                + row.total_maps + '</td><td>'
                 + parseFloat(((row.rate)/100).toFixed(2)) + '%</td></tr>';
         });
         final_html += '</tbody></table>';
+
+        total_seen = '<h4>' + total_seen + '</h4>';
+        $('#results_total').html(total_seen);
+
         $("#results").html(final_html);
         $('#results_table').DataTable( {
             "paging":   false,
             "searching": false,
             "info": false,
-            "order": [[3, 'desc']]
+            "order": [[2, 'desc']]
         });
 
         var table = $('#results_table').DataTable();
