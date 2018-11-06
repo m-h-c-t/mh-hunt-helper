@@ -2,7 +2,7 @@ $( function() {
     $("#erase_mouse").click(function () {
         $("#results").html('');
         $("#mouse").val('').focus();
-        $('#timefilter').val('all');
+        $('#timefilter').val('all_time');
         $("#prev_mouse").val('');
         $("#prev_timefilter").val('');
         window.history.replaceState({}, "MH Hunt Helper", "");

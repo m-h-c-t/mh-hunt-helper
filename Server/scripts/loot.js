@@ -2,7 +2,7 @@ $( function() {
     $("#erase_item").click(function () {
         $("#results").html('');
         $("#item").val('').focus();
-        $('#timefilter').val('all');
+        $('#timefilter').val('all_time');
         $("#prev_item").val('');
         $("#prev_timefilter").val('');
         $("#rate_per_catch").val('');
