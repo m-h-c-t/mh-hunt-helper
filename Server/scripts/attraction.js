@@ -99,7 +99,7 @@ $( function() {
             "paging":   false,
             "searching": false,
             "info": false,
-            "order": [[4, 'desc']],
+            "order": [[3, 'desc']],
             "columnDefs": [
                 {
                     "targets": [ 1 ],
