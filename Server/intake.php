@@ -132,6 +132,8 @@ if (!empty($_POST['extension_version'])) {
     $bindings['extension_version'] = formatVersion($_POST['extension_version']);
 }
 
+try {
+$pdo->beginTransaction();
 $query = $pdo->prepare("INSERT INTO hunts ($fields) VALUES ($values)");
 $query->execute($bindings);
 
@@ -230,6 +232,12 @@ if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
             $query->execute(array($hunt_id, $detail_type_id, $detail_value_id));
         }
     }
+}
+
+$pdo->commit();
+} catch (Exception $e) {
+    $pdo->rollBack();
+    error_log("Failed transaction: " . $e->getMessage());
 }
 
 // Giveaway
