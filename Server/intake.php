@@ -133,108 +133,108 @@ if (!empty($_POST['extension_version'])) {
 }
 
 try {
-$pdo->beginTransaction();
-$query = $pdo->prepare("INSERT INTO hunts ($fields) VALUES ($values)");
-$query->execute($bindings);
+    $pdo->beginTransaction();
+    $query = $pdo->prepare("INSERT INTO hunts ($fields) VALUES ($values)");
+    $query->execute($bindings);
 
-$hunt_id = $pdo->lastInsertId();
+    $hunt_id = $pdo->lastInsertId();
 
-// Stage(s)
-if (!empty($_POST['stage']) && !empty($hunt_id)) {
-    if (is_string($_POST['stage'])) {
-        $_POST['stage'] = array($_POST['stage']);
-    }
+    // Stage(s)
+    if (!empty($_POST['stage']) && !empty($hunt_id)) {
+        if (is_string($_POST['stage'])) {
+            $_POST['stage'] = array($_POST['stage']);
+        }
 
-    foreach ($_POST['stage'] as $stage_name) {
-        $stage_id = 0;
-        $query = $pdo->prepare('SELECT id FROM mhhunthelper.stages WHERE name LIKE ?');
-        $query->execute(array($stage_name));
-
-        $stage_id = $query->fetchColumn();
-
-        if (!$stage_id) {
-            $query = $pdo->prepare('INSERT INTO mhhunthelper.stages (name) VALUES (?)');
+        foreach ($_POST['stage'] as $stage_name) {
+            $stage_id = 0;
+            $query = $pdo->prepare('SELECT id FROM mhhunthelper.stages WHERE name LIKE ?');
             $query->execute(array($stage_name));
-            $stage_id = $pdo->lastInsertId();
-        }
+
+            $stage_id = $query->fetchColumn();
+
+            if (!$stage_id) {
+                $query = $pdo->prepare('INSERT INTO mhhunthelper.stages (name) VALUES (?)');
+                $query->execute(array($stage_name));
+                $stage_id = $pdo->lastInsertId();
+            }
 
 
-        if (!empty($stage_id)) {
-            $query = $pdo->prepare("INSERT INTO hunt_stage (hunt_id, stage_id) VALUES (?, ?)");
-            $query->execute(array($hunt_id, $stage_id));
+            if (!empty($stage_id)) {
+                $query = $pdo->prepare("INSERT INTO hunt_stage (hunt_id, stage_id) VALUES (?, ?)");
+                $query->execute(array($hunt_id, $stage_id));
+            }
         }
     }
-}
 
 
-// Loot
-if (!empty($_POST['loot']) && $hunt_id > 0) {
-    $loot_array = [];
-    $gold_array = [15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265];
-    foreach ($_POST['loot'] as $loot_item) {
-        $loot_item['amount'] = str_replace(",", "", $loot_item['amount']);
-        if (!is_numeric($loot_item['amount']) || $loot_item['amount'] < 1) {
-            continue;
-        }
+    // Loot
+    if (!empty($_POST['loot']) && $hunt_id > 0) {
+        $loot_array = [];
+        $gold_array = [15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265];
+        foreach ($_POST['loot'] as $loot_item) {
+            $loot_item['amount'] = str_replace(",", "", $loot_item['amount']);
+            if (!is_numeric($loot_item['amount']) || $loot_item['amount'] < 1) {
+                continue;
+            }
 
-        $lucky = null;
-        if (!empty($loot_item['lucky'])) {
-            $lucky = $loot_item['lucky'] === 'true' ? 1 : 0;
-        }
+            $lucky = null;
+            if (!empty($loot_item['lucky'])) {
+                $lucky = $loot_item['lucky'] === 'true' ? 1 : 0;
+            }
 
-        $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
-        $query->execute(array($loot_item['name']));
-        $loot_id = $query->fetchColumn();
-        
-        if (in_array($loot_id, $gold_array)) { // Blocking gold, there could be multiples of it, and not accurate
-            continue;
-        }
-
-        if (!$loot_id) {
-            $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');
+            $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
             $query->execute(array($loot_item['name']));
-            $loot_id = $pdo->lastInsertId();
+            $loot_id = $query->fetchColumn();
+
+            if (in_array($loot_id, $gold_array)) { // Blocking gold, there could be multiples of it, and not accurate
+                continue;
+            }
+
+            if (!$loot_id) {
+                $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');
+                $query->execute(array($loot_item['name']));
+                $loot_id = $pdo->lastInsertId();
+            }
+
+            $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount, lucky) VALUES (?, ?, ?, ?)');
+            $query->execute(array($hunt_id, $loot_id, $loot_item['amount'], $lucky));
         }
-
-        $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount, lucky) VALUES (?, ?, ?, ?)');
-        $query->execute(array($hunt_id, $loot_id, $loot_item['amount'], $lucky));
     }
-}
 
-// Hunt Details
-if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
-    foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
-        $detail_type_id = 0;
-        $detail_value_id = 0;
+    // Hunt Details
+    if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
+        foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
+            $detail_type_id = 0;
+            $detail_value_id = 0;
 
-        $query = $pdo->prepare("SELECT id FROM mhhunthelper.detail_types WHERE name LIKE ?");
-        $query->execute(array($detail_type));
-        $detail_type_id = $query->fetchColumn();
-
-        if (!$detail_type_id) {
-            $query = $pdo->prepare('INSERT INTO mhhunthelper.detail_types (name) VALUES (?)');
+            $query = $pdo->prepare("SELECT id FROM mhhunthelper.detail_types WHERE name LIKE ?");
             $query->execute(array($detail_type));
-            $detail_type_id = $pdo->lastInsertId();
-        }
+            $detail_type_id = $query->fetchColumn();
 
-        $query = $pdo->prepare("SELECT id FROM mhhunthelper.detail_values WHERE name LIKE ?");
-        $query->execute(array($detail_value));
-        $detail_value_id = $query->fetchColumn();
+            if (!$detail_type_id) {
+                $query = $pdo->prepare('INSERT INTO mhhunthelper.detail_types (name) VALUES (?)');
+                $query->execute(array($detail_type));
+                $detail_type_id = $pdo->lastInsertId();
+            }
 
-        if (!$detail_value_id) {
-            $query = $pdo->prepare('INSERT INTO mhhunthelper.detail_values (name) VALUES (?)');
+            $query = $pdo->prepare("SELECT id FROM mhhunthelper.detail_values WHERE name LIKE ?");
             $query->execute(array($detail_value));
-            $detail_value_id = $pdo->lastInsertId();
-        }
+            $detail_value_id = $query->fetchColumn();
 
-        if (!empty($detail_type_id) && !empty($detail_value_id)) {
-            $query = $pdo->prepare("INSERT INTO hunt_details (hunt_id, detail_type_id, detail_value_id) VALUES (?, ?, ?)");
-            $query->execute(array($hunt_id, $detail_type_id, $detail_value_id));
+            if (!$detail_value_id) {
+                $query = $pdo->prepare('INSERT INTO mhhunthelper.detail_values (name) VALUES (?)');
+                $query->execute(array($detail_value));
+                $detail_value_id = $pdo->lastInsertId();
+            }
+
+            if (!empty($detail_type_id) && !empty($detail_value_id)) {
+                $query = $pdo->prepare("INSERT INTO hunt_details (hunt_id, detail_type_id, detail_value_id) VALUES (?, ?, ?)");
+                $query->execute(array($hunt_id, $detail_type_id, $detail_value_id));
+            }
         }
     }
-}
 
-$pdo->commit();
+    $pdo->commit();
 } catch (Exception $e) {
     $pdo->rollBack();
     error_log("Failed transaction: " . $e->getMessage());
