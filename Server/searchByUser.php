@@ -66,7 +66,7 @@ print "<br/>";
 
 $query_string = '
     SELECT timestamp, l.name as location, GROUP_CONCAT(DISTINCT s.name SEPARATOR ", ") as stage, t.name as trap, b.name as base, ch.name as charm, h.shield, h.caught, m.name as mouse, c.name as cheese, GROUP_CONCAT(DISTINCT CONCAT_WS(" ", hl.amount, CONCAT(lt.name, IF(hl.lucky, "(L)", ""))) SEPARATOR ", ") as loot
-    FROM hunts h
+    FROM (SELECT * from hunts h WHERE user_id = ? LIMIT 1000) h
     INNER JOIN locations l on h.location_id = l.id
     LEFT JOIN hunt_stage hs on h.id = hs.hunt_id
     LEFT JOIN stages s on hs.stage_id = s.id
@@ -77,10 +77,8 @@ $query_string = '
     LEFT JOIN charms ch on h.charm_id = ch.id
     LEFT JOIN hunt_loot hl on h.id = hl.hunt_id
     LEFT JOIN loot lt on hl.loot_id = lt.id
-    WHERE user_id = ?
     GROUP BY h.id
-    ORDER BY timestamp DESC
-    LIMIT 1000';
+    ORDER BY timestamp DESC';
 $query = $pdo->prepare($query_string);
 $query->execute(array($user_id));
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
