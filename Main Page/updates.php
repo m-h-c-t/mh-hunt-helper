@@ -13,6 +13,12 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
     <ul>
+        <li>Fixed Stuck Snowball mouse recording (19.1.10)</li>
+        <li>Fixed GWH stage names (18.12.13)</li>
+        <li>Fixed GWH boss stage (18.12.13)</li>
+        <li>Added GWH 2018 Stages (18.12.12)</li>
+        <li>Fixed logged out popup spam (18.12.12)</li>
+        <li>Updated Tsitu's loader (18.12.12)</li>
         <li>Fixed multi map autoloader (18.11.6)</li>
         <li>Updated Tsitu's loader (18.11.6)</li>
         <li>Tehhowch's backend update (18.10.21)</li>
