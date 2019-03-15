@@ -10,6 +10,15 @@ if ($http_origin !== "https://www.mousehuntgame.com" && $http_origin !== "http:/
 }
 
 header("Access-Control-Allow-Origin: $http_origin");
+// header("X-Content-Type-Options: nosniff");
+// header("Content-Type: application/json");
+
+require_once "config.php";
+
+if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
+    error_log("Bad version: " . $_POST['extension_version']);
+    sendResponse('error', "Please update extension to the latest version.");
+}
 
 if (
     empty($_POST['asset_package_hash'])      ||
@@ -22,13 +31,6 @@ if (
 ) {
     error_log("One of the fields was missing");
     die();
-}
-
-require_once "config.php";
-
-if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
-    error_log("Bad version: " . $_POST['extension_version']);
-    sendResponse('error', "Please update extension to the latest version.");
 }
 
 // PDO
