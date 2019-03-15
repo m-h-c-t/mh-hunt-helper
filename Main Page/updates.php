@@ -13,6 +13,17 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
     <ul>
+        <li>Added boss defeated flag in data - Tehhowch (19.3.15)</li>
+        <li>Added WWR Rage levels for Lactrodectus - Tehhowch (19.3.15)</li>
+        <li>Added Fort Rox upgrades and tower tracking - Tehhowch (19.3.15)</li>
+        <li>Added Harbour bounty mice pool - Tehhowch (19.3.15)</li>
+        <li>Removed old update checks - Tehhowch (19.3.15)</li>
+        <li>Moved code for crowns for better submission - Tehhowch (19.3.15)</li>
+        <li>Improved tracking for MBW - Tehhowch (19.3.15)</li>
+        <li>Added debug logging for prize mice - Tehhowch (19.3.15)</li>
+        <li>Extensive Readme revamp - Tsitu (19.3.15)</li>
+        <li>Added Mino Lair tracking - Tehhowch (19.3.15)</li>
+        <li>Updated Tsitu's Auto-Loader - Tsitu (19.3.15)</li>
         <li>Started recording lucky catches correctly and marking them so - Tehhowch (19.3.5)</li>
         <li>Refactored a lot of code on options, popup and background pages - Tehhowch (19.3.5)</li>
         <li>Updated mouse name extraction regex, crown collection, other things - Tehhowch (19.3.5)</li>
