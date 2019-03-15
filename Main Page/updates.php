@@ -13,6 +13,13 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
     <ul>
+        <li>Started recording lucky catches correctly and marking them so - Tehhowch (19.3.5)</li>
+        <li>Refactored a lot of code on options, popup and background pages - Tehhowch (19.3.5)</li>
+        <li>Updated mouse name extraction regex, crown collection, other things - Tehhowch (19.3.5)</li>
+        <li>Added 2019 Birthday stages - Tehhowch (19.3.5)</li>
+        <li>Updated Tsitu's Autoloader - Tsitu (19.3.5)</li>
+        <li>Blocked costumed mice recording until pig is caught (19.2.6)</li>
+        <li>Updated Tsitu's Autoloader - Tsitu (19.2.6)</li>
         <li>Fixed Stuck Snowball mouse recording (19.1.10)</li>
         <li>Fixed GWH stage names (18.12.13)</li>
         <li>Fixed GWH boss stage (18.12.13)</li>
