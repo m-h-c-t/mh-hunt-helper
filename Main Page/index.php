@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
-    <meta property="og:title" content="Jack's MouseHunt Tools" />
+    <meta property="og:title" content="MHCT (Jack's) MouseHunt Tools" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.agiletravels.com" />
     <meta property="og:description" content="Tools to help with the MouseHunt game." />
@@ -25,7 +25,7 @@
 <body class="text-center">
 <!-- Jumbotron -->
 <div class="jumbotron">
-    <h1>Jack's MouseHunt Tools</h1>
+    <h1>MHCT (Jack's) MouseHunt Tools</h1>
 </div>
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
@@ -78,7 +78,7 @@
 </div>
 <div class="container">
     <p class="muted">If you want to help, please install the browser extension below.<br/>
-        The code and data are Open Source on <a href="https://github.com/DevJackSmith/" target="_blank">GitHub</a> and <a href="https://keybase.io/devjacksmith" target="_blank">KeyBase</a>.<br/>
+        The code and data are Open Source on <a href="https://github.com/mh-community-tools" target="_blank">GitHub</a> and <a href="https://keybase.io/devjacksmith" target="_blank">KeyBase</a>.<br/>
         Also check out <a href="https://www.reddit.com/r/mousehunt/">MH Subreddit</a> and join us on <a href="https://discord.gg/E4utmBD">Discord</a>.<br/>
         Special thanks to all who helped. These projects are brought to you by Jack and others: Tehhowch, Aardwolf, Tsitu's tools team, Groupsky, Loaf, Nick, Ryonn, and many others who helped with advice, ideas, and otherwise. Also thanks to discord mods for allowing integrations and contributors like you!
     </p>
