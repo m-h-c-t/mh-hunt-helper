@@ -16,6 +16,9 @@ if [ -f hunthelper_weekly.txt.zip ]; then
     rm hunthelper_weekly.txt.zip
 fi
 
+echo "=== Turning off even scheduler ==="
+mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = OFF;"
+
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
@@ -82,6 +85,9 @@ mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --
 rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 maphelper_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
+
+echo "=== Turning on even scheduler ==="
+mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = ON;"
 
 echo "===== finished mh_db_auto_backup.sh ====="
 
