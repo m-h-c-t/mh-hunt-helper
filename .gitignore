@@ -3,7 +3,11 @@
 /old versions/
 /Server/config.php
 /Server/tracker.json
+/Server/banned.json
 /.idea/
 ga.php
 /DB/config.sh
+/DB/*.sql.gz
+/DB/*.txt.zip
+/DB/last_updated.txt
 /Server/id_modifier.php
