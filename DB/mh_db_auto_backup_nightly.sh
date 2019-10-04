@@ -2,7 +2,7 @@
 echo "===== started mh_db_auto_backup_nightly.sh ======"
 
 source /var/www/mh-hunt-helper/DB/config.sh
-cd /keybase/public/devjacksmith/mh_backups/nightly
+#cd /keybase/public/devjacksmith/mh_backups/nightly
 
 # Hunt Helper
 echo "====== Backing up hunt helper ====="
@@ -38,3 +38,4 @@ echo "===== finished mh_db_auto_backup_nightly.sh ====="
 
 date > last_updated.txt
 
+runuser user -c 'cp hunthelper_nightly.sql.gz hunthelper_nightly.txt.zip last_updated.txt /keybase/public/devjacksmith/mh_backups/nightly/'
