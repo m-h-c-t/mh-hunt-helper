@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-    <title>Jack's MH Looter</title>
+    <title>MHCT Looter</title>
     <?php require "common_head.php"; ?>
     <script defer src="/scripts/loot.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/loot.css">
@@ -8,8 +8,8 @@
 <body style="text-align: center;" class="text-center">
     <!-- Jumbotron -->
     <div class="jumbotron">
-        <h1>Jack's MH Loot Search</h1>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
+        <h1>MHCT Loot Search</h1>
+        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
     </div>
     <div class="container">
         <form id="search_options">

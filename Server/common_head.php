@@ -3,7 +3,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta property="og:title" content="Jack's MouseHunt Tools" />
+<meta property="og:title" content="MHCT MouseHunt Tools" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.agiletravels.com" />
 <meta property="og:description" content="Tools to help with the MouseHunt game." />

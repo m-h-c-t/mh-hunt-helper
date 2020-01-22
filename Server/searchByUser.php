@@ -21,8 +21,8 @@
     <div id="loader" class="loader"></div>
     <script>$("#loader").css( "display", "block" );</script>
     <div class="jumbotron">
-        <h1>Jack's MH User History</h1>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
+        <h1>MHCT User History</h1>
+        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
     </div>
     <div class="container-fluid">
 <?php

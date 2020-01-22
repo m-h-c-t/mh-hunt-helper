@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jack's MH Map Spotter</title>
+    <title>MHCT Map Spotter</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta property="og:title" content="Jack's MouseHunt Tools" />
+    <meta property="og:title" content="MHCT MouseHunt Tools" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.agiletravels.com" />
     <meta property="og:description" content="Tools to help with the MouseHunt game." />
@@ -36,9 +36,9 @@
 <!-- Jumbotron -->
 <div class="jumbotron">
     <div class="container-fluid">
-        <h1>Jack's MH Map Spotter</h1>
+        <h1>MHCT Map Spotter</h1>
         <p>Tool for map sniping, leeching and helping.</p>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
+        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
     </div>
 </div>
 <?php } else { ?>

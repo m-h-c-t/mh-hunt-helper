@@ -1,15 +1,15 @@
 <html lang="en">
 <head>
-    <title>Jack's MH Converter</title>
+    <title>MHCT Converter</title>
     <?php require "common_head.php"; ?>
     <script defer src="/scripts/converter.js"></script>
 </head>
 <body style="text-align: center;" class="text-center">
     <!-- Jumbotron -->
     <div class="jumbotron">
-        <h1>Jack's MH Converter</h1>
+        <h1>MHCT Converter</h1>
         <p>Search contents by convertible name.</p>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Jack's MH Tools</a>
+        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
     </div>
     <div class="container">
         <input id="item_type" type="hidden" value="convertible">
