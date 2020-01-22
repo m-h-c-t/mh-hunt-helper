@@ -85,9 +85,8 @@
 </div>
 <div class="container">
     <div class="text-center">
-        <a href="https://chrome.google.com/webstore/detail/mh-hunt-helper/ghfmjkamilolkalibpmokjigalmncfek" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/chrome.png"></a>
-        <a href="https://addons.mozilla.org/en-US/firefox/addon/jacks-mousehunt-helper/" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/firefox.png"><b> Add-on</b></a>&nbsp;
-        <a href="https://addons.opera.com/en/extensions/details/jacks-mousehunt-helper/" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/opera.png"></a>
+        <a href="https://chrome.google.com/webstore/detail/mhct-mousehunt-helper/ghfmjkamilolkalibpmokjigalmncfek?authuser=1" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/chrome.png"></a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/mhct-mousehunt-helper/" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/firefox.png"><b> Add-on</b></a>
     </div>
 </div>
 <?php include_once("ga.php") ?>
