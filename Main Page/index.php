@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
-    <meta property="og:title" content="MHCT (Jack's) MouseHunt Tools" />
+    <meta property="og:title" content="MHCT MouseHunt Tools" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.agiletravels.com" />
     <meta property="og:description" content="Tools to help with the MouseHunt game." />
     <meta property="og:image" content="https://www.agiletravels.com/images/fb_image.jpg" />
     <meta property="fb:app_id" content="314857368939024" />
 
-    <title>Jack's MouseHunt Tools</title>
+    <title>MHCT Tools</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 
@@ -25,7 +25,7 @@
 <body class="text-center">
 <!-- Jumbotron -->
 <div class="jumbotron">
-    <h1>MHCT (Jack's) MouseHunt Tools</h1>
+    <h1>MHCT MouseHunt Tools</h1>
 </div>
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
@@ -80,7 +80,7 @@
     <p class="muted">If you want to help, please install the browser extension below.<br/>
         The code and data are Open Source on <a href="https://github.com/mh-community-tools" target="_blank">GitHub</a> and <a href="https://keybase.io/devjacksmith" target="_blank">KeyBase</a>.<br/>
         Also check out <a href="https://www.reddit.com/r/mousehunt/">MH Subreddit</a> and join us on <a href="https://discord.gg/E4utmBD">Discord</a>.<br/>
-        Special thanks to all who helped. These projects are brought to you by Jack and others: Tehhowch, Aardwolf, Tsitu's tools team, Groupsky, Loaf, Nick, Ryonn, and many others who helped with advice, ideas, and otherwise. Also thanks to discord mods for allowing integrations and contributors like you!
+        Special thanks to all who helped. These projects are brought to you by MHCT Team and others: Jack, Tehhowch, Aardwolf, Tsitu's tools team, Groupsky, Loaf, Nick, Ryonn, and many others who helped with advice, ideas, and otherwise. Also thanks to discord mods for allowing integrations and contributors like you!
     </p>
 </div>
 <div class="container">
