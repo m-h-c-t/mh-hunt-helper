@@ -87,7 +87,7 @@ $( function() {
         var show_rate_per_catch = $('#rate_per_catch').is(':checked');
         var rate_per_catch_title = '';
         if (show_rate_per_catch) {
-            rate_per_catch_title = '<th>Rate per catch</th><th>Catches</th>';
+            rate_per_catch_title = '<th>Rate per catch</th><th>Catches</th><th>Drop%</th><th>Min / Max</th>';
         }
         var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate per hunt</th><th>Hunts</th>' + rate_per_catch_title + '</tr></thead><tbody>';
 
@@ -102,7 +102,8 @@ $( function() {
                 + parseFloat(((row.rate)/1000).toFixed(3)) + '</td><td>'
                 + row.total_hunts + '</td>';
             if (show_rate_per_catch) {
-                final_html += '<td>' + parseFloat(((row.rate_per_catch)/1000).toFixed(3)) + '</td><td>' + row.total_catches + '</td>';
+                final_html += '<td>' + parseFloat(((row.rate_per_catch)/1000).toFixed(3)) + '</td><td>' + row.total_catches + '</td>' 
+                	+ '<td>' + row.drop_pct + '%</td><td>' + row.min_amt + ' / ' + row.max_amt + '</td>';
             }
             final_html += '</tr>';
         });
