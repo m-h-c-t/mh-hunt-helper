@@ -73,7 +73,7 @@ $( function() {
             total_seen = row.total + ' convertibles';
             final_html += '<tr><td>'
                 + row.item + '</td><td>'
-                + parseFloat((row.total_items / row.total).toFixed(5)) + '</td></tr>';
+                + parseFloat((row.total_items / row.total).toPrecision(3)) + '</td></tr>';
         });
         final_html += '</tbody></table>';
 
