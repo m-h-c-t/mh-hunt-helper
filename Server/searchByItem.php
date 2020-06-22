@@ -99,7 +99,7 @@ function getLootQuery(&$query_all, &$query_one) {
     $query_one = '
         SELECT l.name AS location, s.name AS stage, h.total_hunts, h.rate, c.name AS cheese
 		, ROUND(h.total_drops / h.total_catches,5) as rate_per_catch
-		, h.total_catches
+		, h.total_catches, h.total_drops
 		, ROUND(h.drop_count/h.total_catches*100,2) AS drop_pct, h.min_amt, h.max_amt
         FROM ' . $table . ' h
         INNER JOIN cheese c ON h.cheese_id = c.id
