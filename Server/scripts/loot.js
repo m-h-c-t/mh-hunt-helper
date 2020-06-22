@@ -102,7 +102,7 @@ $( function() {
                 + parseFloat(((row.rate)/1000).toFixed(3)) + '</td><td>'
                 + row.total_hunts + '</td>';
             if (show_rate_per_catch) {
-                final_html += '<td>' + parseFloat(((row.rate_per_catch)/1000).toFixed(3)) + '</td><td>' + row.total_catches + '</td>' 
+                final_html += '<td>' + row.rate_per_catch + '</td><td>' + row.total_catches + '</td>' 
                 	+ '<td>' + row.drop_pct + '%</td><td>' + row.min_amt + ' / ' + row.max_amt + '</td>';
             }
             final_html += '</tr>';
