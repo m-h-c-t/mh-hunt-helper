@@ -87,9 +87,9 @@ $( function() {
         var show_rate_per_catch = $('#rate_per_catch').is(':checked');
         var rate_per_catch_title = '';
         if (show_rate_per_catch) {
-            rate_per_catch_title = '<th>Rate per catch</th><th>Catches</th>';
+            rate_per_catch_title = '<th>Qty / Catch</th><th>Catches</th>';
         }
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate per hunt</th><th>Hunts</th>' + rate_per_catch_title + '</tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Qty / Hunt</th><th>Hunts</th>' + rate_per_catch_title + '</tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {
@@ -99,13 +99,18 @@ $( function() {
                 + row.location + '</td><td>'
                 + stage + '</td><td>'
                 + row.cheese + '</td><td>'
-                + parseFloat(((row.rate)/1000).toFixed(3)) + '</td><td>'
-                + row.total_hunts + '</td>';
+                + parseFloat((row.total_drops / row.total_hunts).toPrecision(3))
+                + '</td><td>' + row.total_hunts + '</td>';
+
             if (show_rate_per_catch) {
-                final_html += '<td>' + parseFloat(((row.rate_per_catch)/1000).toFixed(3)) + '</td><td>' + row.total_catches + '</td>';
+                final_html += '<td>';
+                final_html += parseFloat((row.total_drops / row.total_catches).toPrecision(3));
+                final_html += '</td><td>' + row.total_catches + '</td>';
             }
+
             final_html += '</tr>';
         });
+
         final_html += '</tbody></table>';
         $("#results").html(final_html);
         $('#results_table').DataTable( {

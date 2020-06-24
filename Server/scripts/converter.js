@@ -65,15 +65,14 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Item</th><th>Average items</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Item</th><th>Average Qty</th></tr></thead><tbody>';
 
         var all_stages = '';
         let total_seen = 'Did not find this convertible';
         data.forEach(function(row) {
             total_seen = row.total + ' convertibles';
-            final_html += '<tr><td>'
-                + row.item + '</td><td>'
-                + parseFloat(((row.rate)/1000).toFixed(3)) + '</td></tr>';
+            final_html += '<tr><td>' + row.item + '</td><td>';
+            final_html += parseFloat((row.total_items / row.total).toPrecision(3)) + '</td></tr>';
         });
         final_html += '</tbody></table>';
 
