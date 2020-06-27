@@ -99,6 +99,8 @@ rm -rf *.sql.gz *.txt.zip
 echo "===== Remote trigger Docker image builds ====="
 
 curl -H "Content-Type: application/json" --data '{"source_type": "weekly", "source_name": "weekly"}' -X POST $DOCKER_CURL
-curl -H "Content-Type: application/json" --data '{"source_type": "weekly-hh", "source_name": "weekly-hh"}' -X POST $DOCKER_CURL
+curl -H "Content-Type: application/json" --data '{"source_type": "converter", "source_name": "converter"}' -X POST $DOCKER_CURL
+curl -H "Content-Type: application/json" --data '{"source_type": "maphelper", "source_name": "maphelper"}' -X POST $DOCKER_CURL
+curl -H "Content-Type: application/json" --data '{"source_type": "mapspotter", "source_name": "mapspotter"}' -X POST $DOCKER_CURL
 
 echo "===== finished mh_db_auto_backup_weekly.sh ====="
