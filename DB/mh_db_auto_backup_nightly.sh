@@ -45,5 +45,8 @@ rm -f *.sql.gz *.txt.zip
 echo "===== Remote trigger Docker image build ====="
 
 curl -H "Content-Type: application/json" --data '{"source_type": "latest", "source_name": "master"}' -X POST $DOCKER_CURL
+echo
+echo "= hunthelper_nightly triggered ="
+echo
 
 echo "===== finished mh_db_auto_backup_nightly.sh ====="
