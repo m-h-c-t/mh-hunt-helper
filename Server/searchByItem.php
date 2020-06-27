@@ -97,10 +97,8 @@ function getLootQuery(&$query_all, &$query_one) {
     # blocking gold
     $query_all = 'SELECT id, name FROM loot where id NOT IN (15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265)';
     $query_one = '
-        SELECT l.name AS location, s.name AS stage, h.total_hunts, h.rate, c.name AS cheese
-		, ROUND(h.total_drops / h.total_catches,5) as rate_per_catch
-		, h.total_catches, h.total_drops
-		, ROUND(h.drop_count/h.total_catches*100,2) AS drop_pct, h.min_amt, h.max_amt
+        SELECT l.name AS location, s.name AS stage, h.total_hunts, c.name AS cheese, h.total_catches
+          , h.total_drops, ROUND(h.drop_count/h.total_catches*100,2) AS drop_pct, h.min_amt, h.max_amt
         FROM ' . $table . ' h
         INNER JOIN cheese c ON h.cheese_id = c.id
         INNER JOIN locations l ON h.location_id = l.id
@@ -137,9 +135,8 @@ function getMapQuery(&$query_all, &$query_one) {
 
 function getConvertibleQuery(&$query_all, &$query_one) {
     $query_all = 'SELECT c.id, c.name FROM mhconverter.convertibles c ORDER BY c.name ASC';
-    $query_one = 'SELECT i.name as item, ca.rate, ca.total
+    $query_one = 'SELECT i.name as item, ca.total, ca.total_items
         FROM mhconverter.convertibles_aggr ca
         INNER JOIN mhconverter.items i ON ca.item_id = i.id
-        WHERE ca.convertible_id = ?
-        ORDER BY ca.rate DESC';
+        WHERE ca.convertible_id = ?';
 }
