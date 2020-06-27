@@ -5,7 +5,7 @@ source /var/www/mh-hunt-helper/DB/config.sh
 #cd /keybase/public/devjacksmith/mh_backups/nightly
 
 # Hunt Helper
-echo "====== Backing up hunt helper ====="
+echo "====== Backing up hunthelper ====="
 echo "=== Removing old files ==="
 if [ -f hunthelper_nightly.sql.gz ]; then
     rm hunthelper_nightly.sql.gz
@@ -15,7 +15,7 @@ if [ -f hunthelper_nightly.txt.zip ]; then
     rm hunthelper_nightly.txt.zip
 fi
 
-echo "=== Turning off even scheduler ==="
+echo "=== Turning off event scheduler ==="
 mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = OFF;"
 
 echo "=== Dumping into sql.gz file ==="
@@ -26,7 +26,7 @@ echo "=== Dumping into txt files ==="
 rm -rf $MH_DUMP/*
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T $MH_DUMP --no-create-info --compatible=db2 mhhunthelper
 
-echo "=== Turning on even scheduler ==="
+echo "=== Turning on event scheduler ==="
 mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = ON;"
 
 echo "=== Zipping txt files ==="
@@ -42,5 +42,11 @@ su user -c 'cp hunthelper_nightly.sql.gz hunthelper_nightly.txt.zip last_updated
 
 rm -f *.sql.gz *.txt.zip
 
-echo "===== finished mh_db_auto_backup_nightly.sh ====="
+echo "===== Remote trigger Docker image build ====="
 
+curl -H "Content-Type: application/json" --data '{"source_type": "latest", "source_name": "master"}' -X POST $DOCKER_CURL
+echo
+echo "= hunthelper_nightly triggered ="
+echo
+
+echo "===== finished mh_db_auto_backup_nightly.sh ====="

@@ -1,11 +1,11 @@
 #!/bin/bash
-echo "===== started mh_db_auto_backup.sh ======"
+echo "===== started mh_db_auto_backup_weekly.sh ======"
 source /var/www/mh-hunt-helper/DB/config.sh
 
 #cd /keybase/public/devjacksmith/mh_backups/weekly
 
 # Hunt Helper
-echo "====== Backing up hunt helper ====="
+echo "====== Backing up hunthelper ====="
 
 if [ -f hunthelper_weekly.sql.gz ]; then
     rm hunthelper_weekly.sql.gz
@@ -15,7 +15,7 @@ if [ -f hunthelper_weekly.txt.zip ]; then
     rm hunthelper_weekly.txt.zip
 fi
 
-echo "=== Turning off even scheduler ==="
+echo "=== Turning off event scheduler ==="
 mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = OFF;"
 
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_weekly.sql.gz
@@ -85,7 +85,7 @@ rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 maphelper_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
 
-echo "=== Turning on even scheduler ==="
+echo "=== Turning on event scheduler ==="
 mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = ON;"
 
 date > last_updated.txt
@@ -96,5 +96,30 @@ su user -c 'cp converter_weekly.sql.gz converter_weekly.txt.zip maphelper_weekly
 
 rm -rf *.sql.gz *.txt.zip
 
-echo "===== finished mh_db_auto_backup.sh ====="
+echo "===== Remote trigger Docker image builds ====="
+echo
 
+curl -H "Content-Type: application/json" --data '{"source_type": "converter", "source_name": "converter"}' -X POST $DOCKER_CURL
+echo
+echo "= converter_weekly triggered ="
+echo
+sleep 2s
+
+curl -H "Content-Type: application/json" --data '{"source_type": "maphelper", "source_name": "maphelper"}' -X POST $DOCKER_CURL
+echo
+echo "= maphelper_weekly triggered ="
+echo
+sleep 2s
+
+curl -H "Content-Type: application/json" --data '{"source_type": "mapspotter", "source_name": "mapspotter"}' -X POST $DOCKER_CURL
+echo
+echo "= mapspotter_weekly triggered ="
+echo
+sleep 2s
+
+curl -H "Content-Type: application/json" --data '{"source_type": "weekly", "source_name": "weekly"}' -X POST $DOCKER_CURL
+echo
+echo "= hunthelper_weekly triggered ="
+echo
+
+echo "===== finished mh_db_auto_backup_weekly.sh ====="
