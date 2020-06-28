@@ -42,10 +42,10 @@
                 <div class="form-control">
                     <label>
                     <div class="switch">
-                        <input type="checkbox" id="rate_per_catch" value="1">
+                        <input type="checkbox" id="rate_per_hunt" value="1">
                         <span class="slider round"></span>
                     </div>
-                    <span class="switch_label">Show catches and rate per catch</span>
+                    <span class="switch_label">Toggle per hunt rates</span>
                   </label>
                 </div>
             </div>

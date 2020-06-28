@@ -97,7 +97,8 @@ function getLootQuery(&$query_all, &$query_one) {
     # blocking gold
     $query_all = 'SELECT id, name FROM loot where id NOT IN (15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265)';
     $query_one = '
-        SELECT l.name AS location, s.name AS stage, h.total_hunts, c.name AS cheese, h.total_catches, h.total_drops
+        SELECT l.name AS location, s.name AS stage, h.total_hunts, c.name AS cheese, h.total_catches
+          , h.total_drops, ROUND(h.drop_count/h.total_catches*100,2) AS drop_pct, h.min_amt, h.max_amt
         FROM ' . $table . ' h
         INNER JOIN cheese c ON h.cheese_id = c.id
         INNER JOIN locations l ON h.location_id = l.id
