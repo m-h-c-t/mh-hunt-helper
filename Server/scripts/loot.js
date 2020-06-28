@@ -12,9 +12,8 @@ $(function() {
     searchItems('all', firstLoad, $('#timefilter').val());
 
     function searchItems(item_id, callback, timefilter) {
-        if (!item_id) {
-            return;
-        }
+        if (!item_id) return;
+
         if (item_id !== 'all') {
             $("#loader").css("display", "block");
             // Every time we search for a item (on reload or ajax) set a history of it.
@@ -31,10 +30,9 @@ $(function() {
                 item_type: "loot",
                 timefilter: timefilter
             }
-        })
-            .done(function(data) {
-                callback(JSON.parse(data));
-            });
+        }).done(function(data) {
+            callback(JSON.parse(data));
+        });
     }
 
     function firstLoad(items) {
@@ -95,10 +93,7 @@ $(function() {
         data.forEach(function(row) {
             var stage = (row.stage ? row.stage : '');
             all_stages += stage;
-            final_html += '<tr><td>'
-                + row.location + '</td><td>'
-                + stage + '</td><td>'
-                + row.cheese + '</td><td>';
+            final_html += '<tr><td>' + row.location + '</td><td>' + stage + '</td><td>' + row.cheese + '</td><td>';
 
             if (show_per_hunt) {
                 final_html += parseFloat(row.total_drops / row.total_hunts).toPrecision(3) + '</td><td>' + row.total_hunts + '</td>';
