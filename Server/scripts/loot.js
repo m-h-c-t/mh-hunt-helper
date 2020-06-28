@@ -89,7 +89,7 @@ $(function() {
         if (show_per_hunt) {
             per_hunt_catch = '<th>Qty / Hunt</th><th>Hunts</th>';
         }
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th>' + per_hunt_catch + '<th>Drop Chance</th><th>Qty Range</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th>' + per_hunt_catch + '<th>Drop Chance</th><th title="95% CI Margin of Error for Drop Chance">± Error</th><th>Qty Range</th></tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {
@@ -106,7 +106,9 @@ $(function() {
                 final_html += parseFloat(row.total_drops / row.total_catches).toPrecision(3) + '</td><td>' + row.total_catches + '</td>'
             }
 
-            final_html += '<td>' + parseFloat(row.drop_pct).toFixed(2) + '%</td><td>' + row.min_amt + ' - ' + row.max_amt + '</td></tr>';
+            var drop_chance = parseFloat(row.drop_pct / 100);
+            var moe = 1.96 * Math.sqrt(drop_chance * (1 - drop_chance) / row.total_catches) * 100;
+            final_html += '<td>' + parseFloat(row.drop_pct).toFixed(2) + '%</td><td>' + moe.toFixed(2) + '%</td><td>' + row.min_amt + ' - ' + row.max_amt + '</td></tr>';
         })
 
         final_html += '</tbody></table>';
