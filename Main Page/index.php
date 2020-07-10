@@ -77,7 +77,7 @@
     </div>
 </div>
 <div class="container">
-    <p class="muted">If you want to help, please install the browser extension below.<br/>
+    <p class="muted">If you want to help, please install the browser extension below or/and become a Patron at our <a href="https://www.patreon.com/mhct" target="_blank">Patreon</a>!<br/>
         The code and data are Open Source on <a href="https://github.com/mh-community-tools" target="_blank">GitHub</a> and <a href="https://keybase.io/devjacksmith" target="_blank">KeyBase</a>.<br/>
         Also check out <a href="https://www.reddit.com/r/mousehunt/">MH Subreddit</a> and join us on <a href="https://discord.gg/E4utmBD">Discord</a>.<br/>
         Special thanks to all who helped. These projects are brought to you by MHCT Team and others: Jack, Tehhowch, Aardwolf, Tsitu's tools team, Groupsky, Loaf, Nick, Ryonn, and many others who helped with advice, ideas, and otherwise. Also thanks to discord mods for allowing integrations and contributors like you!
