@@ -13,6 +13,10 @@
 <div class="col-sm-8 col-sm-offset-2">
     <h1>Updates<small> (newest first)</small></h1>
     <ul>
+        <li>Maintenance of this list has been discontinued.</li>
+        <li>Please check GitHub commit histories for up-to-date details:</li>
+        <li><a href="https://github.com/mh-community-tools/mh-hunt-helper/commits/master" target="_blank">Server</a> | <a href="https://github.com/mh-community-tools/mh-helper-extension/commits/master" target="_blank">Extension</a></li>
+        <li>------------------------------------------------------------
         <li>Added boss defeated flag in data - Tehhowch (19.3.15)</li>
         <li>Added WWR Rage levels for Lactrodectus - Tehhowch (19.3.15)</li>
         <li>Added Fort Rox upgrades and tower tracking - Tehhowch (19.3.15)</li>
