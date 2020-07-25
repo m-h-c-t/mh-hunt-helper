@@ -25,7 +25,7 @@
 <body class="text-center">
 <!-- Jumbotron -->
 <div class="jumbotron">
-    <h1>MHCT MouseHunt Tools</h1>
+    <h1>MouseHunt Community Tools</h1>
 </div>
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
@@ -77,16 +77,18 @@
     </div>
 </div>
 <div class="container">
-    <p class="muted">If you want to help, please install the browser extension below or/and become a Patron at our <a href="https://www.patreon.com/mhct" target="_blank">Patreon</a>!<br/>
-        The code and data are Open Source on <a href="https://github.com/mh-community-tools" target="_blank">GitHub</a> and <a href="https://keybase.io/devjacksmith" target="_blank">KeyBase</a>.<br/>
-        Also check out <a href="https://www.reddit.com/r/mousehunt/">MH Subreddit</a> and join us on <a href="https://discord.gg/E4utmBD">Discord</a>.<br/>
-        Special thanks to all who helped. These projects are brought to you by MHCT Team and others: Jack, Tehhowch, Aardwolf, Tsitu's tools team, Groupsky, Loaf, Nick, Ryonn, and many others who helped with advice, ideas, and otherwise. Also thanks to discord mods for allowing integrations and contributors like you!
+    <p class="muted">
+        If you'd like to contribute, please install the browser extension below and consider supporting us on <a href="https://www.patreon.com/mhct" target="_blank">Patreon</a>!
+        <br/>Our code is open source on <a href="https://github.com/mh-community-tools" target="_blank">GitHub</a> and SQL database dumps can be downloaded from <a href="https://keybase.pub/devjacksmith/mh_backups/" target="_blank">Keybase</a> or <a href="https://hub.docker.com/r/tsitu/mhct-db-docker" target="_blank">Docker</a>.
+        <br/>Also check out <a href="https://www.reddit.com/r/mousehunt/" target="_blank">/r/mousehunt</a> on Reddit and join the conversation on <a href="https://discord.gg/E4utmBD" target="_blank">Discord</a>.
+        <br/>Maintained by the MHCT team. <b>Thank you</b> to all of our contributors!
     </p>
 </div>
 <div class="container">
     <div class="text-center">
         <a href="https://chrome.google.com/webstore/detail/mhct-mousehunt-helper/ghfmjkamilolkalibpmokjigalmncfek?authuser=1" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/chrome.png"></a>
         <a href="https://addons.mozilla.org/en-US/firefox/addon/mhct-mousehunt-helper/" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/firefox.png"><b> Add-on</b></a>
+        <br/><a href="https://www.patreon.com/mhct" target="_blank"><img src="images/patreon.png" style="width:150px;margin-top:10px;"></a>
     </div>
 </div>
 <?php include_once("ga.php") ?>
