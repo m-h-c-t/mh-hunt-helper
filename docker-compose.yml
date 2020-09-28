@@ -1,0 +1,41 @@
+version:            '3'
+#dcVersion:         1
+services:
+
+# mhct server
+  mhct:
+    image:          richarvey/nginx-php-fpm:1.10.3
+    container_name: mhct
+    hostname:       mhct
+    volumes:
+      - ./:/var/www/html
+    environment:
+      WEBROOT:      /var/www/html/Server
+    ports:
+      - "80:80"
+
+# mh-hunt-helper DB
+  mhct-db:
+    image:          tsitu/mhct-db-docker:latest
+    container_name: mhct-db
+    hostname:       mhct-db
+    ports:
+      - "3306:3306"
+
+# # mhct-converter DB
+#   mhct-converter:
+#     image:          tsitu/mhct-db-docker:converter
+#     container_name: mhct-converter
+#     hostname:       mhct-converter
+
+# # mhct-maphelper DB
+#   mhct-maphelper:
+#     image:          tsitu/mhct-db-docker:maphelper
+#     container_name: mhct-maphelper
+#     hostname:       mhct-maphelper
+
+# # mhct-mapspotter DB
+#   mhct-mapspotter:
+#     image:          tsitu/mhct-db-docker:mapspotter
+#     container_name: mhct-mapspotter
+#     hostname:       mhct-mapspotter
