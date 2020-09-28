@@ -183,7 +183,7 @@ try {
 
             // Hitgrab item id checks
             $hg_item_id = null;
-            if (numeric($loot_item['id'])) { $hg_item_id = $loot_item['id']; }
+            if (is_numeric($loot_item['id'])) { $hg_item_id = $loot_item['id']; }
 
             // Plural name checks
             $plural_name = null;
