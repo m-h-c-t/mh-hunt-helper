@@ -170,32 +170,48 @@ try {
     // Loot
     if (!empty($_POST['loot']) && $hunt_id > 0) {
         $loot_array = [];
-        $gold_array = [15, 47, 106, 138, 191, 194, 210, 226, 227, 260, 261, 262, 264, 265];
         foreach ($_POST['loot'] as $loot_item) {
-            $loot_item['amount'] = str_replace(",", "", $loot_item['amount']);
+
+            // Amount checks
             if (!is_numeric($loot_item['amount']) || $loot_item['amount'] < 1) {
                 continue;
             }
 
+            // Lucky checks
             $lucky = null;
-            if (!empty($loot_item['lucky'])) {
-                $lucky = $loot_item['lucky'] === 'true' ? 1 : 0;
-            }
+            if (!empty($loot_item['lucky'])) { $lucky = $loot_item['lucky'] === 'true' ? 1 : 0; }
 
+            // Hitgrab item id checks
+            $hg_item_id = null;
+            if (numeric($loot_item['id'])) { $hg_item_id = $loot_item['id']; }
+
+            // Plural name checks
+            $plural_name = null;
+            if (!empty($loot_item['plural_name'])) { $plural_name = $loot_item['plural_name']; }
+
+            // Single name checks
+            $single_name = null;
+            if (!empty($loot_item['name'])) { $single_name = $loot_item['name']; }
+
+            // Get mhct id
             $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
             $query->execute(array($loot_item['name']));
             $loot_id = $query->fetchColumn();
 
-            if (in_array($loot_id, $gold_array)) { // Blocking gold, there could be multiples of it, and not accurate
-                continue;
-            }
-
+            // If no mhct id found, add the item to the database
             if (!$loot_id) {
-                $query = $pdo->prepare('INSERT INTO loot (name) VALUES (?)');
-                $query->execute(array($loot_item['name']));
+                $query = $pdo->prepare('INSERT INTO loot (name, hg_item_id, plural_name) VALUES (?, ?, ?)');
+                $query->execute(array($single_name, $hg_item_id, $plural_name));
                 $loot_id = $pdo->lastInsertId();
+
+            // If mhct id exists, update fields if neeeded
+            } else {
+                $query = $pdo->prepare('UPDATE loot SET name = COALESCE(name, ?), hg_item_id = COALESCE(hg_item_id, ?),
+                  plural_name = COALESCE(plural_name, ?) WHERE id = ?');
+                $query->execute(array($single_name, $hg_item_id, $plural_name, $loot_id));
             }
 
+            // Record the item related to the hunt id in hunt_loot relationship table
             $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount, lucky) VALUES (?, ?, ?, ?)');
             $query->execute(array($hunt_id, $loot_id, $loot_item['amount'], $lucky));
         }
