@@ -1,5 +1,4 @@
 version:            '3'
-#dcVersion:         1
 services:
 
 # mhct server
