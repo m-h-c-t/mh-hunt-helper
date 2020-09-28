@@ -5,8 +5,7 @@ We have two ways of doing it: via docker-compose or via docker run.
 # Docker-Compose way
 1. clone this repo or fork it and clone your fork, install docker (and docker-compose)
 1. inside the cloned repo directory, run `docker-compose up -d` (this will take a while as it needs to download database and images)
-1. run `docker exec -it mhct bash` . This gets you a shell inside.
-1. `cd /var/www/html/Server/ && cp config.php.samle config.php && vi config.php` and edit the following:  
+1. In the Server directory copy `config.php.samle` to `config.php`, change the following and save:  
   a - servername: `mhct-db`  
   b - username: `admin`  
   c - password: `admin` (unless you change these, which is more secure)  
