@@ -194,8 +194,8 @@ try {
             if (!empty($loot_item['name'])) { $single_name = $loot_item['name']; }
 
             // Get mhct id
-            $query = $pdo->prepare("SELECT id FROM loot WHERE name LIKE ?");
-            $query->execute(array($loot_item['name']));
+            $query = $pdo->prepare("SELECT MIN(id) FROM loot WHERE name LIKE ? OR name LIKE ? OR hg_item_id = ?");
+            $query->execute(array($single_name, $plural_name, $hg_item_id));
             $loot_id = $query->fetchColumn();
 
             // If no mhct id found, add the item to the database
