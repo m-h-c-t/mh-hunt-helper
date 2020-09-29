@@ -10,6 +10,7 @@ services:
       - ./:/var/www/html
     environment:
       WEBROOT:      /var/www/html/Server
+      ERRORS:       1
     ports:
       - "80:80"
 
