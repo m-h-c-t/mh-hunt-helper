@@ -206,8 +206,8 @@ try {
 
             // If mhct id exists, update fields if neeeded
             } else {
-                $query = $pdo->prepare('UPDATE loot SET name = COALESCE(name, ?), hg_item_id = COALESCE(hg_item_id, ?),
-                  plural_name = COALESCE(plural_name, ?) WHERE id = ?');
+                $query = $pdo->prepare('UPDATE loot SET name = COALESCE(?, name), hg_item_id = COALESCE(?, hg_item_id),
+                  plural_name = COALESCE(?, plural_name) WHERE id = ?');
                 $query->execute(array($single_name, $hg_item_id, $plural_name, $loot_id));
             }
 
