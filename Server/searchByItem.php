@@ -95,7 +95,7 @@ function getLootQuery(&$query_all, &$query_one) {
     $table = generateTable("drops");
 
     # blocking gold
-    $query_all = 'SELECT id, name FROM loot UNION SELECT id, plural_name as name FROM loot';
+    $query_all = 'SELECT hg_item_id as id, name FROM loot UNION SELECT hg_item_id as id, plural_name as name FROM loot';
     $query_one = '
         SELECT l.name AS location, s.name AS stage, h.total_hunts, c.name AS cheese, h.total_catches
           , h.total_drops, ROUND(h.drop_count/h.total_catches*100,2) AS drop_pct, h.min_amt, h.max_amt

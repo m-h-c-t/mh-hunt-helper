@@ -194,26 +194,25 @@ try {
             if (!empty($loot_item['name'])) { $single_name = $loot_item['name']; }
 
             // Get mhct id
-            $query = $pdo->prepare("SELECT MIN(id) FROM loot WHERE name LIKE ? OR name LIKE ? OR hg_item_id = ?");
+            $query = $pdo->prepare("SELECT 1 FROM loot WHERE name LIKE ? OR name LIKE ? OR hg_item_id = ?");
             $query->execute(array($single_name, $plural_name, $hg_item_id));
-            $loot_id = $query->fetchColumn();
+            $exists = $query->fetchColumn();
 
             // If no mhct id found, add the item to the database
-            if (!$loot_id) {
+            if (!$exists) {
                 $query = $pdo->prepare('INSERT INTO loot (name, hg_item_id, plural_name) VALUES (?, ?, ?)');
                 $query->execute(array($single_name, $hg_item_id, $plural_name));
-                $loot_id = $pdo->lastInsertId();
 
-            // If mhct id exists, update fields if neeeded
+            // If hg_item_id  exists, update fields if neeeded
             } else {
-                $query = $pdo->prepare('UPDATE loot SET name = COALESCE(?, name), hg_item_id = COALESCE(?, hg_item_id),
-                  plural_name = COALESCE(?, plural_name) WHERE id = ?');
-                $query->execute(array($single_name, $hg_item_id, $plural_name, $loot_id));
+                $query = $pdo->prepare('UPDATE loot SET name = COALESCE(?, name),
+                  plural_name = COALESCE(?, plural_name) WHERE hg_item_id = ?');
+                $query->execute(array($single_name, $plural_name, $hg_item_id));
             }
 
             // Record the item related to the hunt id in hunt_loot relationship table
             $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount, lucky) VALUES (?, ?, ?, ?)');
-            $query->execute(array($hunt_id, $loot_id, $loot_item['amount'], $lucky));
+            $query->execute(array($hunt_id, $hg_item_id, $loot_item['amount'], $lucky));
         }
     }
 
