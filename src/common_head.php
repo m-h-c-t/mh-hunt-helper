@@ -8,7 +8,6 @@
 <meta property="og:url" content="https://www.agiletravels.com" />
 <meta property="og:description" content="Tools to help with the MouseHunt game." />
 <meta property="og:image" content="https://www.agiletravels.com/images/fb_image.jpg" />
-<meta property="fb:app_id" content="314857368939024" />
 
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 

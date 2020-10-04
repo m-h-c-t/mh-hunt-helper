@@ -7,7 +7,7 @@
     <!-- Jumbotron -->
     <div class="jumbotron">
         <h1>MHCT Attraction Rate</h1>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
+        <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
     </div>
     <div class="container">
 
@@ -32,7 +32,7 @@
 
     <div id="results" class="table-responsive"></div>
 
-    <br/><p class="text-center">For more info, copy of the data, or if you want to help with data gathering, please look <a href="https://www.agiletravels.com">here</a>.</p>
+    <br/><p class="text-center">For more info, copy of the data, or if you want to help with data gathering, please look <a href="/">here</a>.</p>
 
 </div>
 <div id="loader" class="loader"></div>
@@ -55,6 +55,5 @@
   if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
   else window.addEventListener('load', loadDeferredStyles);
 </script>
-<?php include_once("ga.php") ?>
 </body>
 </html>

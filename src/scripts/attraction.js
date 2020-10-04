@@ -17,7 +17,7 @@ $( function() {
         if (mouse_id !== 'all') {
             $("#loader").css( "display", "block" );
             // Every time we search for a mouse (on reload or ajax) set a history of it.
-            window.history.replaceState({}, "MH Hunt Helper", "?mouse=" + mouse_id + "&timefilter=" + timefilter);
+            window.history.replaceState({}, "MH Hunt Helper", "attractions.php?mouse=" + mouse_id + "&timefilter=" + timefilter);
             $("#prev_mouse").val(mouse_id);
             $("#prev_timefilter").val(timefilter);
         }

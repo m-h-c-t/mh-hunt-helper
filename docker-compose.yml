@@ -9,7 +9,7 @@ services:
     volumes:
       - ./:/var/www/html
     environment:
-      WEBROOT:      /var/www/html/Server
+      WEBROOT:      /var/www/html/src
       ERRORS:       1
     ports:
       - "80:80"

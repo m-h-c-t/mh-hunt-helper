@@ -150,7 +150,5 @@
     <h2>Your Posts</h2>
     <div id="currentRequests"></div>
 </div><br/><br/>
-
-<?php //include_once("ga.php") ?>
 </body>
 </html>

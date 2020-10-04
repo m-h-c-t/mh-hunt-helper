@@ -22,7 +22,7 @@
     <script>$("#loader").css( "display", "block" );</script>
     <div class="jumbotron">
         <h1>MHCT User History</h1>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
+        <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
     </div>
     <div class="container-fluid">
 <?php
@@ -157,6 +157,5 @@ print "</tbody></table></div>";
         });
         $("#loader").css( "display", "none" );
     </script>
-    <?php include_once("ga.php") ?>
 </body>
 </html>

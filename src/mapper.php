@@ -8,7 +8,7 @@
     <!-- Jumbotron -->
     <div class="jumbotron">
         <h1>MHCT Mapper</h1>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
+        <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
     </div>
     <div class="container">
         <input id="item_type" type="hidden" value="loot">
@@ -34,6 +34,5 @@
         ?>
     </div>
     <?php require "common_footer.php"; ?>
-    <?php include_once("ga.php") ?>
 </body>
 </html>

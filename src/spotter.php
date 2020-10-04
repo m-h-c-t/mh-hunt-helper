@@ -55,7 +55,5 @@ This tool has been retired :(
     </div><br/><br/>
     <div id="currentRequests"></div>
 </div><br/><br/>
-
-<?php //include_once("ga.php") ?>
 </body>
 </html>
