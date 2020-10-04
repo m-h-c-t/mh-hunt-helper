@@ -1,20 +1,7 @@
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <base href="/">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta property="og:title" content="MHCT MouseHunt Tools" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.agiletravels.com" />
-    <meta property="og:description" content="Tools to help with the MouseHunt game." />
-    <meta property="og:image" content="https://www.agiletravels.com/images/fb_image.jpg" />
-    <meta property="fb:app_id" content="314857368939024" />
-
     <title>MHCT Tracker</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="styles/attraction.css">
+    <?php require "common_head.php"; ?>
 </head>
 <body style="text-align: center;" class="text-center">
     <!-- Jumbotron -->
@@ -55,5 +42,6 @@
 
         <br/><p class="text-center">For more info, copy of the data, or if you want to help with data gathering, please look <a href="/">here</a>.</p>
     </div>
+    <?php require "common_footer.php"; ?>
 </body>
 </html>

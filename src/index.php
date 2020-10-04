@@ -1,26 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <base href="/">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-
-    <meta property="og:title" content="MHCT MouseHunt Tools" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.agiletravels.com" />
-    <meta property="og:description" content="Tools to help with the MouseHunt game." />
-    <meta property="og:image" content="https://www.agiletravels.com/images/fb_image.jpg" />
-    <meta property="fb:app_id" content="314857368939024" />
+    <?php require "common_head.php"; ?>
 
     <title>MHCT Tools</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
-
-    <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script defer type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script defer type="text/javascript" src="scripts/main.js"></script>
 </head>
 <body class="text-center">
 <!-- Jumbotron -->
@@ -92,5 +76,7 @@
     </div>
 </div>
 <br/>
+<?php require "common_footer.php"; ?>
+<script defer type="text/javascript" src="scripts/main.js"></script>
 </body>
 </html>

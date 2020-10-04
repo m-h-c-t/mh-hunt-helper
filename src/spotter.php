@@ -4,23 +4,8 @@ This tool has been retired :(
 <html>
 <head>
     <title>MHCT Map Spotter</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta property="og:title" content="MHCT MouseHunt Tools" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.agiletravels.com" />
-    <meta property="og:description" content="Tools to help with the MouseHunt game." />
-    <meta property="og:image" content="https://www.agiletravels.com/images/fb_image.jpg" />
-    <meta property="fb:app_id" content="314857368939024" />
-
-    <script defer src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <?php require "common_head.php"; ?>
     <script defer src="scripts/spotter.js"></script>
-    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/attraction.css">
 </head>
 
 <body class="text-center" style="background-color: #fff;">
@@ -32,7 +17,7 @@ This tool has been retired :(
     <div class="container-fluid">
         <h1>MHCT Map Spotter</h1>
         <p>Tool for map sniping, leeching and helping.</p>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
+        <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
     </div>
 </div>
 <?php } else { ?>
@@ -55,5 +40,6 @@ This tool has been retired :(
     </div><br/><br/>
     <div id="currentRequests"></div>
 </div><br/><br/>
+<?php require "common_footer.php"; ?>
 </body>
 </html>
