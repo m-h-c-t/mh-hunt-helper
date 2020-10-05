@@ -1,13 +1,16 @@
 /stages.txt
 /mhhh.pem
 /old versions/
-/Server/config.php
-/Server/tracker.json
-/Server/banned.json
 /.idea/
 ga.php
 /DB/config.sh
 /DB/*.sql.gz
 /DB/*.txt.zip
 /DB/last_updated.txt
-/Server/id_modifier.php
+/src/id_modifier.php
+/src/config.php
+/src/configs.php
+/src/bcheck.php
+/src/uuid.php
+/src/tracker.json
+/src/banned.json
