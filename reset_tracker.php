@@ -1,6 +1,6 @@
 <?php
 
-$file_name = 'Server/tracker.json';
+$file_name = 'src/tracker.json';
 
 $data = json_decode(file_get_contents($file_name));
 
