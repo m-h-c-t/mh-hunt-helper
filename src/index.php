@@ -27,6 +27,11 @@
                 </td></tr>
             <tr><td>
                     <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                       data-content="Search by mouse name to see the location, cheese and attraction rate of a specific mouse."></a>
+                    <a href="/attractions.php" style="display:block;text-decoration:none;color:#333;">Attraction Rate</a>
+                </td></tr>
+            <tr><td>
+                    <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                        data-content="Search by loot name to see the location and drop rate of a specific loot."></a>
                     <a href="/loot.php" style="display:block;text-decoration:none;color:#333;">Looter</a>
                 </td></tr>
@@ -47,9 +52,6 @@
                 </td></tr>
             <tr><td>
                     <a href="https://www.mousehuntgame.com/forum/showthread.php?130827-Jack-s-MH-Tools" style="display:block;text-decoration:none;color:#333;">Feedback / Support Forum</a>
-                </td></tr>
-            <tr><td>
-                    <a href="/updates.php" style="display:block;text-decoration:none;color:#333;">Latest Updates</a>
                 </td></tr>
             </tbody>
         </table>
