@@ -4,13 +4,13 @@ We have two ways of doing it: via docker-compose or via docker run.
 
 # Docker-Compose way
 1. clone this repo or fork it and clone your fork, install docker (and docker-compose)
-1. inside the cloned repo directory, run `docker-compose up -d` (this will take a while as it needs to download database and images)
-1. In the Server directory copy `.sample` files to ones without it. And then in `config.php`, change the following and save:  
+2. inside the cloned repo directory, run `docker-compose up -d` (this will take a while as it needs to download database and images)
+3. In the Server directory copy `.sample` files to ones without it. And then in `config.php`, change the following and save:  
   a - servername: `mhct-db`  
   b - username: `admin`  
   c - password: `admin` (unless you change these, which is more secure)  
   d - dbname: `mhhunthelper`  
-1. You should now be able to access server on http://127.0.0.1 or http://localhost on your browser, and connect to database via port 3306 on your localhost or 127.0.0.1, and modify the code on your host machine.
+4. You should now be able to access server on http://127.0.0.1 or http://localhost on your browser, and connect to database via port 3306 on your localhost or 127.0.0.1, and modify the code on your host machine.
 
 To add other databases uncomment them in docker-compose.yml and run `docker-compose up -d` again
 
