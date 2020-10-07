@@ -1,12 +1,10 @@
 <!-- nested collapse -->
-<div class="panel-group" id="accordion1<?php echo $location_id; ?>">
-    <div class="panel panel-default">
+<div class="panel-group col-md-6 col-lg-4" id="accordion1<?php echo $location_id; ?>">
+    <div class="panel panel-primary">
         <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion1<?php echo $location_id; ?>" href="#collapseThree<?php echo $location_id; ?>">
-                  <?php echo $result['name']; ?>
-                </a>
-            </h4>
+            <a class="btn bg-info" data-toggle="collapse" data-parent="#accordion1<?php echo $location_id; ?>" href="#collapseThree<?php echo $location_id; ?>">
+                <?php echo $result['name'] . " (" . count($result['mice_count']) . ")"; ?>
+            </a>
         </div>
         <div id="collapseThree<?php echo $location_id; ?>" class="panel-collapse collapse">
             <div class="panel-body">
@@ -15,11 +13,12 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion2<?php echo $location_id; ?>" href="#collapseThreeOne<?php echo $location_id . $stage_id; ?>"><?php echo $stage_result['name']; ?>
+                                <a class="btn btn-default" data-toggle="collapse" data-parent="#accordion2<?php echo $location_id; ?>" href="#collapseThreeOne<?php echo $location_id . $stage_id; ?>">
+                                  <?php echo $stage_result['name'] . " (" . count($stage_result['mice']) . ")"; ?>
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapseThreeOne<?php echo $location_id . $stage_id; ?>" class="panel-collapse collapse">
+                        <div id="collapseThreeOne<?php echo $location_id . $stage_id; ?>" class="panel-collapse collapse <?php if (count($result['stages']) == 1) { echo "in"; } ?>">
                             <div class="table-responsive">
                             <table class="table table-bordered" style="margin:0;">
                             <?php foreach ($stage_result['mice'] as $mouse_id => $mouse_result) { ?>
@@ -32,7 +31,7 @@
                                           <th>
                                               <td>Attraction rate</td><td>Attracted Hunts</td><td>Total Hunts</td>
                                           </th>
-                                        <?php foreach ($mouse_result['cheese'] as $cheese_result) { ?>
+                                          <?php foreach ($mouse_result['cheese'] as $cheese_result) { ?>
                                             <tr>
                                                 <td>
                                                    <?php echo $cheese_result['name']; ?>
@@ -56,11 +55,9 @@
                             </div>
                         </div>
                     </div>
-                  <?php } ?>
+                    <?php } ?>
                 </div>
-
             </div>
         </div>
     </div>
-
 </div>

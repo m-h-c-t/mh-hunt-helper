@@ -3,7 +3,7 @@
 require_once "config.php";
 $results = [];
 
-if (!empty($_REQUEST['mice'])) {
+if (!empty(trim($_REQUEST['mice']))) {
     main();
 }
 
@@ -11,10 +11,17 @@ function main() {
     global $pdo, $results;
 
     connectMHHH();
-    $mice = explode('||', $_REQUEST['mice']);
-    $mice = array_map('trim', $mice);
+    $mice = explode("\n", str_replace("\r", "", $_REQUEST['mice']));
+    $mice = array_map('clean', $mice);
+    $mice = array_filter($mice);
     $db_results = queryDatabase($mice);
     $results = formResultsArray($db_results, $mice);
+}
+
+function clean($mouse) {
+    $mouse = trim($mouse);
+    $mouse = preg_replace("/\ mouse$/i", "", $mouse);
+    return $mouse;
 }
 
 function connectMHHH() {
@@ -31,8 +38,8 @@ function queryDatabase($mice) {
 SELECT
     l.id as location_id,
     l.name AS location,
-    IFNULL(st.id, 'NA') AS stage_id,
-    IFNULL(st.name, 'NA') AS stage,
+    IFNULL(st.id, '...') AS stage_id,
+    IFNULL(st.name, '...') AS stage,
     c.id AS cheese_id,
     c.name AS cheese,
     m.id as mouse_id,
@@ -55,9 +62,11 @@ WHERE m.name IN (" . $placeholders . ")
 }
 
 function formResultsArray($db_results, $original_mice) {
+    $results['found']['mice'] = [];
     foreach ($db_results as $row) {
         $results['found']['mice'][$row['mouse_id']] = $row['mouse'];
         $results['results'][$row['location_id']]['name'] = $row['location'];
+        $results['results'][$row['location_id']]['mice_count'][$row['mouse_id']] = 1;
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['name'] = $row['stage'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['name'] = $row['mouse'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['name'] = $row['cheese'];
@@ -68,5 +77,6 @@ function formResultsArray($db_results, $original_mice) {
     $results['found']['count'] = count($results['found']['mice']);
     $results['not_found']['mice'] = array_udiff($original_mice, $results['found']['mice'], 'strcasecmp');
     $results['not_found']['count'] = count($results['not_found']['mice']);
+    $results['original_mice'] = $original_mice;
     return $results;
 }
