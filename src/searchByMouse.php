@@ -1,14 +1,14 @@
 <?php
 
 require_once "config.php";
+$results = [];
 
-main();
+if (!empty($_REQUEST['mice'])) {
+    main();
+}
 
 function main() {
     global $pdo;
-    if (empty($_REQUEST['mice'])) {
-        return;
-    }
 
     connectMHHH();
     print getSetups();
@@ -21,11 +21,12 @@ function connectMHHH() {
 }
 
 function getSetups() {
+    global $results;
     $mice_names = explode('||', $_REQUEST['mice']);
     $qmarks = implode(',', array_fill(0, count($mice_names), '?'));
 
     $query = "
-SELECT 
+SELECT
     l.id as location_id,
     l.name AS location,
     IFNULL(st.id, 'NA') AS stage_id,
@@ -57,7 +58,5 @@ WHERE m.name IN (" . $qmarks . ")
         $found_setups[$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['total_hunts'] = $row['total_hunts'];
         $found_setups[$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['attracted_hunts'] = $row['attracted_hunts'];
     }
-   return "<pre>".json_encode($found_setups, JSON_PRETTY_PRINT)."<pre>";
+   $results = "<pre>".json_encode($found_setups, JSON_PRETTY_PRINT)."<pre>";
 }
-
-

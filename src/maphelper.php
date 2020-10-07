@@ -1,6 +1,15 @@
 <?php
+    $title = "MHCT Map Helper";
+    //$css = "styles/attraction.css";
+    //$js = "scripts/maphelper.js";
+    require_once "new-common-header.php";
+$_REQUEST['mice'] = "white";
+    require_once "searchByMouse.php";
+echo $results;
+    require_once "maphelper-results-header.php";
 
-header( "refresh:2;url=https://tsitu.github.io/MH-Tools/map.html" );
+    include "maphelper-results-body.php";
 
-echo "Under Maintenance... Redirecting to Tsitu's for now: <a href='https://tsitu.github.io/MH-Tools/map.html'>https://tsitu.github.io/MH-Tools/map.html</a>";
+    require_once "maphelper-mice-form.php";
 
+    require_once "new-common-footer.php";
