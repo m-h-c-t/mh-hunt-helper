@@ -13,7 +13,7 @@ function main() {
     connectMHHH();
     $mice = explode("\n", str_replace("\r", "", $_REQUEST['mice']));
     $mice = array_map('clean', $mice);
-    $mice = array_filter($mice);
+    $mice = array_values(array_filter($mice));
     $db_results = queryDatabase($mice);
     $results = formResultsArray($db_results, $mice);
 }
