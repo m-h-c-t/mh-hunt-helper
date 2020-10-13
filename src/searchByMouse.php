@@ -53,7 +53,7 @@ INNER JOIN mice m ON a.mouse_id = m.id
 INNER JOIN cheese c ON a.cheese_id = c.id
 LEFT JOIN stages st ON a.stage_id = st.id
 WHERE m.name IN (" . $placeholders . ")
-";
+ORDER BY a.rate DESC";
 
     global $pdo;
     $query = $pdo->prepare($query);
@@ -74,9 +74,28 @@ function formResultsArray($db_results, $original_mice) {
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['total_hunts'] = $row['total_hunts'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['attracted_hunts'] = $row['attracted_hunts'];
     }
+
+    uasort($results['results'], 'cmpLocationMiceCount');
+    foreach ($results['results'] as &$location) {
+        uasort($location['stages'], 'cmpStageMiceCount');
+    }
     $results['found']['count'] = count($results['found']['mice']);
     $results['not_found']['mice'] = array_udiff($original_mice, $results['found']['mice'], 'strcasecmp');
     $results['not_found']['count'] = count($results['not_found']['mice']);
     $results['original_mice'] = $original_mice;
     return $results;
+}
+
+function cmpLocationMiceCount($a, $b) {
+    if ($a['mice_count'] == $b['mice_count']) {
+        return 0;
+    }
+    return ($a['mice_count'] > $b['mice_count']) ? -1 : 1;
+}
+
+function cmpStageMiceCount($a, $b) {
+    if ($a['mice'] == $b['mice']) {
+        return 0;
+    }
+    return ($a['mice'] > $b['mice']) ? -1 : 1;
 }
