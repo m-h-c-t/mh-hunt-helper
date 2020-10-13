@@ -80,10 +80,11 @@ function formResultsArray($db_results, $original_items) {
         // $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['item_id']]['cheese'][$row['cheese_id']]['max_amt'] = $row['max_amt'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['item_id']]['cheese'][$row['cheese_id']]['drop_rate'] = $row['drop_rate'];
     }
-
-    uasort($results['results'], 'cmpLocationitemsCount');
-    foreach ($results['results'] as &$location) {
-        uasort($location['stages'], 'cmpStageitemsCount');
+    if (isset($results)) {
+        uasort($results['results'], 'cmpLocationitemsCount');
+        foreach ($results['results'] as &$location) {
+            uasort($location['stages'], 'cmpStageitemsCount');
+        }
     }
     $results['found']['count'] = count($results['found']['items']);
     $results['not_found']['items'] = array_udiff($original_items, $results['found']['items'], 'strcasecmp');
