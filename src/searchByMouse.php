@@ -87,15 +87,9 @@ function formResultsArray($db_results, $original_mice) {
 }
 
 function cmpLocationMiceCount($a, $b) {
-    if ($a['mice_count'] == $b['mice_count']) {
-        return 0;
-    }
-    return ($a['mice_count'] > $b['mice_count']) ? -1 : 1;
+    return $b['mice_count'] <=> $a['mice_count'];
 }
 
 function cmpStageMiceCount($a, $b) {
-    if ($a['mice'] == $b['mice']) {
-        return 0;
-    }
-    return ($a['mice'] > $b['mice']) ? -1 : 1;
+    return $b['mice'] <=> $a['mice'];
 }
