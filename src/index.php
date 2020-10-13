@@ -19,37 +19,44 @@
             </thead>
             <tbody>
             <tr><td>
-                    <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-                       data-content="Copy/Paste (OR Automatically filled by extension below) a list of your map mice into this tool,
-            and it will show you locations with stages, cheese, attraction rates, and mice in each area, sorted by descending
-            number of mice in each location."></a>
-                    <a href="/maphelper.php" style="display:block;text-decoration:none;color:#333;">Map Helper</a>
-                </td></tr>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="Copy/Paste (OR Automatically filled by extension below) a list of your map mice into this tool,
+                    and it will show you locations with stages, cheese, attraction rates, and mice in each area, sorted by descending
+                    number of mice in each location."></a>
+                <a href="/maphelper.php" style="display:block;text-decoration:none;color:#333;">Map Helper</a>
+            </td></tr>
             <tr><td>
-                    <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-                       data-content="Search by mouse name to see the location, cheese and attraction rate of a specific mouse."></a>
-                    <a href="/attractions.php" style="display:block;text-decoration:none;color:#333;">Attraction Rate</a>
-                </td></tr>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="Copy/Paste a list of your scavenger map items into this tool,
+                    and it will show you locations with stages, cheese, drop rates, and items in each area, sorted by descending
+                    number of items in each location."></a>
+                <a href="/scavhelper.php" style="display:block;text-decoration:none;color:#333;">Scavenger Helper</a>
+            </td></tr>
             <tr><td>
-                    <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-                       data-content="Search by loot name to see the location and drop rate of a specific loot."></a>
-                    <a href="/loot.php" style="display:block;text-decoration:none;color:#333;">Looter</a>
-                </td></tr>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="Search by mouse name to see the location, cheese and attraction rate of a specific mouse."></a>
+                <a href="/attractions.php" style="display:block;text-decoration:none;color:#333;">Attraction Rate</a>
+            </td></tr>
             <tr><td>
-                    <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-                       data-content="Search maps to see what mice are likely to appear on them."></a>
-                    <a href="/mapper.php" style="display:block;text-decoration:none;color:#333;">Mapper</a>
-                </td></tr>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="Search by loot name to see the location and drop rate of a specific loot."></a>
+                <a href="/loot.php" style="display:block;text-decoration:none;color:#333;">Looter</a>
+            </td></tr>
             <tr><td>
-                    <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-                       data-content="Search convertibles like chests, to see what items are likely to be in them."></a>
-                    <a href="/converter.php" style="display:block;text-decoration:none;color:#333;">Converter</a>
-                </td></tr>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="Search maps to see what mice are likely to appear on them."></a>
+                <a href="/mapper.php" style="display:block;text-decoration:none;color:#333;">Mapper</a>
+            </td></tr>
             <tr><td>
-                    <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-                       data-content="See stats about these tools as well as confirmed RH location. (RH must be caught by one of us for it to show up here)"></a>
-                    <a href="/tracker.php" style="display:block;text-decoration:none;color:#333;">Tracker</a>
-                </td></tr>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="Search convertibles like chests, to see what items are likely to be in them."></a>
+                <a href="/converter.php" style="display:block;text-decoration:none;color:#333;">Converter</a>
+            </td></tr>
+            <tr><td>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="See stats about these tools as well as confirmed RH location. (RH must be caught by one of us for it to show up here)"></a>
+                <a href="/tracker.php" style="display:block;text-decoration:none;color:#333;">Tracker</a>
+            </td></tr>
             </tbody>
         </table>
     </div>
