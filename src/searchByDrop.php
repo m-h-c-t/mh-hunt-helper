@@ -49,7 +49,7 @@ SELECT
     (d.drop_count/d.total_catches*100) as drop_rate
 FROM mhhunthelper.drops d
 INNER JOIN locations l ON d.location_id = l.id
-INNER JOIN loot lt ON d.loot_id = lt.id
+INNER JOIN loot lt ON d.loot_id = lt.hg_item_id
 INNER JOIN cheese c ON d.cheese_id = c.id
 LEFT JOIN stages st ON d.stage_id = st.id
 WHERE lt.name IN (" . $placeholders . ")

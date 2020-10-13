@@ -74,10 +74,11 @@ function formResultsArray($db_results, $original_mice) {
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['total_hunts'] = $row['total_hunts'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['attracted_hunts'] = $row['attracted_hunts'];
     }
-
-    uasort($results['results'], 'cmpLocationMiceCount');
-    foreach ($results['results'] as &$location) {
-        uasort($location['stages'], 'cmpStageMiceCount');
+    if (isset($results)) {
+        uasort($results['results'], 'cmpLocationMiceCount');
+        foreach ($results['results'] as &$location) {
+            uasort($location['stages'], 'cmpStageMiceCount');
+        }
     }
     $results['found']['count'] = count($results['found']['mice']);
     $results['not_found']['mice'] = array_udiff($original_mice, $results['found']['mice'], 'strcasecmp');
