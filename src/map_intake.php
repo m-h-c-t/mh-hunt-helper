@@ -73,12 +73,12 @@ if (!$map_type_id) {
 $mice_supplied_count = count($_POST['mice']);
 $mice_ids = [];
 foreach ($_POST['mice'] as $mouse_name) {
-    $query = $pdo->prepare("SELECT m.id FROM $mhmh_dbname.mice m WHERE m.name LIKE ?");
+    $query = $pdo->prepare("SELECT m.id FROM mice m WHERE m.name LIKE ?");
     $query->execute(array($mouse_name));
     $mouse_id = $query->fetchColumn();
 
     if (!$mouse_id) {
-        $query = $pdo->prepare("INSERT INTO $mhmh_dbname.mice (name) VALUES (?)");
+        $query = $pdo->prepare("INSERT INTO mice (name) VALUES (?)");
         $query->execute(array($mouse_name));
         $mouse_id = $pdo->lastInsertId();
     }
