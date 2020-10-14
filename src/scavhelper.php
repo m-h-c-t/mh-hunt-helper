@@ -8,7 +8,7 @@
     require_once "searchByDrop.php";
 
     echo '<div class="container-fluid" id="results">';
-    if ($_REQUEST['items']) {
+    if (isset($_REQUEST['items']) && !empty($_REQUEST['items'])) {
         require_once "scavhelper-results-header.php";
     }
 

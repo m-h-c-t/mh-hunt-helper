@@ -8,7 +8,7 @@
     require_once "searchByMouse.php";
 
     echo '<div class="container-fluid" id="results">';
-    if ($_REQUEST['mice']) {
+    if (isset($_REQUEST['mice']) && !empty($_REQUEST['mice'])) {
         require_once "maphelper-results-header.php";
     }
 
