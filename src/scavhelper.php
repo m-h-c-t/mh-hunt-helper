@@ -12,7 +12,7 @@
         require_once "scavhelper-results-header.php";
     }
 
-    if ($results['results']) {
+    if (isset($_REQUEST['results']) && !empty($_REQUEST['results'])) {
       foreach ($results['results'] as $location_id => $result) {
         require "scavhelper-results-body.php";
       }
