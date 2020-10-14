@@ -14,7 +14,7 @@ $mms_username = "";
 $mms_password = "";
 $mms_dbname = "";
 
-// $mhmh_dbname = "";
+
 
 // $fb_app_id = "";
 // $fb_app_secret = "";

@@ -65,26 +65,6 @@ rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 converter_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
 
-
-# Map Helper
-echo "===== Backing up map helper ====="
-
-if [ -f maphelper_weekly.sql.gz ]; then
-    rm maphelper_weekly.sql.gz
-fi
-
-if [ -f maphelper_weekly.txt.zip ]; then
-        rm maphelper_weekly.txt.zip
-fi
-
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhmaphelper --ignore-table=mhmaphelper.users | gzip -9 > maphelper_weekly.sql.gz
-sleep 5s
-rm -rf /var/lib/mysql-files/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhmaphelper --ignore-table=mhmaphelper.users
-rm -rf /var/lib/mysql-files/*.sql
-zip -j -9 maphelper_weekly.txt.zip /var/lib/mysql-files/*
-rm -rf /var/lib/mysql-files/*
-
 echo "=== Turning on event scheduler ==="
 mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = ON;"
 
@@ -92,7 +72,7 @@ date > last_updated.txt
 
 echo "===== Copying to keybase ====="
 
-su user -c 'cp converter_weekly.sql.gz converter_weekly.txt.zip maphelper_weekly.sql.gz maphelper_weekly.txt.zip mapspotter_weekly.sql.gz mapspotter_weekly.txt.zip hunthelper_weekly.sql.gz hunthelper_weekly.txt.zip last_updated.txt  /keybase/public/devjacksmith/mh_backups/weekly/'
+su user -c 'cp converter_weekly.sql.gz converter_weekly.txt.zip mapspotter_weekly.sql.gz mapspotter_weekly.txt.zip hunthelper_weekly.sql.gz hunthelper_weekly.txt.zip last_updated.txt  /keybase/public/devjacksmith/mh_backups/weekly/'
 
 rm -rf *.sql.gz *.txt.zip
 
@@ -102,12 +82,6 @@ echo
 curl -H "Content-Type: application/json" --data '{"source_type": "converter", "source_name": "converter"}' -X POST $DOCKER_CURL
 echo
 echo "= converter_weekly triggered ="
-echo
-sleep 2s
-
-curl -H "Content-Type: application/json" --data '{"source_type": "maphelper", "source_name": "maphelper"}' -X POST $DOCKER_CURL
-echo
-echo "= maphelper_weekly triggered ="
 echo
 sleep 2s
 

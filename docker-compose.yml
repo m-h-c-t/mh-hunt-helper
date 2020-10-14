@@ -28,12 +28,6 @@ services:
 #     container_name: mhct-converter
 #     hostname:       mhct-converter
 
-# # mhct-maphelper DB
-#   mhct-maphelper:
-#     image:          tsitu/mhct-db-docker:maphelper
-#     container_name: mhct-maphelper
-#     hostname:       mhct-maphelper
-
 # # mhct-mapspotter DB
 #   mhct-mapspotter:
 #     image:          tsitu/mhct-db-docker:mapspotter

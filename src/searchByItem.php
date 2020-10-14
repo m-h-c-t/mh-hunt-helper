@@ -17,10 +17,6 @@ function main() {
             connectMHHH();
             getMouseQuery($query_all, $query_one);
             break;
-        // case 'mhmh_mouse':
-            // connectMHHH();
-            // getMHMHMouseQuery($query_all, $query_one);
-            // break;
         case 'loot':
             connectMHHH();
             getLootQuery($query_all, $query_one);
@@ -118,11 +114,6 @@ function generateTable($table) {
     }
     return $table;
 }
-
-// function getMHMHMouseQuery(&$query_all, &$query_one) {
-//     global $mhmh_dbname;
-//     $query_all = 'SELECT id, name FROM ' . $mhmh_dbname . '.mice';
-// }
 
 function getMapQuery(&$query_all, &$query_one) {
     $query_all = 'SELECT m.id, m.name FROM mhmapspotter.maps m ORDER BY m.name ASC';
