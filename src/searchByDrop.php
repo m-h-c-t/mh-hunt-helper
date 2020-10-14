@@ -3,7 +3,9 @@
 require_once "config.php";
 $results = [];
 
-if (!empty(trim($_REQUEST['items']))) {
+
+
+if (isset($_REQUEST['items']) && !empty(trim($_REQUEST['items']))) {
     main();
 }
 
