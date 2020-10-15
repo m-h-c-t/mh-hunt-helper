@@ -33,7 +33,7 @@
                                           </th>
                                           <?php foreach ($item_result['cheese'] as $cheese_result) { ?>
                                           <tr>
-                                              <?php foreach ($result_column_names as $name => $suffix) { echo "<td>$cheese_result[$name]$suffix</td>"; } ?>
+                                              <?php foreach ($result_column_names as $column_name => $suffix) { echo "<td>$cheese_result[$column_name]$suffix</td>"; } ?>
                                           </tr>
                                         <?php } ?>
                                         </table>
