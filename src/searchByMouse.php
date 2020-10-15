@@ -61,18 +61,18 @@ ORDER BY a.rate DESC";
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function formResultsArray($db_results, $original_mice) {
-    $results['found']['mice'] = [];
+function formResultsArray($db_results, $original_items) {
+    $results['found']['items'] = [];
     foreach ($db_results as $row) {
-        $results['found']['mice'][$row['mouse_id']] = $row['mouse'];
+        $results['found']['items'][$row['mouse_id']] = $row['mouse'];
         $results['results'][$row['location_id']]['name'] = $row['location'];
-        $results['results'][$row['location_id']]['mice_count'][$row['mouse_id']] = 1;
+        $results['results'][$row['location_id']]['items_count'][$row['mouse_id']] = 1;
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['name'] = $row['stage'];
-        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['name'] = $row['mouse'];
-        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['name'] = $row['cheese'];
-        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['rate'] = $row['rate']/100;
-        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['total_hunts'] = $row['total_hunts'];
-        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['attracted_hunts'] = $row['attracted_hunts'];
+        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['mouse_id']]['name'] = $row['mouse'];
+        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['mouse_id']]['cheese'][$row['cheese_id']]['name'] = $row['cheese'];
+        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['mouse_id']]['cheese'][$row['cheese_id']]['rate'] = $row['rate']/100;
+        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['mouse_id']]['cheese'][$row['cheese_id']]['total_hunts'] = $row['total_hunts'];
+        $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['mouse_id']]['cheese'][$row['cheese_id']]['attracted_hunts'] = $row['attracted_hunts'];
     }
     if (isset($results)) {
         uasort($results['results'], 'cmpLocationMiceCount');
@@ -80,17 +80,17 @@ function formResultsArray($db_results, $original_mice) {
             uasort($location['stages'], 'cmpStageMiceCount');
         }
     }
-    $results['found']['count'] = count($results['found']['mice']);
-    $results['not_found']['mice'] = array_udiff($original_mice, $results['found']['mice'], 'strcasecmp');
-    $results['not_found']['count'] = count($results['not_found']['mice']);
-    $results['original_mice'] = $original_mice;
+    $results['found']['count'] = count($results['found']['items']);
+    $results['not_found']['items'] = array_udiff($original_items, $results['found']['items'], 'strcasecmp');
+    $results['not_found']['count'] = count($results['not_found']['items']);
+    $results['original_items'] = $original_items;
     return $results;
 }
 
 function cmpLocationMiceCount($a, $b) {
-    return $b['mice_count'] <=> $a['mice_count'];
+    return $b['items_count'] <=> $a['items_count'];
 }
 
 function cmpStageMiceCount($a, $b) {
-    return $b['mice'] <=> $a['mice'];
+    return $b['items'] <=> $a['items'];
 }

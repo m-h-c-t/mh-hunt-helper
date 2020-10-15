@@ -29,23 +29,12 @@
                                     <td style="padding:0;">
                                         <table class="table table-bordered table-condensed table-striped" style="margin:0;">
                                           <th>
-                                              <td>Drop rate</td><td>Total Catches</td><td>Total Hunts</td>
+                                              <?php foreach($column_titles as $title) { echo "<td>$title</td>"; } ?>
                                           </th>
                                           <?php foreach ($item_result['cheese'] as $cheese_result) { ?>
-                                            <tr>
-                                                <td>
-                                                   <?php echo $cheese_result['name']; ?>
-                                                </td>
-                                                <td>
-                                                   <?php echo $cheese_result['drop_rate']; ?>&#37;
-                                                 </td>
-                                                 <td>
-                                                   <?php echo $cheese_result['total_catches']; ?>
-                                                 </td>
-                                                 <td>
-                                                   <?php echo $cheese_result['total_hunts']; ?>
-                                                </td>
-                                             </tr>
+                                          <tr>
+                                              <?php foreach ($result_column_names as $name => $suffix) { echo "<td>$cheese_result[$name]$suffix</td>"; } ?>
+                                          </tr>
                                         <?php } ?>
                                         </table>
                                     </td>
