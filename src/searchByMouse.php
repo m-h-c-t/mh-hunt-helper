@@ -61,12 +61,12 @@ ORDER BY a.rate DESC";
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function formResultsArray($db_results, $original_mice) {
-    $results['found']['mice'] = [];
+function formResultsArray($db_results, $original_items) {
+    $results['found']['items'] = [];
     foreach ($db_results as $row) {
-        $results['found']['mice'][$row['mouse_id']] = $row['mouse'];
+        $results['found']['items'][$row['mouse_id']] = $row['mouse'];
         $results['results'][$row['location_id']]['name'] = $row['location'];
-        $results['results'][$row['location_id']]['mice_count'][$row['mouse_id']] = 1;
+        $results['results'][$row['location_id']]['item_count'][$row['mouse_id']] = 1;
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['name'] = $row['stage'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['name'] = $row['mouse'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['name'] = $row['cheese'];
@@ -80,15 +80,15 @@ function formResultsArray($db_results, $original_mice) {
             uasort($location['stages'], 'cmpStageMiceCount');
         }
     }
-    $results['found']['count'] = count($results['found']['mice']);
-    $results['not_found']['mice'] = array_udiff($original_mice, $results['found']['mice'], 'strcasecmp');
-    $results['not_found']['count'] = count($results['not_found']['mice']);
-    $results['original_mice'] = $original_mice;
+    $results['found']['count'] = count($results['found']['items']);
+    $results['not_found']['items'] = array_udiff($original_items, $results['found']['items'], 'strcasecmp');
+    $results['not_found']['count'] = count($results['not_found']['items']);
+    $results['original_items'] = $original_items;
     return $results;
 }
 
 function cmpLocationMiceCount($a, $b) {
-    return $b['mice_count'] <=> $a['mice_count'];
+    return $b['item_count'] <=> $a['item_count'];
 }
 
 function cmpStageMiceCount($a, $b) {

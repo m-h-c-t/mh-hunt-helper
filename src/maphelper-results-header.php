@@ -5,8 +5,8 @@
     <div class="panel-group">
         <div class="panel panel-danger">
         <div class="panel-heading"><?php echo $results['not_found']['count']; ?> mice not found!</div>
-        <?php foreach ($results['not_found']['mice'] as $mouse) { ?>
-        <div class="panel-body"><?php echo $mouse; ?></div>
+        <?php foreach ($results['not_found']['items'] as $item) { ?>
+        <div class="panel-body"><?php echo $item; ?></div>
         <?php }; ?>
     </div></div>
 <?php } ?>

@@ -3,7 +3,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <a class="btn bg-info" data-toggle="collapse" data-parent="#accordion1<?php echo $location_id; ?>" href="#collapseThree<?php echo $location_id; ?>">
-                <?php echo $result['name'] . " (" . count($result['mice_count']) . ")"; ?>
+                <?php echo $result['name'] . " (" . count($result['item_count']) . ")"; ?>
             </a>
         </div>
         <div id="collapseThree<?php echo $location_id; ?>" class="panel-collapse collapse">
