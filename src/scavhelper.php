@@ -14,11 +14,11 @@
     }
 
     if (isset($results['results']) && !empty($results['results'])) {
-      $column_titles = ["Drop rate", "Total Catches", "Total Catches"];
-      $result_column_names = ["name" => "", "drop_rate" => "&#37;", "total_catches" => "", "total_hunts" => ""];
-      foreach ($results['results'] as $location_id => $result) {
-        require "helper-results-body.php";
-      }
+        $column_titles = ["Drop rate", "Total Catches", "Total Catches"];
+        $result_column_names = ["name" => "", "drop_rate" => "&#37;", "total_catches" => "", "total_hunts" => ""];
+        foreach ($results['results'] as $location_id => $result) {
+          require "helper-results-body.php";
+        }
     }
     echo '</div>';
 

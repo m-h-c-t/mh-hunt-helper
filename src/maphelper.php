@@ -14,9 +14,11 @@
     }
 
     if (isset($results['results']) && !empty($results['results'])) {
-      foreach ($results['results'] as $location_id => $result) {
-        require "maphelper-results-body.php";
-      }
+        $column_titles = ["Attraction rate", "Attracted Hunts", "Total Hunts"];
+        $result_column_names = ["name" => "", "rate" => "&#37;", "attracted_hunts" => "", "total_hunts" => ""];
+        foreach ($results['results'] as $location_id => $result) {
+          require "helper-results-body.php";
+        }
     }
     echo '</div>';
 
