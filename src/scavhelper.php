@@ -20,6 +20,6 @@
     }
     echo '</div>';
 
-    require_once "scavhelper-items-form.php";
+    require_once "helper-form.php";
 
     require_once "new-common-footer.php";
