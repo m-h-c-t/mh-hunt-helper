@@ -29,21 +29,23 @@
                                     <td style="padding:0;">
                                         <table class="table table-bordered table-condensed table-striped" style="margin:0;">
                                           <th>
-                                              <td>Drop rate</td><td>Total Catches</td><td>Total Hunts</td>
+                                              <td><?php echo $column_titles[0];?></td>
+                                              <td><?php echo $column_titles[1];?></td>
+                                              <td><?php echo $column_titles[2];?></td>
                                           </th>
                                           <?php foreach ($item_result['cheese'] as $cheese_result) { ?>
                                             <tr>
                                                 <td>
-                                                   <?php echo $cheese_result['name']; ?>
+                                                   <?php echo $cheese_result[$result_column_names[0]]; ?>
                                                 </td>
                                                 <td>
-                                                   <?php echo $cheese_result['drop_rate']; ?>&#37;
+                                                   <?php echo $cheese_result[$result_column_names[1]]; ?>&#37;
                                                  </td>
                                                  <td>
-                                                   <?php echo $cheese_result['total_catches']; ?>
+                                                   <?php echo $cheese_result[$result_column_names[2]]; ?>
                                                  </td>
                                                  <td>
-                                                   <?php echo $cheese_result['total_hunts']; ?>
+                                                   <?php echo $cheese_result[$result_column_names[3]]; ?>
                                                 </td>
                                              </tr>
                                         <?php } ?>
