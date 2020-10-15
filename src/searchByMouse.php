@@ -74,7 +74,7 @@ function formResultsArray($db_results, $original_items) {
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['mouse_id']]['cheese'][$row['cheese_id']]['total_hunts'] = $row['total_hunts'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['mouse_id']]['cheese'][$row['cheese_id']]['attracted_hunts'] = $row['attracted_hunts'];
     }
-    if (isset($results)) {
+    if (isset($results['results']) && !empty($results['results'])) {
         uasort($results['results'], 'cmpLocationMiceCount');
         foreach ($results['results'] as &$location) {
             uasort($location['stages'], 'cmpStageMiceCount');

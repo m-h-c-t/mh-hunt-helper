@@ -82,7 +82,7 @@ function formResultsArray($db_results, $original_items) {
         // $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['item_id']]['cheese'][$row['cheese_id']]['max_amt'] = $row['max_amt'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['items'][$row['item_id']]['cheese'][$row['cheese_id']]['drop_rate'] = $row['drop_rate'];
     }
-    if (isset($results)) {
+    if (isset($results['results']) && !empty($results['results'])) {
         uasort($results['results'], 'cmpLocationitemsCount');
         foreach ($results['results'] as &$location) {
             uasort($location['stages'], 'cmpStageitemsCount');

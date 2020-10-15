@@ -7,7 +7,7 @@
         <div class="panel panel-danger">
             <div class="panel-heading"><?php echo $results['not_found']['count'] . " " . $name; ?> not found!</div>
             <?php foreach ($results['not_found']['items'] as $item) { ?>
-            <div class="panel-body"><?php echo $item; ?></div>
+            <div class="panel-body"><?php echo htmlspecialchars($item); ?></div>
             <?php }; ?>
         </div>
     </div>
