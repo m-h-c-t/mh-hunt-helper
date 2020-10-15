@@ -66,7 +66,7 @@ function formResultsArray($db_results, $original_items) {
     foreach ($db_results as $row) {
         $results['found']['items'][$row['mouse_id']] = $row['mouse'];
         $results['results'][$row['location_id']]['name'] = $row['location'];
-        $results['results'][$row['location_id']]['item_count'][$row['mouse_id']] = 1;
+        $results['results'][$row['location_id']]['items_count'][$row['mouse_id']] = 1;
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['name'] = $row['stage'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['name'] = $row['mouse'];
         $results['results'][$row['location_id']]['stages'][$row['stage_id']]['mice'][$row['mouse_id']]['cheese'][$row['cheese_id']]['name'] = $row['cheese'];
@@ -88,7 +88,7 @@ function formResultsArray($db_results, $original_items) {
 }
 
 function cmpLocationMiceCount($a, $b) {
-    return $b['item_count'] <=> $a['item_count'];
+    return $b['items_count'] <=> $a['items_count'];
 }
 
 function cmpStageMiceCount($a, $b) {
