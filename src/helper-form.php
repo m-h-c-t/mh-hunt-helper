@@ -1,6 +1,6 @@
 <!-- helper Form -->
 <form novalidate name="item_list_form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <div class="form-group row">
+    <div class="form-group row col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <h2><i class="glyphicon glyphicon-pencil"></i> <?php echo ucfirst($name); ?></h2>
         <textarea rows="10" class="form-control input-lg" placeholder="Copy map <?php echo $name; ?> list here..." required name="<?php echo $name; ?>" id="<?php echo $name; ?>"
           ><?php if (isset($results['original_items']) && !empty($results['original_items'])) { echo htmlspecialchars(implode("\n", $results['original_items'])); } ?></textarea>
