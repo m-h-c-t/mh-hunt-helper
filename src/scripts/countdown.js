@@ -1,7 +1,6 @@
 // Set the date we're counting down to
-var countDownDate = new Date("Dec 8, 2020 9:00:00").getTime();
-var eventName = "Great Winter Hunt" + "!";
-document.getElementById("eventname").innerHTML = eventName;
+var eventDate = document.getElementById("countdownDate").value;
+var countDownDate = new Date(eventDate).getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
