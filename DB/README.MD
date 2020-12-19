@@ -9,7 +9,7 @@ This folder contains Database backups which can be used to determine all kinds o
 This back up contains all the data related to convertibles like chests for example
 
 **Hunt Helper:**
-This back up contains all the hunts and their details
+This back up contains all the hunts and their details. **[See diagram here](diagram.png)**
 
 **Map Spotter:**
 This back up contains all the map help/sniping requests (not currently used much)
