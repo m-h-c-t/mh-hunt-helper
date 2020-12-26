@@ -16,5 +16,5 @@
     text-decoration: none;
     color: gray;
     position: relative;
-    top: 8px;
+    top: 8px !important;
 }
