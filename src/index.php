@@ -57,6 +57,9 @@
                     data-content="See stats about these tools as well as confirmed RH location. (RH must be caught by one of us for it to show up here)"></a>
                 <a href="/tracker.php" style="display:block;text-decoration:none;color:#333;">Tracker</a>
             </td></tr>
+            <tr><td>
+                <a href="/faq.php" style="display:block;text-decoration:none;color:#333;">F.A.Q.</a>
+            </td></tr>
             </tbody>
         </table>
     </div>
