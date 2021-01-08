@@ -16,6 +16,14 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
+      <h3 class="panel-title">Anything weird going on with the aggregations?</h3>
+    </div>
+    <div class="panel-body">
+      Drop rates ignore all hunts with Gift of the Day Base because it adds normal loot in unexpected places. This means hunt totals for drops and attractions might be very different. This is not applied to other components that generate loot in unexpected places, such as Snowball Charms making Super Snowball Charms since these loots tend not to be of interest for lookup.
+    </div>
+  </div>    
+  <div class="panel panel-default">
+    <div class="panel-heading">
       <h3 class="panel-title">Who are you/MHCT?</h3>
     </div>
     <div class="panel-body">
