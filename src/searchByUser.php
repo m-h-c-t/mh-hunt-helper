@@ -142,6 +142,6 @@ print "</tbody></table></div>";
         });
         $("#loader").css( "display", "none" );
     </script>
-<?php require "common_footer.php"; ?>
+<?php require_once "new-common-footer.php"; ?>
 </body>
 </html>
