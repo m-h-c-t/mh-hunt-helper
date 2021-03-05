@@ -126,8 +126,12 @@ function getMapQuery(&$query_all, &$query_one) {
 
 function getConvertibleQuery(&$query_all, &$query_one) {
     $query_all = 'SELECT c.id, c.name FROM mhconverter.convertibles c ORDER BY c.name ASC';
-    $query_one = 'SELECT i.name as item, ca.total, ca.total_items
-        FROM mhconverter.convertibles_aggr ca
-        INNER JOIN mhconverter.items i ON ca.item_id = i.id
-        WHERE ca.convertible_id = ?';
+    $query_one = 'SELECT aci.convertible_id as conv, i.name as item, 
+        aci.total_convertibles_opened as total,	aci.total_item_quantity as total_items,
+        aci.single_convertibles_opened as single_opens, aci.times_with_any, 
+        aci.min_item_quantity, aci.max_item_quantity, aci.total_quantity_when_any 
+        from aggr_convertible_item aci 
+	        inner join items i 
+		        on aci.item_id = i.id 
+        where aci.convertible_id = ?';
 }
