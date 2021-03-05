@@ -38,7 +38,7 @@ if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['
 }
 
 // PDO
-$pdo = new PDO("mysql:host=$mms_servername;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
+$pdo = new PDO("mysql:host=$mms_servername;port=$mms_port;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 $query = $pdo->prepare('SELECT 1 FROM map_records WHERE map_id = :id LIMIT 1');

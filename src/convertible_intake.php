@@ -34,7 +34,7 @@ if (
 }
 
 // PDO
-$pdo = new PDO("mysql:host=$convertible_servername;dbname=$convertible_dbname;charset=utf8", $convertible_username, $convertible_password);
+$pdo = new PDO("mysql:host=$convertible_servername;port=$convertible_port;dbname=$convertible_dbname;charset=utf8", $convertible_username, $convertible_password);
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 // Check for existing entry
