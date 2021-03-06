@@ -70,7 +70,7 @@ $( function() {
         var all_stages = '';
         let total_seen = 'Did not find this convertible';
         data.forEach(function(row) {
-            total_seen = row.total + ' convertibles. (Opened single ' + row.single_opens + ')';
+            total_seen = row.total + ' convertibles. (' + row.single_opens + ' opened single)';
             final_html += '<tr><td>' + row.item + '</td><td>';
             final_html += parseFloat((row.total_items / row.total).toPrecision(3)) + '</td><td>';
             if (row.single_opens == 0) {
