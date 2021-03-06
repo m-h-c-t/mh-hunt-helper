@@ -76,7 +76,7 @@ $( function() {
             if (row.single_opens == 0) {
                 final_html += 'N/A' + '</td><td>';
             } else {
-                final_html += parseFloat((row.times_with_any / row.single_opens).toPrecision(3)) + '</td><td>';
+                final_html += parseFloat((row.times_with_any / row.single_opens / 100).toPrecision(3)) + '&percnt;</td><td>';
             }
             final_html += row.min_item_quantity + '-' + row.max_item_quantity + '</td></tr>';
         });
