@@ -65,14 +65,20 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Item</th><th>Average Qty</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Item</th><th>Average Qty</th><th>Chance for any</th><th>Min-Max Qty</th></tr></thead><tbody>';
 
         var all_stages = '';
         let total_seen = 'Did not find this convertible';
         data.forEach(function(row) {
-            total_seen = row.total + ' convertibles';
+            total_seen = row.total + ' convertibles. (' + row.single_opens + ' opened single)';
             final_html += '<tr><td>' + row.item + '</td><td>';
-            final_html += parseFloat((row.total_items / row.total).toPrecision(3)) + '</td></tr>';
+            final_html += parseFloat((row.total_items / row.total).toPrecision(3)) + '</td><td>';
+            if (row.single_opens == 0) {
+                final_html += 'N/A' + '</td><td>';
+            } else {
+                final_html += parseFloat((row.times_with_any / row.single_opens * 100).toPrecision(3)) + '&percnt;</td><td>';
+            }
+            final_html += row.min_item_quantity + '-' + row.max_item_quantity + '</td></tr>';
         });
         final_html += '</tbody></table>';
 
