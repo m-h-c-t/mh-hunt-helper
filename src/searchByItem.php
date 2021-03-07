@@ -91,7 +91,7 @@ function getLootQuery(&$query_all, &$query_one) {
     $table = generateTable("drops");
 
     # blocking gold
-    $query_all = 'SELECT hg_item_id as id, name FROM loot UNION SELECT hg_item_id as id, plural_name as name FROM loot';
+    $query_all = 'SELECT hg_item_id AS id, name FROM loot UNION SELECT hg_item_id AS id, plural_name AS name FROM loot WHERE plural_name IS NOT NULL';
     $query_one = '
         SELECT l.name AS location, s.name AS stage, h.total_hunts, c.name AS cheese, h.total_catches
           , h.total_drops, ROUND(h.drop_count/h.total_catches*100,2) AS drop_pct, h.min_amt, h.max_amt
@@ -126,12 +126,12 @@ function getMapQuery(&$query_all, &$query_one) {
 
 function getConvertibleQuery(&$query_all, &$query_one) {
     $query_all = 'SELECT c.id, c.name FROM mhconverter.convertibles c ORDER BY c.name ASC';
-    $query_one = 'SELECT aci.convertible_id as conv, i.name as item, 
+    $query_one = 'SELECT aci.convertible_id as conv, i.name as item,
         aci.total_convertibles_opened as total,	aci.total_item_quantity as total_items,
-        aci.single_convertibles_opened as single_opens, aci.times_with_any, 
-        aci.min_item_quantity, aci.max_item_quantity, aci.total_quantity_when_any 
-        from aggr_convertible_item aci 
-	        inner join items i 
-		        on aci.item_id = i.id 
+        aci.single_convertibles_opened as single_opens, aci.times_with_any,
+        aci.min_item_quantity, aci.max_item_quantity, aci.total_quantity_when_any
+        from aggr_convertible_item aci
+	        inner join items i
+		        on aci.item_id = i.id
         where aci.convertible_id = ?';
 }
