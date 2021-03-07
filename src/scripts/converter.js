@@ -50,6 +50,11 @@ $( function() {
         $('#item').autocomplete({
             source: function(request, response) {
                 var results = $.ui.autocomplete.filter(items, request.term);
+
+                results.sort(function(a, b) {
+                    return a.value.toUpperCase().indexOf(request.term.toUpperCase()) - b.value.toUpperCase().indexOf(request.term.toUpperCase());
+                });
+
                 response(results.slice(0, 10));
             },
             delay: 0,
