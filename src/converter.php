@@ -2,7 +2,8 @@
     $title = "MHCT Converter";
     // $css = "styles/loot.css";
     $js = "scripts/converter.js";
-    require_once "new-common-header.php";
+    $load_datatable_libraries = true;
+    require_once "common-header.php";
 ?>
 
         <input id="item_type" type="hidden" value="convertible">
@@ -21,5 +22,4 @@
         <div id="results_total"></div>
         <div id="results" class="table-responsive"></div>
 
-
-<?php require "new-common-footer.php"; ?>
+<?php require_once "common-footer.php"; ?>

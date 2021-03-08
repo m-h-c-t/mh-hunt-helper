@@ -2,7 +2,8 @@
     $title = "MHCT Mapper";
     // $css = "styles/loot.css";
     $js = "scripts/mapper.js";
-    require_once "new-common-header.php";
+    $load_datatable_libraries = true;
+    require_once "common-header.php";
 ?>
 
         <input id="item_type" type="hidden" value="loot">
@@ -21,4 +22,4 @@
         <div id="results_total"></div>
         <div id="results" class="table-responsive"></div>
     </div>
-<?php require_once "new-common-footer.php"; ?>
+<?php require_once "common-footer.php"; ?>

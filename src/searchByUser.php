@@ -1,16 +1,11 @@
-<html lang="en">
-<head>
-    <?php require "common_head.php"; ?>
-</head>
-<body style="text-align: center;" class="text-center">
-    <div id="loader" class="loader"></div>
-    <script>$("#loader").css( "display", "block" );</script>
-    <div class="jumbotron">
-        <h1>MHCT User History</h1>
-        <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
-    </div>
-    <div class="container-fluid">
 <?php
+    $title = "MHCT User History";
+    // $css = "styles/loot.css";
+    // $js = "scripts/attraction.js";
+    $fluid_container = true;
+    $load_datatable_libraries = true;
+    require_once "common-header.php";
+
 
 if (empty($_GET['user']) || !is_numeric($_GET['user'])) {
     print "<b>PLEASE SPECIFY A VALID USER ID</b>";
@@ -142,6 +137,6 @@ print "</tbody></table></div>";
         });
         $("#loader").css( "display", "none" );
     </script>
-<?php require_once "new-common-footer.php"; ?>
+<?php require_once "common-footer.php"; ?>
 </body>
 </html>
