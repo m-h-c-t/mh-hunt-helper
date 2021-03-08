@@ -2,7 +2,9 @@
     $title = "MHCT Looter";
     $css = "styles/loot.css";
     $js = "scripts/loot.js";
-    require_once "new-common-header.php";
+    $load_datatable_libraries = true;
+    $fluid_container = true;
+    require_once "common-header.php";
 ?>
         <form id="search_options">
         <input id="prev_item" type="hidden" value="<?php (!empty($_GET['item']) ? print $_GET['item'] : '' ) ?>">
@@ -47,4 +49,4 @@
 
         <div id="results" class="table-responsive"></div>
 
-<?php require_once "new-common-footer.php"; ?>
+<?php require_once "common-footer.php"; ?>

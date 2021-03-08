@@ -1,8 +1,9 @@
 <?php
     $title = "MHCT Scavenger Helper";
 //    $css = "styles/maphelper.css";
+    $fluid_container = true;
     $js = "scripts/scavhelper.js";
-    require_once "new-common-header.php";
+    require_once "common-header.php";
 
 
     require_once "searchByDrop.php";
@@ -24,4 +25,4 @@
 
     require_once "helper-form.php";
 
-    require_once "new-common-footer.php";
+    require_once "common-footer.php";

@@ -2,7 +2,7 @@
     $title = "MHCT Tracker";
     // $css = "styles/loot.css";
     // $js = "scripts/attraction.js";
-    require_once "new-common-header.php";
+    require_once "common-header.php";
 ?>
 
         <?php
@@ -36,4 +36,4 @@
         <?php //require_once "missing_mice.php"; ?>
 
 
-<?php require_once "new-common-footer.php"; ?>
+<?php require_once "common-footer.php"; ?>

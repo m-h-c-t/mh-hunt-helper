@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <?php require "common_head.php"; ?>
+<?php
+    $title = "MouseHunt Community Tools";
+    $css = "styles/main.css";
+    $js = "scripts/main.js";
+    $hide_home_link = true;
+    $hide_footer_note = true;
+    require_once "common-header.php";
+?>
 
-    <title>MHCT Tools</title>
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
-</head>
-<body class="text-center">
-<!-- Jumbotron -->
-<div class="jumbotron">
-    <h1>MouseHunt Community Tools</h1>
-</div>
-<div class="container">
     <div class="col-md-6 col-md-offset-3">
         <table class="table text-center table-responsive table-hover table-bordered">
             <thead>
@@ -79,8 +74,4 @@
         <br/><a href="https://www.patreon.com/mhct" target="_blank"><img src="images/patreon.png" style="width:150px;margin-top:10px;"></a>
     </div>
 </div>
-<br/>
-<?php require "common_footer.php"; ?>
-<script defer type="text/javascript" src="scripts/main.js"></script>
-</body>
-</html>
+<?php require_once "common-footer.php"; ?>

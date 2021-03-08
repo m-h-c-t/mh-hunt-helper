@@ -1,9 +1,7 @@
 <?php
   $title = "MHCT FAQ";
-
-  require_once "new-common-header.php";
+  require_once "common-header.php";
 ?>
-<div class="container">
 
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -21,7 +19,7 @@
     <div class="panel-body">
       Drop rates ignore all hunts with Gift of the Day Base because it adds normal loot in unexpected places. This means hunt totals for drops and attractions might be very different. This is not applied to other components that generate loot in unexpected places, such as Snowball Charms making Super Snowball Charms since these loots tend not to be of interest for lookup.
     </div>
-  </div>    
+  </div>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Who are you/MHCT?</h3>
@@ -84,5 +82,5 @@
       If it's about official MouseHunt game, please submit it through the game in Help -> Contact Us. If it's about tools, you can talk to us on MH Discord channel <a href="https://discord.gg/E4utmBD" target="_blank">#community-tools</a>. There are no stupid questions, we all were new to this game once.
     </div>
   </div>
-</div>
-<?php require_once "new-common-footer.php"; ?>
+
+<?php require_once "common-footer.php"; ?>

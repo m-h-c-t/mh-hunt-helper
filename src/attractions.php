@@ -2,11 +2,12 @@
     $title = "MHCT Attraction Rate";
     // $css = "styles/loot.css";
     $js = "scripts/attraction.js";
-    require_once "new-common-header.php";
+    $load_datatable_libraries = true;
+    require_once "common-header.php";
 ?>
 
-        <input id="prev_mouse" type="hidden" value="<?php (!empty($_GET['mouse']) ? print $_GET['mouse'] : '' ) ?>">
-        <input id="prev_timefilter" type="hidden" value="<?php (!empty($_GET['timefilter']) ? print $_GET['timefilter'] : 'all' ) ?>">
+    <input id="prev_mouse" type="hidden" value="<?php (!empty($_GET['mouse']) ? print $_GET['mouse'] : '' ) ?>">
+    <input id="prev_timefilter" type="hidden" value="<?php (!empty($_GET['timefilter']) ? print $_GET['timefilter'] : 'all' ) ?>">
 
     <div class="input-group col-sm-6 col-sm-offset-3">
         <div class="input-group-addon"><strong style="display:block">Mouse:</strong><br/><br/><strong style="display:block">Time:</strong></div>
@@ -26,6 +27,4 @@
 
     <div id="results" class="table-responsive"></div>
 
-</div>
-<div id="loader" class="loader"></div>
-<?php require_once "new-common-footer.php"; ?>
+<?php require_once "common-footer.php"; ?>
