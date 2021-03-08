@@ -1,6 +1,6 @@
 <?php
     $title = "MouseHunt Community Tools";
-    // $css = "styles/loot.css";
+    $css = "styles/main.css";
     $js = "scripts/main.js";
     $hide_home_link = true;
     require_once "common-header.php";

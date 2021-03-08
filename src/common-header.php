@@ -40,6 +40,6 @@
     <!-- Jumbotron -->
     <div class="jumbotron">
         <h1><?php echo $title; ?></h1>
-        <?php if (isset($hide_home_link)) { ?> <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a><?php } ?>
+        <?php if (!isset($hide_home_link)) { ?> <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a><?php } ?>
     </div>
-    <div class="<?php echo isset($fluid_container) ? 'container-fluid' : 'container'; }">
+    <div class="<?php echo isset($fluid_container) ? 'container-fluid' : 'container'; ?>">
