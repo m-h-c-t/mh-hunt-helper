@@ -3,6 +3,7 @@
     $css = "styles/loot.css";
     $js = "scripts/loot.js";
     $load_datatable_libraries = true;
+    $fluid_container = true;
     require_once "common-header.php";
 ?>
         <form id="search_options">

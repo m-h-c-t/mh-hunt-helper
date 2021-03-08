@@ -2,6 +2,7 @@
     $title = "MHCT Map Helper";
 //    $css = "styles/maphelper.css";
     $js = "scripts/maphelper.js";
+    $fluid_container = true;
     require_once "common-header.php";
 
 

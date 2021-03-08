@@ -1,6 +1,7 @@
 <?php
     $title = "MHCT Scavenger Helper";
 //    $css = "styles/maphelper.css";
+    $fluid_container = true;
     $js = "scripts/scavhelper.js";
     require_once "common-header.php";
 

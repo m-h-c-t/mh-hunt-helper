@@ -1,7 +1,7 @@
 <br/>
 <?php if (!isset($hide_footer_note)) { ?>
     <p class="text-center">For more info, copy of the data, or if you want to help with data gathering, please look <a href="https://www.agiletravels.com">here</a>.</p>
-    </div>
+  </div></br>
 <?php } ?>
 <div id="loader" class="loader"></div>
 <noscript id="deferred-styles">
@@ -9,9 +9,10 @@
 
     <?php if (isset($load_datatable_libraries)) { ?>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css" integrity="sha512-BMbq2It2D3J17/C7aRklzOODG1IQ3+MHw3ifzBHMBwGO/0yUqYmsStgBjI0z5EYlaDEFnvYV7gNYdD3vFLRKsA==" crossorigin="anonymous" />
+        <link rel="stylesheet" type="text/css" href="styles/custom-datatables.css">
     <?php } ?>
 
-    <!-- <link rel="stylesheet" type="text/css" href="styles/attraction.css"> -->
+    <link rel="stylesheet" type="text/css" href="styles/common.css">
 </noscript>
 <script>
   var loadDeferredStyles = function() {
