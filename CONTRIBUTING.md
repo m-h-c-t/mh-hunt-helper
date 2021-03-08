@@ -37,3 +37,23 @@ NOTE: To use the other databases, pull and run them (where `[TAG]` can be `conve
 2. `docker run -d --name mhct-[TAG] tsitu/mhct-db-docker:[TAG]`
 
 This will start each database in its own container with its own IP address (use `docker inspect` to find it). You will use that IP address in `config.php`. Alternatively you can restore each database from [its backup](https://keybase.pub/devjacksmith/mh_backups/) into your `mhct-db` container.
+
+### When You're Using podman
+
+Podman comes with Fedora-flavored linuxes now as a sort of open-source/community version of Docker. It actually has some advantages we're not going to go into or really take advantage of. As far as we're concerned here it just made the setup a bit tricky to figure out.
+
+You've got two options when deploying in podman - you can deploy things within a pod (a shared namespace, this is technically less resource-intensive) or as individual containers (each their own pods). We have 1-3 mysql databases all wanting to talk on port 3306 otherwise this would be an easy task.
+
+If you want to deploy everything into one pod (this should be the preferred way): `podman pod create --name mhct --share cgroup,ipc,uts` -- by default pods share networking and this will just be a headache we don't want. If you don't do this remove `--pod mhct` from below.
+
+1. Pull your images. Just like above but use `podman` instead of `docker`.
+2. `podman run -d --pod mhct --name mhct-nginx -p 32080:80 -e 'GIT_EMAIL=' -e 'GIT_NAME=Your Name' -e 'GIT_USERNAME=' -e 'GIT_REPO=github.com/mh-community-tools/mh-hunt-helper' -e 'GIT_PERSONAL_TOKEN=Long String' -e 'WEBROOT=/var/www/html/src' richarvey/nginx-php-fpm:1.8.` -- note the name change from above. You should also set up the git stuff like above. This maps the webserver port 80 to your local port 32080: http://localhost:32080
+3. `podman run -d --pod mhct --name mhct-db -p 3306:3306 tsitu/mhct-db-docker:latest` -- your mhhunthelper database will be on localhost port 3306
+4. `podman run -d --pod mhct --name mhct-converter -p 3307:3306 tsitu/mhct-db-docker:converter` -- your mhconverter database is on localhost port 3307
+5. `podman run -d --pod mhct --name mhct-converter -p 3308:3306 tsitu/mhct-db-docker:mhmapspotter` -- your mhmapspotter database is on localhost port 3308
+
+When you update your config.php you can't use localhost for the hostname because we wanted to remap those 3306 ports. Find an ip address on your host `ip addr`, `hostname -i`, and a few other commands will help you here. There may be quite a few addresses. Within that nginx container (`podman exec -it mhct-nginx bash`) you can try `curl ip.add.ress:3306`. If you get connection refused try another IP address. You get a different error message if it's working - that's your IP address for the config.php file.
+
+NOTE: If you tried this before a port parameter showed up in config.php.sample you will need to add `port=3307;` to any dbo connections you're working with. 3306 is the default so if you're just working with one database you're fine.
+
+If you got your pod all set up you can save it so it can be re-created quickly! `podman generate kube mhct > mhct.yaml` will generate a yaml file **with all your github secrets** so keep it safe. `podman play kube mhct.yaml` will re-create your pod! (minus that config.php file). If you pre-pull images you can be sure to have the most up-to-date ones to build from.

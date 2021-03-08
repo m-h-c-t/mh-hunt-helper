@@ -1,17 +1,11 @@
-<html lang="en">
-<head>
-    <title>MHCT Looter</title>
-    <?php require "common_head.php"; ?>
-    <script defer src="/scripts/loot.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/loot.css">
-</head>
-<body style="text-align: center;" class="text-center">
-    <!-- Jumbotron -->
-    <div class="jumbotron">
-        <h1>MHCT Loot Search</h1>
-        <a href="https://agiletravels.com" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> MHCT Tools</a>
-    </div>
-    <div class="container">
+<?php
+    $title = "MHCT Looter";
+    $css = "styles/loot.css";
+    $js = "scripts/loot.js";
+    $load_datatable_libraries = true;
+    $fluid_container = true;
+    require_once "common-header.php";
+?>
         <form id="search_options">
         <input id="prev_item" type="hidden" value="<?php (!empty($_GET['item']) ? print $_GET['item'] : '' ) ?>">
         <input id="prev_timefilter" type="hidden" value="<?php (!empty($_GET['timefilter']) ? print $_GET['timefilter'] : 'all' ) ?>">
@@ -55,8 +49,4 @@
 
         <div id="results" class="table-responsive"></div>
 
-        <br/><p class="text-center">For more info, copy of the data, or if you want to help with data gathering, please look <a href="https://www.agiletravels.com">here</a>.</p>
-    </div>
-    <?php require "common_footer.php"; ?>
-</body>
-</html>
+<?php require_once "common-footer.php"; ?>

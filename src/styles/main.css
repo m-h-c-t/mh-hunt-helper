@@ -1,9 +1,3 @@
-.jumbotron {
-    background: url("/images/croppedcat-min.jpg") center no-repeat;
-    text-shadow: 0 0 1em black;
-    color: white;
-}
-
 * {
    font-size: 16px;
    line-height: 2;

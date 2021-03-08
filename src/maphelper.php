@@ -2,7 +2,8 @@
     $title = "MHCT Map Helper";
 //    $css = "styles/maphelper.css";
     $js = "scripts/maphelper.js";
-    require_once "new-common-header.php";
+    $fluid_container = true;
+    require_once "common-header.php";
 
 
     require_once "searchByMouse.php";
@@ -24,4 +25,4 @@
 
     require_once "helper-form.php";
 
-    require_once "new-common-footer.php";
+    require_once "common-footer.php";

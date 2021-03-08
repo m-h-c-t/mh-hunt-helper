@@ -24,7 +24,7 @@
                             <?php foreach ($stage_result['items'] as $item_id => $item_result) { ?>
                                 <tr>
                                     <td>
-                                        <?php echo $item_result['name']; ?>
+                                        <a href="https://mhwiki.hitgrab.com/wiki/index.php?search=<?php echo urlencode($item_result['name']); ?>" target="_blank"><?php echo $item_result['name']; ?></a>
                                     </td>
                                     <td style="padding:0;">
                                         <table class="table table-bordered table-condensed table-striped" style="margin:0;">
