@@ -6,6 +6,7 @@ $servername = ""; // host
 $username = "";
 $password = "";
 $dbname = "";
+$port = "3306";
 
 $htapi = "";
 
@@ -13,6 +14,7 @@ $mms_servername = ""; // host
 $mms_username = "";
 $mms_password = "";
 $mms_dbname = "";
+$mms_port = "3306";
 
 
 
@@ -25,6 +27,7 @@ $convertible_servername = ""; // host
 $convertible_username = "";
 $convertible_password = "";
 $convertible_dbname = "";
+$convertible_port = "3306";
 
 $random_uuid_hash_1 = '';
 $random_uuid_hash_2 = '';

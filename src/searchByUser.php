@@ -20,7 +20,7 @@ if (empty($_GET['user']) || !is_numeric($_GET['user'])) {
 require "config.php";
 
 // PDO
-$pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+$pdo = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 $query = $pdo->prepare('SELECT id FROM users WHERE digest LIKE ?');

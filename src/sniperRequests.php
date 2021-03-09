@@ -9,7 +9,7 @@ function main() {
     global $pdo, $mms_servername, $mms_dbname, $mms_username, $mms_password;
 
     // PDO
-    $pdo = new PDO("mysql:host=$mms_servername;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
+    $pdo = new PDO("mysql:host=$mms_servername;port=$mms_port;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
     if (empty($_REQUEST['mh_action'])) {
