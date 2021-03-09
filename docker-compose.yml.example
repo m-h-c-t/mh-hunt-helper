@@ -23,13 +23,14 @@ services:
       - "3306:3306"
 
 # # mhct-converter DB
-#   mhct-converter:
-#     image:          tsitu/mhct-db-docker:converter
-#     container_name: mhct-converter
-#     hostname:       mhct-converter
+#  mhct-converter:
+#    image:          tsitu/mhct-db-docker:converter
+#    container_name: mhct-converter
+#    hostname:       mhct-converter
 
 # # mhct-mapspotter DB
-#   mhct-mapspotter:
-#     image:          tsitu/mhct-db-docker:mapspotter
-#     container_name: mhct-mapspotter
-#     hostname:       mhct-mapspotter
+#  mhct-mapspotter:
+#    image:          tsitu/mhct-db-docker:mapspotter
+#    container_name: mhct-mapspotter
+#    hostname:       mhct-mapspotter
+
