@@ -78,7 +78,7 @@ $( function() {
             total_seen = row.total + ' convertibles. (' + row.single_opens + ' opened single)';
             final_html += '<tr><td>' + row.item + '</td><td>';
             final_html += parseFloat((row.total_items / row.total).toPrecision(3)) + '</td><td>';
-            if (row.single_opens == 0 || is_null(row.min_item_quantity) || is_null(row.max_item_quantity)) {
+            if (row.single_opens == 0 || row.min_item_quantity == null || row.max_item_quantity == null) {
                 final_html += 'N/A</td><td>N/A</td>';
             } else {
                 final_html += parseFloat((row.times_with_any / row.single_opens * 100).toPrecision(3)) + '&percnt;</td><td>'
