@@ -2,6 +2,7 @@
 /mhhh.pem
 /old versions/
 /.idea/
+/docker-compose.yml
 ga.php
 /DB/config.sh
 /DB/*.sql.gz
