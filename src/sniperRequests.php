@@ -6,7 +6,7 @@ require_once "config.php";
 main();
 
 function main() {
-    global $pdo, $mms_servername, $mms_dbname, $mms_username, $mms_password;
+    global $pdo, $mms_servername, $mms_dbname, $mms_username, $mms_password, $mms_port;
 
     // PDO
     $pdo = new PDO("mysql:host=$mms_servername;port=$mms_port;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);

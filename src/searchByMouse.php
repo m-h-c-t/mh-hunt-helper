@@ -25,7 +25,7 @@ function clean($mouse) {
 }
 
 function connectMHHH() {
-    global $pdo, $servername, $dbname, $username, $password;
+    global $pdo, $servername, $dbname, $username, $password, $port;
     $pdo = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 }

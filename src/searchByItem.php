@@ -37,19 +37,19 @@ function main() {
 }
 
 function connectMHHH() {
-    global $pdo, $servername, $dbname, $username, $password;
+    global $pdo, $servername, $dbname, $username, $password, $port;
     $pdo = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 }
 
 function connectMMS() {
-    global $pdo, $mms_servername, $mms_dbname, $mms_username, $mms_password;
+    global $pdo, $mms_servername, $mms_dbname, $mms_username, $mms_password, $mms_port;
     $pdo = new PDO("mysql:host=$mms_servername;port=$mms_port;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 }
 
 function connectMHC() {
-    global $pdo, $convertible_servername, $convertible_dbname, $convertible_username, $convertible_password;
+    global $pdo, $convertible_servername, $convertible_dbname, $convertible_username, $convertible_password, $convertible_port;
     $pdo = new PDO("mysql:host=$convertible_servername;port=$convertible_port;dbname=$convertible_dbname;charset=utf8", $convertible_username, $convertible_password);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 }
