@@ -24,7 +24,7 @@
                 <input name="item" id="item" class="form-control input-lg" type="text" placeholder="Start typing map name and select." autofocus>
                 <div id="erase_item" class="input-group-addon fakebutton"><span class="glyphicon glyphicon-remove"></span></div>
             </div>
-        <br/>';
+        <br/>
 
         //Ajax here
         print '<div id="results_total"></div>';
