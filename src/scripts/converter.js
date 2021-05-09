@@ -70,7 +70,7 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Item</th><th>Average Qty</th><th>Chance for any</th><th>Min-Max Qty</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Item</th><th>Average Qty</th><th>Chance for any</th><th>Min-Max Qty / Slot</th></tr></thead><tbody>';
 
         var all_stages = '';
         let total_seen = 'Did not find this convertible';
@@ -81,8 +81,10 @@ $( function() {
             if (row.single_opens == 0 || row.min_item_quantity == null || row.max_item_quantity == null) {
                 final_html += 'N/A</td><td>N/A</td>';
             } else {
-                final_html += parseFloat((row.times_with_any / row.single_opens * 100).toPrecision(3)) + '&percnt;</td><td>'
-                + row.min_item_quantity + '-' + row.max_item_quantity + '</td>';
+                final_html += parseFloat((row.times_with_any / row.single_opens * 100).toPrecision(3)) + '&percnt;</td><td>';
+                if (row.min_item_quantity == row.max_item_quantity) { final_html += row.min_item_quantity; }
+                else { final_html += row.min_item_quantity + '-' + row.max_item_quantity; }
+                final_html += '</td>';
             }
             final_html += '</tr>';
         });
