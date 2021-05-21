@@ -61,7 +61,7 @@
       <h3 class="panel-title">Are Hitgrab/MouseHunt devs aware of this? is this allowed?</h3>
     </div>
     <div class="panel-body">
-      We chat regularly with the awesome Hitgrab devs, and so far we had no complaints. If we do receive any requests from them, we'll be sure to remove and disable anything and everything that they are against. Afterall, we are here to play the game and enjoy/support the community. That said they've been very supportive so far and even implemented some similar features into the game itself!. Special thanks to them and Wiki contirbutors, Reddit mods, Discord mods, and others.
+      We chat regularly with the awesome Hitgrab devs, and so far we had no complaints. If we do receive any requests from them, we'll be sure to remove and disable anything and everything that they are against. Afterall, we are here to play the game and enjoy/support the community. That said they've been very supportive so far and even implemented some similar features into the game itself!. Special thanks to them and Wiki contributors, Reddit mods, Discord mods, BT, and others.
     </div>
   </div>
 
