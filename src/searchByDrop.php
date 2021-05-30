@@ -43,7 +43,7 @@ SELECT
     IFNULL(st.name, '...') AS stage,
     c.id AS cheese_id,
     c.name AS cheese,
-    lt.id as item_id,
+    lt.hg_item_id as item_id,
     lt.name as item,
     d.total_hunts,
     d.total_catches,
