@@ -29,10 +29,12 @@
                                     </td>
                                     <td style="padding:0;">
                                         <table class="table table-bordered table-condensed table-striped" style="margin:0;">
-                                          <td class="text-center">
-                                              (<a href="https://mhwiki.hitgrab.com/wiki/index.php?search=<?php echo urlencode($item_result['name']); ?>" target="_blank">wiki</a>)
-                                          </td>
-                                          <?php foreach($column_titles as $title) { echo "<td>$title</td>"; } ?>
+                                          <tr>
+                                              <td class="text-center">
+                                                  (<a href="https://mhwiki.hitgrab.com/wiki/index.php?search=<?php echo urlencode($item_result['name']); ?>" target="_blank">wiki</a>)
+                                              </td>
+                                              <?php foreach($column_titles as $title) { echo "<td>$title</td>"; } ?>
+                                          </tr>
                                           <?php foreach ($item_result['cheese'] as $cheese_result) { ?>
                                           <tr>
                                               <?php foreach ($result_column_names as $column_name => $suffix) { echo "<td>$cheese_result[$column_name]$suffix</td>"; } ?>
