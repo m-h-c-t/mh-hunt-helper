@@ -15,15 +15,14 @@ if (
     empty($_POST['mice'])              ||
     empty($_POST['id'])                || !is_numeric($_POST['id']) ||
     empty($_POST['name'])              ||
-    empty($_POST['extension_version']))
-    ) {
+    empty($_POST['extension_version'])) {
     error_log("One of the fields was missing");
     die();
 }
 
 require_once "config.php";
 
-if (!is_numeric($_POST['extension_version'] || !in_array($_POST['extension_version'], $allowed_extension_versions)) {
+if (!is_numeric($_POST['extension_version']) || !in_array($_POST['extension_version'], $allowed_extension_versions)) {
     error_log("Bad version: " . $_POST['extension_version']);
     // sendResponse('error', "Please update extension to the latest version (unless testing).");
     die();
