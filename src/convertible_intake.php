@@ -15,11 +15,6 @@ header("Access-Control-Allow-Origin: $http_origin");
 
 require_once "config.php";
 
-if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
-    error_log("Bad version: " . $_POST['extension_version']);
-    sendResponse('error', "Please update extension to the latest version.");
-}
-
 if (
     empty($_POST['asset_package_hash'])      ||
     empty($_POST['convertible']['name'])     ||
@@ -31,6 +26,11 @@ if (
 ) {
     error_log("One of the fields was missing");
     die();
+}
+
+if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
+    error_log("Bad version: " . $_POST['extension_version']);
+    sendResponse('error', "Please update extension to the latest version.");
 }
 
 // PDO
@@ -47,8 +47,8 @@ $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 // }
 
 // Record new entry
-$query = $pdo->prepare('INSERT INTO entries (user_id, asset_hash) VALUES (?, ?)');
-$query->execute(array($_POST['user_id'], $_POST['asset_package_hash']));
+$query = $pdo->prepare('INSERT INTO entries (user_id, asset_hash, extension_version) VALUES (?, ?, ?)');
+$query->execute(array($_POST['user_id'], $_POST['asset_package_hash'], $_POST['extension_version']));
 $entry_id = $pdo->lastInsertId();
 
 // Check for existing convertible
