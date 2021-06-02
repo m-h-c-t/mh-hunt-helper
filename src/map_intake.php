@@ -25,7 +25,7 @@ require_once "config.php";
 
 if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
     error_log("Bad version: " . $_POST['extension_version']);
-    sendResponse('error', "Please update extension to the latest version.");
+    sendResponse('error', "Please update extension to the latest version (unless testing).");
 }
 
 if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['mice'])
@@ -91,8 +91,8 @@ if ($mice_supplied_count != count($mice_ids)) {
 
 
 // Record map with mice
-$query = $pdo->prepare('INSERT INTO map_records (map_id, map_type_id) VALUES (?, ?)');
-$query->execute(array($_POST['id'], $map_type_id));
+$query = $pdo->prepare('INSERT INTO map_records (map_id, map_type_id, extension_version) VALUES (?, ?, ?)');
+$query->execute(array($_POST['id'], $map_type_id, $_POST['extension_version']));
 
 $insert_query = 'INSERT INTO map_mice (map_id, mouse_id) VALUES (:map_id,';
 $insert_query .= implode('),(:map_id,', $mice_ids);
