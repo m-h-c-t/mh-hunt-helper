@@ -39,8 +39,8 @@ function queryDatabase($items) {
 SELECT
     l.id as location_id,
     l.name AS location,
-    IFNULL(st.id, '...') AS stage_id,
-    IFNULL(st.name, '...') AS stage,
+    IFNULL(st.id, '---') AS stage_id,
+    IFNULL(st.name, '---') AS stage,
     c.id AS cheese_id,
     c.name AS cheese,
     lt.hg_item_id as item_id,
