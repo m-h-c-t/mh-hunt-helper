@@ -28,6 +28,9 @@ $( function() {
     }
 
     function firstLoad(items) {
+        for (var i = 0; i < items.length; i++) {
+            items[i].value = decodeURI(escape(items[i].value));
+        }
         // Check and search for previous item (done on reload of whole page)
         var previous_item_id = $("#prev_item").val();
         if (previous_item_id) {
