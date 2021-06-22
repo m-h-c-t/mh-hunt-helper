@@ -25,6 +25,10 @@ function main() {
             connectMMS();
             getMapQuery($query_all, $query_one);
             break;
+        case 'mousemaps':
+                connectMMS();
+                getMouseMapsQuery($query_all, $query_one);
+                break;
         case 'convertible':
             connectMHC();
             getConvertibleQuery($query_all, $query_one);
@@ -121,6 +125,15 @@ function getMapQuery(&$query_all, &$query_one) {
         FROM mhmapspotter.map_mice_aggr mma
         INNER JOIN mhmapspotter.mice m ON mma.mouse_id = m.id
         WHERE mma.map_type_id = ?
+        ORDER BY mma.rate DESC';
+}
+
+function getMouseMapsQuery(&$query_all, &$query_one) {
+    $query_all = 'SELECT m.id, m.name FROM mhmapspotter.mice m ORDER BY m.name ASC';
+    $query_one = 'SELECT m.name as map, mma.rate, mma.seen_maps, mma.total_maps
+        FROM mhmapspotter.map_mice_aggr mma
+        INNER JOIN mhmapspotter.maps m ON mma.map_type_id = m.id
+        WHERE mma.mouse_id = ?
         ORDER BY mma.rate DESC';
 }
 
