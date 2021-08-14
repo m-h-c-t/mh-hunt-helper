@@ -56,7 +56,7 @@ $query_string = '
     INNER JOIN bases b on h.base_id = b.id
     LEFT JOIN charms ch on h.charm_id = ch.id
     LEFT JOIN hunt_loot hl on h.id = hl.hunt_id
-    LEFT JOIN loot lt on hl.loot_id = lt.hg_item_id
+    LEFT JOIN loot lt on hl.loot_id = lt.id
     GROUP BY h.id
     ORDER BY timestamp DESC';
 $query = $pdo->prepare($query_string);

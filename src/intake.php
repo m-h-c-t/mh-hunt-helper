@@ -182,8 +182,8 @@ try {
             if (!empty($loot_item['lucky'])) { $lucky = $loot_item['lucky'] === 'true' ? 1 : 0; }
 
             // Hitgrab item id checks
-            $hg_item_id = null;
-            if (is_numeric($loot_item['id'])) { $hg_item_id = $loot_item['id']; }
+            $loot_item_id = null;
+            if (is_numeric($loot_item['id'])) { $loot_item_id = $loot_item['id']; }
 
             // Plural name checks
             $plural_name = null;
@@ -194,14 +194,14 @@ try {
             if (!empty($loot_item['name'])) { $single_name = $loot_item['name']; }
 
             // Insert/Update loot table
-            $query = $pdo->prepare("INSERT INTO loot (name, plural_name, hg_item_id)
+            $query = $pdo->prepare("INSERT INTO loot (name, plural_name, id)
             VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE
             name = VALUES(name), plural_name = COALESCE(VALUES(plural_name), plural_name)");
-            $query->execute(array($single_name, $plural_name, $hg_item_id));
+            $query->execute(array($single_name, $plural_name, $loot_item_id));
 
             // Record the item related to the hunt id in hunt_loot relationship table
             $query = $pdo->prepare('INSERT INTO hunt_loot (hunt_id, loot_id, amount, lucky) VALUES (?, ?, ?, ?)');
-            $query->execute(array($hunt_id, $hg_item_id, $loot_item['amount'], $lucky));
+            $query->execute(array($hunt_id, $loot_item_id, $loot_item['amount'], $lucky));
         }
     }
 
