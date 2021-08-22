@@ -16,3 +16,4 @@ ga.php
 /src/tracker.json
 /src/banned.json
 /src/countdown-settings.php
+/vendor
