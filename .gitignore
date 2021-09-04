@@ -10,8 +10,7 @@ ga.php
 /DB/last_updated.txt
 /src/id_modifier.php
 /src/config.php
-/src/configs.php
-/src/bcheck.php
+/src/check-ban.php
 /src/uuid.php
 /src/tracker.json
 /src/banned.json
