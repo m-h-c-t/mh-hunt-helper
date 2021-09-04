@@ -1,6 +1,6 @@
 <?php
 define('not_direct_access', TRUE);
-require_once "bcheck.php";
+require_once "check-ban.php";
 
 $http_origin = $_SERVER['HTTP_ORIGIN'];
 
