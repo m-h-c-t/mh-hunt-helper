@@ -1,5 +1,7 @@
 <?php
 
+require "check-direct-access.php";
+
 // Field check
 
 if (empty($_POST['location']['name'])) {

@@ -1,5 +1,7 @@
 <?php
 
+require "check-direct-access.php";
+
 // Time check
 if (empty($_POST['entry_timestamp']) || !is_numeric($_POST['entry_timestamp'])){
     error_log("Entry timestamp is missing");

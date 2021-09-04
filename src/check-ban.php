@@ -1,9 +1,6 @@
 <?php
-if (!defined('not_direct_access')) {
-    error_log("bcheck direct access error: " . ip_display());
-	header("HTTP/1.0 404 Not Found");
-    die();
-}
+
+require "check-direct-access.php";
 
 $data = file_get_contents("banned.json");
 
@@ -46,7 +43,7 @@ function recordOffenders() {
 	$file_name = 'banned.json';
 	$data = file_get_contents($file_name);
 	$user_id;
-	
+
 	$cf_ip = $_SERVER['REMOTE_ADDR'];
 	if (isset($_SERVER['HTTP_CF_CONNECTING_IP']) && !empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
 		$cf_ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
@@ -58,7 +55,7 @@ function recordOffenders() {
 	if (empty($user_id)) {
 		$user_id = 0;
 	}
-	
+
     if (empty($data)) {
 		$data = (object)[
             "ips" => (object)[],

@@ -1,5 +1,7 @@
 <?php
 
+require "check-direct-access.php";
+
 // Giveaway
 if ($_POST['entry_timestamp'] >= $giveaway_start_time && $_POST['entry_timestamp'] <= $giveaway_end_time) {
     recordGiveawayHunt($_POST['user_id'], $_POST['entry_timestamp']);

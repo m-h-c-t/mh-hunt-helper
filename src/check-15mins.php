@@ -1,5 +1,7 @@
 <?php
 
+require "check-direct-access.php";
+
 if (empty($_POST['user_id']) || !is_numeric($_POST['user_id'])) {
     error_log("User ID is missing");
     sendResponse('success', "Thanks for the hunt info!");
