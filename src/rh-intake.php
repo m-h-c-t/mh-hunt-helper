@@ -24,8 +24,8 @@ function recordRelicHunterInDB() {
     $query = $pdo->prepare('
         INSERT INTO rh_tracker(`date`, location_id)
         SELECT ?, l.id FROM locations l
-        ON DUPLICATE KEY UPDATE location_id = l.id
-        WHERE l.name LIKE ?;');
+        WHERE l.name LIKE ?
+        ON DUPLICATE KEY UPDATE location_id = l.id;');
     $query->execute(array(date("Y-m-d"), $_POST['rh_environment']));
 }
 
