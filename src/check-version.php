@@ -1,6 +1,6 @@
 <?php
 
-require "check-direct-access.php";
+require_once "check-direct-access.php";
 
 // Extension version check
 if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {

@@ -1,6 +1,6 @@
 <?php
 
-require "check-direct-access.php";
+require_once "check-direct-access.php";
 
 if (!empty($_POST['mouse']) && $_POST['mouse'] == 'Frostwing Commander' && $_POST['location']['id'] == 39)
 {

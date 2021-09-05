@@ -1,6 +1,6 @@
 <?php
 
-require "check-direct-access.php";
+require_once "check-direct-access.php";
 
 // CORS check
 if (!$_SERVER['HTTP_ORIGIN'] || ($_SERVER['HTTP_ORIGIN'] !== "https://www.mousehuntgame.com" && $_SERVER['HTTP_ORIGIN'] !== "http://www.mousehuntgame.com")) {

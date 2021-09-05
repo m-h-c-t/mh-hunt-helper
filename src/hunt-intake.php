@@ -1,6 +1,6 @@
 <?php
 
-require "check-direct-access.php";
+require_once "check-direct-access.php";
 
 // Field check
 

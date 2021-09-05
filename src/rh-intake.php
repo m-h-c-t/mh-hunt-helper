@@ -1,6 +1,6 @@
 <?php
 
-require "check-direct-access.php";
+require_once "check-direct-access.php";
 
 // Relic Hunter
 if (!empty($_POST['rh_environment']) && !empty($_POST['user_id'])) {
