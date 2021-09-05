@@ -15,23 +15,23 @@ function recordRelicHunter() {
         error_log("RH Submission bad or missing timestamp.");
         die();
     }
-    recordRelicHunterInFile();
-    recordRelicHunterInDB();
+    $location = getAliasLocationName(filter_var($_POST['rh_environment'], FILTER_SANITIZE_STRING));
+    recordRelicHunterInFile($location);
+    recordRelicHunterInDB($location);
 }
 
-function recordRelicHunterInDB() {
+function recordRelicHunterInDB($location) {
     global $pdo;
     $query = $pdo->prepare('
         INSERT INTO rh_tracker(`date`, location_id)
         SELECT ?, l.id FROM locations l
         WHERE l.name LIKE ?
         ON DUPLICATE KEY UPDATE location_id = l.id;');
-    $query->execute(array(date("Y-m-d"), $_POST['rh_environment']));
+    $query->execute(array(date("Y-m-d"), $location));
 }
 
-function recordRelicHunterInFile() {
+function recordRelicHunterInFile($location) {
     $file_name = 'tracker.json';
-    $location = getAliasLocationName(filter_var($_POST['rh_environment'], FILTER_SANITIZE_STRING));
 
     $data = file_get_contents($file_name);
 
