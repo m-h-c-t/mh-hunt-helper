@@ -1,9 +1,6 @@
 <?php
 require_once "config.php";
-
-// PDO
-$pdo = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
-$pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+require_once "db-connect.php";
 
 echo <<< END
 <table class="table table-hover table-bordered" style="width:auto;margin:auto;">

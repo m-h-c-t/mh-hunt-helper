@@ -54,8 +54,13 @@
             </td></tr>
             <tr><td>
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
-                    data-content="See stats about these tools as well as confirmed RH location. (RH must be caught by one of us for it to show up here)"></a>
-                <a href="/tracker.php" style="display:block;text-decoration:none;color:#333;">Tracker</a>
+                    data-content="See confirmed RH location. (RH must be caught by one of us for it to show up here)"></a>
+                <a href="/rh-tracker.php" style="display:block;text-decoration:none;color:#333;">Relic Hunter Tracker</a>
+            </td></tr>
+            <tr><td>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="See stats about these tools."></a>
+                <a href="/tracker.php" style="display:block;text-decoration:none;color:#333;">Stats</a>
             </td></tr>
             <tr><td>
                 <a href="/faq.php" style="display:block;text-decoration:none;color:#333;">F.A.Q.</a>
