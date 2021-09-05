@@ -10,9 +10,7 @@ if (empty($_GET['hunter-id']) || !is_numeric($_GET['hunter-id'])) {
 }
 
 require_once "config.php";
-// PDO
-$pdo = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
-$pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+require_once "db-connect.php";
 
 $query = $pdo->prepare('SELECT id FROM users WHERE digest LIKE ?');
 $query->execute(array($encrypted_user_id));

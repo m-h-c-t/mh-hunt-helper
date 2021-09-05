@@ -42,8 +42,7 @@ function main() {
 
 function connectMHHH() {
     global $pdo, $servername, $dbname, $username, $password, $port;
-    $pdo = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    require_once "db-connect.php";
 }
 
 function connectMMS() {
