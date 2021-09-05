@@ -32,6 +32,7 @@ print "<h3>Current Relic Hunter Location: $location.<br/>
 
 
 echo <<< END
+Special thanks to Neb for tracking this manually for 6 months!<br/><br/>
 <table class="table table-hover table-bordered" style="width:auto;margin:auto;">
     <thead>
         <tr><th colspan="2" class="text-center">RH History</th></tr></thead>
