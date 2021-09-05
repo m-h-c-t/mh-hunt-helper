@@ -29,19 +29,20 @@ if (!empty($data)) {
 }
 
 // Show current location
-print "<h3>Current Relic Hunter Location: $location.<br/>
+print "<h3>Current RH Location: $location.<br/>
 <small>Last seen (after last move): $time_since ago.</small></h3><br/>";
 
 
 // Aggregated locations
-print "Special thanks to Neb for tracking this manually for 6 months!<br/><br/>";
-print "<h4>Aggregated RH Stats</h4>";
+print "<h3>Aggregated RH Stats<br/><small>(updated hourly)</small></h3>";
 
 $query = $pdo->prepare('SELECT count(*) as total_seen, count(distinct location_id) as unique_locations FROM rh_tracker');
 $query->execute();
 $totals = $query->fetch(PDO::FETCH_ASSOC);
-// $unique_locations = $query->fetchColumn();
-print "$totals[total_seen] times seen RH in $totals[unique_locations] unique locations<br/>";
+
+print "Special thanks to Neb for tracking this manually for 6 months!<br/>";
+print "Seen RH $totals[total_seen] times in $totals[unique_locations] unique locations<br/>";
+
 echo <<< END
 <table id="aggregated_locations" class="table table-hover table-striped table-bordered" style="width:auto;margin:auto;">
     <thead>
@@ -59,7 +60,7 @@ print "</tbody></table><br/>";
 
 
 // History
-print "<h5>Daily RH Location History</h5>";
+print "<h3>Daily RH Location History</h3>";
 echo <<< END
 <table class="table table-hover table-striped table-bordered" style="width:auto;margin:auto;">
     <thead>
