@@ -40,7 +40,6 @@ $query = $pdo->prepare('SELECT count(*) as total_seen, count(distinct location_i
 $query->execute();
 $totals = $query->fetch(PDO::FETCH_ASSOC);
 
-print "Special thanks to Neb for tracking this manually for 6 months!<br/>";
 print "Seen RH $totals[total_seen] times in $totals[unique_locations] unique locations<br/>";
 
 echo <<< END
