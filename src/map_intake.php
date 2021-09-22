@@ -12,7 +12,7 @@ if ($http_origin !== "https://www.mousehuntgame.com" && $http_origin !== "http:/
 header("Access-Control-Allow-Origin: $http_origin");
 
 if (
-    empty($_POST['mice'])              ||
+    empty($_POST['mice'])              || # BLOCKING SCAVENGER MAPS
     empty($_POST['id'])                || !is_numeric($_POST['id']) ||
     empty($_POST['name'])              ||
     empty($_POST['extension_version'])) {
