@@ -9,9 +9,9 @@
 
     <meta property="og:title" content="MHCT MouseHunt Tools" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.agiletravels.com" />
+    <meta property="og:url" content="https://www.mhct.win" />
     <meta property="og:description" content="Tools to help with the MouseHunt game." />
-    <meta property="og:image" content="https://www.agiletravels.com/images/fb_image.jpg" />
+    <meta property="og:image" content="https://www.mhct.win/images/fb_image.jpg" />
 
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha512-Dop/vW3iOtayerlYAqCgkVr2aTr2ErwwTYOvRFUpzl2VhCMJyjQF0Q9TjUXIo6JhuM/3i0vVEt2e/7QQmnHQqw==" crossorigin="anonymous" />
