@@ -1,5 +1,13 @@
 <?php
 
+if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($_POST['user_id'])) {
+    define('not_direct_access', TRUE);
+    require_once "uuid.php";
+    require_once "check-time.php";
+    recordRelicHunterFromHint($_POST['hint']);
+    sendResponse('success', "Thanks for reporting RH!");
+}
+
 require_once "check-direct-access.php";
 
 // Check if Relic Hunter submission
@@ -8,7 +16,26 @@ if (!empty($_POST['rh_environment']) && !empty($_POST['user_id'])) {
 	sendResponse('success', "Thanks for reporting RH!");
     // Dies in sendResponse
 }
-// else it's not an RH submission
+// else it's not an RH submission, let it continue
+
+// ------ RH FUNCTIONS -----
+
+function recordRelicHunterFromHint($hint) {
+    global $pdo;
+    $query = $pdo->prepare('
+        SELECT l.name
+        FROM rh_hints rh
+        INNER JOIN locations l on rh.location_id = l.id
+        WHERE rh.hint LIKE ?;');
+    $query->execute(array($hint));
+    $location = $query->fetchColumn();
+    if (!$location) {
+        error_log("RH Hint is bad or new.");
+        die();
+    }
+    recordRelicHunterInFile($location);
+    recordRelicHunterInDB($location);
+}
 
 function recordRelicHunter() {
     if (empty($_POST['entry_timestamp']) || !is_numeric($_POST['entry_timestamp'])) {

@@ -1,6 +1,6 @@
 <br/>
 <?php if (!isset($hide_footer_note)) { ?>
-    <p class="text-center">For more info, copy of the data, or if you want to help with data gathering, please look <a href="https://www.mhct.win">here</a>.</p>
+    <p class="text-center">For more info, copy of the data, or if you want to help with data gathering, please look <a href="/">here</a>.</p>
   </div></br>
 <?php } ?>
 <div id="loader" class="loader"></div>

@@ -2,14 +2,7 @@
 define('not_direct_access', TRUE);
 require_once "check-ban.php";
 
-$http_origin = $_SERVER['HTTP_ORIGIN'];
-
-if ($http_origin !== "https://www.mousehuntgame.com" && $http_origin !== "http://www.mousehuntgame.com") {
-    error_log("Origin didn't match, requests origin was: " . $http_origin);
-    die();
-}
-
-header("Access-Control-Allow-Origin: $http_origin");
+require_once "check-cors.php";
 
 if (
     empty($_POST['mice'])              || # BLOCKING SCAVENGER MAPS
