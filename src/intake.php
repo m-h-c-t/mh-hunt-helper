@@ -24,13 +24,7 @@ require_once "hunt-intake.php";
 
 require_once "giveaway-intake.php";
 
+require_once "send_response.php";
+
 sendResponse('success', "Thanks for the hunt info!");
 
-// ============ COMMON FUNCTIONS ============
-function sendResponse($status, $message) {
-    $response = json_encode([
-        'status' => $status,
-        'message' => $message
-    ]);
-    die($response);
-}

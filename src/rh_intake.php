@@ -2,8 +2,12 @@
 
 if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($_POST['user_id'])) {
     define('not_direct_access', TRUE);
+    require_once "check-cors.php";
     require_once "uuid.php";
     require_once "check-time.php";
+    require_once "config.php";
+    require_once "db-connect.php";
+    require_once "send_response.php";
     recordRelicHunterFromHint($_POST['hint']);
     sendResponse('success', "Thanks for reporting RH!");
 }
