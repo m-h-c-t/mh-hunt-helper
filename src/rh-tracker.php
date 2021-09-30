@@ -43,7 +43,7 @@ $totals = $query->fetch(PDO::FETCH_ASSOC);
 print "Seen RH $totals[total_seen] times in $totals[unique_locations] unique locations<br/>";
 
 echo <<< END
-<table id="aggregated_locations" class="table table-hover table-striped table-bordered" style="width:auto;margin:auto;">
+<div class="table-responsive"><table id="aggregated_locations" class="table table-hover table-striped table-bordered">
     <thead>
         <tr><th class="text-center">Location</th><th>Times Seen</th><th>Percentage Seen</th><th>Last Seen</th></tr></thead>
     <tbody>
@@ -55,13 +55,13 @@ while ( $row = $query->fetch(PDO::FETCH_ASSOC)) {
     echo "<tr><td>$row[name]</td><td>$row[times_seen]</td><td>" . round($row['times_seen']/$totals['total_seen']*100, 2) . "&#37;</td><td>$row[last_seen]</td></tr>";
 }
 
-print "</tbody></table><br/>";
+print "</tbody></table></div><br/>";
 
 
 // History
 print "<h3>Daily RH Location History</h3>";
 echo <<< END
-<table class="table table-hover table-striped table-bordered" style="width:auto;margin:auto;">
+<table class="table table-hover table-striped table-bordered">
     <thead>
         <tr><th class="text-center">Date</th><th class="text-center">Location</th></tr></thead>
     <tbody>
