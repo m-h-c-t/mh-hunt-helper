@@ -37,6 +37,12 @@
     <?php if (isset($css)) { echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css\">"; } ?>
 </head>
 <body style="text-align: center;" class="text-center">
+    <!-- mhct.win banner -->
+    <?php if (strpos($_SERVER['SERVER_NAME'],"agiletravels")){?>
+        <br/><div class="container-fluid alert-secondary">
+            <a href="https://www.mhct.win<?php echo $_SERVER['REQUEST_URI']; ?>">We are moving to https://mhct.win. Please update your bookmarks!</a>
+        </div><br/>
+    <?php } ?>
     <!-- Jumbotron -->
     <div class="jumbotron">
         <h1><?php echo $title; ?></h1>
