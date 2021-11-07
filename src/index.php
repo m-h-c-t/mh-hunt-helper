@@ -59,6 +59,11 @@
             </td></tr>
             <tr><td>
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
+                    data-content="Check when event starts or ends."></a>
+                <a href="/countdown.php" style="display:block;text-decoration:none;color:#333;">Events Countdown</a>
+            </td></tr>
+            <tr><td>
+                <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="See stats about these tools."></a>
                 <a href="/tracker.php" style="display:block;text-decoration:none;color:#333;">Stats</a>
             </td></tr>
