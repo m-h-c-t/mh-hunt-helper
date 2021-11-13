@@ -101,6 +101,12 @@ $( function() {
             "paging":   false,
             "searching": false,
             "info": false,
+            "columns": [
+                { "type": "html" },
+                { "type": "num-fmt" },
+                { "type": "num-fmt" },
+                { orderable: false }
+            ],
             "order": [[1, 'desc']]
         });
 
