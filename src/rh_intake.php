@@ -37,6 +37,7 @@ function recordRelicHunterFromHint($hint) {
         error_log("RH Hint is bad or new.");
         die();
     }
+    $location = getAliasLocationName($location);
     recordRelicHunterInFile($location);
     recordRelicHunterInDB($location);
 }

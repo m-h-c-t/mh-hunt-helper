@@ -1,5 +1,6 @@
 <?php
 define('not_direct_access', TRUE);
+require_once "send_response.php";
 require_once "check-ban.php";
 
 $http_origin = $_SERVER['HTTP_ORIGIN'];
@@ -79,11 +80,3 @@ foreach ($_POST['items'] as $item) {
 }
 
 sendResponse('success', "Thanks for the convertible info!");
-
-function sendResponse($status, $message) {
-    $response = json_encode([
-        'status' => $status,
-        'message' => $message
-    ]);
-    die($response);
-}

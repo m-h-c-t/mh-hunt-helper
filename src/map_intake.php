@@ -1,7 +1,7 @@
 <?php
 define('not_direct_access', TRUE);
+require_once "send_response.php";
 require_once "check-ban.php";
-
 require_once "check-cors.php";
 
 if (
@@ -100,11 +100,3 @@ if ($mice_supplied_count != $mice_inserted_count) {
 }
 
 sendResponse('success', "Thanks for the map info!");
-
-function sendResponse($status, $message) {
-    $response = json_encode([
-        'status' => $status,
-        'message' => $message
-    ]);
-    die($response);
-}
