@@ -33,6 +33,10 @@ function main() {
             connectMHC();
             getConvertibleQuery($query_all, $query_one);
             break;
+        case 'itemconvertibles':
+            connectMHC();
+            getReverseConvertibleQuery($query_all, $query_one);
+            break;
         default:
             return;
     }
@@ -146,4 +150,21 @@ function getConvertibleQuery(&$query_all, &$query_one) {
 	        inner join items i
 		        on aci.item_id = i.id
         where aci.convertible_id = ?';
+}
+
+function getReverseConvertibleQuery(&$query_all, &$query_one) {
+    $query_all = 'SELECT i.id, i.name FROM mhconverter.items i ORDER BY i.name ASC';
+    $query_one = 'SELECT
+        -- aci.convertible_id as conv,
+        c.name as item,
+        aci.total_convertibles_opened as total,
+        aci.total_item_quantity as total_items,
+        aci.single_convertibles_opened as single_opens,
+        aci.times_with_any,
+        aci.min_item_quantity,
+        aci.max_item_quantity,
+        aci.total_quantity_when_any
+        from aggr_convertible_item aci
+        inner join convertibles c on aci.convertible_id = c.id
+        where aci.item_id = ?';
 }

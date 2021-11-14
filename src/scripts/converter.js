@@ -1,6 +1,7 @@
 $( function() {
     $("#erase_item").click(function () {
         $("#results").html('');
+        $("#results_total").html('');
         $("#item").val('').focus();
         window.history.replaceState({}, "MH Hunt Helper", "converter.php");
     });
