@@ -8,71 +8,71 @@
 ?>
 
     <div class="col-md-6 col-md-offset-3">
-        <table class="table text-center table-responsive table-hover table-bordered">
+        <table class="table text-center table-responsive table-bordered">
             <thead>
             <!-- <h3>MouseHunt Tools <span class="glyphicon glyphicon-flag"></span></h3> -->
             </thead>
             <tbody>
-            <tr><td>
+            <tr><td colspan="2">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Copy/Paste (OR Automatically filled by extension below) a list of your map mice into this tool,
                     and it will show you locations with stages, cheese, attraction rates, and mice in each area, sorted by descending
                     number of mice in each location."></a>
                 <a href="/maphelper.php" style="display:block;text-decoration:none;color:#333;">Map Helper</a>
             </td></tr>
-            <tr><td>
+            <tr><td colspan="2">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Copy/Paste a list of your scavenger map items into this tool,
                     and it will show you locations with stages, cheese, drop rates, and items in each area, sorted by descending
                     number of items in each location."></a>
                 <a href="/scavhelper.php" style="display:block;text-decoration:none;color:#333;">Scavenger Helper</a>
             </td></tr>
-            <tr><td>
+            <tr><td colspan="2">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Search by mouse name to see the location, cheese and attraction rate of a specific mouse."></a>
                 <a href="/attractions.php" style="display:block;text-decoration:none;color:#333;">Attraction Rate</a>
             </td></tr>
-            <tr><td>
+            <tr><td colspan="2">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Search by loot name to see the location and drop rate of a specific loot."></a>
                 <a href="/loot.php" style="display:block;text-decoration:none;color:#333;">Looter</a>
             </td></tr>
-            <tr><td>
+            <tr><td width="50%">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Search maps to see what mice are likely to appear on them."></a>
                 <a href="/mapper.php" style="display:block;text-decoration:none;color:#333;">Mapper</a>
-            </td></tr>
-            <tr><td>
+                </td>
+                <td width="50%">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Search for a mouse to see which maps it's likely to appear on."></a>
                 <a href="/reverse-mapper.php" style="display:block;text-decoration:none;color:#333;">Reverse Mapper</a>
             </td></tr>
-            <tr><td>
+            <tr><td width="50%">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Search convertibles like chests, to see what items are likely to be in them."></a>
                 <a href="/converter.php" style="display:block;text-decoration:none;color:#333;">Converter</a>
-            </td></tr>
-            <tr><td>
+                </td>
+                <td width="50%">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Search to see which convertibles are likely to have the item you looking for."></a>
                 <a href="/reverse-converter.php" style="display:block;text-decoration:none;color:#333;">Reverse Converter</a>
             </td></tr>
-            <tr><td>
+            <tr><td colspan="2">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="See confirmed RH location. (RH must be caught by one of us for it to show up here)"></a>
                 <a href="/rh-tracker.php" style="display:block;text-decoration:none;color:#333;">Relic Hunter Tracker</a>
             </td></tr>
-            <tr><td>
+            <tr><td colspan="2">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="Check when event starts or ends."></a>
                 <a href="/countdown.php" style="display:block;text-decoration:none;color:#333;">Events Countdown</a>
             </td></tr>
-            <tr><td>
+            <tr><td colspan="2">
                 <a tabindex="0" class="glyphicon glyphicon-question-sign pull-right popover_styles" role="button" data-toggle="popover"
                     data-content="See stats about these tools."></a>
                 <a href="/tracker.php" style="display:block;text-decoration:none;color:#333;">Stats</a>
             </td></tr>
-            <tr><td>
+            <tr><td colspan="2">
                 <a href="/faq.php" style="display:block;text-decoration:none;color:#333;">F.A.Q.</a>
             </td></tr>
             </tbody>
