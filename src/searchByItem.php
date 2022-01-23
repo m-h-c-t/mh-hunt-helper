@@ -26,9 +26,9 @@ function main() {
             getMapQuery($query_all, $query_one);
             break;
         case 'mousemaps':
-                connectMMS();
-                getMouseMapsQuery($query_all, $query_one);
-                break;
+            connectMMS();
+            getMouseMapsQuery($query_all, $query_one);
+            break;
         case 'convertible':
             connectMHC();
             getConvertibleQuery($query_all, $query_one);

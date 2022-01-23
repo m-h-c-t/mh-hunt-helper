@@ -1,11 +1,12 @@
 <?php
+# In this file mice can be mice or scavenger items
 define('not_direct_access', TRUE);
 require_once "send_response.php";
 require_once "check-ban.php";
 require_once "check-cors.php";
 
 if (
-    empty($_POST['mice'])              || # BLOCKING SCAVENGER MAPS
+    (empty($_POST['mice']) && empty($_POST['items']))               ||
     empty($_POST['id'])                || !is_numeric($_POST['id']) ||
     empty($_POST['name'])              ||
     empty($_POST['extension_version'])) {
@@ -21,11 +22,20 @@ if (!is_numeric($_POST['extension_version']) || !in_array($_POST['extension_vers
     die();
 }
 
-if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['mice'])
-    || in_array('Paladin Weapon Master', $_POST['mice'])
-    || in_array('Manaforge Smith', $_POST['mice'])
-    || in_array('Hired Eidolon', $_POST['mice'])
-    || in_array('Desert Nomad', $_POST['mice']))) {
+$passed_things = [];
+if (!empty($_POST['mice'])) {
+    $passed_things = $_POST['mice'];
+} else if (!empty($_POST['items'])) {
+    $passed_things = $_POST['items'];
+} else {
+    error_log("No mice nor items on submitted map. Skipping.");
+    die();
+}
+
+# Old Arduous Chrom Map check
+if ($_POST['name'] == 'Arduous Chrome Map' && count(array_intersect(
+    ['Dark Templar', 'Paladin Weapon Master', 'Manaforge Smith', 'Hired Eidolon', 'Desert Nomad'],
+    $passed_things))) {
     // error_log('Old map submitted');
     die();
 }
@@ -63,9 +73,9 @@ if (!$map_type_id) {
 
 
 // Get mice ids
-$mice_supplied_count = count($_POST['mice']);
+$mice_supplied_count = count($passed_things);
 $mice_ids = [];
-foreach ($_POST['mice'] as $mouse_name) {
+foreach ($passed_things as $mouse_name) {
     $query = $pdo->prepare("SELECT m.id FROM mice m WHERE m.name LIKE ?");
     $query->execute(array($mouse_name));
     $mouse_id = $query->fetchColumn();
