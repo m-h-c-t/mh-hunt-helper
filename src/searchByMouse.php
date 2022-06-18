@@ -20,8 +20,7 @@ function main() {
 
 function clean($mouse) {
     $mouse = trim($mouse);
-    $mouse = preg_replace("/\ mouse$/i", "", $mouse);
-    $mouse = preg_replace("/(\s(.+?) found (these|this) (mouse|mice):\(\d+?\))|(Missing (mouse|mice) in .+?\(\d+?\))/i", "", $mouse);
+    $mouse = preg_replace("/(\s(.+?) found (these|this) (mouse|mice):\(\d+?\))|(Missing (mouse|mice) in .+?\(\d+?\)|\ mouse$)/i", "", $mouse);
     return $mouse;
 }
 
