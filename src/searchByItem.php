@@ -12,10 +12,11 @@ function main() {
 
     $query_all = '';
     $query_one = '';
+    $params = [$_REQUEST['item_id']];
     switch ($_REQUEST['item_type']) {
         case 'mouse':
             connectMHHH();
-            getMouseQuery($query_all, $query_one);
+            getMouseQuery($query_all, $query_one, $params);
             break;
         case 'loot':
             connectMHHH();
@@ -41,7 +42,7 @@ function main() {
             return;
     }
 
-    getItem($query_all, $query_one);
+    getItem($query_all, $query_one, $params);
 }
 
 function connectMHHH() {
@@ -62,7 +63,7 @@ function connectMHC() {
 }
 
 // Loot rates by location
-function getItem($query_all, $query_one) {
+function getItem($query_all, $query_one, $params) {
     global $pdo;
     if ($_REQUEST['item_id'] === 'all') {
         $query = $pdo->prepare($query_all);
@@ -71,17 +72,23 @@ function getItem($query_all, $query_one) {
             $item_array[] = ["id" => (int)$row['id'], "value" => utf8_encode(stripslashes($row['name']))];
         }
         print json_encode($item_array);
-    } else if (!empty($_REQUEST['item_id'])) {
+    } else {
         $query = $pdo->prepare($query_one);
-        $query->execute(array($_REQUEST['item_id']));
+        $query->execute($params);
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         print json_encode($results);
     }
 }
 
-function getMouseQuery(&$query_all, &$query_one) {
+function getMouseQuery(&$query_all, &$query_one, &$params) {
     $table = generateTable("attractions");
+
+    $min_hunts = 0;
+    if (!empty($_REQUEST['min_hunts']) && is_numeric($_REQUEST['min_hunts']) && $_REQUEST['min_hunts'] >= 0) {
+        $min_hunts = $_REQUEST['min_hunts'];
+    }
+    $params[] = strval($min_hunts);
 
     $query_all = 'SELECT id, name FROM mice';
     $query_one = '
@@ -91,7 +98,7 @@ function getMouseQuery(&$query_all, &$query_one) {
         INNER JOIN mice m ON h.mouse_id = m.id
         INNER JOIN cheese c ON h.cheese_id = c.id
         LEFT JOIN stages s ON h.stage_id = s.id
-        WHERE h.mouse_id = ? AND total_hunts > 0';
+        WHERE h.mouse_id = ? AND total_hunts > ?';
 }
 
 function getLootQuery(&$query_all, &$query_one) {
