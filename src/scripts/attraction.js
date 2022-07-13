@@ -89,17 +89,19 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate</th><th>Total hunts</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate</th><th>Error</th><th>Total hunts</th></tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {
             var stage = (row.stage ? row.stage : '');
             all_stages += stage;
+            var moe = 1.96 * Math.sqrt(row.rate * (1 - row.rate) / row.total_hunts) * 100;
             final_html += '<tr><td>'
                 + row.location + '</td><td>'
                 + stage + '</td><td>'
                 + row.cheese + '</td><td>'
                 + parseFloat(((row.rate)/100).toFixed(2)) + '%</td><td>'
+                + moe.toFixed(2) + '%</td><td>'
                 + row.total_hunts + '</td></tr>';
         });
         final_html += '</tbody></table>';

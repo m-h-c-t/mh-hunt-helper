@@ -24,7 +24,7 @@ $(function() {
 
         $.ajax({
             url: "searchByItem.php",
-            method: "POST",
+            method: "GET",
             data: {
                 item_id: item_id,
                 item_type: "loot",
