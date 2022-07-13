@@ -24,11 +24,12 @@ $( function() {
 
         $.ajax({
             url: "searchByItem.php",
-            method: "POST",
+            method: "GET",
             data: {
                 item_id: mouse_id,
                 item_type: "mouse",
-                timefilter: timefilter
+                timefilter: timefilter,
+                min_hunts: 100
             }
         })
         .done(function( data ) {
