@@ -95,7 +95,8 @@ $( function() {
         data.forEach(function(row) {
             var stage = (row.stage ? row.stage : '');
             all_stages += stage;
-            var moe = 1.96 * Math.sqrt(row.rate * (1 - row.rate) / row.total_hunts) * 100;
+            var rate = row.rate/10000
+            var moe = 1.96 * Math.sqrt(rate * (1 - rate) / row.total_hunts) * 100;
             final_html += '<tr><td>'
                 + row.location + '</td><td>'
                 + stage + '</td><td>'
