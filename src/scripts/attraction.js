@@ -89,13 +89,15 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate</th><th>Error</th><th>Total hunts</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%">'
+            + '<thead><tr><th>Location</th><th>Stage</th><th>Cheese</th><th>Rate</th>'
+            + '<th title="95% CI Margin of Error for Attraction Chance">± Error</th><th>Total hunts</th></tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {
             var stage = (row.stage ? row.stage : '');
             all_stages += stage;
-            var rate = row.rate/10000
+            var rate = row.rate/10000;
             var moe = 1.96 * Math.sqrt(rate * (1 - rate) / row.total_hunts) * 100;
             final_html += '<tr><td>'
                 + row.location + '</td><td>'

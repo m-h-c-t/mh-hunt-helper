@@ -95,7 +95,9 @@ $(function() {
         if (show_per_hunt) {
             per_hunt_catch = '<th>Qty / Hunt</th><th>Hunts</th>';
         }
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Location</th><th>Stage</th><th>Cheese</th>' + per_hunt_catch + '<th>Drop Chance</th><th title="95% CI Margin of Error for Drop Chance">± Error</th><th>Qty Range</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead>'
+            + '<tr><th>Location</th><th>Stage</th><th>Cheese</th>' + per_hunt_catch + '<th>Drop Chance</th>'
+            + '<th title="95% CI Margin of Error for Drop Chance">± Error</th><th>Qty Range</th></tr></thead><tbody>';
 
         var all_stages = '';
         data.forEach(function(row) {
