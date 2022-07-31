@@ -4,14 +4,14 @@ If you'd like a relatively simple way to set up your own development environment
 
 ## Method 1: Docker Compose
 1. Clone this repo or fork it and clone your fork. Install Docker (and `docker-compose`)
-2. Inside the cloned repo directory, run `docker-compose up -d` (this will take a while as it needs to download the database and images)
-3. In the `src` directory, make copies of `.sample` files and remove the suffixes on them. Change the following in `config.php` and save:
+2. In the `src` directory, make copies of `.example` files and remove the suffixes on them. Change the following in `config.php` and save:
 ```php
   $servername = "mhct-db"
   $username = "admin"
   $password = "admin" // unless you change these, which is more secure
   $dbname = "mhhunthelper"
 ```
+3. Inside the cloned repo directory, run `docker-compose up -d` (this will take a while as it needs to download the database and images)
 4. You should now be able to access the local server via http://127.0.0.1 or http://localhost on your browser, connect to the database via port 3306, and modify the code on your host machine.
 
 To add other databases, uncomment them in `docker-compose.yml` and run `docker-compose up -d` again
@@ -21,7 +21,7 @@ To add other databases, uncomment them in `docker-compose.yml` and run `docker-c
 2. `docker run -p 3306:3306 --name mhct-db -d tsitu/mhct-db-docker` (`-p 3306:3306` is optional but maps the Docker port to your localhost for easy access)
 3. `docker pull richarvey/nginx-php-fpm:1.8.2`
 4. `docker run -d -e 'GIT_EMAIL=' -e 'GIT_NAME=Your Name' -e 'GIT_USERNAME=' -e 'GIT_REPO=github.com/mh-community-tools/mh-hunt-helper' -e 'GIT_PERSONAL_TOKEN=Long String' -e 'WEBROOT=/var/www/html/src' --name mhct richarvey/nginx-php-fpm:1.8.` - The Git stuff is part of your account. You may want to create a new personal token.
-5. `docker exec -it mhct bash` - This gets you a shell inside the server container. You'll need to create and edit `src/config.php` via the `.sample` file:
+5. `docker exec -it mhct bash` - This gets you a shell inside the server container. You'll need to create and edit `src/config.php` via the `.example` file:
 ```php
   $servername = "IPADDRESS" // check via `docker inspect mhct-db` (e.g. 172.17.0.2)
   $username = "admin"
@@ -54,6 +54,6 @@ If you want to deploy everything into one pod (this should be the preferred way)
 
 When you update your config.php you can't use localhost for the hostname because we wanted to remap those 3306 ports. Find an ip address on your host `ip addr`, `hostname -i`, and a few other commands will help you here. There may be quite a few addresses. Within that nginx container (`podman exec -it mhct-nginx bash`) you can try `curl ip.add.ress:3306`. If you get connection refused try another IP address. You get a different error message if it's working - that's your IP address for the config.php file.
 
-NOTE: If you tried this before a port parameter showed up in config.php.sample you will need to add `port=3307;` to any dbo connections you're working with. 3306 is the default so if you're just working with one database you're fine.
+NOTE: If you tried this before a port parameter showed up in config.php.example you will need to add `port=3307;` to any dbo connections you're working with. 3306 is the default so if you're just working with one database you're fine.
 
 If you got your pod all set up you can save it so it can be re-created quickly! `podman generate kube mhct > mhct.yaml` will generate a yaml file **with all your github secrets** so keep it safe. `podman play kube mhct.yaml` will re-create your pod! (minus that config.php file). If you pre-pull images you can be sure to have the most up-to-date ones to build from.
