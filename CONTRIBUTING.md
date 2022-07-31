@@ -4,14 +4,14 @@ If you'd like a relatively simple way to set up your own development environment
 
 ## Method 1: Docker Compose
 1. Clone this repo or fork it and clone your fork. Install Docker (and `docker-compose`)
-2. In the `src` directory, make copies of `.example` files and remove the suffixes on them. Change the following in `config.php` and save:
+2. In the new cloned directory, cd into `src` directory, make copies of `.example` files and remove the suffixes on them. Change the following in `config.php` and save:
 ```php
   $servername = "mhct-db"
   $username = "admin"
   $password = "admin" // unless you change these, which is more secure
   $dbname = "mhhunthelper"
 ```
-3. Inside the cloned repo directory, run `docker-compose up -d` (this will take a while as it needs to download the database and images)
+3. CD out to  the root directory, run `docker-compose up -d` (this will take a while as it needs to download the database and images)
 4. You should now be able to access the local server via http://127.0.0.1 or http://localhost on your browser, connect to the database via port 3306, and modify the code on your host machine.
 
 To add other databases, uncomment them in `docker-compose.yml` and run `docker-compose up -d` again
