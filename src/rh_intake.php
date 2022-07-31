@@ -4,6 +4,7 @@ if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($_POST['us
     define('not_direct_access', TRUE);
     require_once "check-cors.php";
     require_once "uuid.php";
+    require_once "check-ban.php";
     require_once "check-time.php";
     require_once "config.php";
     require_once "db-connect.php";
@@ -20,7 +21,6 @@ if (!empty($_POST['rh_environment']) && !empty($_POST['user_id'])) {
 	sendResponse('success', "Thanks for reporting RH!");
     // Dies in sendResponse
 }
-// else it's not an RH submission, let it continue
 
 // ------ RH FUNCTIONS -----
 
