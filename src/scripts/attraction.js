@@ -58,14 +58,21 @@ $( function() {
             searchMice($("#prev_mouse").val(), renderResultsTable, $('#timefilter').val());
         }
 
-        // set autocomplete
-        addAutocomplete(mice);
+        // Set up autocomplete, allow auto-filling the search via the `mouse_name` parameter.
+        const mouseName = new URLSearchParams(window.location.search).get('mouse_name');
+        if (mouseName) {
+            $("#mouse").val(mouseName);
+            addAutocomplete(mice, mouseName);
+        } else {
+            addAutocomplete(mice);
+        }
+
         $('#timefilter').change(function() {
             searchMice($('#prev_mouse').val(), renderResultsTable, $('#timefilter').val());
         });
     }
 
-    function addAutocomplete(mice) {
+    function addAutocomplete(mice, searchTerm = null) {
         $('#mouse').autocomplete({
             source: function(request, response) {
                 var results = $.ui.autocomplete.filter(mice, request.term);
@@ -81,6 +88,17 @@ $( function() {
                 searchMice(ui.item.id, renderResultsTable, $('#timefilter').val());
             }
         });
+
+        // If we passed in a search term, search and select it.
+        if (searchTerm) {
+            $('#mouse').autocomplete({
+                selectFirst: true,
+                autoFocus: true,
+            }).autocomplete('search', searchTerm);
+
+            // Click first suggestion, as jQuery UI does not provide a good way to do this with mutliple results.
+            $('#mouse').autocomplete('widget').find('li:first').click();
+        }
 
         // Fix for double click on IOS
         if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
