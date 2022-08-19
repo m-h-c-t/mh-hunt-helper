@@ -2,10 +2,10 @@
 
 $allowed_extension_versions = [];
 
-$servername = ""; // host
-$username = "";
-$password = "";
-$dbname = "";
+$servername = "mhct-db";
+$username = "admin"l
+$password = "admin";
+$dbname = "mhhunthelper";
 $port = "3306";
 
 $htapi = "";
