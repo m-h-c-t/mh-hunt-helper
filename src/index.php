@@ -91,7 +91,8 @@
     <div class="text-center">
         <a href="https://chrome.google.com/webstore/detail/mhct-mousehunt-helper/ghfmjkamilolkalibpmokjigalmncfek?authuser=1" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/chrome.png"></a>
         <a href="https://addons.mozilla.org/en-US/firefox/addon/mhct-mousehunt-helper/" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/firefox.png"><b> Add-on</b></a>
-        <br/><a href="https://www.patreon.com/mhct" target="_blank"><img src="images/patreon.png" style="width:150px;margin-top:10px;"></a>
+        <br/><a href="https://github.com/m-h-c-t" target="_blank"><img src="images/github.png" style="width:100px;margin-top:10px;margin-right:10px;"></a>
+        <a href="https://www.patreon.com/mhct" target="_blank"><img src="images/patreon.png" style="width:150px;margin-top:10px;"></a>
     </div>
 </div>
 <?php require_once "common-footer.php"; ?>
