@@ -59,7 +59,8 @@
             ['in59te', 10],
             ['Program', 10],
             ['Michele', 10],
-            ['Ryonn', 10]
+            ['Ryonn', 10],
+            ['Larry the Friendly Knight', 10]
         ]
     } );</script>
 
