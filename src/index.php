@@ -75,6 +75,9 @@
             <tr><td colspan="2">
                 <a href="/faq.php" style="display:block;text-decoration:none;color:#333;">F.A.Q.</a>
             </td></tr>
+            <tr><td colspan="2">
+                <a href="/contributors.php" style="display:block;text-decoration:none;color:#333;">Contributors</a>
+            </td></tr>
             </tbody>
         </table>
     </div>
