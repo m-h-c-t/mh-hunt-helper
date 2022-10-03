@@ -12,14 +12,12 @@
     <div class="col-md-12" style="height:500px;" id="my_canvas"></div>
     <script type="text/javascript" src="scripts/wordcloud2.js"></script>
     <script type="text/javascript">WordCloud(document.getElementById('my_canvas'), {
-        // minSize: 10,
         shrinkToFit: true,
         minSize: 12,
-        origin: [500, 0],
+        // origin: [500, 0],
         clearCanvas: true,
-        // backgroundColor: 'pink',
         gridSize: 15,
-        weightFactor: 5,
+        weightFactor: 4,
         color: 'random-dark',
         // hover: window.drawBox,
         fontFamily: 'Finger Paint, cursive, sans-serif',
@@ -60,40 +58,97 @@
             ['Program', 10],
             ['Michele', 10],
             ['Ryonn', 10],
-            ['Larry the Friendly Knight', 10]
+            ['Larry the Friendly Knight', 10],
+            ['Xalca', 10],
         ]
     } );</script>
+</div>
 
-
-    <br/><br/><br/>
-    <h3 id="donate" name="donate">Not to mention our sponsors! Thanks for keeping the servers alive!</h3>
-    <h4>If you would like to donate to support the cost of our servers, you may do so here:</h4>
-    <div class="align-self-center">
-        <table class="table text-center table-responsive table-bordered">
-            <thead>
-            </thead>
-            <tbody>
-                <tr><td>
-                    <h4><a href="https://www.patreon.com/mhct" style="display:block;text-decoration:none;color:#333;">Patreon</a></h4>
-                </td></tr>
-                <tr><td>
-                    <h4>Bitcoin</h4><a href="images/bitcoin_qr.jpg" style="display:block;text-decoration:none;color:#333;">QR-Code</a>
-                    <span class="bg-success">bc1quq8wtjwylkh6xh0q3wdgp74t8zyjyvnpakf4h2</span>
-                </td></tr>
-                <tr><td>
-                    <h4>Ethereum</h4><a href="images/eth_qr.jpeg" style="display:block;text-decoration:none;color:#333;">QR-Code</a>
-                    <span class="bg-success">0x0519F3dB4C7b2C87EAe6F06759DdC4697A5fD96d</span>
-                </td></tr>
-                <tr><td>
-                    <h4>Monero</h4><a href="images/monero_qr.png" style="display:block;text-decoration:none;color:#333;">QR-Code</a>
-                    <span class="bg-success">49tfggRG3XjezzLK2tB983BPTggqJx4JXCujTie23hzh29DfeAHPYvD7y5f2hAZdoXhr4gJJkUPuCDeU2iwiS1QQFevmPMt</span>
-                </td></tr>
-                <tr><td>
-                    <h4>Algo</h4><a href="images/algo_qr.jpeg" style="display:block;text-decoration:none;color:#333;">QR-Code</a>
-                    <span class="bg-success">TA7P52M3W6KPJLUXMNADFQWSFSHRODUFTWJBYSAQFEHYON7S26TBF4EJWU</span>
-                </td></tr>
-            </tbody>
-        </table>
+<br/><br/><br/><br/>
+<h3 id="donate" name="donate">And of course our sponsors! Thanks for keeping the servers alive!</h3>
+<h4>If you would like to donate to support the cost of our servers, you may do so here:</h4>
+<div class="panel-group" id="donate_accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#donate_accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Patreon
+            </a>
+        </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+            <a href="https://www.patreon.com/mhct" style="display:block;text-decoration:none;color:#333;">Donate using Patreon here.</a>
+        </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+        <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#donate_accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Bitcoin
+            </a>
+        </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="panel-body">
+            <img style="height:300;width:300;" src="images/bitcoin_qr.jpg"><br/>
+            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('bc1quq8wtjwylkh6xh0q3wdgp74t8zyjyvnpakf4h2');">
+                Copy address <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+            </button>
+        </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+        <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#donate_accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Ethereum
+            </a>
+        </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+        <div class="panel-body">
+            <img style="height:300;width:300;" src="images/eth_qr.jpeg"><br/>
+            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('0x0519F3dB4C7b2C87EAe6F06759DdC4697A5fD96d');">
+                Copy address <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+            </button>
+        </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingFour">
+        <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#donate_accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                Monero
+            </a>
+        </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+        <div class="panel-body">
+            <img style="height:300;width:300;" src="images/monero_qr.png"><br/>
+            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('49tfggRG3XjezzLK2tB983BPTggqJx4JXCujTie23hzh29DfeAHPYvD7y5f2hAZdoXhr4gJJkUPuCDeU2iwiS1QQFevmPMt');">
+                Copy address <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+            </button>
+        </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingFive">
+        <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#donate_accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                Algorand
+            </a>
+        </h4>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+        <div class="panel-body">
+            <img style="height:300;width:300;" src="images/algo_qr.jpeg"><br/>
+            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('TA7P52M3W6KPJLUXMNADFQWSFSHRODUFTWJBYSAQFEHYON7S26TBF4EJWU');">
+                Copy address <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+            </button>
+        </div>
+        </div>
     </div>
 </div>
 
