@@ -60,6 +60,7 @@
             ['Ryonn', 10],
             ['Larry the Friendly Knight', 10],
             ['Xalca', 10],
+            ['Neb', 10],
         ]
     } );</script>
 </div>
