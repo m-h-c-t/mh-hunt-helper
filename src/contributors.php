@@ -63,7 +63,7 @@
             ['Neb', 10],
             ['Squirrely', 10],
             ['Sophie', 10],
-            ['Renee', 10]
+            ['Renette', 10]
         ]
     } );</script>
 </div>
