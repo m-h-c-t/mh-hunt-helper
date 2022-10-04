@@ -76,7 +76,9 @@
                 <a href="/faq.php" style="display:block;text-decoration:none;color:#333;">F.A.Q.</a>
             </td></tr>
             <tr><td colspan="2">
-                <a href="/contributors.php" style="display:block;text-decoration:none;color:#333;">Contributors</a>
+                <a href="/contributors.php" style="display:block;text-decoration:none;color:#333;">Contributors/Sponsors <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-balloon-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8.49 10.92C19.412 3.382 11.28-2.387 8 .986 4.719-2.387-3.413 3.382 7.51 10.92l-.234.468a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2.376 2.376 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224l-.235-.468ZM6.726 1.269c-1.167-.61-2.8-.142-3.454 1.135-.237.463-.36 1.08-.202 1.85.055.27.467.197.527-.071.285-1.256 1.177-2.462 2.989-2.528.234-.008.348-.278.14-.386Z"/>
+                </svg></a>
             </td></tr>
             </tbody>
         </table>
@@ -84,7 +86,7 @@
 </div>
 <div class="container">
     <p class="muted">
-        If you'd like to contribute, please install the browser extension below and consider supporting us on <a href="https://www.patreon.com/mhct" target="_blank">Patreon</a>!
+        If you'd like to contribute, please install the browser extension below and consider supporting us through <a href="donations.php">Donations</a>!
         <br/>Our code is open source on <a href="https://github.com/m-h-c-t" target="_blank">GitHub</a> and SQL database dumps can be downloaded from <a href="https://keybase.pub/devjacksmith/mh_backups/" target="_blank">Keybase</a> or <a href="https://hub.docker.com/r/tsitu/mhct-db-docker" target="_blank">Docker</a>.
         <br/>Also check out <a href="https://www.reddit.com/r/mousehunt/" target="_blank">/r/mousehunt</a> on Reddit and join the conversation on <a href="https://discord.gg/E4utmBD" target="_blank">Discord</a>.
         <br/>Maintained by the MHCT team. <b>Thank you</b> to all of our contributors!
@@ -95,7 +97,6 @@
         <a href="https://chrome.google.com/webstore/detail/mhct-mousehunt-helper/ghfmjkamilolkalibpmokjigalmncfek?authuser=1" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/chrome.png"></a>
         <a href="https://addons.mozilla.org/en-US/firefox/addon/mhct-mousehunt-helper/" target="_blank" style="display:inline-block;text-decoration:none;color:#333;"><img src="images/firefox.png"><b> Add-on</b></a>
         <br/><a href="https://github.com/m-h-c-t" target="_blank"><img src="images/github.png" style="width:100px;margin-top:10px;margin-right:10px;"></a>
-        <a href="https://www.patreon.com/mhct" target="_blank"><img src="images/patreon.png" style="width:150px;margin-top:10px;"></a>
     </div>
 </div>
 <?php require_once "common-footer.php"; ?>
