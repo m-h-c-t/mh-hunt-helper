@@ -1,5 +1,50 @@
 <?php
+// DEV CONFIG
 $http_origin = $_SERVER['HTTP_ORIGIN'];
 header("Access-Control-Allow-Origin: $http_origin");
 
-die("1");
+die("1"); // KILL SWITCH
+?>
+
+
+<?php
+// PROD CONFIG (you most likely don't need this)
+
+$uuid_timeout = 20;
+
+if (empty($_REQUEST['entry_timestamp'])) {
+    error_log("UUID Request Failed, missing entry_timestamp");
+    die();
+}
+else if(empty($_REQUEST['user_id'])) {
+    error_log("UUID Request Failed, missing user_id");
+    die();
+}
+
+require_once "config.php";
+
+require __DIR__ . '/../vendor/autoload.php';
+use Ramsey\Uuid\Uuid;
+
+$redis = new Predis\Client();
+
+if (defined('not_direct_access')) {
+    // Checking and deleting uuid
+    $myuuid_time = $redis->get($_REQUEST['uuid']);
+    if (!$myuuid_time || abs(time() - $myuuid_time) > $uuid_timeout) {
+        error_log("User $_REQUEST[user_id]: Failed uuid test with user_id: " . $_REQUEST['user_id'] . " and timestamp: " . $_REQUEST['entry_timestamp']);
+        die();
+    }
+    $redis->del($_REQUEST['uuid']);
+
+} else {
+    // Creating uuid
+    // But first: CORS check
+    define('not_direct_access', TRUE);
+    require_once "check-cors.php";
+
+    $myuuid = Uuid::uuid4();
+    $myuuid = $myuuid->toString();
+    $redis->set($myuuid,time());
+    die($myuuid);
+}
