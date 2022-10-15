@@ -63,7 +63,9 @@
             ['Neb', 10],
             ['Squirrely', 10],
             ['Sophie', 10],
-            ['Renette', 10]
+            ['Renette', 10],
+            ['Asterios', 10],
+            ['StijnJacobsPXL', 10]
         ]
     } );</script>
 </div>
