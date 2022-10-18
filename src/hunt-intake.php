@@ -134,7 +134,7 @@ if (!$user_id) {
 
 if (array_key_exists('hunter_id_hash', $_POST) && !empty($_POST['hunter_id_hash'])) {
     $query = $pdo->prepare('UPDATE users set digest2022 = ? WHERE id = ? and digest2022 is NULL');
-    $query->execute(array($$_POST['hunter_id_hash'], $user_id));
+    $query->execute(array($_POST['hunter_id_hash'], $user_id));
 }
 
 if (empty($_POST['cheese']['name']) || empty($_POST['cheese']['id']) || !is_numeric($_POST['cheese']['id'])) {
