@@ -3,7 +3,7 @@
 $allowed_extension_versions = [];
 
 $servername = "mhct-db";
-$username = "admin"l
+$username = "admin";
 $password = "admin";
 $dbname = "mhhunthelper";
 $port = "3306";
