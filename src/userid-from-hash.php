@@ -1,9 +1,6 @@
 <?php
 
-if ( !$not_direct_access_id) {
-    return;
-}
-
+require_once "check-direct-access.php";
 require_once "config.php";
 require_once "db-connect.php";
 

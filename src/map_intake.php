@@ -4,6 +4,7 @@ require_once "send_response.php";
 require_once "check-ban.php";
 require_once "check-cors.php";
 require_once "config.php";
+require_once "db-connect.php";
 require_once "userid-from-hash.php";
 
 
@@ -26,8 +27,6 @@ foreach ($required_fields as $field => $type) {
     }
 }
 
-
-
 if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
     error_log("Bad version: " . $_POST['extension_version']);
     // sendResponse('error', "Please update extension to the latest version (unless testing).");
@@ -42,6 +41,7 @@ if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['
     // error_log('Old map submitted');
     die();
 }
+
 setPDOMap();
 $query = $pdo_map->prepare('SELECT 1 FROM map_records WHERE map_id = :id LIMIT 1');
 $query->execute(array('id' => $_POST['id']));
