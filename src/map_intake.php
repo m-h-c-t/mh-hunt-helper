@@ -4,7 +4,7 @@ require_once "send_response.php";
 require_once "check-ban.php";
 require_once "check-cors.php";
 require_once "config.php";
-require_once "user-id-from-hash.php";
+require_once "userid-from-hash.php";
 
 
 $required_fields = [
