@@ -13,6 +13,7 @@ if ((empty($_GET['user']) || !is_numeric($_GET['user'])) && (empty($_GET['hunter
     return;
 }
 
+require_once "config.php";
 // PDO
 require_once "db-connect.php";
 
@@ -37,8 +38,6 @@ if (empty($user_id)) {
     ?><script>$("#loader").css( "display", "none" );</script><?php
     return;
 }
-
-require_once "config.php";
 
 $count_query_string = "SELECT count(*) FROM hunts where user_id = ?";
 $query2 = $pdo->prepare($count_query_string);
