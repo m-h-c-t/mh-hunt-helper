@@ -16,7 +16,7 @@ foreach ($required_fields as $field => $type) {
         error_log("$field field is missing (blocking scav maps by mice field)");
         die();
     }
-    if ($type == 'number' && !is_numeric($field)) {
+    if ($type == 'number' && !is_numeric($_POST[$field])) {
         error_log("$field field is not numeric");
         die();
     }
