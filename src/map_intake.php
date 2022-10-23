@@ -3,12 +3,16 @@ define('not_direct_access', TRUE);
 require_once "send_response.php";
 require_once "check-ban.php";
 require_once "check-cors.php";
+require_once "config.php";
+require_once "user-id-from-hash.php";
+
 
 $required_fields = [
     'mice'              => 'string', # BLOCKING SCAVENGER MAPS
     'id'                => 'number',
     'name'              => 'string',
     'extension_version' => 'number',
+    'hunter_id_hash'    => 'string',
 ];
 
 foreach ($required_fields as $field => $type) {
@@ -22,7 +26,7 @@ foreach ($required_fields as $field => $type) {
     }
 }
 
-require_once "config.php";
+
 
 if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
     error_log("Bad version: " . $_POST['extension_version']);
@@ -93,8 +97,8 @@ if ($mice_supplied_count != count($mice_ids)) {
 
 
 // Record map with mice
-$query = $pdo->prepare('INSERT INTO map_records (map_id, map_type_id, extension_version) VALUES (?, ?, ?)');
-$query->execute(array($_POST['id'], $map_type_id, $_POST['extension_version']));
+$query = $pdo->prepare('INSERT INTO map_records (map_id, map_type_id, extension_version, user_id) VALUES (?, ?, ?, ?)');
+$query->execute(array($_POST['id'], $map_type_id, $_POST['extension_version'], $user_id));
 
 $insert_query = 'INSERT INTO map_mice (map_id, mouse_id) VALUES (:map_id,';
 $insert_query .= implode('),(:map_id,', $mice_ids);
