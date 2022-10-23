@@ -1,5 +1,9 @@
 # Contributing
 
+### Number 1 Rule: Keep the PRs small. They should have one and only one purpose. The smaller the better.
+
+## Environment Setup
+
 If you'd like a relatively simple way to set up your own development environment for contributing to this project, here are some instructions using Docker containers.
 
 ## Method 1: Docker Compose
