@@ -5,8 +5,7 @@ require_once "check-ban.php";
 require_once "check-cors.php";
 require_once "config.php";
 require_once "db-connect.php";
-require_once "userid-from-hash.php";
-
+require_once "check-userid.php";
 
 $required_fields = [
     'mice'              => 'string', # BLOCKING SCAVENGER MAPS
@@ -90,7 +89,6 @@ if ($mice_supplied_count != count($mice_ids)) {
     error_log("Map intake should have found $mice_supplied_count mice ids, but instead found " . count($mice_ids) . " ids, for map id $_POST[id]");
     die();
 }
-
 
 // Record map with mice
 $query = $pdo_map->prepare('INSERT INTO map_records (map_id, map_type_id, extension_version, user_id) VALUES (?, ?, ?, ?)');
