@@ -4,18 +4,27 @@ require_once "send_response.php";
 require_once "check-ban.php";
 require_once "check-cors.php";
 
-if (
-    empty($_POST['mice'])              || # BLOCKING SCAVENGER MAPS
-    empty($_POST['id'])                || !is_numeric($_POST['id']) ||
-    empty($_POST['name'])              ||
-    empty($_POST['extension_version'])) {
-    error_log("One of the fields was missing");
-    die();
+$required_fields = [
+    'mice'              => 'string', # BLOCKING SCAVENGER MAPS
+    'id'                => 'number',
+    'name'              => 'string',
+    'extension_version' => 'number',
+];
+
+foreach ($required_fields as $field => $type) {
+    if (empty($_POST[$field])) {
+        error_log("$field field is missing (blocking scav maps by mice field)");
+        die();
+    }
+    if ($type == 'number' && !is_numeric($field)) {
+        error_log("$field field is not numeric");
+        die();
+    }
 }
 
 require_once "config.php";
 
-if (!is_numeric($_POST['extension_version']) || !in_array($_POST['extension_version'], $allowed_extension_versions)) {
+if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
     error_log("Bad version: " . $_POST['extension_version']);
     // sendResponse('error', "Please update extension to the latest version (unless testing).");
     die();
