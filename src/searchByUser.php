@@ -14,6 +14,7 @@ if (empty($_GET['hunter_id'])) {
 
 $_REQUEST['hunter_id_hash'] = $_GET['hunter_id'];
 
+define('not_direct_access', TRUE);
 require_once "config.php";
 require_once "db-connect.php";
 require_once "check-userid.php";
