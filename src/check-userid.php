@@ -15,7 +15,11 @@ $query->execute(array($_REQUEST['hunter_id_hash']));
 $user_id = $query->fetchColumn();
 
 // If can't find by digest2022, try old way and update new hash
-if (empty($user_id) && !empty($encrypted_user_id)) {
+if (empty($user_id) && !empty($_REQUEST['user_id'])) {
+
+    $encrypted_user_id = $_REQUEST['user_id'];
+    require_once "id_modifier.php";
+
     $query = $pdo->prepare('SELECT id FROM users WHERE digest LIKE ?');
     $query->execute(array($encrypted_user_id));
 
