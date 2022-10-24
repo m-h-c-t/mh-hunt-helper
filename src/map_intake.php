@@ -3,12 +3,16 @@ define('not_direct_access', TRUE);
 require_once "send_response.php";
 require_once "check-ban.php";
 require_once "check-cors.php";
+require_once "config.php";
+require_once "db-connect.php";
+require_once "check-userid.php";
 
 $required_fields = [
     'mice'              => 'string', # BLOCKING SCAVENGER MAPS
     'id'                => 'number',
     'name'              => 'string',
     'extension_version' => 'number',
+    'hunter_id_hash'    => 'string',
 ];
 
 foreach ($required_fields as $field => $type) {
@@ -21,8 +25,6 @@ foreach ($required_fields as $field => $type) {
         die();
     }
 }
-
-require_once "config.php";
 
 if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
     error_log("Bad version: " . $_POST['extension_version']);
@@ -39,18 +41,15 @@ if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['
     die();
 }
 
-// PDO
-$pdo = new PDO("mysql:host=$mms_servername;port=$mms_port;dbname=$mms_dbname;charset=utf8", $mms_username, $mms_password);
-$pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-$query = $pdo->prepare('SELECT 1 FROM map_records WHERE map_id = :id LIMIT 1');
+setPDOMap();
+$query = $pdo_map->prepare('SELECT 1 FROM map_records WHERE map_id = :id LIMIT 1');
 $query->execute(array('id' => $_POST['id']));
 
 if ($query->fetchColumn()) {
     die();
 }
 
-$query = $pdo->prepare('SELECT 1 FROM map_mice WHERE map_id = :id LIMIT 1');
+$query = $pdo_map->prepare('SELECT 1 FROM map_mice WHERE map_id = :id LIMIT 1');
 $query->execute(array('id' => $_POST['id']));
 
 if ($query->fetchColumn()) {
@@ -60,14 +59,14 @@ if ($query->fetchColumn()) {
 }
 
 // Get map id
-$query = $pdo->prepare('SELECT m.id FROM maps m WHERE m.name LIKE ?');
+$query = $pdo_map->prepare('SELECT m.id FROM maps m WHERE m.name LIKE ?');
 $query->execute(array($_POST['name']));
 $map_type_id = $query->fetchColumn();
 
 if (!$map_type_id) {
-    $query = $pdo->prepare('INSERT INTO maps (name) VALUES (?)');
+    $query = $pdo_map->prepare('INSERT INTO maps (name) VALUES (?)');
     $query->execute(array($_POST['name']));
-    $map_type_id = $pdo->lastInsertId();
+    $map_type_id = $pdo_map->lastInsertId();
 }
 
 
@@ -75,14 +74,14 @@ if (!$map_type_id) {
 $mice_supplied_count = count($_POST['mice']);
 $mice_ids = [];
 foreach ($_POST['mice'] as $mouse_name) {
-    $query = $pdo->prepare("SELECT m.id FROM mice m WHERE m.name LIKE ?");
+    $query = $pdo_map->prepare("SELECT m.id FROM mice m WHERE m.name LIKE ?");
     $query->execute(array($mouse_name));
     $mouse_id = $query->fetchColumn();
 
     if (!$mouse_id) {
-        $query = $pdo->prepare("INSERT INTO mice (name) VALUES (?)");
+        $query = $pdo_map->prepare("INSERT INTO mice (name) VALUES (?)");
         $query->execute(array($mouse_name));
-        $mouse_id = $pdo->lastInsertId();
+        $mouse_id = $pdo_map->lastInsertId();
     }
     $mice_ids[] = $mouse_id;
 }
@@ -91,16 +90,15 @@ if ($mice_supplied_count != count($mice_ids)) {
     die();
 }
 
-
 // Record map with mice
-$query = $pdo->prepare('INSERT INTO map_records (map_id, map_type_id, extension_version) VALUES (?, ?, ?)');
-$query->execute(array($_POST['id'], $map_type_id, $_POST['extension_version']));
+$query = $pdo_map->prepare('INSERT INTO map_records (map_id, map_type_id, extension_version, user_id) VALUES (?, ?, ?, ?)');
+$query->execute(array($_POST['id'], $map_type_id, $_POST['extension_version'], $user_id));
 
 $insert_query = 'INSERT INTO map_mice (map_id, mouse_id) VALUES (:map_id,';
 $insert_query .= implode('),(:map_id,', $mice_ids);
 $insert_query .= ')';
 
-$query = $pdo->prepare($insert_query);
+$query = $pdo_map->prepare($insert_query);
 $query->execute(array('map_id' => $_POST['id']));
 
 $mice_inserted_count = $query->rowCount();
