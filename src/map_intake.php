@@ -30,7 +30,7 @@ if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['
     || in_array('Manaforge Smith', $_POST['mice'])
     || in_array('Hired Eidolon', $_POST['mice'])
     || in_array('Desert Nomad', $_POST['mice']))) {
-    // error_log('Old map submitted');
+    error_log('Old map submitted');
     die();
 }
 

@@ -1,78 +1,80 @@
 <?php
 
 require_once "check-direct-access.php";
+require_once "check-userid.php";
+require_once "send_response.php";
 
 // Field check
 
 if (empty($_POST['location']['name'])) {
     error_log("Location name is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['trap']['name'])) {
     error_log("Trap name is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['base']['name'])) {
     error_log("Base name is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['entry_id']) || !is_numeric($_POST['entry_id'])) {
     error_log("Entry id is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['location']['id']) || !is_numeric($_POST['location']['id'])) {
     error_log("Location ID is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['trap']['id']) || !is_numeric($_POST['trap']['id'])) {
     error_log("Trap ID is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['base']['id']) || !is_numeric($_POST['base']['id'])) {
     error_log("Base ID is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
-if ((!array_key_exists('attraction_bonus', $_POST) || !is_numeric($_POST['attraction_bonus'])) && $_POST['extension_version'] >= 11217) {
+if (!array_key_exists('attraction_bonus', $_POST) || !is_numeric($_POST['attraction_bonus'])) {
     error_log("Attraction bonus is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
-if ((!array_key_exists('total_luck', $_POST) || !is_numeric($_POST['total_luck'])) && $_POST['extension_version'] >= 11217) {
+if (!array_key_exists('total_luck', $_POST) || !is_numeric($_POST['total_luck'])) {
     error_log("Total Luck is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
-if ((!array_key_exists('total_power', $_POST) || !is_numeric($_POST['total_power'])) && $_POST['extension_version'] >= 11217) {
+if (!array_key_exists('total_power', $_POST) || !is_numeric($_POST['total_power'])) {
     error_log("Total Power is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (!array_key_exists('attracted', $_POST)) {
     error_log("Attracted field is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (!array_key_exists('caught', $_POST)) {
     error_log("Location name is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
@@ -117,26 +119,6 @@ foreach($value_intake as $item) {
     }
 }
 
-// fetch user_id or record it
-if (!$encrypted_user_id) {
-    $encrypted_user_id = 0;
-}
-$query = $pdo->prepare('SELECT id FROM users WHERE digest LIKE ?');
-$query->execute(array($encrypted_user_id));
-
-$user_id = $query->fetchColumn();
-
-if (!$user_id) {
-    $query = $pdo->prepare('INSERT INTO users (digest) VALUES (?)');
-    $query->execute(array($encrypted_user_id));
-    $user_id = $pdo->lastInsertId();
-}
-
-if (array_key_exists('hunter_id_hash', $_POST) && !empty($_POST['hunter_id_hash'])) {
-    $query = $pdo->prepare('UPDATE users set digest2022 = ? WHERE id = ? and digest2022 is NULL');
-    $query->execute(array($_POST['hunter_id_hash'], $user_id));
-}
-
 if (empty($_POST['cheese']['name']) || empty($_POST['cheese']['id']) || !is_numeric($_POST['cheese']['id'])) {
     error_log('Cheese missing');
     die();
@@ -150,27 +132,58 @@ if ($query->fetchColumn()) {
     die();
 }
 
-$fields = 'entry_id, timestamp, location_id, trap_id, base_id, cheese_id, caught, attracted, user_id';
-$values = ':entry_id, :entry_timestamp, :location_id, :trap_id, :base_id, :cheese_id, :caught, :attracted, :user_id';
-$bindings = array(
-    'entry_id' => $_POST['entry_id'],
-    'entry_timestamp' => $_POST['entry_timestamp'],
-    'location_id' => $_POST['location']['id'],
-    'trap_id' => $_POST['trap']['id'],
-    'base_id' => $_POST['base']['id'],
-    'cheese_id' => $_POST['cheese']['id'],
-    'caught' => $_POST['caught'],
-    'attracted' => $_POST['attracted'],
-    'user_id' => $user_id,
-);
+$fields = [
+    'entry_id',
+    'timestamp',
+    'location_id',
+    'trap_id',
+    'base_id',
+    'cheese_id',
+    'caught',
+    'attracted',
+    'user_id',
+    'attraction_bonus',
+    'total_power',
+    'total_luck',
+    'extension_version',
+    'shield',
+];
+$fields = implode(',', $fields);
 
-if ($_POST['extension_version'] >= 11217) {
-    $fields .= ', attraction_bonus, total_power, total_luck';
-    $values .= ', :attraction_bonus, :total_power, :total_luck';
-    $bindings['attraction_bonus'] = $_POST['attraction_bonus'];
-    $bindings['total_power']      = $_POST['total_power'];
-    $bindings['total_luck']       = $_POST['total_luck'];
-}
+$values = [
+    ':entry_id',
+    ':entry_timestamp',
+    ':location_id',
+    ':trap_id',
+    ':base_id',
+    ':cheese_id',
+    ':caught',
+    ':attracted',
+    ':user_id',
+    ':attraction_bonus',
+    ':total_power',
+    ':total_luck',
+    ':extension_version',
+    ':shield',
+];
+$values = implode(',', $values);
+
+$bindings = array(
+    'entry_id'          => $_POST['entry_id'],
+    'entry_timestamp'   => $_POST['entry_timestamp'],
+    'location_id'       => $_POST['location']['id'],
+    'trap_id'           => $_POST['trap']['id'],
+    'base_id'           => $_POST['base']['id'],
+    'cheese_id'         => $_POST['cheese']['id'],
+    'caught'            => $_POST['caught'],
+    'attracted'         => $_POST['attracted'],
+    'user_id'           => $user_id,
+    'attraction_bonus'  => $_POST['attraction_bonus'],
+    'total_power'       => $_POST['total_power'],
+    'total_luck'        => $_POST['total_luck'],
+    'extension_version' => $_POST['extension_version'],
+    'shield'            => ((!empty($_POST['shield']) && $_POST['shield'] !== 'false') ? 1 : 0),
+);
 
 // Optionals
 
@@ -194,20 +207,6 @@ foreach ($value_intake as $item) {
         $values .= ', :' . $item['name'] . "_id";
         $bindings[$item['name'] . "_id"] = ${$item['name'] . "_id"};
     }
-}
-
-// Shield
-if (!empty($_POST['shield']) && $_POST['shield'] !== 'false') {
-    $fields .= ', shield';
-    $values .= ', :shield';
-    $bindings['shield'] = 1;
-}
-
-// Extension Version
-if (!empty($_POST['extension_version'])) {
-    $fields .= ', extension_version';
-    $values .= ', :extension_version';
-    $bindings['extension_version'] = formatVersion($_POST['extension_version']);
 }
 
 try {
@@ -320,16 +319,4 @@ try {
 } catch (Exception $e) {
     $pdo->rollBack();
     error_log("Failed transaction: " . $e->getMessage());
-}
-
-function formatVersion($version) {
-    if (strpos($version, '.') !== false) {
-        $version_array = explode('.', $version);
-        $new_version = '';
-        foreach($version_array as $piece) {
-            $new_version .= str_pad($piece,  2, "0", STR_PAD_LEFT);
-        }
-        $version = intval($new_version);
-    }
-    return $version;
 }
