@@ -4,6 +4,7 @@ require_once "send_response.php";
 require_once "check-ban.php";
 require_once "check-cors.php";
 require_once "config.php";
+require_once "check-version.php";
 require_once "db-connect.php";
 require_once "check-userid.php";
 
@@ -11,8 +12,6 @@ $required_fields = [
     'mice'              => 'string', # BLOCKING SCAVENGER MAPS
     'id'                => 'number',
     'name'              => 'string',
-    'extension_version' => 'number',
-    'hunter_id_hash'    => 'string',
 ];
 
 foreach ($required_fields as $field => $type) {
@@ -24,12 +23,6 @@ foreach ($required_fields as $field => $type) {
         error_log("$field field is not numeric");
         die();
     }
-}
-
-if (!in_array($_POST['extension_version'], $allowed_extension_versions)) {
-    error_log("Bad version: " . $_POST['extension_version']);
-    // sendResponse('error', "Please update extension to the latest version (unless testing).");
-    die();
 }
 
 if ($_POST['name'] == 'Arduous Chrome Map' && (in_array('Dark Templar', $_POST['mice'])
