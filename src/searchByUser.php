@@ -6,41 +6,20 @@
     $load_datatable_libraries = true;
     require_once "common-header.php";
 
-// Update this after switch to hunter_id_hash is complete
-if ((empty($_GET['user']) || !is_numeric($_GET['user'])) && (empty($_GET['hunter_id']))) {
+if (empty($_GET['hunter_id'])) {
     print "<b>PLEASE SPECIFY A VALID USER ID</b>";
     ?><script>$("#loader").css( "display", "none" );</script><?php
     return;
 }
 
+$_REQUEST['hunter_id_hash'] = $_GET['hunter_id'];
+
+define('not_direct_access', TRUE);
 require_once "config.php";
-// PDO
 require_once "db-connect.php";
+require_once "check-userid.php";
 
-if (!empty($_GET['hunter_id'])) {
-    $query = $pdo->prepare('SELECT id FROM users WHERE digest2022 LIKE ?');
-    $query->execute(array($_GET['hunter_id']));
-    $user_id = $query->fetchColumn();
-}
-
-// Remove this after switch to hunter_id_hash is complete
-if (empty($user_id) && !empty($_GET['user']) && is_numeric($_GET['user'])) {
-    $not_direct_access_id = true;
-    $encrypted_user_id = $_GET['user'];
-    require "id_modifier.php";
-    $query = $pdo->prepare('SELECT id FROM users WHERE digest LIKE ?');
-    $query->execute(array($encrypted_user_id));
-    $user_id = $query->fetchColumn();
-}
-
-if (empty($user_id)) {
-    print "<b>PLEASE SPECIFY A VALID USER ID</b>";
-    ?><script>$("#loader").css( "display", "none" );</script><?php
-    return;
-}
-
-$count_query_string = "SELECT count(*) FROM hunts where user_id = ?";
-$query2 = $pdo->prepare($count_query_string);
+$query2 = $pdo->prepare("SELECT count(*) FROM hunts where user_id = ?");
 $query2->execute(array($user_id));
 $count = $query2->fetchColumn();
 
