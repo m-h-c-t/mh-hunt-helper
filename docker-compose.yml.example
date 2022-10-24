@@ -27,10 +27,13 @@ services:
 #    image:          tsitu/mhct-db-docker:converter
 #    container_name: mhct-converter
 #    hostname:       mhct-converter
+#    ports:
+#      - "3307:3306"
 
 # # mhct-mapspotter DB
 #  mhct-mapspotter:
 #    image:          tsitu/mhct-db-docker:mapspotter
 #    container_name: mhct-mapspotter
 #    hostname:       mhct-mapspotter
-
+#    ports:
+#      - "3308:3306"
