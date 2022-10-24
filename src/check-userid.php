@@ -24,7 +24,7 @@ if (empty($user_id) && !empty($encrypted_user_id)) {
     // Update new hash if found
     if (!empty($user_id)) {
         $query = $pdo->prepare('UPDATE users set digest2022 = ? WHERE id = ? and digest2022 is NULL');
-        $query->execute(array($_POST['hunter_id_hash'], $user_id));
+        $query->execute(array($_REQUEST['hunter_id_hash'], $user_id));
     }
 }
 
