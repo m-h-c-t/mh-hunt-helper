@@ -1,78 +1,80 @@
 <?php
 
 require_once "check-direct-access.php";
+require_once "check-userid.php";
+require_once "send_response.php";
 
 // Field check
 
 if (empty($_POST['location']['name'])) {
     error_log("Location name is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['trap']['name'])) {
     error_log("Trap name is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['base']['name'])) {
     error_log("Base name is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['entry_id']) || !is_numeric($_POST['entry_id'])) {
     error_log("Entry id is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['location']['id']) || !is_numeric($_POST['location']['id'])) {
     error_log("Location ID is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['trap']['id']) || !is_numeric($_POST['trap']['id'])) {
     error_log("Trap ID is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (empty($_POST['base']['id']) || !is_numeric($_POST['base']['id'])) {
     error_log("Base ID is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if ((!array_key_exists('attraction_bonus', $_POST) || !is_numeric($_POST['attraction_bonus'])) && $_POST['extension_version'] >= 11217) {
     error_log("Attraction bonus is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if ((!array_key_exists('total_luck', $_POST) || !is_numeric($_POST['total_luck'])) && $_POST['extension_version'] >= 11217) {
     error_log("Total Luck is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if ((!array_key_exists('total_power', $_POST) || !is_numeric($_POST['total_power'])) && $_POST['extension_version'] >= 11217) {
     error_log("Total Power is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (!array_key_exists('attracted', $_POST)) {
     error_log("Attracted field is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
 if (!array_key_exists('caught', $_POST)) {
     error_log("Location name is missing");
-    error_log('USER: ' . $_POST['user_id']);
+    error_log('USER: ' . $_POST['hunter_id_hash']);
     sendResponse('success', "Thanks for the hunt info!");
 }
 
@@ -115,26 +117,6 @@ foreach($value_intake as $item) {
             ${$item['name'] . "_id"} = $pdo->lastInsertId();
         }
     }
-}
-
-// fetch user_id or record it
-if (!$encrypted_user_id) {
-    $encrypted_user_id = 0;
-}
-$query = $pdo->prepare('SELECT id FROM users WHERE digest LIKE ?');
-$query->execute(array($encrypted_user_id));
-
-$user_id = $query->fetchColumn();
-
-if (!$user_id) {
-    $query = $pdo->prepare('INSERT INTO users (digest) VALUES (?)');
-    $query->execute(array($encrypted_user_id));
-    $user_id = $pdo->lastInsertId();
-}
-
-if (array_key_exists('hunter_id_hash', $_POST) && !empty($_POST['hunter_id_hash'])) {
-    $query = $pdo->prepare('UPDATE users set digest2022 = ? WHERE id = ? and digest2022 is NULL');
-    $query->execute(array($_POST['hunter_id_hash'], $user_id));
 }
 
 if (empty($_POST['cheese']['name']) || empty($_POST['cheese']['id']) || !is_numeric($_POST['cheese']['id'])) {
