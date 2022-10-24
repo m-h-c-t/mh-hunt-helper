@@ -1,6 +1,7 @@
 <?php
 
 require_once "check-direct-access.php";
+require_once "send_response.php";
 
 // Time check
 if (empty($_POST['entry_timestamp']) || !is_numeric($_POST['entry_timestamp'])){

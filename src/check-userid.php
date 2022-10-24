@@ -5,8 +5,15 @@ require_once "config.php";
 require_once "db-connect.php";
 
 $user_id;
-if (!empty($_REQUEST['hunter_id_hash'])) {
-    $query = $pdo->prepare('SELECT u.id FROM users u WHERE u.digest2022 = ?');
-    $query->execute(array($_REQUEST['hunter_id_hash']));
-    $user_id = $query->fetchColumn();
+if (empty($_REQUEST['hunter_id_hash'])) {
+    error_log("missing hash for check-userid.php");
+    die();
+}
+
+$query = $pdo->prepare('SELECT u.id FROM users u WHERE u.digest2022 = ?');
+$query->execute(array($_REQUEST['hunter_id_hash']));
+$user_id = $query->fetchColumn();
+if (empty($user_id)) {
+    error_log("Couldn't find user id by hash for check-userid.php");
+    die();
 }
