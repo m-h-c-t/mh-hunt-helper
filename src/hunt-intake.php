@@ -100,7 +100,7 @@ foreach($id_value_intake as $item) {
 
 // only value intake
 $value_intake = array(
-    ["name" => "mouse", "table_name" => "mice",   "optional" => true]
+    ["name" => "mouse", "table_name" => "mice", "optional" => true]
 );
 
 foreach($value_intake as $item) {

@@ -45,14 +45,7 @@ foreach ($convertible_fields as $field => $type) {
 // PDO
 setPDOConv();
 
-// Check for existing entry
-// $query = $pdo_conv->prepare('SELECT 1 FROM entries WHERE user_id = :user_id AND asset_hash = :asset_hash LIMIT 1');
-// $query->execute(array('user_id' => $_POST['user_id'], 'asset_hash' => $_POST['asset_package_hash']));
-
-// if ($query->fetchColumn()) {
-    // error_log("Converter tried to insert existing asset for user id $_POST[user_id]");
-    // die();
-// }
+// TODO: Check for existing entry
 
 // Record new entry
 $query = $pdo_conv->prepare('INSERT INTO entries (user_id, asset_hash, extension_version) VALUES (?, ?, ?)');
