@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <title><?php echo $title; ?></title>
-
+    <meta name="wot-verification" content="91f659cc74820ead4528"/>
     <meta charset="utf-8">
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
