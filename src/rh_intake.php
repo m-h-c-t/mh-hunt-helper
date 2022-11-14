@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($user_id)) {
+if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($_REQUEST['hunter_id_hash'])) {
     define('not_direct_access', TRUE);
     require_once "check-cors.php";
     require_once "uuid.php";
