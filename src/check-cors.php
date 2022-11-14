@@ -10,3 +10,7 @@ if (!$_SERVER['HTTP_ORIGIN'] || ($_SERVER['HTTP_ORIGIN'] !== "https://www.mouseh
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 #header("X-Content-Type-Options: nosniff");
 #header("Content-Type: application/json");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    die();
+}
