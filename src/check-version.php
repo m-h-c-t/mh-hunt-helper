@@ -3,8 +3,9 @@
 require_once "check-direct-access.php";
 require_once "config.php";
 
+// Nice response from prod server
 // if ($_POST['extension_version'] == '0') {
-    // sendResponse('success', "Thanks for TESTING!");
+    // sendResponse('success', "Thanks for TESTING extension! You are pointing to prod server.");
 // }
 
 // Extension version check
