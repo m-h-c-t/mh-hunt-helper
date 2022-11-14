@@ -35,4 +35,4 @@ $random_uuid_hash_2 = '';
 $giveaway_url = '';
 $giveaway_key = '';
 $giveaway_start_time = 0;
-$giveaway_end_time = 9999999999;
+$giveaway_end_time = 0; // disabled by default
