@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($_POST['user_id'])) {
+if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($user_id)) {
     define('not_direct_access', TRUE);
     require_once "check-cors.php";
     require_once "uuid.php";
@@ -16,7 +16,7 @@ if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($_POST['us
 require_once "check-direct-access.php";
 
 // Check if Relic Hunter submission
-if (!empty($_POST['rh_environment']) && !empty($_POST['user_id'])) {
+if (!empty($_POST['rh_environment']) && !empty($user_id)) {
     recordRelicHunter();
 	sendResponse('success', "Thanks for reporting RH!");
     // Dies in sendResponse

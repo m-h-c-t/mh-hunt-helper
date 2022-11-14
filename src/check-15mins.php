@@ -13,7 +13,7 @@ $row = $query->fetch(PDO::FETCH_ASSOC);
 // Also checks for hunter rewind charm
 if (!empty($row['timestamp']) && ($_POST['entry_timestamp'] - $row['timestamp']) < 899
     && !empty($row['charm_id']) && $row['charm_id'] != 2584) {
-    error_log("User $_POST[hunter_id_hash]: Tried to submit a hunt faster than 15 minutes=============" . ip_display());
+    error_log("User $_POST[hunter_id_hash]: Tried to submit a hunt faster than 15 minutes=============");
 	recordOffenders();
     sendResponse('success', "Thanks for the hunt info!");
 }

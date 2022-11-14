@@ -1,6 +1,6 @@
 <?php
 
-$allowed_extension_versions = [];
+$allowed_extension_versions = [0];
 
 $servername = "mhct-db";
 $username = "admin";
@@ -35,4 +35,4 @@ $random_uuid_hash_2 = '';
 $giveaway_url = '';
 $giveaway_key = '';
 $giveaway_start_time = 0;
-$giveaway_end_time = 9999999999;
+$giveaway_end_time = 0; // disabled by default

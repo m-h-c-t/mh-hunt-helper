@@ -13,11 +13,11 @@ require_once "check-version.php";
 
 require_once "uuid.php";
 
+require_once "check-userid.php";
+
 require_once "check-time.php";
 
 require_once "db-connect.php";
-
-require_once "check-userid.php";
 
 require_once "rh_intake.php";
 
