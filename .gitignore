@@ -11,7 +11,6 @@ ga.php
 /src/id_modifier.php
 /src/config.php
 /src/check-ban.php
-/src/uuid.php
 /src/tracker.json
 /src/banned.json
 /src/countdown-settings.php

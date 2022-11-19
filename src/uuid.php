@@ -1,14 +1,10 @@
 <?php
-// DEV CONFIG
-$http_origin = $_SERVER['HTTP_ORIGIN'];
-header("Access-Control-Allow-Origin: $http_origin");
 
-die("1"); // KILL SWITCH
-?>
+// For dev env we can just replace all that with few lines:
+// $http_origin = $_SERVER['HTTP_ORIGIN'];
+// header("Access-Control-Allow-Origin: $http_origin");
+// echo "1";
 
-
-<?php
-// PROD CONFIG (you most likely don't need this)
 
 $uuid_timeout = 20;
 
@@ -17,7 +13,7 @@ if (empty($_REQUEST['entry_timestamp'])) {
     die();
 }
 else if(empty($_REQUEST['hunter_id_hash'])) {
-    error_log("UUID Request Failed, missing hunter_id_hash");
+    error_log("UUID Request Failed, missing user_id");
     die();
 }
 
@@ -32,7 +28,7 @@ if (defined('not_direct_access')) {
     // Checking and deleting uuid
     $myuuid_time = $redis->get($_REQUEST['uuid']);
     if (!$myuuid_time || abs(time() - $myuuid_time) > $uuid_timeout) {
-        error_log("UUID: Failed uuid test with hunter_id_hash: " . $_REQUEST['hunter_id_hash'] . " and timestamp: " . $_REQUEST['entry_timestamp']);
+        error_log("Failed uuid test with hunter_id_hash: " . $_REQUEST['hunter_id_hash'] . " and timestamp: " . $_REQUEST['entry_timestamp']);
         die();
     }
     $redis->del($_REQUEST['uuid']);
@@ -42,9 +38,10 @@ if (defined('not_direct_access')) {
     // But first: CORS check
     define('not_direct_access', TRUE);
     require_once "check-cors.php";
-
+    
     $myuuid = Uuid::uuid4();
     $myuuid = $myuuid->toString();
     $redis->set($myuuid,time());
     die($myuuid);
 }
+
