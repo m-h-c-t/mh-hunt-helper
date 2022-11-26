@@ -8,7 +8,6 @@ ga.php
 /DB/*.sql.gz
 /DB/*.txt.zip
 /DB/last_updated.txt
-/src/id_modifier.php
 /src/config.php
 /src/check-ban.php
 /src/tracker.json
