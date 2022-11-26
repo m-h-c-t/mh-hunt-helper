@@ -35,6 +35,7 @@
             ['Chad', 10],
             ['Chromatical', 10],
             ['Coding-Hen', 10],
+            ['Cube', 10],
             ['Groupsky', 10],
             ['Haoala', 10],
             ['Hazado', 10],
