@@ -12,15 +12,15 @@ This back up contains all the data related to convertibles like chests for examp
 This back up contains all the hunts and their details. **[See diagram here](diagram.png)**
 
 **Map Spotter:**
-This back up contains all the map help/sniping requests (not currently used much)
-  
+This back up contains all the maps related data
+
 # Nightly / Weekly
 **Nightly:**
 These are created every day (this is the latest most of the time)
 
 **Weekly:**
 These are created every week
-  
+
 # Formats
 **SQL**
 These files are .sql.gz, so you'll have to uncompress them first to get .sql files or import them into a tool that takes .sql.gz
