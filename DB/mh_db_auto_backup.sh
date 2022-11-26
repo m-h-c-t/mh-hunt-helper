@@ -37,10 +37,10 @@ if [ -f mapspotter_weekly.txt.zip ]; then
         rm mapspotter_weekly.txt.zip
 fi
 
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --ignore-table=mhmapspotter.fb_users --ignore-table=mhmapspotter.fb_groups --events --routines mhmapspotter | gzip -9 > mapspotter_weekly.sql.gz
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhmapspotter | gzip -9 > mapspotter_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --ignore-table=mhmapspotter.fb_users --ignore-table=mhmapspotter.fb_groups --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhmapspotter
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhmapspotter
 rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 mapspotter_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
@@ -57,10 +57,10 @@ if [ -f converter_weekly.txt.zip ]; then
     rm converter_weekly.txt.zip
 fi
 
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhconverter --ignore-table=mhconverter.entries | gzip -9 > converter_weekly.sql.gz
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhconverter | gzip -9 > converter_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhconverter --ignore-table=mhconverter.entries
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhconverter
 rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 converter_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
