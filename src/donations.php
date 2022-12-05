@@ -4,6 +4,8 @@
 ?>
 <h3>Thanks again to our sponsors for keeping our servers alive!</h3>
 <h4>If you would like to donate to support the cost of our servers, you may do so here:</h4>
+Donations are currently suspended while under construction. See discord for details.
+<!--
 <div class="container">
 <div class="panel-group col-md-6 col-md-offset-3" id="donate_accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
@@ -16,7 +18,7 @@
         </div>
         <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
         <div class="panel-body">
-            <a href="https://www.patreon.com/mhct" style="display:block;text-decoration:none;color:#333;">Donate using Patreon here.</a>
+            <a href="INSERT NEW PATREON URL HERE" style="display:block;text-decoration:none;color:#333;">Donate using Patreon here.</a>
         </div>
         </div>
     </div>
@@ -31,7 +33,7 @@
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
         <div class="panel-body">
             <img style="height:300;width:300;" src="images/bitcoin_qr.jpg"><br/>
-            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('bc1quq8wtjwylkh6xh0q3wdgp74t8zyjyvnpakf4h2');">
+            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('INSDERT BITCOIN ADDRESS HERE');">
                 Copy address <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
             </button>
         </div>
@@ -48,7 +50,7 @@
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
         <div class="panel-body">
             <img style="height:300;width:300;" src="images/eth_qr.jpeg"><br/>
-            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('0x0519F3dB4C7b2C87EAe6F06759DdC4697A5fD96d');">
+            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('INSERT ETHEREUM ADDRESS HERE');">
                 Copy address <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
             </button>
         </div>
@@ -65,7 +67,7 @@
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
         <div class="panel-body">
             <img style="height:300;width:300;" src="images/monero_qr.png"><br/>
-            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('49tfggRG3XjezzLK2tB983BPTggqJx4JXCujTie23hzh29DfeAHPYvD7y5f2hAZdoXhr4gJJkUPuCDeU2iwiS1QQFevmPMt');">
+            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('INSERT MONERO ADDRESS HERE');">
                 Copy address <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
             </button>
         </div>
@@ -82,13 +84,14 @@
         <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
         <div class="panel-body">
             <img style="height:300;width:300;" src="images/algo_qr.jpeg"><br/>
-            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('TA7P52M3W6KPJLUXMNADFQWSFSHRODUFTWJBYSAQFEHYON7S26TBF4EJWU');">
+            <button type="button" class="btn btn-default" onclick="navigator.clipboard.writeText('INSERT ALGORAND ADDRESS HERE');">
                 Copy address <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
             </button>
         </div>
         </div>
     </div>
 </div></div>
+-->
 
 <?php
     require_once "common-footer.php";
