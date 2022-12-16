@@ -11,4 +11,4 @@ Special thanks to all who helped. Few honorable mentions: Tehhowch, Aardwolf, Ts
 
 This tool uses some of the [Tsitu's scripts](https://github.com/tsitu/MH-Tools/) to autopopulate their site from extension.
 
-You can support these tools financially over at [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R3H0L26)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R3H0L26)
