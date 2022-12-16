@@ -53,6 +53,7 @@
             ['Nick (Horntracker)', 10],
             ['PersonalPalimpsest', 10],
             ['Plasmoidia', 10],
+            ['PotatoSalad', 10],
             ['Program', 10],
             ['Renette', 10],
             ['Ryonn', 10],
