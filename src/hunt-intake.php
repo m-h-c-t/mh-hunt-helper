@@ -284,6 +284,12 @@ try {
 
     // Hunt Details
     if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
+        if (array_key_exists('pillage_type', $_POST['hunt_details']) && array_key_exists('pillage_amount', $_POST['hunt_details'])) {
+            $query = $pdo->prepare('INSERT INTO hunt_pillages (hunt_id, pillage_type, amount) values (?, ?, ?)');
+            $query->execute(array($hunt_id, $_POST['hunt_details']['pillage_type'], $_POST['hunt_details']['pillage_amount']));
+            unset($_POST['hunt_details']['pillage_type']);
+            unset($_POST['hunt_details']['pillage_amount']);
+        }
         foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
             $detail_type_id = 0;
             $detail_value_id = 0;
