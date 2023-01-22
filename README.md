@@ -10,3 +10,5 @@ This is the back end for mh-helper-extension. It helps collect hunt info for pop
 Special thanks to all who helped. Few honorable mentions: Tehhowch, Aardwolf, Tsitu's tools team, Loaf, Groupsky, Nick (HornTracker), Bavo, wOen, and many others who helped with advice, ideas, and otherwise. Also thanks to contributors and discord mods.
 
 This tool uses some of the [Tsitu's scripts](https://github.com/tsitu/MH-Tools/) to autopopulate their site from extension.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R3H0L26)
