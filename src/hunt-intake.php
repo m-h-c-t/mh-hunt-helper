@@ -78,6 +78,12 @@ if (!array_key_exists('caught', $_POST)) {
     sendResponse('success', "Thanks for the hunt info!");
 }
 
+$is_lucky_catch = 0;
+if (array_key_exists('hunt_details', $_POST) && array_key_exists('is_lucky_catch', $_POST['hunt_details'])) {
+    $is_lucky_catch = strtolower($_POST['hunt_details']['is_lucky_catch']) == "true" ? 1 : 0;
+    unset($_POST['hunt_details']['is_lucky_catch']);
+}
+
 // id and value intake
 $id_value_intake = array(
     ["name" => "location", "table_name" => "locations", "optional" => false],
@@ -147,6 +153,7 @@ $fields = [
     'total_luck',
     'extension_version',
     'shield',
+    'is_lucky_catch'
 ];
 $fields = implode(',', $fields);
 
@@ -165,6 +172,7 @@ $values = [
     ':total_luck',
     ':extension_version',
     ':shield',
+    ':is_lucky_catch'
 ];
 $values = implode(',', $values);
 
@@ -183,6 +191,7 @@ $bindings = array(
     'total_luck'        => $_POST['total_luck'],
     'extension_version' => $_POST['extension_version'],
     'shield'            => ((!empty($_POST['shield']) && $_POST['shield'] !== 'false') ? 1 : 0),
+    'is_lucky_catch'    => $is_lucky_catch
 );
 
 // Optionals
