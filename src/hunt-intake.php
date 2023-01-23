@@ -4,6 +4,9 @@ require_once "check-direct-access.php";
 require_once "check-userid.php";
 require_once "send_response.php";
 
+// Keep track of processed details
+$processed_details = array();
+
 // Field check
 
 if (empty($_POST['location']['name'])) {
@@ -81,7 +84,7 @@ if (!array_key_exists('caught', $_POST)) {
 $is_lucky_catch = 0;
 if (array_key_exists('hunt_details', $_POST) && array_key_exists('is_lucky_catch', $_POST['hunt_details'])) {
     $is_lucky_catch = strtolower($_POST['hunt_details']['is_lucky_catch']) == "true" ? 1 : 0;
-    unset($_POST['hunt_details']['is_lucky_catch']);
+    $processed_details['is_lucky_catch'] = True;
 }
 
 // id and value intake
@@ -294,6 +297,9 @@ try {
     // Hunt Details
     if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
         foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
+            if (array_key_exists($detail_type, $processed_details)) {
+                continue;
+            }
             $detail_type_id = 0;
             $detail_value_id = 0;
 
