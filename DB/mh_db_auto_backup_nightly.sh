@@ -24,7 +24,7 @@ sleep 5s
 
 echo "=== Dumping into txt files ==="
 rm -rf $MH_DUMP/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T $MH_DUMP --no-create-info --compatible=db2 mhhunthelper
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T $MH_DUMP --no-create-info --compatible=ansi mhhunthelper
 
 echo "=== Turning on event scheduler ==="
 mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = ON;"
