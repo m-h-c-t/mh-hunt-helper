@@ -4,6 +4,9 @@ require_once "check-direct-access.php";
 require_once "check-userid.php";
 require_once "send_response.php";
 
+// Keep track of processed details
+$processed_details = array();
+
 // Field check
 
 if (empty($_POST['location']['name'])) {
@@ -284,7 +287,16 @@ try {
 
     // Hunt Details
     if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
+        if (array_key_exists('pillage_type', $_POST['hunt_details']) && array_key_exists('pillage_amount', $_POST['hunt_details'])) {
+            $query = $pdo->prepare('INSERT INTO hunt_pillages (hunt_id, pillage_type, amount) values (?, LEFT(?, 1), ?)');
+            $query->execute(array($hunt_id, $_POST['hunt_details']['pillage_type'], $_POST['hunt_details']['pillage_amount']));
+            $processed_details['pillage_type'] = True;
+            $processed_details['pillage_amount'] = True;
+        }
         foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
+            if (array_key_exists($detail_type, $processed_details)) {
+                continue;
+            }
             $detail_type_id = 0;
             $detail_value_id = 0;
 
