@@ -21,7 +21,7 @@ mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = OFF;"
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhhunthelper
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=ansi mhhunthelper
 rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 hunthelper_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
@@ -40,7 +40,7 @@ fi
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhmapspotter | gzip -9 > mapspotter_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhmapspotter
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=ansi mhmapspotter
 rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 mapspotter_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
@@ -60,7 +60,7 @@ fi
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhconverter | gzip -9 > converter_weekly.sql.gz
 sleep 5s
 rm -rf /var/lib/mysql-files/*
-mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=db2 mhconverter
+mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines -T /var/lib/mysql-files/ --no-create-info --compatible=ansi mhconverter
 rm -rf /var/lib/mysql-files/*.sql
 zip -j -9 converter_weekly.txt.zip /var/lib/mysql-files/*
 rm -rf /var/lib/mysql-files/*
