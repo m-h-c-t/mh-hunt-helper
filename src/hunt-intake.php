@@ -288,7 +288,7 @@ try {
     // Hunt Details
     if (!empty($_POST['hunt_details']) && !empty($hunt_id)) {
         if (array_key_exists('pillage_type', $_POST['hunt_details']) && array_key_exists('pillage_amount', $_POST['hunt_details'])) {
-            $query = $pdo->prepare('INSERT INTO hunt_pillages (hunt_id, pillage_type, amount) values (?, ?, ?)');
+            $query = $pdo->prepare('INSERT INTO hunt_pillages (hunt_id, pillage_type, amount) values (?, LEFT(?, 1), ?)');
             $query->execute(array($hunt_id, $_POST['hunt_details']['pillage_type'], $_POST['hunt_details']['pillage_amount']));
             $processed_details['pillage_type'] = True;
             $processed_details['pillage_amount'] = True;
