@@ -54,43 +54,19 @@ $query = $pdo->prepare($query_string);
 $query->execute(array($user_id));
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-print '<div class="table-responsive"><table id="results_table" class="table table-striped table-bordered table-hover display"><thead>
-<th>Time</th>
-<th>Location</th>
-<th>Stage</th>
-<th>Trap</th>
-<th>Base</th>
-<th>Charm</th>
-<th>Cheese</th>
-<th>Shield</th>
-<th>Caught</th>
-<th>Mouse</th>
-<th>Loot</th>
-</thead><tbody>';
-
-foreach ($results as $row) {
-    print "<tr>";
-    print "<td>$row[timestamp]</td>";
-    print "<td>$row[location]</td>";
-    print "<td>$row[stage]</td>";
-    print "<td>$row[trap]</td>";
-    print "<td>$row[base]</td>";
-    print "<td>$row[charm]</td>";
-    print "<td>$row[cheese]</td>";
-    print "<td class='text-center'>$row[shield]</td>";
-    print "<td class='text-center'>$row[caught]</td>";
-    print "<td>$row[mouse]</td>";
-    print "<td>$row[loot]</td>";
-    print "</tr>";
-}
-print "</tbody></table></div>";
-
 ?>
     </div>
+    <div class="table-responsive">
+        <table id="results_table" class="table table-striped table-bordered table-hover display" style="width:100%"></table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-+H4iLjY3JsKiF2V6N366in5IQHj2uEsGV7Pp/GRcm0fn76aPAk5V8xB6n8fQhhSonTqTXs/klFz4D0GIn6Br9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.40/moment-timezone-with-data-10-year-range.min.js" integrity="sha512-GKxhLkFh/5zSOuvIDwC5cdQkh13mR+jMgSA/9nBgA530xRXiwWhT7uje6b6Tpboa95M7OTSKxbYdMHRgLLBILQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
         $('#timezone_name').html(Intl.DateTimeFormat().resolvedOptions().timeZone);
         var temp_date = new Date;
         $('#results_table').DataTable( {
+            data: <?php echo json_encode($results) ?>,
             dom: 'lBftpri',
             order: [[0, 'desc']],
             buttons: [
@@ -101,19 +77,39 @@ print "</tbody></table></div>";
             {
                 extend: 'csvHtml5',
                 title: 'MH Data export'
-            }
+            },
+            // Note: If wanted uncomment pdfMake and vfs_font libraries in commonFooter.php
+            // {
+            //     extend: 'pdfHtml5',
+            //     title: 'MH Data export'
+            // }
             ],
-            "columnDefs": [
+            columns: [
+                { title: 'Time', data: 'timestamp' },
+                { title: 'Location', data: 'location' },
+                { title: 'Stage', data: 'stage' },
+                { title: 'Trap', data: 'trap' },
+                { title: 'Base', data: 'base' },
+                { title: 'Charm', data: 'charm' },
+                { title: 'Cheese', data: 'cheese', },
+                { title: 'Shield', data: 'shield', className: 'text-center' },
+                { title: 'Caught', data: 'caught', className: 'text-center' },
+                { title: 'Mouse', data: 'mouse' },
+                { title: 'Loot', data: 'loot', className: 'loot-col' },
+            ],
+            columnDefs: [
                 {
-                    "targets": [ 0 ],
-                    render: function ( data, type, row ) {
-                        temp_date.setTime(data * 1000);
-                        var formatted_date = temp_date.getFullYear() + "-"
-                            + ((temp_date.getMonth() + 1) < 10 ? "0" : "" ) + (temp_date.getMonth() + 1) + "-"
-                            + (temp_date.getDate() < 10 ? "0" : "" ) + temp_date.getDate();
-                        var formatted_time = (temp_date.getHours() < 10 ? "0" : "" ) + temp_date.getHours() + ":"
-                            + (temp_date.getMinutes() < 10 ? "0" : "" ) + temp_date.getMinutes();
-                        return '<span style="white-space: nowrap;">' + formatted_date + '</span> <span style="white-space: nowrap;">' + formatted_time + '</span>';
+                    // Loot col can get very hungry
+                    targets: [-1],
+                    width: '30%'
+                },
+                {
+                    type: 'unix',
+                    targets: 0,
+                    render: (data, type, row) => {
+                        return moment(data * 1000, 'x')
+                            .tz(Intl.DateTimeFormat().resolvedOptions().timeZone)
+                            .format('[<span style="white-space: nowrap;">]YYYY-MM-DD[</span> <span style="white-space: nowrap;">]HH:mm[</span>]')
                     }
                 },
                 {
