@@ -13,6 +13,10 @@
         <link rel="stylesheet" type="text/css" href="styles/custom-datatables.css">
     <?php } ?>
 
+    <?php if (isset($load_datatable_buttons)) { ?>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-buttons-bs/2.3.4/buttons.bootstrap.min.css" integrity="sha512-9f6zdtjcsdQBi6t6rIC1qRCAvXJk+buIJqbDflhnw9EmpxcPSvJ7FPoDiA3R8UiaXaT8T5s+NNQePAMIB0MDpw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php } ?>
+
     <link rel="stylesheet" type="text/css" href="styles/common.css">
 </noscript>
 <script>

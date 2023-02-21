@@ -4,6 +4,7 @@
     // $js = "scripts/attraction.js";
     $fluid_container = true;
     $load_datatable_libraries = true;
+    $load_datatable_buttons = true;
     require_once "common-header.php";
 
 if (empty($_GET['hunter_id'])) {
