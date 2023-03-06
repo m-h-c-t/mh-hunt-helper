@@ -73,6 +73,7 @@ date > last_updated.txt
 echo "===== Copying to keybase ====="
 
 su user -c 'cp converter_weekly.sql.gz converter_weekly.txt.zip mapspotter_weekly.sql.gz mapspotter_weekly.txt.zip hunthelper_weekly.sql.gz hunthelper_weekly.txt.zip last_updated.txt  /keybase/public/devjacksmith/mh_backups/weekly/'
+su user -c 'cp converter_weekly.sql.gz converter_weekly.txt.zip mapspotter_weekly.sql.gz mapspotter_weekly.txt.zip hunthelper_weekly.sql.gz hunthelper_weekly.txt.zip last_updated.txt  /backups/weekly/'
 
 rm -rf *.sql.gz *.txt.zip
 
