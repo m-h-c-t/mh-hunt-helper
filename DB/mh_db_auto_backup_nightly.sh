@@ -7,6 +7,7 @@ source /var/www/mh-hunt-helper/DB/config.sh
 if [[ -z $MH_DUMP || "$MH_DUMP" = "/" || ! -d "$MH_DUMP" ]]
 then
   echo "dump directory empty"
+  exit
 fi
 
 # Hunt Helper
