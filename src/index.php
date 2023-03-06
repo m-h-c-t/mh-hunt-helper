@@ -87,7 +87,7 @@
 <div class="container">
     <p class="muted">
         If you'd like to contribute, please install the browser extension below and consider supporting us through <a href="donations.php">Donations</a>!
-        <br/>Our code is open source on <a href="https://github.com/m-h-c-t" target="_blank">GitHub</a> and SQL database dumps can be downloaded from <a href="https://keybase.pub/devjacksmith/mh_backups/" target="_blank">Keybase</a> or <a href="https://hub.docker.com/r/tsitu/mhct-db-docker" target="_blank">Docker</a>.
+        <br/>Our code is open source on <a href="https://github.com/m-h-c-t" target="_blank">GitHub</a> and SQL database dumps can be downloaded from <a href="https://backups.mhct.win/" target="_blank">MHCT.win's backup directory</a> or <a href="https://hub.docker.com/r/tsitu/mhct-db-docker" target="_blank">Docker</a>.
         <br/>Also check out <a href="https://www.reddit.com/r/mousehunt/" target="_blank">/r/mousehunt</a> on Reddit and join the conversation on <a href="https://discord.gg/E4utmBD" target="_blank">Discord</a>.
         <br/>Maintained by the MHCT team. <b>Thank you</b> to all of our contributors!
     </p>
