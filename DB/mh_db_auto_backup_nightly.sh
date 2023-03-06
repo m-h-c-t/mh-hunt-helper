@@ -46,6 +46,7 @@ date > last_updated.txt
 
 su user -c 'cp hunthelper_nightly.sql.gz hunthelper_nightly.txt.zip last_updated.txt /keybase/public/devjacksmith/mh_backups/nightly/'
 su user -c 'cp hunthelper_nightly.sql.gz hunthelper_nightly.txt.zip last_updated.txt /backups/mh_backups/nightly/'
+su user -c 'chmod og+r /backups/mh_backups/nightly/*'
 
 rm -f *.sql.gz *.txt.zip
 
