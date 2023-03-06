@@ -4,6 +4,11 @@ echo "===== started mh_db_auto_backup_nightly.sh ======"
 source /var/www/mh-hunt-helper/DB/config.sh
 #cd /keybase/public/devjacksmith/mh_backups/nightly
 
+if [[ -z $MH_DUMP || "$MH_DUMP" = "/" || ! -d "$MH_DUMP" ]]
+then
+  echo "dump directory empty"
+fi
+
 # Hunt Helper
 echo "====== Backing up hunthelper ====="
 echo "=== Removing old files ==="
@@ -39,6 +44,7 @@ echo "===== Copying files ====="
 date > last_updated.txt
 
 su user -c 'cp hunthelper_nightly.sql.gz hunthelper_nightly.txt.zip last_updated.txt /keybase/public/devjacksmith/mh_backups/nightly/'
+su user -c 'cp hunthelper_nightly.sql.gz hunthelper_nightly.txt.zip last_updated.txt /backups/mh_backups/nightly/'
 
 rm -f *.sql.gz *.txt.zip
 
