@@ -1,6 +1,7 @@
 <?php
 
 require_once "config.php";
+require_once "set-public-cors.php";
 
 main();
 
