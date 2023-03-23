@@ -1,6 +1,7 @@
 <?php
 
 require_once "config.php";
+
 global $pdo, $servername, $dbname, $username, $password, $port;
 if (!$pdo) {
     require_once "db-connect.php";
@@ -21,6 +22,7 @@ else {
 
 
 if (!isset($silent) || !$silent) {
+    require_once "check-public-cors.php";
     header('Content-Type: application/json');
     print json_encode($filters, JSON_PRETTY_PRINT);
 }
