@@ -7,7 +7,7 @@ $public_cors_whitelist = [
     'https://dev.markethunt.win'
 ];
 
-if (!$_SERVER['HTTP_ORIGIN'] || !in_array($_SERVER['HTTP_ORIGIN'], $public_cors_whitelist)) {
+if ($_SERVER['HTTP_ORIGIN'] && !in_array($_SERVER['HTTP_ORIGIN'], $public_cors_whitelist)) {
     error_log("Origin didn't match, requests origin was: " . $_SERVER['HTTP_ORIGIN']);
     die();
 }
