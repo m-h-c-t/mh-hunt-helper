@@ -13,7 +13,6 @@ if (!$_SERVER['HTTP_ORIGIN'] || !in_array($_SERVER['HTTP_ORIGIN'], $public_cors_
 }
 
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
-header("Vary: Origin");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     die();

@@ -14,7 +14,6 @@ if (!$_SERVER['HTTP_ORIGIN'] || !in_array($_SERVER['HTTP_ORIGIN'], $intake_cors_
 }
 
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
-header("Vary: Origin");
 #header("X-Content-Type-Options: nosniff");
 #header("Content-Type: application/json");
 
