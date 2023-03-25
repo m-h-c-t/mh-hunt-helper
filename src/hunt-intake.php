@@ -302,6 +302,12 @@ try {
             $processed_details['pillage_type'] = True;
             $processed_details['pillage_amount'] = True;
         }
+        # Process details for the location
+        $loc_name = preg_replace("/[^a-z0-9]/", "_", strtolower($_POST['location']['name']));
+        $loc_file = "location/" . $loc_name . ".php";
+        if (file_exists($loc_file)) {
+            include($loc_file);
+        }
         foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
             if (array_key_exists($detail_type, $processed_details)) {
                 continue;
