@@ -6,7 +6,7 @@
 if (array_key_exists('at_boss', $_POST['hunt_details']) && array_key_exists('poster_type', $_POST['hunt_details'])) {
     $poster_name = $_POST['hunt_details']['poster_type'];
     $poster_rare = 0;
-    if (str_contains($poster_name, "Rare ")) {
+    if (strpos($poster_name, "Rare ") !== false) {
         $poster_rare = 1;
         $poster_name = str_replace("Rare ", "", $poster_name);
     }
