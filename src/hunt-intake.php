@@ -303,16 +303,7 @@ try {
             $processed_details['pillage_amount'] = True;
         }
         # Process details for the location
-        if (file_exists("locations/locations.php")) {
-            include("locations/locations.php");
-            $loc_id = filter_var($_POST['location']['id'], FILTER_VALIDATE_INT);
-            if (array_key_exists($loc_id, $location_id_to_filter_name)) {
-                $loc_file = "locations/" . $location_id_to_filter_name[$loc_id] . ".php";
-                if (file_exists($loc_file)) {
-                    include($loc_file);
-                }
-            }
-        }
+        include_once "locations/locations.php";
         foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
             if (array_key_exists($detail_type, $processed_details)) {
                 continue;
