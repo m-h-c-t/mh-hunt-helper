@@ -302,6 +302,10 @@ try {
             $processed_details['pillage_type'] = True;
             $processed_details['pillage_amount'] = True;
         }
+        # Hunt count is skippable if it is 1
+        if (array_key_exists('hunt_count', $_POST['hunt_details']) && $_POST['hunt_details']['hunt_count'] == 1) {
+            $processed_details['hunt_count'] = True;
+        }
         # Process details for the location
         include_once "locations/locations.php";
         foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
