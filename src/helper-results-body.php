@@ -25,13 +25,14 @@
                                 <tr>
                                     <td>
                                         <?php $name_link = ($name == "mice" ? "/attractions.php?mouse=" : "/loot.php?item=") ?>
-                                        <a href="<?php echo $name_link . $item_id; ?>" target="_blank"><?php echo $item_result['name']; ?></a>
+                                        <a href="<?php echo $name_link . $item_id; ?>" target="_blank"><?php echo $item_result['name']; ?></a><br/>
+                                        (<a href="https://mhwiki.hitgrab.com/wiki/index.php?search=<?php echo urlencode($item_result['name']); ?>" target="_blank">wiki</a>)
                                     </td>
                                     <td style="padding:0;">
                                         <table class="table table-bordered table-condensed table-striped" style="margin:0;">
                                           <tr>
                                               <td class="text-center">
-                                                  (<a href="https://mhwiki.hitgrab.com/wiki/index.php?search=<?php echo urlencode($item_result['name']); ?>" target="_blank">wiki</a>)
+                                                  Cheese
                                               </td>
                                               <?php foreach($column_titles as $title) { echo "<td>$title</td>"; } ?>
                                           </tr>
