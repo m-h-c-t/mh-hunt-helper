@@ -307,7 +307,7 @@ try {
             $processed_details['hunt_count'] = True;
         }
         # Process details for the location
-        include_once "locations/locations.php";
+        require_once "locations/locations.php";
         foreach ($_POST['hunt_details'] as $detail_type => $detail_value) {
             if (array_key_exists($detail_type, $processed_details)) {
                 continue;
