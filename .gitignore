@@ -12,5 +12,6 @@ ga.php
 /src/check-ban.php
 /src/tracker.json
 /src/banned.json
+/src/rejections.json
 /src/countdown-settings.php
 /vendor
