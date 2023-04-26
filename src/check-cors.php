@@ -1,6 +1,7 @@
 <?php
 
-require_once "check-direct-access.php";
+// Can't require this with current uuid.php usage of direct access var
+// require_once "check-direct-access.php";
 
 // CORS check
 $intake_cors_whitelist = [
