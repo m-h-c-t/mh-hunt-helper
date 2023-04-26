@@ -1,11 +1,5 @@
 <?php
 
-if (empty($_POST['pre']) || empty($_POST['post']) || empty($_REQUEST['hunter_id_hash'])) {
-    error_log("Missing pre, post, or hunter id hash");
-    sendResponse('success', "Thanks for the hunt info!");
-    die();
-}
-
 define('not_direct_access', TRUE);
 require_once "check-cors.php";
 require_once "uuid.php";
@@ -15,10 +9,14 @@ require_once "config.php";
 require_once "check-version.php";
 require_once "db-connect.php";
 require_once "send_response.php";
+
+if (empty($_POST['pre']) || empty($_POST['post']) || empty($_REQUEST['hunter_id_hash']) || empty($_POST['entry_timestamp'])) {
+    error_log("Missing pre, post, or hunter id hash");
+    sendResponse('success', "Thanks for the hunt info!");
+}
+
 recordRejectionsInFile($_POST['entry_timestamp'], $_POST['pre'], $_POST['post']);
 sendResponse('success', "Thanks for the hunt info!");
-
-die();
 
 function recordRejectionsInFile($timestamp, $preData, $postData, $limit = 250) {
     $file_name = 'rejections.json';
