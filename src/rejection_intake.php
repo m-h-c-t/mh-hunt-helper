@@ -10,39 +10,44 @@ require_once "check-version.php";
 require_once "db-connect.php";
 require_once "send_response.php";
 
-if (empty($_POST['pre']) || empty($_POST['post']) || empty($_REQUEST['hunter_id_hash']) || empty($_POST['entry_timestamp'])) {
-    error_log("Missing pre, post, or hunter id hash");
-    sendResponse('success', "Thanks for the hunt info!");
+foreach(['pre', 'post', 'hunter_id_hash', 'entry_timestamp', 'extension_version'] as $field) {
+    if (empty($_POST[$field])) {
+        error_log("Missing $field in rejection_intake.");
+        sendResponse('success', "Thanks for the hunt info!");
+    }
 }
 
-recordRejectionsInFile($_POST['entry_timestamp'], $_POST['pre'], $_POST['post']);
+recordRejectionsInFile();
 sendResponse('success', "Thanks for the hunt info!");
 
-function recordRejectionsInFile($timestamp, $preData, $postData, $limit = 250) {
+function recordRejectionsInFile($limit = 250) {
+    $timestamp = $_POST['entry_timestamp'];
+    $pre = $_POST['pre'];
+    $post = $_POST['post'];
+
     $file_name = 'rejections.json';
 
     $data = file_get_contents($file_name);
 
     if (!empty($data)) {
         $data = json_decode($data, true);
+        ksort($data); // sort it by timestamp descending
 
         if (count($data) >= $limit) {
-            $data = array_slice($data, -$limit + 1, $limit - 1, true); // Limit to last N - 1 entries
+            $data = array_slice($data, 0, $limit - 1, true); // Limit to last limit - 1 entries
         }
     }
 
-    $data[$timestamp] = getRejectionRecord($timestamp, $preData, $postData);
-
-    file_put_contents($file_name, json_encode($data));
-}
-
-function getRejectionRecord($timestamp, $pre, $post) {
-    return [
+    $data[$timestamp] = [
         'date' => date('Y-m-d\TH:i:s', $timestamp),
+        'extension_version' => $_POST['extension_version'],
         'mouse' => $pre['mouse'],
         'pre' => getEnvironmentData($pre),
         'post' => getEnvironmentData($post),
     ];
+    ksort($data); // sort it by timestamp descending
+
+    file_put_contents($file_name, json_encode($data));
 }
 
 function getEnvironmentData($rejectionData) {
