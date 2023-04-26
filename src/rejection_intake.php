@@ -18,6 +18,7 @@ foreach(['pre', 'post', 'hunter_id_hash', 'entry_timestamp', 'extension_version'
 }
 
 recordRejectionsInFile();
+recordRejectionsInDB();
 sendResponse('success', "Thanks for the hunt info!");
 
 function recordRejectionsInFile($limit = 250) {
@@ -55,6 +56,16 @@ function getEnvironmentData($rejectionData) {
         'location' => $rejectionData['location'],
         'stage' => $rejectionData['stage'],
     ];
+}
+
+function recordRejectionsInDB() {
+    global $pdo;
+    $query = $pdo->prepare('INSERT INTO rejections (prelocation, postlocation, extension_version) VALUES (:prelocation, :postlocation, :extension_version) ON DUPLICATE KEY UPDATE count=count+1, extension_version=:extension_version');
+    $query->execute(array(
+        'prelocation' => $_POST['pre']['location'],
+        'postlocation' => $_POST['post']['location'],
+        'extension_version' => $_POST['extension_version'],
+    ));
 }
 
 ?>
