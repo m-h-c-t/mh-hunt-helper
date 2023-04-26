@@ -5,6 +5,7 @@
 // header("Access-Control-Allow-Origin: $http_origin");
 // echo "1";
 
+require_once "check-cors.php";
 
 $uuid_timeout = 20;
 
@@ -35,10 +36,6 @@ if (defined('not_direct_access')) {
 
 } else {
     // Creating uuid
-    // But first: CORS check
-    define('not_direct_access', TRUE);
-    require_once "check-cors.php";
-    
     $myuuid = Uuid::uuid4();
     $myuuid = $myuuid->toString();
     $redis->set($myuuid,time());
