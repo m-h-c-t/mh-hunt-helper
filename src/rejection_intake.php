@@ -31,7 +31,7 @@ function recordRejectionsInFile($limit = 250) {
 
     if (!empty($data)) {
         $data = json_decode($data, true);
-        ksort($data); // sort it by timestamp descending
+        krsort($data, 1); // sort it by timestamp descending
 
         if (count($data) >= $limit) {
             $data = array_slice($data, 0, $limit - 1, true); // Limit to last limit - 1 entries
@@ -45,7 +45,7 @@ function recordRejectionsInFile($limit = 250) {
         'pre' => getEnvironmentData($pre),
         'post' => getEnvironmentData($post),
     ];
-    ksort($data); // sort it by timestamp descending
+    krsort($data, 1); // sort it by timestamp descending
 
     file_put_contents($file_name, json_encode($data));
 }
