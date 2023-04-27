@@ -28,7 +28,7 @@ $query->execute(array($max_ext_version));
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
-print '$total_count Rejected transitions for the latest extension version $max_ext_version.<br>';
+print "$total_count Rejected transitions for the latest extension version $max_ext_version.<br>";
 print 'This list will regenerate slowly over time for each extension release.<br>';
 print 'This is for internal use only, and is almost never a complete comprehensive list.<br>';
 
