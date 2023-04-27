@@ -36,6 +36,8 @@ function recordRejectionsInFile($limit = 250) {
         if (count($data) >= $limit) {
             $data = array_slice($data, 0, $limit - 1, true); // Limit to last limit - 1 entries
         }
+    } else {
+        $data = [];
     }
 
     $data[$timestamp] = [
