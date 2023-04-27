@@ -62,10 +62,21 @@ function getEnvironmentData($rejectionData) {
 
 function recordRejectionsInDB() {
     global $pdo;
-    $query = $pdo->prepare('INSERT INTO rejections (prelocation, postlocation, extension_version) VALUES (:prelocation, :postlocation, :extension_version) ON DUPLICATE KEY UPDATE count=count+1, extension_version=:extension_version');
+
+    // Get location ids
+    $query = $pdo->prepare('SELECT id FROM locations WHERE name=?');
+    $query->execute(array($_POST['pre']['location']));
+    $pre_location_id = $query->fetchColumn();
+
+    $query = $pdo->prepare('SELECT id FROM locations WHERE name=?');
+    $query->execute(array($_POST['post']['location']));
+    $post_location_id = $query->fetchColumn();
+
+    $query = $pdo->prepare('INSERT INTO rejections (pre_location_id, post_location_id, extension_version)
+        VALUES (:pre_location, :postlocation, :extension_version) ON DUPLICATE KEY UPDATE count=count+1');
     $query->execute(array(
-        'prelocation' => $_POST['pre']['location'],
-        'postlocation' => $_POST['post']['location'],
+        'pre_location_id' => $pre_location_id,
+        'post_location_id' => $post_location_id,
         'extension_version' => $_POST['extension_version'],
     ));
 }

@@ -14,8 +14,11 @@ $query->execute(array());
 $max_ext_version = $query->fetchColumn();
 
 $query_string = '
-    SELECT r.*
-    FROM rejections r WHERE r.extension_version = (?)
+    SELECT l1.name as prelocation, l2.name as postlocation, r.count
+    FROM rejections r
+    INNER JOIN locations l1 on r.pre_location_id = l1.id
+    INNER JOIN locations l2 on r.post_location_id = l2.id
+    WHERE r.extension_version = (?)
     ORDER BY count DESC';
 $query = $pdo->prepare($query_string);
 $query->execute(array($max_ext_version));
