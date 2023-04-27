@@ -40,3 +40,5 @@ foreach ($results as $row) {
     print "</tr>";
 }
 print "</tbody></table></div>";
+
+require_once "common-footer.php";
