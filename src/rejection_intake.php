@@ -44,7 +44,7 @@ function recordRejectionsInFile($limit = 250) {
     $data[$timestamp] = [
         'date' => date('Y-m-d\TH:i:s', $timestamp),
         'extension_version' => $_POST['extension_version'],
-        'mouse' => $pre['mouse'],
+        'mouse' => $pre['mouse'] ? $pre['mouse'] : '',
         'pre' => getEnvironmentData($pre),
         'post' => getEnvironmentData($post),
     ];
@@ -56,7 +56,7 @@ function recordRejectionsInFile($limit = 250) {
 function getEnvironmentData($rejectionData) {
     return [
         'location' => $rejectionData['location'],
-        'stage' => $rejectionData['stage'],
+        'stage' => $rejectionData['stage'] ? $rejectionData['stage'] : '',
     ];
 }
 
