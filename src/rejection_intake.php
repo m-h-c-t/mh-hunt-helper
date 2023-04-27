@@ -73,7 +73,7 @@ function recordRejectionsInDB() {
     $post_location_id = $query->fetchColumn();
 
     $query = $pdo->prepare('INSERT INTO rejections (pre_location_id, post_location_id, extension_version)
-        VALUES (:pre_location, :postlocation, :extension_version) ON DUPLICATE KEY UPDATE count=count+1');
+        VALUES (:pre_location_id, :post_location_id, :extension_version) ON DUPLICATE KEY UPDATE count=count+1');
     $query->execute(array(
         'pre_location_id' => $pre_location_id,
         'post_location_id' => $post_location_id,
