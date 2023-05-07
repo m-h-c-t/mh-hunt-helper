@@ -38,6 +38,6 @@ $giveaway_start_time = 0;
 $giveaway_end_time = 0; // disabled by default
 
 // 3rd party integrations
-$user_agent = 'mhct';
+$query_user_agent = 'mhct';
 
 $markethunt_domain = 'api.markethunt.win';
