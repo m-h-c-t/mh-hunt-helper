@@ -156,10 +156,12 @@ function getConvertibleQuery(&$query_all, &$query_one) {
         aci.total_convertibles_opened as total,	aci.total_item_quantity as total_items,
         aci.single_convertibles_opened as single_opens, aci.times_with_any,
         aci.min_item_quantity, aci.max_item_quantity, aci.total_quantity_when_any,
-        i.gold_value as item_value, i.sb_value as item_sb_value
+        v.gold_value as item_gold_value, v.sb_value as item_sb_value
         from aggr_convertible_item aci
 	        inner join items i
 		        on aci.item_id = i.id
+            left join item_values v
+                using (item_id)
         where aci.convertible_id = ?';
 }
 

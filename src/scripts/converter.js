@@ -110,10 +110,10 @@ $( function() {
             }
             
             let gold_value_text = '';
-            if (row.item_value) {
-                gold_value_text = (row.total_items / row.total * row.item_value).toFixed(0);
+            if (row.item_gold_value) {
+                gold_value_text = parseFloat((row.total_items / row.total * row.item_gold_value).toPrecision(3));
 
-                total_gold_value += row.total_items / row.total * row.item_value;
+                total_gold_value += row.total_items / row.total * row.item_gold_value;
                 total_sb_value += row.total_items / row.total * row.item_sb_value;
             }
 
@@ -129,8 +129,8 @@ $( function() {
 
         if (total_gold_value > 0) {
             total_seen += '<br>';
-            total_seen += `Total tradeable value: ${Number(total_gold_value.toFixed(0)).toLocaleString()}
-                gold (${total_sb_value.toPrecision(4)} SB)`;
+            total_seen += `Tradeable value per open: ${parseFloat(total_gold_value.toPrecision(3)).toLocaleString()}
+                gold (${parseFloat(total_sb_value.toPrecision(3))} SB)`;
         }
 
         $('#results_total').html(`<h4>${total_seen}</h4>`);

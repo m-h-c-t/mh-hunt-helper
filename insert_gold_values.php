@@ -28,34 +28,38 @@ function fetchDailyMarketValuesJson() {
 }
 
 $daily_data = fetchDailyMarketValuesJson();
-$current_sb_price = $daily_data[114]['price'];
+$latest_sb_price = $daily_data[114]['price'];
 
 setPDOConv();
 
-$query = $pdo_conv->prepare('SELECT id, gold_value, sb_value FROM items');
+// insert/update gold values for items with markethunt entries
+foreach ($daily_data as $item_id => $item_data) {
+    if ($item_data === NULL) continue;
+
+    $insert_query = $pdo_conv->prepare('INSERT INTO item_values (item_id, gold_value) 
+        VALUES (:item_id, :gold_value)
+        ON DUPLICATE KEY UPDATE item_id = :item_id2, gold_value = :gold_value2');
+    $insert_query->execute([
+        'item_id' => $item_id,
+        'item_id2' => $item_id,
+        'gold_value' => $item_data['price'],
+        'gold_value2' => $item_data['price']
+    ]);
+}
+
+$query = $pdo_conv->prepare('SELECT item_id, gold_value, sb_value FROM item_values');
 $query->execute();
 
-while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-    $item_id = (int)$row['id'];
+// update sb values of all items based on their gold values
+while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+    $item_id = (int)$row['item_id'];
     $gold_value = $row['gold_value'] === NULL ? NULL : intval($row['gold_value']);
-    $sb_value = $row['sb_value'] === NULL ? NULL : doubleval($row['sb_value']);
 
-    if (array_key_exists($item_id, $daily_data) && !is_null($daily_data[$item_id])) {
-        // markethunt entry found, update gold and sb values
-        $gold_value = $daily_data[$item_id]['price'];
-        $sb_value = $daily_data[$item_id]['sb_price'];
-    } else if ($gold_value !== NULL) {
-        // has manually entered gold value, update sb value only
-        $sb_value = $gold_value / $current_sb_price;
-    }
-
-    // persist changes
-    $update_query = $pdo_conv->prepare('UPDATE items 
-        SET gold_value = :gold_value, sb_value = :sb_value 
-        WHERE id = :item_id');
-    $update_query->execute(array(
-        'gold_value' => $gold_value,
-        'sb_value' => $sb_value,
+    $update_query = $pdo_conv->prepare('UPDATE item_values 
+        SET sb_value = :sb_value 
+        WHERE item_id = :item_id');
+    $update_query->execute([
+        'sb_value' => $gold_value / $latest_sb_price,
         'item_id' => $item_id,
-    ));
+    ]);
 }
