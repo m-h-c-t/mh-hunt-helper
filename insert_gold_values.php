@@ -47,7 +47,7 @@ foreach ($daily_data as $item_id => $item_data) {
     ]);
 }
 
-$query = $pdo_conv->prepare('SELECT item_id, gold_value, sb_value FROM item_values');
+$query = $pdo_conv->prepare('SELECT item_id, gold_value, sb_value FROM item_markethunt');
 $query->execute();
 
 // update sb values of all items based on their gold values
