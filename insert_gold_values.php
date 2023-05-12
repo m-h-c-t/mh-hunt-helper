@@ -36,7 +36,7 @@ setPDOConv();
 foreach ($daily_data as $item_id => $item_data) {
     if ($item_data === NULL) continue;
 
-    $insert_query = $pdo_conv->prepare('INSERT INTO item_values (item_id, gold_value) 
+    $insert_query = $pdo_conv->prepare('INSERT INTO item_markethunt (item_id, gold_value) 
         VALUES (:item_id, :gold_value)
         ON DUPLICATE KEY UPDATE item_id = :item_id2, gold_value = :gold_value2');
     $insert_query->execute([
