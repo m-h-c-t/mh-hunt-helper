@@ -55,7 +55,7 @@ while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
     $item_id = (int)$row['item_id'];
     $gold_value = $row['gold_value'] === NULL ? NULL : intval($row['gold_value']);
 
-    $update_query = $pdo_conv->prepare('UPDATE item_values 
+    $update_query = $pdo_conv->prepare('UPDATE item_markethunt 
         SET sb_value = :sb_value 
         WHERE item_id = :item_id');
     $update_query->execute([
