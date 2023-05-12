@@ -160,7 +160,7 @@ function getConvertibleQuery(&$query_all, &$query_one) {
         from aggr_convertible_item aci
 	        inner join items i
 		        on aci.item_id = i.id
-            left join item_values v
+            left join item_markethunt im
                 using (item_id)
         where aci.convertible_id = ?';
 }
