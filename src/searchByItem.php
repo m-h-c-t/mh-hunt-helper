@@ -13,6 +13,7 @@ function main() {
     $query_all = '';
     $query_one = '';
     $params = [$_REQUEST['item_id']];
+
     switch ($_REQUEST['item_type']) {
         case 'mouse':
             connectMHHH();
@@ -27,9 +28,9 @@ function main() {
             getMapQuery($query_all, $query_one);
             break;
         case 'mousemaps':
-                connectMMS();
-                getMouseMapsQuery($query_all, $query_one);
-                break;
+            connectMMS();
+            getMouseMapsQuery($query_all, $query_one);
+            break;
         case 'convertible':
             connectMHC();
             getConvertibleQuery($query_all, $query_one);
@@ -71,12 +72,14 @@ function getItem($query_all, $query_one, $params) {
         while($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $item_array[] = ["id" => (int)$row['id'], "value" => utf8_encode(stripslashes($row['name']))];
         }
+
         print json_encode($item_array);
     } else {
         $query = $pdo->prepare($query_one);
         $query->execute($params);
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
         print json_encode($results);
     }
 }
@@ -149,13 +152,16 @@ function getMouseMapsQuery(&$query_all, &$query_one) {
 
 function getConvertibleQuery(&$query_all, &$query_one) {
     $query_all = 'SELECT c.id, c.name FROM mhconverter.convertibles c ORDER BY c.name ASC';
-    $query_one = 'SELECT aci.convertible_id as conv, i.name as item,
+    $query_one = 'SELECT aci.convertible_id as conv, i.name as item, 
         aci.total_convertibles_opened as total,	aci.total_item_quantity as total_items,
         aci.single_convertibles_opened as single_opens, aci.times_with_any,
-        aci.min_item_quantity, aci.max_item_quantity, aci.total_quantity_when_any
+        aci.min_item_quantity, aci.max_item_quantity, aci.total_quantity_when_any,
+        im.gold_value as item_gold_value, im.sb_value as item_sb_value
         from aggr_convertible_item aci
 	        inner join items i
 		        on aci.item_id = i.id
+            left join item_markethunt im
+                using (item_id)
         where aci.convertible_id = ?';
 }
 
