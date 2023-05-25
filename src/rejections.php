@@ -9,11 +9,11 @@ require_once "common-header.php";
 require_once "config.php";
 require_once "db-connect.php";
 
-$query = $pdo->prepare("SELECT MAX(extension_version) as max_ext_version, SUM(count) as total_count
-    FROM rejections GROUP BY extension_version");
+$query = $pdo->prepare("SELECT extension_version, SUM(count) as total_count
+    FROM rejections GROUP BY extension_version ORDER BY extension_version DESC LIMIT 1");
 $query->execute(array());
 $results = $query->fetch();
-$max_ext_version = $results['max_ext_version'];
+$max_ext_version = $results['extension_version'];
 $total_count = $results['total_count'];
 
 $query_string = '
