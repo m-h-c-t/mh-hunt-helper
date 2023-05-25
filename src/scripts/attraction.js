@@ -38,9 +38,6 @@ $( function() {
     }
 
     function firstLoad(mice) {
-        for (var i = 0; i < mice.length; i++) {
-            mice[i].value = decodeURI(escape(mice[i].value));
-        }
         // Check and search for previous mouse (done on reload of whole page)
         var previous_mouse_id = $("#prev_mouse").val();
         if (previous_mouse_id) {
