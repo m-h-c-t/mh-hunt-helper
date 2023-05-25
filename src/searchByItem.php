@@ -70,7 +70,7 @@ function getItem($query_all, $query_one, $params) {
         $query = $pdo->prepare($query_all);
         $query->execute();
         while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-            $item_array[] = ["id" => (int)$row['id'], "value" => utf8_encode(stripslashes($row['name']))];
+            $item_array[] = ["id" => (int)$row['id'], "value" => $row['name']];
         }
 
         print json_encode($item_array);
