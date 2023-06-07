@@ -40,7 +40,7 @@
     <!-- Jumbotron -->
     <div class="jumbotron">
         <h1>
-            <?php echo isset( $is_home ) && $is_home ? 'MouseHunt <span>Community</span> Tools' : $title; ?>
+            <?php echo isset( $is_home ) && $is_home ? 'MouseHunt <span>C</span><span>o</span><span>m</span><span>m</span><span>u</span><span>n</span><span>i</span><span>t</span><span>y</span> Tools' : $title; ?>
         </h1>
         <?php if (!isset($hide_home_link)) { ?> <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Main Page</a><?php } ?>
     </div>
