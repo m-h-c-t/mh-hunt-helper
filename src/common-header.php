@@ -39,7 +39,9 @@
 <body style="text-align: center;" class="text-center">
     <!-- Jumbotron -->
     <div class="jumbotron">
-        <h1><?php echo $title; ?></h1>
+        <h1>
+            <?php echo isset( $is_home ) && $is_home ? 'MouseHunt <span>Community</span> Tools' : $title; ?>
+        </h1>
         <?php if (!isset($hide_home_link)) { ?> <a href="/" class="clickable"><span class="glyphicon glyphicon-chevron-left"></span> Main Page</a><?php } ?>
     </div>
     <div class="<?php echo isset($fluid_container) ? 'container-fluid' : 'container'; ?>">
