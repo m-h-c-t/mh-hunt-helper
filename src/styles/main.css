@@ -16,3 +16,50 @@
 .table > tbody > tr > td:hover {
     background-color: rgba(0,0,0,.075);
 }
+
+/* Pride month rainbow text 🏳️‍🌈️ */
+.jumbotron h1 span {
+    font-size: 63px;
+    text-shadow: 0 0 1px #bababa;
+    -webkit-text-stroke: 2px rgb(255 255 255 / 30%);
+}
+
+.jumbotron h1 span:hover {
+    filter: saturate(10);
+}
+
+.jumbotron h1 span:nth-child(1) {
+    color: #e40303;
+}
+
+.jumbotron h1 span:nth-child(2) {
+    color: #ff8c00;
+}
+
+.jumbotron h1 span:nth-child(3) {
+    color: #ffed00;
+}
+
+.jumbotron h1 span:nth-child(4) {
+    color: #008026;
+}
+
+.jumbotron h1 span:nth-child(5) {
+    color: #004dff;
+}
+
+.jumbotron h1 span:nth-child(6) {
+    color: #eb81eb;
+}
+
+.jumbotron h1 span:nth-child(7) {
+    color: #fff;
+}
+
+.jumbotron h1 span:nth-child(8) {
+    color: #f4a8b7;
+}
+
+.jumbotron h1 span:nth-child(9) {
+    color: #5bcefa;
+}
