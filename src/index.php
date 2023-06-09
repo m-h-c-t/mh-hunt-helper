@@ -4,6 +4,7 @@
     $js = "scripts/main.js";
     $hide_home_link = true;
     $hide_footer_note = true;
+    $is_home = true;
     require_once "common-header.php";
 ?>
 
