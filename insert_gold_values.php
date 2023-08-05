@@ -27,30 +27,35 @@ function fetchDailyMarketValuesJson() {
     return $data;
 }
 
-$daily_data = fetchDailyMarketValuesJson();
-$latest_sb_price = $daily_data[114]['price'];
-
-setPDOConv();
-
-// insert/update gold values for items with markethunt entries
-foreach ($daily_data as $item_id => $item_data) {
-    if ($item_data === NULL) continue;
-
-    $insert_query = $pdo_conv->prepare('INSERT INTO item_markethunt (item_id, gold_value) 
-        VALUES (:item_id, :gold_value)
-        ON DUPLICATE KEY UPDATE item_id = :item_id2, gold_value = :gold_value2');
+function setGoldValue($connection, int $item_id, int $gold_value) {
+    $insert_query = $connection->prepare('INSERT INTO item_markethunt (item_id, gold_value) 
+        VALUES (:item_id, :gold_value) ON DUPLICATE KEY UPDATE gold_value = VALUES(gold_value)');
     $insert_query->execute([
         'item_id' => $item_id,
-        'item_id2' => $item_id,
-        'gold_value' => $item_data['price'],
-        'gold_value2' => $item_data['price']
+        'gold_value' => $gold_value,
     ]);
 }
 
+setPDOConv();
+
+$daily_data = fetchDailyMarketValuesJson();
+$latest_sb_price = $daily_data[114]['price'];
+
+// Insert/update gold values from markethunt
+foreach ($daily_data as $item_id => $item_data) {
+    if ($item_data === NULL) continue;
+
+    setGoldValue($pdo_conv, $item_id, $item_data['price']);
+}
+
+// update custom item prices
+setGoldValue($pdo_conv, 211, $daily_data[114]['price']); // Magic Essence
+setGoldValue($pdo_conv, 431, 1); // Gold
+
+// Update sb values of all items based on their gold values. We do it this way to support custom item prices
 $query = $pdo_conv->prepare('SELECT item_id, gold_value, sb_value FROM item_markethunt');
 $query->execute();
 
-// update sb values of all items based on their gold values
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
     $item_id = (int)$row['item_id'];
     $gold_value = $row['gold_value'] === NULL ? NULL : intval($row['gold_value']);
