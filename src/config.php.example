@@ -1,6 +1,6 @@
 <?php
 
-$allowed_extension_versions = [0];
+$allowed_extension_versions = file("versions.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 $servername = "mhct-db";
 $username = "admin";
