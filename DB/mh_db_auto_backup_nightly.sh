@@ -2,7 +2,6 @@
 echo "===== started mh_db_auto_backup_nightly.sh ======"
 
 source /var/www/mh-hunt-helper/DB/config.sh
-#cd /keybase/public/devjacksmith/mh_backups/nightly
 
 if [[ -z $MH_DUMP || "$MH_DUMP" = "/" || ! -d "$MH_DUMP" ]]
 then
@@ -23,6 +22,8 @@ fi
 
 echo "=== Turning off event scheduler ==="
 mysql -u $MH_USER -p$MH_PASS -e "SET GLOBAL event_scheduler = OFF;"
+# wait 5 minutes for other events to finish
+sleep 300s
 
 echo "=== Dumping into sql.gz file ==="
 mysqldump -u $MH_USER -p$MH_PASS --host=127.0.0.1 --skip-lock-tables --events --routines mhhunthelper | gzip -9 > hunthelper_nightly.sql.gz
@@ -40,11 +41,10 @@ rm -rf $MH_DUMP/*.sql
 zip -j -9 hunthelper_nightly.txt.zip $MH_DUMP/*
 rm -rf $MH_DUMP/*
 
-echo "===== Copying files ====="
+echo "===== Copying files to backups folder ====="
 
 date > last_updated.txt
 
-su user -c 'cp hunthelper_nightly.sql.gz hunthelper_nightly.txt.zip last_updated.txt /keybase/public/devjacksmith/mh_backups/nightly/'
 su user -c 'cp hunthelper_nightly.sql.gz hunthelper_nightly.txt.zip last_updated.txt /backups/mh_backups/nightly/'
 su user -c 'chmod og+r /backups/mh_backups/nightly/*'
 
