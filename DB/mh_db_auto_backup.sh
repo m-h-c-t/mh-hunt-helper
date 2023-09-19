@@ -77,24 +77,25 @@ su user -c 'chmod og+r /backups/mh_backups/weekly/*'
 
 rm -rf *.sql.gz *.txt.zip
 
-echo "===== Remote trigger Docker image builds ====="
-echo
+# Only available in Docker Hub Pro plan now
+# echo "===== Remote trigger Docker image builds ====="
+# echo
 
-curl -H "Content-Type: application/json" --data '{"source_type": "converter", "source_name": "converter"}' -X POST $DOCKER_CURL
-echo
-echo "= converter_weekly triggered ="
-echo
-sleep 2s
+# curl -H "Content-Type: application/json" --data '{"source_type": "converter", "source_name": "converter"}' -X POST $DOCKER_CURL
+# echo
+# echo "= converter_weekly triggered ="
+# echo
+# sleep 2s
 
-curl -H "Content-Type: application/json" --data '{"source_type": "mapspotter", "source_name": "mapspotter"}' -X POST $DOCKER_CURL
-echo
-echo "= mapspotter_weekly triggered ="
-echo
-sleep 2s
+# curl -H "Content-Type: application/json" --data '{"source_type": "mapspotter", "source_name": "mapspotter"}' -X POST $DOCKER_CURL
+# echo
+# echo "= mapspotter_weekly triggered ="
+# echo
+# sleep 2s
 
-curl -H "Content-Type: application/json" --data '{"source_type": "weekly", "source_name": "weekly"}' -X POST $DOCKER_CURL
-echo
-echo "= hunthelper_weekly triggered ="
-echo
+# curl -H "Content-Type: application/json" --data '{"source_type": "weekly", "source_name": "weekly"}' -X POST $DOCKER_CURL
+# echo
+# echo "= hunthelper_weekly triggered ="
+# echo
 
 echo "===== finished mh_db_auto_backup_weekly.sh ====="
