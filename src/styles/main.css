@@ -19,9 +19,8 @@
 
 /* Pride month rainbow text 🏳️‍🌈️ */
 .jumbotron h1 span {
-    font-size: 63px;
-    text-shadow: 0 0 1px #bababa;
-    -webkit-text-stroke: 2px rgb(255 255 255 / 30%);
+    line-height: inherit;
+    font-size: inherit;
 }
 
 .jumbotron h1 span:hover {
