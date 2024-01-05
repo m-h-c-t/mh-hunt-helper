@@ -71,12 +71,18 @@ $( function() {
     }
 
     function renderResultsTable(data) {
-        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr><th>Convertible</th><th>Average Qty</th><th>Chance for any</th><th>Min-Max Qty / Slot</th></tr></thead><tbody>';
+        var final_html = '<table id="results_table" class="table table-striped table-hover" style="width:100%"><thead><tr>'
+            + '<th>Convertible</th>'
+            + '<th>Average Qty</th>'
+            + '<th>Chance for any</th>'
+            + '<th>Min-Max Qty / Slot</th>'
+            + '<th>Opened Total</th>'
+            + '<th>Opened Single</th>'
+            + '</tr></thead><tbody>';
 
-        var all_stages = '';
-        let total_seen = 'Did not find this item';
+        let seen_any = false;
         data.forEach(function(row) {
-            total_seen = row.total + ' convertibles. (' + row.single_opens + ' opened single)';
+            seen_any = true;
             final_html += '<tr><td>' + row.item + '</td><td>';
             final_html += parseFloat((row.total_items / row.total).toPrecision(3)) + '</td><td>';
             if (row.single_opens == 0 || row.min_item_quantity == null || row.max_item_quantity == null) {
@@ -87,12 +93,15 @@ $( function() {
                 else { final_html += row.min_item_quantity + '-' + row.max_item_quantity; }
                 final_html += '</td>';
             }
+            final_html += '<td>' + row.total + '</td>';
+            final_html += '<td>' + row.single_opens + '</td>';
             final_html += '</tr>';
         });
         final_html += '</tbody></table>';
 
-        total_seen = '<h4>' + total_seen + '</h4>';
-        $('#results_total').html(total_seen);
+        if (!seen_any) {
+            $('#results_total').html("Did not find item. Ask us about it on Discord #community-tools channel.");
+        }
 
         $("#results").html(final_html);
         $('#results_table').DataTable( {
