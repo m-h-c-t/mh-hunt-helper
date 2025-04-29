@@ -18,6 +18,6 @@ header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 #header("X-Content-Type-Options: nosniff");
 #header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     die();
 }
