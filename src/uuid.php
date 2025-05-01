@@ -1,14 +1,12 @@
 <?php
 
+require_once "check-cors.php";
+
 // For dev env we can just replace all that with few lines:
-// $http_origin = $_SERVER['HTTP_ORIGIN'];
-// header("Access-Control-Allow-Origin: $http_origin");
 // if (!$_REQUEST['uuid']) {
 //     echo "1";
 // }
 // return;
-
-require_once "check-cors.php";
 
 $uuid_timeout = 20;
 
