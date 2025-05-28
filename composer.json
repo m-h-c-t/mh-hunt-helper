@@ -1,6 +1,6 @@
 {
     "require": {
-        "predis/predis": "^2.0",
+        "predis/predis": "^3.0",
         "ramsey/uuid": "^4.2"
     }
 }
