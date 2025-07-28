@@ -79,6 +79,7 @@ $( function() {
                     <th>Chance for any</th>
                     <th>Min-Max Qty / Slot</th>
                     <th>Gold Value</th>
+                    <th>SB Value</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -107,10 +108,15 @@ $( function() {
             }
             
             let gold_value_text = '';
+            let sb_value_text = '';
             if (row.item_gold_value) {
                 gold_value_text = parseFloat((row.total_items / row.total * row.item_gold_value).toPrecision(3));
 
                 total_gold_value += row.total_items / row.total * row.item_gold_value;
+            }
+            if (row.item_sb_value) {
+                sb_value_text = parseFloat((row.total_items / row.total * row.item_sb_value).toPrecision(3));
+
                 total_sb_value += row.total_items / row.total * row.item_sb_value;
             }
 
@@ -120,6 +126,7 @@ $( function() {
                 <td>${chance_for_any_text}</td>
                 <td>${min_max_qty_text}</td>
                 <td>${gold_value_text}</td>
+                <td>${sb_value_text}</td>
             </tr>`;
         });
         final_html += '</tbody></table>';
@@ -142,6 +149,7 @@ $( function() {
                 { "type": "num-fmt" },
                 { "type": "num-fmt" },
                 { orderable: false },
+                { "type": "num-fmt" },
                 { "type": "num-fmt" },
             ],
             "order": [[1, 'desc']]
