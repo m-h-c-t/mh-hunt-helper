@@ -43,7 +43,10 @@ function main() {
             return;
     }
 
-    getItem($query_all, $query_one, $params);
+    $response = getItem($query_all, $query_one, $params);
+
+    header('Content-Type: application/json');
+    die($response);
 }
 
 function connectMHHH() {
@@ -66,6 +69,8 @@ function connectMHC() {
 // Loot rates by location
 function getItem($query_all, $query_one, $params) {
     global $pdo;
+
+    $response = json_encode([]);
     if ($_REQUEST['item_id'] === 'all') {
         $query = $pdo->prepare($query_all);
         $query->execute();
@@ -73,15 +78,17 @@ function getItem($query_all, $query_one, $params) {
             $item_array[] = ["id" => (int)$row['id'], "value" => $row['name']];
         }
 
-        print json_encode($item_array);
+        $response = json_encode($item_array);
     } else {
         $query = $pdo->prepare($query_one);
         $query->execute($params);
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        print json_encode($results);
+        $response = json_encode($results);
     }
+
+    return $response;
 }
 
 function getMouseQuery(&$query_all, &$query_one, &$params) {
@@ -152,7 +159,7 @@ function getMouseMapsQuery(&$query_all, &$query_one) {
 
 function getConvertibleQuery(&$query_all, &$query_one) {
     $query_all = 'SELECT c.id, c.name FROM mhconverter.convertibles c ORDER BY c.name ASC';
-    $query_one = 'SELECT aci.convertible_id as conv, i.name as item, 
+    $query_one = 'SELECT aci.convertible_id as conv, i.name as item,
         aci.total_convertibles_opened as total,	aci.total_item_quantity as total_items,
         aci.single_convertibles_opened as single_opens, aci.times_with_any,
         aci.min_item_quantity, aci.max_item_quantity, aci.total_quantity_when_any,
