@@ -21,11 +21,10 @@ $( function() {
             data: {
                 item_id: item_id,
                 item_type: "convertible"
-            }
-        })
-        .done(function( data ) {
-            callback( JSON.parse(data));
+            },
+            success: callback
         });
+
     }
 
     function firstLoad(items) {
@@ -96,17 +95,17 @@ $( function() {
             let min_max_qty_text;
             if (row.single_opens == 0 || row.min_item_quantity == null || row.max_item_quantity == null) {
                 chance_for_any_text = 'N/A';
-                min_max_qty_text = 'N/A'; 
+                min_max_qty_text = 'N/A';
             } else {
                 chance_for_any_text = parseFloat((row.times_with_any / row.single_opens * 100).toPrecision(3)) + '&percnt;';
 
-                if (row.min_item_quantity == row.max_item_quantity) { 
-                    min_max_qty_text = row.min_item_quantity; 
-                } else { 
-                    min_max_qty_text = row.min_item_quantity + '-' + row.max_item_quantity; 
+                if (row.min_item_quantity == row.max_item_quantity) {
+                    min_max_qty_text = row.min_item_quantity;
+                } else {
+                    min_max_qty_text = row.min_item_quantity + '-' + row.max_item_quantity;
                 }
             }
-            
+
             let gold_value_text = '';
             let sb_value_text = '';
             if (row.item_gold_value) {

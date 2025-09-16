@@ -29,9 +29,8 @@ $(function() {
                 item_id: item_id,
                 item_type: "loot",
                 timefilter: timefilter
-            }
-        }).done(function(data) {
-            callback(JSON.parse(data));
+            },
+            success: callback
         });
     }
 

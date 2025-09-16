@@ -21,10 +21,8 @@ $( function() {
             data: {
                 item_id: item_id,
                 item_type: "map"
-            }
-        })
-        .done(function( data ) {
-            callback( JSON.parse(data));
+            },
+            success: callback
         });
     }
 

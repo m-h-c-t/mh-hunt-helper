@@ -30,10 +30,8 @@ $( function() {
                 item_type: "mouse",
                 timefilter: timefilter,
                 min_hunts: 100
-            }
-        })
-        .done(function( data ) {
-            callback( JSON.parse(data));
+            },
+            success: callback
         });
     }
 
