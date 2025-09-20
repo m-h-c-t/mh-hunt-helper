@@ -342,6 +342,32 @@ try {
         }
     }
 
+    // Auras
+    if (!empty($_POST['auras']) && !empty($hunt_id)) {
+        if (is_string($_POST['auras'])) {
+            $_POST['auras'] = array($_POST['auras']);
+        }
+
+        foreach ($_POST['auras'] as $aura_code_name) {
+            $aura_id = 0;
+            $query = $pdo->prepare('SELECT id FROM mhhunthelper.auras WHERE code_name LIKE ?');
+            $query->execute(array($aura_code_name));
+
+            $aura_id = $query->fetchColumn();
+
+            if (!$aura_id) {
+                $query = $pdo->prepare('INSERT INTO mhhunthelper.auras (code_name) VALUES (?)');
+                $query->execute(array($aura_code_name));
+                $aura_id = $pdo->lastInsertId();
+            }
+
+            if (!empty($aura_id)) {
+                $query = $pdo->prepare("INSERT INTO hunt_aura (hunt_id, aura_id) VALUES (?, ?)");
+                $query->execute(array($hunt_id, $aura_id));
+            }
+        }
+    }
+
     $pdo->commit();
 } catch (Exception $e) {
     $pdo->rollBack();
