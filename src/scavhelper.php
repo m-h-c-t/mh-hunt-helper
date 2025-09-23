@@ -3,6 +3,8 @@
 //    $css = "styles/maphelper.css";
     $fluid_container = true;
     $js = "scripts/scavhelper.js";
+
+    $load_tablesorter_libraries = true;
     require_once "common-header.php";
 
 
@@ -22,6 +24,10 @@
         }
     }
     echo '</div>';
+
+    if (isset($results['results']) && !empty($results['results'])) {
+        require "helper-results-grid-scav.php";
+    }
 
     require_once "helper-form.php";
 
