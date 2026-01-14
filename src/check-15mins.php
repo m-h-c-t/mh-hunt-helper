@@ -15,5 +15,5 @@ if (!empty($row['timestamp']) && ($_POST['entry_timestamp'] - $row['timestamp'])
     && !empty($row['charm_id']) && $row['charm_id'] != 2584) {
     error_log("User $_POST[hunter_id_hash]: Tried to submit a hunt faster than 15 minutes=============");
 	recordOffenders();
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "You are submitting hunts too fast!");
 }

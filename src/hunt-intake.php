@@ -12,73 +12,73 @@ $processed_details = array();
 if (empty($_POST['location']['name'])) {
     error_log("Location name is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Location name is missing");
 }
 
 if (empty($_POST['trap']['name'])) {
     error_log("Trap name is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Trap name is missing");
 }
 
 if (empty($_POST['base']['name'])) {
     error_log("Base name is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Base name is missing");
 }
 
 if (empty($_POST['entry_id']) || !is_numeric($_POST['entry_id'])) {
     error_log("Entry id is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Entry id is missing");
 }
 
 if (empty($_POST['location']['id']) || !is_numeric($_POST['location']['id'])) {
     error_log("Location ID is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Location ID is missing");
 }
 
 if (empty($_POST['trap']['id']) || !is_numeric($_POST['trap']['id'])) {
     error_log("Trap ID is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Trap ID is missing");
 }
 
 if (empty($_POST['base']['id']) || !is_numeric($_POST['base']['id'])) {
     error_log("Base ID is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Base ID is missing");
 }
 
 if (!array_key_exists('attraction_bonus', $_POST) || !is_numeric($_POST['attraction_bonus'])) {
     error_log("Attraction bonus is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Attraction bonus is missing");
 }
 
 if (!array_key_exists('total_luck', $_POST) || !is_numeric($_POST['total_luck'])) {
     error_log("Total Luck is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Total Luck is missing");
 }
 
 if (!array_key_exists('total_power', $_POST) || !is_numeric($_POST['total_power'])) {
     error_log("Total Power is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Total Power is missing");
 }
 
 if (!array_key_exists('attracted', $_POST)) {
     error_log("Attracted field is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Attracted field is missing");
 }
 
 if (!array_key_exists('caught', $_POST)) {
     error_log("Location name is missing");
     error_log('USER: ' . $_POST['hunter_id_hash']);
-    sendResponse('success', "Thanks for the hunt info!");
+    sendResponse('error', "Location name is missing");
 }
 
 $is_lucky_catch = 0;

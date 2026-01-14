@@ -13,7 +13,7 @@ require_once "send_response.php";
 foreach(['pre', 'post', 'hunter_id_hash', 'entry_timestamp', 'extension_version'] as $field) {
     if (empty($_POST[$field])) {
         error_log("Missing $field in rejection_intake.");
-        sendResponse('success', "Thanks for the hunt info!");
+        sendResponse('error', "Missing $field in rejection_intake.");
     }
 }
 
