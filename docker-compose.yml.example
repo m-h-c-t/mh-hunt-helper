@@ -3,16 +3,15 @@ services:
 
 # mhct server
   mhct:
-    image:          richarvey/nginx-php-fpm:1.10.3
+    build:
+      dockerfile: fpm-nginx_xdebug.dockerfile
     container_name: mhct
     hostname:       mhct
-    volumes:
-      - ./:/var/www/html
-    environment:
-      WEBROOT:      /var/www/html/src
-      ERRORS:       1
     ports:
-      - "80:80"
+      - "8080:8080"
+      - "9003:9003"
+    volumes:
+      - .:/var/www/html
 
 # mh-hunt-helper DB
   mhct-db:
