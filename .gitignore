@@ -13,6 +13,7 @@ check-ban.php
 tracker.json
 banned.json
 rejections.json
+errors.json
 countdown-settings.php
 versions.txt
 /vendor
