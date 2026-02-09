@@ -1,5 +1,11 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    die();
+}
+
 require_once "config.php";
 
 main();
@@ -45,6 +51,8 @@ function main() {
 
     $response = getItem($query_all, $query_one, $params);
 
+    // cache for 120 seconds since this data doesn't change often
+    header('Cache-Control: public, max-age=120');
     header('Content-Type: application/json');
     die($response);
 }
