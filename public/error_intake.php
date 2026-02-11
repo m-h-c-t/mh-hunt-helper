@@ -68,6 +68,8 @@ function recordErrorsInFile($limit = 250) {
         'date' => date('Y-m-d\TH:i:s', $timestamp),
         'extension_version' => $_POST['extension_version'],
         'issues' => $issues,
+        'message' => $_POST['message'] ?? '',
+        'context' => $_POST['context'] ?? '',
     ];
     krsort($data, 1); // sort it by timestamp descending
 
