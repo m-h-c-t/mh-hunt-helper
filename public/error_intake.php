@@ -9,11 +9,10 @@ require_once "config.php";
 require_once "check-version.php";
 require_once "send_response.php";
 
-foreach(['issues', 'hunter_id_hash', 'entry_timestamp', 'extension_version'] as $field) {
-    if (empty($_POST[$field])) {
-        error_log("Missing $field in error_intake.");
-        sendResponse('error', "Missing $field in error_intake.");
-    }
+
+if (empty($_POST['message'])) {
+    error_log("Missing message in error_intake.");
+    sendResponse('error', "Missing message in error_intake.");
 }
 
 recordErrorsInFile();
@@ -21,25 +20,27 @@ sendResponse('success', "Thanks for the hunt info!");
 
 function recordErrorsInFile($limit = 250) {
     $timestamp = $_POST['entry_timestamp'];
-    $issues = $_POST['issues'];
+    $message = $_POST['message'];
 
-    // Validate 'issues' field: ensure type and size are reasonable before logging.
-    if (!is_array($issues)) {
-        error_log("Invalid type for 'issues' in error_intake. Expected array.");
-        sendResponse('error', "Invalid data for 'issues'.");
+    // decode message if it's JSON encoded, otherwise use it as is
+    if (is_string($message)) {
+        $decodedMessage = json_decode($message, true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $message = $decodedMessage;
+        }
     }
 
     // Check the JSON encoded size to ensure it's reasonable
-    $issuesJson = json_encode($issues);
-    if ($issuesJson === false || json_last_error() !== JSON_ERROR_NONE) {
-        error_log("Unencodable 'issues' field received in error_intake.");
-        sendResponse('error', "Invalid content in 'issues'.");
+    $messageJson = json_encode($message);
+    if ($messageJson === false || json_last_error() !== JSON_ERROR_NONE) {
+        error_log("Unencodable 'message' field received in error_intake.");
+        sendResponse('error', "Invalid content in 'message'.");
     }
 
-    $maxIssuesLength = 10000; // limit size of a single 'issues' entry
-    if (strlen($issuesJson) > $maxIssuesLength) {
-        error_log("Received oversized 'issues' field in error_intake (length " . strlen($issuesJson) . ").");
-        sendResponse('error', "The 'issues' field is too large.");
+    $maxMessageLength = 10000; // limit size of a single 'message' entry
+    if (strlen($messageJson) > $maxMessageLength) {
+        error_log("Received oversized 'message' field in error_intake (length " . strlen($messageJson) . ").");
+        sendResponse('error', "The 'message' field is too large.");
     }
 
     $file_name = 'errors.json';
@@ -67,9 +68,9 @@ function recordErrorsInFile($limit = 250) {
     $data[$timestamp] = [
         'date' => date('Y-m-d\TH:i:s', $timestamp),
         'extension_version' => $_POST['extension_version'],
-        'issues' => $issues,
+        'issues' => $decodedMessage,
         'url' => $_POST['url'] ?? '',
-        'message' => $_POST['message'] ?? '',
+        'message' => $messageJson ?? '',
         'context' => $_POST['context'] ?? '',
     ];
     krsort($data, 1); // sort it by timestamp descending
