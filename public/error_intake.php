@@ -22,6 +22,7 @@ function recordErrorsInFile($limit = 250) {
     $issuesRaw = $_POST['issues'];
     $contextRaw = $_POST['context'];
     $url = $_POST['url'];
+    $extension_version = $_POST['extension_version'];
 
     // Decode issues from JSON
     $issues = json_decode($issuesRaw, true);
@@ -69,6 +70,7 @@ function recordErrorsInFile($limit = 250) {
         'issues' => $issues,
         'context' => $context ?? '',
         'url' => $url ?? '',
+        'extension_version' => $extension_version ?? '',
     ];
     krsort($data, 1); // sort it by timestamp descending
 
