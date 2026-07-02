@@ -8,6 +8,7 @@ ga.php
 /DB/*.sql.gz
 /DB/*.txt.zip
 /DB/last_updated.txt
+/DB/data
 config.php
 check-ban.php
 tracker.json

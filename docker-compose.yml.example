@@ -21,6 +21,16 @@ services:
     ports:
       - "3306:3306"
 
+#  mh-hunt-helper DB slim with volume
+#  mhct-db:
+#    image: tsitu/mhct-db-docker:latest-slim
+#    container_name: mhct-db
+#    hostname: mhct-db
+#    ports:
+#      - "3306:3306"
+#    volumes:
+#      - ./db/data/mhhunthelper:/var/lib/mysql
+
 # # mhct-converter DB
 #  mhct-converter:
 #    image:          tsitu/mhct-db-docker:converter
