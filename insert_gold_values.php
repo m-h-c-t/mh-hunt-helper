@@ -1,6 +1,6 @@
 <?php
-require_once('src/config.php');
-require_once('src/db-connect.php');
+require_once('public/config.php');
+require_once('public/db-connect.php');
 
 global $pdo_conv;
 
