@@ -15,9 +15,13 @@ if (!$_SERVER['HTTP_ORIGIN'] || !in_array($_SERVER['HTTP_ORIGIN'], $intake_cors_
 }
 
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
-#header("X-Content-Type-Options: nosniff");
-#header("Content-Type: application/json");
+header("Vary: Origin");
 
+// Preflight: the extension sends X-Requested-With (and sometimes a JSON Content-Type),
+// which are not CORS-safelisted, so they must be explicitly allowed.
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept");
+    header("Access-Control-Max-Age: 86400");
     die();
 }
