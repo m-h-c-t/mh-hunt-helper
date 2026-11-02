@@ -3,6 +3,11 @@
 const RH_HINT_CONFIRMATION_COUNT = 5;
 const RH_HINT_CONFIRMATION_WINDOW_HOURS = 24;
 
+// CORS preflight carries no body, so it would otherwise fall through to the direct-access 404 below
+if (!defined('not_direct_access') && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    require_once "check-cors.php";
+}
+
 if (!defined('not_direct_access') && !empty($_POST['hint']) && !empty($_REQUEST['hunter_id_hash'])) {
     define('not_direct_access', TRUE);
     require_once "check-cors.php";
